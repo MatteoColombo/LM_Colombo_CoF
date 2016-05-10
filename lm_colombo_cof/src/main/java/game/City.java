@@ -7,23 +7,15 @@ public class City {
 	private String cityName;
 	private Color cityColor;
 	// private Reward cityReward;
-	private boolean hasKing;
 	private ArrayList<Emporium> emporiums;
 
-	public City(Color cityColor, String cityName, boolean hasKing /* Reward cityReward */) {
+	public City(Color cityColor, String cityName /* Reward cityReward */) {
 		this.cityName = cityName;
 		this.cityColor = cityColor;
-		this.hasKing = hasKing;
 		this.emporiums= new ArrayList<Emporium>();
 		//this.cityReward=cityReward;
 	}
 
-	public City(Color cityColor, String cityName /*, Reward cityReward*/) {
-		this.cityName = cityName;
-		this.cityColor = cityColor;
-		this.hasKing = false;
-		//this.cityReward=cityReward;
-	}
 
 	public String getName() {
 		return cityName;

@@ -32,8 +32,12 @@ public class City {
 	public boolean hasEmporiumOfPlayer(){
 		for(Emporium e: emporiums){
 			//I need to check if it exists an emporium of the received player
-			if(true)
-				return true;
+			/*
+			 * 	if(p.equals(e.getPlayer()))
+			 * 		return true;
+			 */
+		
+			return true;
 		}
 		return false;
 	}

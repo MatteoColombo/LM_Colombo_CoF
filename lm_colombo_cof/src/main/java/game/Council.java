@@ -2,23 +2,20 @@ package game;
 
 public class Council {
 	final int COUNCIL_DIM = 4;
-	private Councilor[] council;
+	private Councilor[] councMembers;
 	private int first;
-	private int last;
 
-	public Council(Councilor[] council) {
-		this.council = council;
+	public Council(Councilor[] councMembers) {
+		this.councMembers = councMembers;
 		this.first = COUNCIL_DIM - 1;
-		this.last = 0;
 	}
 
 	public void insertCounciler(Councilor councilor) {
-		council[first] = councilor;
-		last = first;
+		councMembers[first] = councilor;
 		first = (first + 1) % COUNCIL_DIM;
 	}
 
 	public Councilor getCouncilor(int pos) {
-		return council[(first + pos) % COUNCIL_DIM];
+		return councMembers[(first + pos) % COUNCIL_DIM];
 	}
 }

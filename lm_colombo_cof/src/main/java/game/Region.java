@@ -1,15 +1,15 @@
 package game;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Region {
 	private final int NUM_CARDS = 2;
 	private String regionName;
-	private ArrayList<City> cities;
+	private List<City> cities;
 	private Council regionCouncil;
 	private PermissionCard[] permissionCards;
 
-	public Region(String regionName, ArrayList<City> cities, Council regionCouncil) {
+	public Region(String regionName, List<City> cities, Council regionCouncil) {
 		this.regionCouncil = regionCouncil;
 		this.cities = cities;
 		this.regionCouncil = regionCouncil;
@@ -18,6 +18,7 @@ public class Region {
 		generatePermissionCard(1);
 	}
 
+	@Override
 	public String toString() {
 		return regionName;
 	}
@@ -47,7 +48,7 @@ public class Region {
 		return tempCard;
 	}
 
-	public ArrayList<City> getCities() {
+	public List<City> getCities() {
 		return cities;
 	}
 

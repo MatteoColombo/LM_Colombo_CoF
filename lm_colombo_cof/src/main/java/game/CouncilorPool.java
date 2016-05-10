@@ -29,13 +29,15 @@ public class CouncilorPool {
 
 	public Councilor getCouncilor(Color councColor) {
 		for (CouncilorColorAvailability temp : availCounc) {
-			if (temp.getColor().equals(councColor)) {
+			if (temp.getColor().equals(councColor)  && temp.getAvailability() > 0) {
 				temp.decAvailability();
+			}else{
+				return null;
 			}
 		}
 		return new Councilor(councColor);
 	}
-
+	
 	public Councilor slideCouncilor(Councilor oldCouncilor, Color councColor) {
 		for (CouncilorColorAvailability temp : availCounc) {
 			if (temp.getColor().equals(councColor)) {

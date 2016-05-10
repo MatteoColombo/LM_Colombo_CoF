@@ -2,17 +2,18 @@ package game;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 public class City {
 	private String cityName;
 	private Color cityColor;
 	// private Reward cityReward;
-	private ArrayList<Emporium> emporiums;
+	private List<Emporium> emporiums;
 
 	public City(Color cityColor, String cityName /* Reward cityReward */) {
 		this.cityName = cityName;
 		this.cityColor = cityColor;
-		this.emporiums= new ArrayList<Emporium>();
+		this.emporiums= new ArrayList<>();
 		//this.cityReward=cityReward;
 	}
 

@@ -21,7 +21,7 @@ public class Reward {
 
 	public Reward(RewardType rewardType) {
 		Random r = new Random();
-
+		
 		int differentBonus = r.nextInt(MAXDIFFERENTBONUS) +1;
 		int bonusToInsert = differentBonus;
 		int treshold = r.nextInt(differentBonus*2);
@@ -33,7 +33,7 @@ public class Reward {
 			}
 			
 			Bonus buffer = getBonusFromTable(indexBonus);
-			if(!(buffer.mustBeAlone && differentBonus > 1)) {
+			if(!(buffer.mustBeAlone && differentBonus > 1) && buffer.isInstantiableFor(rewardType)) {
 				bonusList.add(buffer);
 				flagTable.flag(indexBonus);
 				bonusToInsert--;

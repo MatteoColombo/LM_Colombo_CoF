@@ -27,18 +27,17 @@ public class CouncilorPool {
 		return false;
 	}
 
-	public Councilor getCouncilor(Color councColor) {
+	public Councilor getCouncilor(Color councColor) throws NegativeException{
 		for (CouncilorColorAvailability temp : availCounc) {
-			if (temp.getColor().equals(councColor)  && temp.getAvailability() > 0) {
+			if (temp.getColor().equals(councColor)){
 				temp.decAvailability();
-			}else{
-				return null;
+				return new Councilor(councColor);
 			}
 		}
-		return new Councilor(councColor);
+		return null;
 	}
 	
-	public Councilor slideCouncilor(Councilor oldCouncilor, Color councColor) {
+	public Councilor slideCouncilor(Councilor oldCouncilor, Color councColor) throws NegativeException,OverMaxValueException {
 		for (CouncilorColorAvailability temp : availCounc) {
 			if (temp.getColor().equals(councColor)) {
 				temp.decAvailability();

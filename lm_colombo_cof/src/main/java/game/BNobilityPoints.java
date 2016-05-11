@@ -18,7 +18,17 @@ public class BNobilityPoints extends Bonus {
 
 	@Override
 	public int getValue() {
-		return 2;
+		return 25;
+	}
+
+	@Override
+	public Bonus deepCopy() {
+		return new BNobilityPoints(this.amount);
+	}
+
+	@Override
+	public boolean mustBeAlone() {
+		return false;
 	}
 
 }

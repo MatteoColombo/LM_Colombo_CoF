@@ -1,9 +1,9 @@
 package game;
 
-public class BCoins extends Bonus {
+public class BPoliticCards extends Bonus {
 
 
-	public BCoins(int amount) {
+	public BPoliticCards(int amount) {
 		super(amount);
 	}
 
@@ -14,12 +14,12 @@ public class BCoins extends Bonus {
 
 	@Override
 	public int getValue() {
-		return 11;
+		return 40;
 	}
 
 	@Override
 	public Bonus deepCopy() {
-		return new BCoins(this.amount);
+		return new BPoliticCards(this.amount);
 	}
 
 	@Override

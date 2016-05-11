@@ -1,9 +1,11 @@
 package game;
 
-public class BExtraMainAction extends Bonus {
+public class BExtraRewardFromCity extends Bonus {
 
-	public BExtraMainAction(int amount) {
+	public BExtraRewardFromCity(int amount) {
 		super(amount);
+		this.value = 98;
+		this.mustBeAlone = true;
 	}
 
 	@Override
@@ -18,17 +20,17 @@ public class BExtraMainAction extends Bonus {
 
 	@Override
 	public int getValue() {
-		return 99;
-	}
-
-	@Override
-	public Bonus deepCopy() {
-		return new BExtraMainAction(this.amount);
+		return this.value;
 	}
 
 	@Override
 	public boolean mustBeAlone() {
-		return true;
+		return this.mustBeAlone;
+	}
+
+	@Override
+	public Bonus deepCopy() {
+		return new BExtraRewardFromCity(this.amount);
 	}
 
 }

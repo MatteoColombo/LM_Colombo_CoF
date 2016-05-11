@@ -3,20 +3,21 @@ package game;
 public class Coins {
 	private int amount;
 
-	public Coins() {
+	public Coins(int value) {
+		this.amount = value;
 	}
 
 	public int getAmount() {
 		return this.amount;
 	}
 
-	public void increment(int valor) {
-		this.amount = this.amount + valor;
+	public void increment(int value) {
+		this.amount = this.amount + value;
 	}
 
-	private void decrease(int valor) {
-		if (this.amount > valor)
-			this.amount = this.amount - valor;
+	public void decrease(int value) {
+		if (this.amount > value)
+			this.amount = this.amount - value;
 		else {
 		}
 	}

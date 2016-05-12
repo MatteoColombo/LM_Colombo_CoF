@@ -32,4 +32,6 @@ public abstract class Bonus {
 	public abstract Bonus deepCopy();
 	public abstract boolean isInstantiableFor(RewardType rt);
 	
+	// TODO assignBonusTo(Player) when player is ready
+	
 }

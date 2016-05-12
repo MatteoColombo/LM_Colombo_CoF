@@ -22,9 +22,12 @@ public class Reward {
 	public Reward(RewardType rewardType) {
 		Random r = new Random();
 		
+		// TODO differenciate rewardType more (if needed)
+		
 		int differentBonus = r.nextInt(MAXDIFFERENTBONUS) +1;
 		int bonusToInsert = differentBonus;
 		int treshold = r.nextInt(differentBonus*MULTIPLIER);
+		
 		while(bonusToInsert > 0) {
 			
 			int indexBonus = r.nextInt(allBonusType.length);

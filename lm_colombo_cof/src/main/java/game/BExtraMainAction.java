@@ -12,7 +12,7 @@ public class BExtraMainAction extends Bonus {
 	public boolean isInstantiableFor(RewardType rt) {
 		switch(rt) {
 		case CITY: return false;
-		case PERMISSION: return false;
+		case PERMISSION: return true;
 		case NOBILITY: return true;
 		default: return false;
 		}

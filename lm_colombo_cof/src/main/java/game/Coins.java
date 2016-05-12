@@ -15,10 +15,10 @@ public class Coins {
 		this.amount = this.amount + value;
 	}
 
-	public void decrease(int value) {
+	public void decrease(int value) throws NegativeException{
 		if (this.amount > value)
 			this.amount = this.amount - value;
-		else {
+		else {throw new NegativeException();
 		}
 	}
 

@@ -3,7 +3,10 @@ package game;
 public abstract class Bonus {
 	
 	protected int amount;
+
+	// marker for powerful bonus such as extra main action
 	protected boolean mustBeAlone;
+	// represent the "power" of the bonus relatively to all others. Used in the reward generation
 	protected int value;
 	
 	public Bonus(int amount) {

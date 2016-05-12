@@ -19,16 +19,6 @@ public class BExtraRewardFromCity extends Bonus {
 	}
 
 	@Override
-	public int getValue() {
-		return this.value;
-	}
-
-	@Override
-	public boolean mustBeAlone() {
-		return this.mustBeAlone;
-	}
-
-	@Override
 	public Bonus deepCopy() {
 		return new BExtraRewardFromCity(this.amount);
 	}

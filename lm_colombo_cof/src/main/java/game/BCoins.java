@@ -5,6 +5,8 @@ public class BCoins extends Bonus {
 
 	public BCoins(int amount) {
 		super(amount);
+		this.mustBeAlone = false;
+		this.value = 11;
 	}
 
 	@Override
@@ -13,18 +15,8 @@ public class BCoins extends Bonus {
 	}
 
 	@Override
-	public int getValue() {
-		return 11;
-	}
-
-	@Override
 	public Bonus deepCopy() {
 		return new BCoins(this.amount);
-	}
-
-	@Override
-	public boolean mustBeAlone() {
-		return false;
 	}
 
 }

@@ -4,6 +4,8 @@ public class BNobilityPoints extends Bonus {
 
 	public BNobilityPoints(int amount) {
 		super(amount);
+		this.value = 25;
+		this.mustBeAlone = false;
 	}
 
 	@Override
@@ -17,18 +19,8 @@ public class BNobilityPoints extends Bonus {
 	}
 
 	@Override
-	public int getValue() {
-		return 25;
-	}
-
-	@Override
 	public Bonus deepCopy() {
 		return new BNobilityPoints(this.amount);
-	}
-
-	@Override
-	public boolean mustBeAlone() {
-		return false;
 	}
 
 }

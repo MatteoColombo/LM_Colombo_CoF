@@ -4,6 +4,8 @@ public class BExtraMainAction extends Bonus {
 
 	public BExtraMainAction(int amount) {
 		super(amount);
+		this.value = 99;
+		this.mustBeAlone = true;
 	}
 
 	@Override
@@ -17,18 +19,8 @@ public class BExtraMainAction extends Bonus {
 	}
 
 	@Override
-	public int getValue() {
-		return 99;
-	}
-
-	@Override
 	public Bonus deepCopy() {
 		return new BExtraMainAction(this.amount);
-	}
-
-	@Override
-	public boolean mustBeAlone() {
-		return true;
 	}
 
 }

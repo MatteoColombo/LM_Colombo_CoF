@@ -5,6 +5,8 @@ public class BPoliticCards extends Bonus {
 
 	public BPoliticCards(int amount) {
 		super(amount);
+		this.value = 40;
+		this.mustBeAlone = false;
 	}
 
 	@Override
@@ -13,18 +15,8 @@ public class BPoliticCards extends Bonus {
 	}
 
 	@Override
-	public int getValue() {
-		return 40;
-	}
-
-	@Override
 	public Bonus deepCopy() {
 		return new BPoliticCards(this.amount);
-	}
-
-	@Override
-	public boolean mustBeAlone() {
-		return false;
 	}
 
 }

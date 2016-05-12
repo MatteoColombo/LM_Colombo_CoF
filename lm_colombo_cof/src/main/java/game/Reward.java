@@ -14,7 +14,7 @@ public class Reward {
 												 new BExtraRewardFromCity(1)};
 	
 	private static final int MAXDIFFERENTBONUS = 3;
-	
+	private static final int MULTIPLIER = 30;
 
 	private static FlagTable flagTable = new FlagTable(allBonusType.length);
 	private ArrayList<Bonus> bonusList;
@@ -24,7 +24,7 @@ public class Reward {
 		
 		int differentBonus = r.nextInt(MAXDIFFERENTBONUS) +1;
 		int bonusToInsert = differentBonus;
-		int treshold = r.nextInt(differentBonus*2);
+		int treshold = r.nextInt(differentBonus*MULTIPLIER);
 		while(bonusToInsert > 0) {
 			
 			int indexBonus = r.nextInt(allBonusType.length);
@@ -46,6 +46,14 @@ public class Reward {
 			bonusList.get(bonusToIncrement).increment(1);
 			actualValue += bonusList.get(bonusToIncrement).getValue();
 		}
+		
+		flagTable.unflagAll();
+	}
+	
+	
+	// constructor for the king's bonuses that contains only victory points
+	public Reward(int vp) {
+		this.bonusList.add(new BVictoryPoints(vp));
 	}
 	
 	private static Bonus getBonusFromTable(int index) {

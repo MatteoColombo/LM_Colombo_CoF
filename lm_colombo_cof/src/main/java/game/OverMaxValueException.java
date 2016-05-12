@@ -1,10 +1,11 @@
 package game;
 
-public class OverMaxValueException extends Exception{
-	public OverMaxValueException(){
+public class OverMaxValueException extends Exception {
+	public OverMaxValueException() {
 		super();
 	}
-	public OverMaxValueException(String errorMessage){
+
+	public OverMaxValueException(String errorMessage) {
 		super(errorMessage);
 	}
 }

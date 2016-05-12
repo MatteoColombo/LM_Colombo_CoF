@@ -3,19 +3,20 @@ package game;
 import java.util.List;
 
 public class Region {
-	private final int NUM_CARDS = 2;
+	private final int NUM_CARDS;
 	private String regionName;
 	private List<City> cities;
 	private Council regionCouncil;
 	private PermissionCard[] permissionCards;
 
-	public Region(String regionName, List<City> cities, Council regionCouncil) {
+	public Region(String regionName, List<City> cities, Council regionCouncil, int numDisclosedPermCards) {
+		this.NUM_CARDS = numDisclosedPermCards;
 		this.regionCouncil = regionCouncil;
 		this.cities = cities;
 		this.regionCouncil = regionCouncil;
 		permissionCards = new PermissionCard[NUM_CARDS];
-		generatePermissionCard(0);
-		generatePermissionCard(1);
+		for (int i = 0; i < permissionCards.length; i++)
+			generatePermissionCard(i);
 	}
 
 	@Override
@@ -23,27 +24,24 @@ public class Region {
 		return regionName;
 	}
 
-	// I need the Player class
-	public boolean isCompleted() {
+	public boolean isCompleted(Player p) {
 		for (City c : cities) {
-			// I need to pass the player
-			if (!c.hasEmporiumOfPlayer())
+			if (!c.hasEmporiumOfPlayer(p))
 				return false;
 		}
 		return true;
 	}
 
-	// I need the permission cards
 	private void generatePermissionCard(int posArray) {
-
+		permissionCards[posArray] = new PermissionCard();
 	}
 
 	public PermissionCard getPermissionCard(int posArray) {
 		return permissionCards[posArray];
 	}
-	
-	public PermissionCard givePermissionCard(int posArray){
-		PermissionCard tempCard= permissionCards[posArray];
+
+	public PermissionCard givePermissionCard(int posArray) {
+		PermissionCard tempCard = permissionCards[posArray];
 		generatePermissionCard(posArray);
 		return tempCard;
 	}
@@ -55,14 +53,13 @@ public class Region {
 	public Council getCouncil() {
 		return regionCouncil;
 	}
-	
-	public City getCity(String cityName){
-		for(City tempCity: cities){
-			if(tempCity.getName().equals(cityName))
+
+	public City getCity(String cityName) {
+		for (City tempCity : cities) {
+			if (tempCity.getName().equals(cityName))
 				return tempCity;
 		}
 		return null;
 	}
-	
-}
 
+}

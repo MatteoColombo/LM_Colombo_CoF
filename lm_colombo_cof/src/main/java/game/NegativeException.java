@@ -1,10 +1,11 @@
 package game;
 
-public class NegativeException extends Exception{
-	public NegativeException(){
+public class NegativeException extends Exception {
+	public NegativeException() {
 		super();
 	}
-	public NegativeException(String errorMessage){
+
+	public NegativeException(String errorMessage) {
 		super(errorMessage);
 	}
 }

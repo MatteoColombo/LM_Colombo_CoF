@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<map>
+<region>
+	<city capital="true">
+		<name>Milano</name>
+		<color>#fff000</color>
+		<connection>Torino</connection>
+		<connection>Venezia</connection>
+		<connection>Padova</connection>
+	</city>
+	<city>
+		<name>Padova</name>
+		<color>#fff000</color>
+		<connection>Milano</connection>
+	</city>
+</region>
+<region>
+	<city>
+		<name>Venezia</name>
+		<color>#ff45D0</color>
+		<connection>Milano</connection>
+	</city>
+</region>
+<region>
+	<city>
+		<name>Torino</name>
+		<color>#f3d4b5</color>
+		<connection>Milano</connection>
+	</city>
+</region>
+</map>

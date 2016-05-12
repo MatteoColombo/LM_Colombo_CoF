@@ -28,7 +28,7 @@ public class CouncilorColorAvailability {
 			throw new OverMaxValueException();
 	}
 
-	public void decAvailability() throws NegativeException{
+	public void decAvailability() throws NegativeException {
 		if ((availability - 1) >= 0)
 			availability++;
 		else

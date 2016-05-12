@@ -7,16 +7,28 @@ import java.util.List;
 public class City {
 	private String cityName;
 	private Color cityColor;
-	// private Reward cityReward;
+	private Reward cityReward;
 	private List<Emporium> emporiums;
-
-	public City(Color cityColor, String cityName /* Reward cityReward */) {
+	private final boolean capital;
+	public City(Color cityColor, String cityName, Reward cityReward) {
 		this.cityName = cityName;
 		this.cityColor = cityColor;
-		this.emporiums= new ArrayList<>();
-		//this.cityReward=cityReward;
+		this.emporiums = new ArrayList<>();
+		this.cityReward = cityReward;
+		this.capital=false;
 	}
-
+	
+	public City(Color cityColor, String cityName, Reward cityReward, boolean capital) {
+		this.cityName = cityName;
+		this.cityColor = cityColor;
+		this.emporiums = new ArrayList<>();
+		this.cityReward = cityReward;
+		this.capital=capital;
+	}
+	
+	public boolean isCapital(){
+		return capital;
+	}
 
 	public String getName() {
 		return cityName;
@@ -25,27 +37,23 @@ public class City {
 	public Color getColor() {
 		return cityColor;
 	}
-	
-	public void addEmporium(Emporium e){
+
+	public void addEmporium(Emporium e) throws EmporiumExistsException {
+		if (hasEmporiumOfPlayer(e.getPlayer()))
+			throw new EmporiumExistsException();
 		this.emporiums.add(e);
 	}
-	//I need to pass the player
-	public boolean hasEmporiumOfPlayer(){
-		for(Emporium e: emporiums){
-			//I need to check if it exists an emporium of the received player
-			/*
-			 * 	if(p.equals(e.getPlayer()))
-			 * 		return true;
-			 */
-		
-			return true;
+
+	public boolean hasEmporiumOfPlayer(Player p) {
+		for (Emporium e : emporiums) {
+			if (p.equals(e.getPlayer()))
+				return true;
 		}
 		return false;
 	}
-	
-	/*
-	private Reward getReward(){
+
+	public Reward getReward() {
 		return cityReward;
-	}*/
+	}
 
 }

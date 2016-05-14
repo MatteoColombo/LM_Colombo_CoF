@@ -2,6 +2,14 @@ package game;
 
 public abstract class Bonus {
 	
+	public static final Bonus[] allBonusType = { 
+			 new BCoins(1),
+			 new BAssistants(1),
+			 new BNobilityPoints(1),
+			 new BVictoryPoints(1),
+			 new BPoliticCards(1),
+			 new BExtraMainAction()};
+	
 	private int amount;
 	
 	public Bonus(int amount) {
@@ -18,7 +26,6 @@ public abstract class Bonus {
 
 	public abstract int getValue();
 	public abstract Bonus deepCopy();
-	public abstract boolean isInstantiableFor(RewardType rt);
 	
 	// TODO assignBonusTo(Player) when player is ready
 	

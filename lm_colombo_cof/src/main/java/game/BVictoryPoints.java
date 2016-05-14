@@ -9,11 +9,6 @@ public class BVictoryPoints extends Bonus {
 	}
 
 	@Override
-	public boolean isInstantiableFor(RewardType rt) {
-		return true;
-	}
-
-	@Override
 	public Bonus deepCopy() {
 		return new BVictoryPoints(this.getAmount());
 	}

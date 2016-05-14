@@ -10,16 +10,6 @@ public class BNobilityPoints extends Bonus {
 	}
 
 	@Override
-	public boolean isInstantiableFor(RewardType rt) {
-		switch(rt) {
-		case CITY: return true;
-		case PERMISSION: return true;
-		case NOBILITY: return false;
-		default: return false;
-		}
-	}
-
-	@Override
 	public Bonus deepCopy() {
 		return new BNobilityPoints(this.getAmount());
 	}

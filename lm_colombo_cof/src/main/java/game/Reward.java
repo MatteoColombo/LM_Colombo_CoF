@@ -3,37 +3,35 @@ package game;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Reward {
-	
-	public static final Bonus[] allBonusType = { new BCoins(1),
-												 new BAssistants(1),
-												 new BNobilityPoints(1),
-												 new BVictoryPoints(1),
-												 new BPoliticCards(1),
-												 new BExtraMainAction(1)};	
+public class Reward {	
 
-	private static FlagTable flagTable = new FlagTable(allBonusType.length);
 	private ArrayList<Bonus> bonusList = new ArrayList<Bonus>();
+
+	public Reward(ArrayList<Bonus> bonusList) {
+		this.bonusList = bonusList;
+	}
 	
 	public Reward(Bonus singleBonus)  {
 		this.bonusList.add(singleBonus);
 	}
 	
-	public Reward(int differentBonus, int treshold) {
-		Random r = new Random();
+	public Reward(Bonus[] availableBonus, int differentBonus, int treshold) throws IllegalArgumentException{
 		
-		// TODO differenciate rewardType more (if needed)
-		
+		if(differentBonus > availableBonus.length) {
+			throw new IllegalArgumentException();
+		}
+		FlagTable flagTable = new FlagTable(availableBonus.length);
+		Random r = new Random();		
 		int bonusToInsert = differentBonus;
 		
 		while(bonusToInsert > 0) {
 			
-			int indexBonus = r.nextInt(allBonusType.length);
+			int indexBonus = r.nextInt(availableBonus.length);
 			while(flagTable.isFlagged(indexBonus)) {
-				indexBonus = r.nextInt(allBonusType.length);
+				indexBonus = r.nextInt(availableBonus.length);
 			}
 			
-			Bonus buffer = getBonusFromTable(indexBonus);
+			Bonus buffer = availableBonus[indexBonus].deepCopy();
 			bonusList.add(buffer);
 			flagTable.flag(indexBonus);
 			bonusToInsert--;
@@ -49,10 +47,6 @@ public class Reward {
 		}
 		
 		flagTable.unflagAll();
-	}
-	
-	private static Bonus getBonusFromTable(int index) {
-		return allBonusType[index].deepCopy();
 	}
 	
 	private int getTotalValue() {

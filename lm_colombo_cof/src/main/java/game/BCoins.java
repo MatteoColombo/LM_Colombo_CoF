@@ -9,11 +9,6 @@ public class BCoins extends Bonus {
 	}
 
 	@Override
-	public boolean isInstantiableFor(RewardType rt) {
-		return true;
-	}
-
-	@Override
 	public Bonus deepCopy() {
 		return new BCoins(this.getAmount());
 	}

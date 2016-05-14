@@ -17,5 +17,4 @@ public class BVictoryPoints extends Bonus {
 	public int getValue() {
 		return VALUE;
 	}
-	
 }

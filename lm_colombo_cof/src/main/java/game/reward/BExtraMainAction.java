@@ -1,4 +1,4 @@
-package game;
+package game.reward;
 
 public class BExtraMainAction extends Bonus {
 

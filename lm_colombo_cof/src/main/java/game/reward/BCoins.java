@@ -1,4 +1,4 @@
-package game;
+package game.reward;
 
 public class BCoins extends Bonus {
 
@@ -17,5 +17,4 @@ public class BCoins extends Bonus {
 	public int getValue() {
 		return VALUE;
 	}
-
 }

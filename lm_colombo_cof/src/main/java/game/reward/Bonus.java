@@ -1,14 +1,14 @@
-package game;
+package game.reward;
 
 public abstract class Bonus {
 	
-	private static final Bonus[] allBonusType = { 
+	private static final Bonus[] allStandardBonus = { 
 			 new BCoins(1),
 			 new BAssistants(1),
 			 new BNobilityPoints(1),
 			 new BVictoryPoints(1),
 			 new BPoliticCards(1),
-			 new BExtraMainAction()};
+			 new BExtraMainAction()}; // 1 by default
 	
 	private int amount;
 	
@@ -20,8 +20,8 @@ public abstract class Bonus {
 		return this.amount;
 	}
 
-	public static Bonus[] getAllBonusType() {
-		return allBonusType.clone();
+	public static Bonus[] getAllStandardBonus() {
+		return allStandardBonus.clone();
 	}
 	
 	public abstract int getValue();

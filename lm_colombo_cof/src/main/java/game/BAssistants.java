@@ -2,11 +2,10 @@ package game;
 
 public class BAssistants extends Bonus {
 
-
+	private static final int VALUE = 33;
+	
 	public BAssistants(int amount) {
 		super(amount);
-		this.value = 33;
-		this.mustBeAlone = false;
 	}
 
 	@Override
@@ -16,7 +15,13 @@ public class BAssistants extends Bonus {
 
 	@Override
 	public Bonus deepCopy() {
-		return new BAssistants(this.amount);
+		return new BAssistants(this.getAmount());
 	}
+
+	@Override
+	public int getValue() {
+		return VALUE;
+	}
+
 
 }

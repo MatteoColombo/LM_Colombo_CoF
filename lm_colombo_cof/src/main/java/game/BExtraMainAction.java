@@ -2,10 +2,11 @@ package game;
 
 public class BExtraMainAction extends Bonus {
 
+	private static final int VALUE = 99;
+
+	
 	public BExtraMainAction(int amount) {
 		super(amount);
-		this.value = 99;
-		this.mustBeAlone = true;
 	}
 
 	@Override
@@ -20,7 +21,16 @@ public class BExtraMainAction extends Bonus {
 
 	@Override
 	public Bonus deepCopy() {
-		return new BExtraMainAction(this.amount);
+		return new BExtraMainAction(this.getAmount());
 	}
 
+	@Override
+	public int getValue() {
+		return VALUE;
+	}
+	
+	@Override
+	public void increment(int given) throws UnsupportedOperationException{
+		throw new UnsupportedOperationException();
+	}
 }

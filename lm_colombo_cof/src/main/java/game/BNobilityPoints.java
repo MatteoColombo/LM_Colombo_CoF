@@ -2,10 +2,11 @@ package game;
 
 public class BNobilityPoints extends Bonus {
 
+	private static final int VALUE = 30;
+
+	
 	public BNobilityPoints(int amount) {
 		super(amount);
-		this.value = 25;
-		this.mustBeAlone = false;
 	}
 
 	@Override
@@ -20,7 +21,12 @@ public class BNobilityPoints extends Bonus {
 
 	@Override
 	public Bonus deepCopy() {
-		return new BNobilityPoints(this.amount);
+		return new BNobilityPoints(this.getAmount());
 	}
-
+	
+	@Override
+	public int getValue() {
+		return VALUE;
+	}
+	
 }

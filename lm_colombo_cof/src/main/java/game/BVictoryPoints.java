@@ -2,10 +2,10 @@ package game;
 
 public class BVictoryPoints extends Bonus {
 
+	private static final int VALUE = 10;
+	
 	public BVictoryPoints(int amount) {
 		super(amount);
-		this.value = 10;
-		this.mustBeAlone = false;
 	}
 
 	@Override
@@ -15,7 +15,12 @@ public class BVictoryPoints extends Bonus {
 
 	@Override
 	public Bonus deepCopy() {
-		return new BVictoryPoints(this.amount);
+		return new BVictoryPoints(this.getAmount());
+	}
+
+	@Override
+	public int getValue() {
+		return VALUE;
 	}
 	
 }

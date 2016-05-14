@@ -2,12 +2,7 @@ package game;
 
 public abstract class Bonus {
 	
-	protected int amount;
-
-	// marker for powerful bonus such as extra main action
-	protected boolean mustBeAlone;
-	// represent the "power" of the bonus relatively to all others. Used in the reward generation
-	protected int value;
+	private int amount;
 	
 	public Bonus(int amount) {
 		this.amount = amount;
@@ -20,15 +15,8 @@ public abstract class Bonus {
 	public void increment(int given) {
 		this.amount += given;
 	}
-	
-	public boolean mustBeAlone() {
-		return this.mustBeAlone;
-	}
-	
-	public int getValue() {
-		return this.value;
-	}
 
+	public abstract int getValue();
 	public abstract Bonus deepCopy();
 	public abstract boolean isInstantiableFor(RewardType rt);
 	

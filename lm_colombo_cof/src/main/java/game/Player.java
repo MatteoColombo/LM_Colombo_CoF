@@ -25,19 +25,32 @@ public class Player {
 			emporium.add(new Emporium(this));
 	}
 
-	public int getCoins() {
-		return this.coins.getAmount();
+	public Coins getCoins() {
+		return this.coins;
 	}
 
-	public int getAssistants() {
-		return this.assistants.getAmount();
+	public Assistants getAssistants() {
+		return this.assistants;
 	}
 
-	public int getVictoryPoints() {
-		return this.victoryPoints.getAmount();
+	public VictoryPoints getVictoryPoints() {
+		return this.victoryPoints;
 	}
 
-	public int getNoblePoints() {
-		return this.noblePoints.getAmount();
+	public NoblePoints getNoblePoints() {
+		return this.noblePoints;
 	}
+
+	public ArrayList<PoliticCard> getPoliticCard() {
+		return this.politicCard;
+	}
+
+	public ArrayList<PermissionCard> getPermissionCard() {
+		return this.permissionCard;
+	}
+
+	public ArrayList<Emporium> getEmporium() {
+		return this.emporium;
+	}
+
 }

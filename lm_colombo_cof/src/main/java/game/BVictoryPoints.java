@@ -9,8 +9,8 @@ public class BVictoryPoints extends Bonus {
 	}
 
 	@Override
-	public Bonus deepCopy() {
-		return new BVictoryPoints(this.getAmount());
+	public Bonus newCopy(int amount) {
+		return new BVictoryPoints(amount);
 	}
 
 	@Override

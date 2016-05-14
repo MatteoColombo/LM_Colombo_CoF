@@ -10,8 +10,8 @@ public class BNobilityPoints extends Bonus {
 	}
 
 	@Override
-	public Bonus deepCopy() {
-		return new BNobilityPoints(this.getAmount());
+	public Bonus newCopy(int amount) {
+		return new BNobilityPoints(amount);
 	}
 	
 	@Override

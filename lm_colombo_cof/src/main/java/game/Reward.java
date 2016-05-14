@@ -1,21 +1,22 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Reward {	
 
-	private ArrayList<Bonus> bonusList = new ArrayList<Bonus>();
+	private ArrayList<Bonus> bonusList = new ArrayList<>();
 
-	public Reward(ArrayList<Bonus> bonusList) {
-		this.bonusList = bonusList;
+	public Reward(List<Bonus> bonusList) {
+		this.bonusList = (ArrayList<Bonus>) bonusList;
 	}
 	
 	public Reward(Bonus singleBonus)  {
 		this.bonusList.add(singleBonus);
 	}
 	
-	public Reward(Bonus[] availableBonus, int differentBonus, int treshold) throws IllegalArgumentException{
+	public Reward(Bonus[] availableBonus, int differentBonus, int value) {
 		
 		if(differentBonus > availableBonus.length) {
 			throw new IllegalArgumentException();
@@ -30,30 +31,13 @@ public class Reward {
 			while(flagTable.isFlagged(indexBonus)) {
 				indexBonus = r.nextInt(availableBonus.length);
 			}
-			
-			Bonus buffer = availableBonus[indexBonus].deepCopy();
+			// the following statement generate a balanced amount for the choosen bonus
+			// TODO balancement not tested yet
+			int amount = (r.nextInt(value) / (availableBonus[indexBonus].getValue() * differentBonus)) +1;
+			Bonus buffer = availableBonus[indexBonus].newCopy(amount);
 			bonusList.add(buffer);
 			flagTable.flag(indexBonus);
 			bonusToInsert--;
 		}
-		
-		int actualValue = this.getTotalValue();
-		while(actualValue < treshold) {
-			int bonusToIncrement = r.nextInt(differentBonus);
-			try {
-				bonusList.get(bonusToIncrement).increment(1);
-				actualValue += bonusList.get(bonusToIncrement).getValue();
-			} catch(UnsupportedOperationException e) {}
-		}
-		
-		flagTable.unflagAll();
-	}
-	
-	private int getTotalValue() {
-		int sum = 0;
-		for(Bonus bonus: bonusList) {
-			sum+= bonus.getValue();
-		}
-		return sum;
 	}
 }

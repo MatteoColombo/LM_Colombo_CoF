@@ -9,8 +9,8 @@ public class BAssistants extends Bonus {
 	}
 
 	@Override
-	public Bonus deepCopy() {
-		return new BAssistants(this.getAmount());
+	public Bonus newCopy(int amount) {
+		return new BAssistants(amount);
 	}
 
 	@Override

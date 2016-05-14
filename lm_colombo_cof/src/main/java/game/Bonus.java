@@ -2,7 +2,7 @@ package game;
 
 public abstract class Bonus {
 	
-	public static final Bonus[] allBonusType = { 
+	private static final Bonus[] allBonusType = { 
 			 new BCoins(1),
 			 new BAssistants(1),
 			 new BNobilityPoints(1),
@@ -19,13 +19,13 @@ public abstract class Bonus {
 	public int getAmount() {
 		return this.amount;
 	}
-	
-	public void increment(int given) {
-		this.amount += given;
-	}
 
+	public static Bonus[] getAllBonusType() {
+		return allBonusType.clone();
+	}
+	
 	public abstract int getValue();
-	public abstract Bonus deepCopy();
+	public abstract Bonus newCopy(int amount);
 	
 	// TODO assignBonusTo(Player) when player is ready
 	

@@ -9,8 +9,8 @@ public class BPoliticCards extends Bonus {
 	}
 
 	@Override
-	public Bonus deepCopy() {
-		return new BPoliticCards(this.getAmount());
+	public Bonus newCopy(int amount) {
+		return new BPoliticCards(amount);
 	}
 	
 	@Override

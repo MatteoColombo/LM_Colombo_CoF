@@ -9,8 +9,8 @@ public class BCoins extends Bonus {
 	}
 
 	@Override
-	public Bonus deepCopy() {
-		return new BCoins(this.getAmount());
+	public Bonus newCopy(int amount) {
+		return new BCoins(amount);
 	}
 
 	@Override

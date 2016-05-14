@@ -9,17 +9,12 @@ public class BExtraMainAction extends Bonus {
 	}
 
 	@Override
-	public Bonus deepCopy() {
+	public Bonus newCopy(int amount) {
 		return new BExtraMainAction();
 	}
 
 	@Override
 	public int getValue() {
 		return VALUE;
-	}
-	
-	@Override
-	public void increment(int given) throws UnsupportedOperationException{
-		throw new UnsupportedOperationException();
 	}
 }

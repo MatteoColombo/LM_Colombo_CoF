@@ -11,7 +11,7 @@ public class Player {
 	private ArrayList<PermissionCard> permissionCard;
 	private ArrayList<Emporium> emporium;
 
-	public Player(int money, int helper, int draw, int maxEmp) {
+	public Player(int money, int helper, int draw, int maxEmp, ArrayList<String> pickedColours) {
 		this.coins = new Coins(money);
 		this.assistants = new Assistants(helper);
 		this.victoryPoints = new VictoryPoints(0);
@@ -20,7 +20,7 @@ public class Player {
 		this.permissionCard = new ArrayList<PermissionCard>();
 		this.emporium = new ArrayList<Emporium>();
 		for (int i = 0; i < draw; i++)
-			politicCard.add(new PoliticCard());
+			politicCard.add(new PoliticCard(pickedColours));
 		for (int i = 0; i < maxEmp; i++)
 			emporium.add(new Emporium(this));
 	}

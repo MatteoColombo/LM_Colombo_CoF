@@ -1,8 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map>
-	<region>
-		<city capital="true">
-			<name>Milano</name>
-		</city>
-	</region>
-</map>
+<map><region><city capital="true"><name>Milano</name><color>#ffffff</color></city></region></map>

@@ -26,12 +26,12 @@ public class MapLoader {
 	private Graph<City, DefaultEdge> graph;
 	
 	public MapLoader(String xmlPath, CouncilorPool pool) {
-		this.xmlPath = "map.xml";
+		this.xmlPath = "src/main/resources/map.xml";
 		this.pool = pool;
 		this.regions= new ArrayList<>();
-		this.graph= new ListenableUndirectedGraph<>(DefaultEdge.class);
+		//this.graph= new ListenableUndirectedGraph<>(DefaultEdge.class);
 		loadXML();
-		generateGraph();
+		//generateGraph();
 	
 	}
 
@@ -106,6 +106,16 @@ public class MapLoader {
 		return regions;
 	}
 	
+	public static void main(String[] args) {
+		List<Color> colors = new ArrayList<>();
+		colors.add(Color.BLACK);
+		colors.add(Color.BLUE);
+		colors.add(Color.ORANGE);
+		colors.add(Color.WHITE);
+		colors.add(Color.PINK);
+		MapLoader ml = new MapLoader("map.xml", new CouncilorPool(4, 4, colors));
+
+	}
 
 	public City getKingCity() {
 		return null;

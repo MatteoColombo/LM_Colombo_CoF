@@ -12,20 +12,20 @@ public class CouncilorPool {
 	private CouncilorColorAvailability[] availCounc;
 	private List<Color> colors;
 	private int generatedCouncils;
-	
-	public CouncilorPool(int councPerColor, int councilSize,List<Color> colors) {
+
+	public CouncilorPool(int councPerColor, int councilSize, List<Color> colors) {
 		this.CONC_PER_COLOR = councPerColor;
-		this.COUNCIL_SIZE=councilSize;
-		this.colors=colors;
-		this.COLORS_NUMBER=colors.size();
+		this.COUNCIL_SIZE = councilSize;
+		this.colors = colors;
+		this.COLORS_NUMBER = colors.size();
 		initializeAvailCounc();
-		generatedCouncils=0;
+		generatedCouncils = 0;
 	}
 
 	private void initializeAvailCounc() {
 		availCounc = new CouncilorColorAvailability[COLORS_NUMBER];
-		for(int i=0;i < COLORS_NUMBER;i++){
-			availCounc[i]=new CouncilorColorAvailability(CONC_PER_COLOR, colors.get(i));
+		for (int i = 0; i < COLORS_NUMBER; i++) {
+			availCounc[i] = new CouncilorColorAvailability(CONC_PER_COLOR, colors.get(i));
 		}
 	}
 
@@ -38,12 +38,12 @@ public class CouncilorPool {
 		return false;
 	}
 
-	private Councilor getCouncilor(Color councColor){
+	private Councilor getCouncilor(Color councColor) {
 		for (CouncilorColorAvailability temp : availCounc) {
 			if (temp.getColor().equals(councColor)) {
-				try{
+				try {
 					temp.decAvailability();
-				}catch(NegativeException ne){
+				} catch (NegativeException ne) {
 					System.err.println(ne.getMessage());
 				}
 			}
@@ -67,15 +67,15 @@ public class CouncilorPool {
 		}
 		return new Councilor(councColor);
 	}
-	
-	public Council getCouncil() throws CouncilorNotAvailableException{
-		if((generatedCouncils*COUNCIL_SIZE)>((COLORS_NUMBER*CONC_PER_COLOR)-COUNCIL_SIZE))
+
+	public Council getCouncil() throws CouncilorNotAvailableException {
+		if ((generatedCouncils * COUNCIL_SIZE) > ((COLORS_NUMBER * CONC_PER_COLOR) - COUNCIL_SIZE))
 			throw new CouncilorNotAvailableException();
-		Random r= new Random();
-		ArrayList<Councilor> generatedCouncil= new ArrayList<Councilor>();
-		for(int i=0;i<COUNCIL_SIZE;){
-			int temp=r.nextInt(COLORS_NUMBER);
-			if(isAvailable(colors.get(temp))){
+		Random r = new Random();
+		ArrayList<Councilor> generatedCouncil = new ArrayList<Councilor>();
+		for (int i = 0; i < COUNCIL_SIZE;) {
+			int temp = r.nextInt(COLORS_NUMBER);
+			if (isAvailable(colors.get(temp))) {
 				generatedCouncil.add(getCouncilor(colors.get(temp)));
 				i++;
 			}

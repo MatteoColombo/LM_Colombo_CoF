@@ -8,7 +8,10 @@ public class Region {
 	private List<City> cities;
 	private Council regionCouncil;
 	private PermissionCard[] permissionCards;
-
+	public Region(){
+		this.NUM_CARDS=2;
+	}
+	
 	public Region(String regionName, List<City> cities, Council regionCouncil, int numDisclosedPermCards) {
 		this.NUM_CARDS = numDisclosedPermCards;
 		this.regionCouncil = regionCouncil;

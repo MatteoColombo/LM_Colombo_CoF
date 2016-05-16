@@ -18,9 +18,8 @@ public class Assistants {
 	public void decrease(int value) throws NegativeException {
 		if (this.amount > value)
 			this.amount = this.amount - value;
-		else {
+		else 
 			throw new NegativeException();
-		}
 	}
 
 }

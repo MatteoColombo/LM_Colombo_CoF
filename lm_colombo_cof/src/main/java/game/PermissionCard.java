@@ -6,8 +6,9 @@ import java.util.Random;
 
 public class PermissionCard {
 
-	private ArrayList<City> cities;
+	private ArrayList<City> cities; //still pending if is better to implement that City ArrayList with its own class or with the String one
 	/* private Bonus */
+	private boolean used;
 
 	public PermissionCard(ArrayList<String> citiesOfRegions) {//Bonus missing
 		for (String x : citiesOfRegions) {

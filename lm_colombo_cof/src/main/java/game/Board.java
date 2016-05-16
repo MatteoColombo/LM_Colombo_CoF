@@ -3,13 +3,14 @@ package game;
 import java.awt.Color;
 import java.util.List;
 
+
 public class Board {
 	private final int NUM_REG;
 	private final String xmlPath;
 	private final int councPerColor;
 	private final int concSize;
 	private final List<Color> colors;
-	private Region[] regions;
+	private List<Region> regions;
 	private MapLoader xmlManager;
 	private NobleTrack track;
 	private King mapKing;
@@ -25,7 +26,7 @@ public class Board {
 	}
 
 	private void initializeBoard() throws ConfigurationErrorException{
-		this.xmlManager = new MapLoader(xmlPath);
+		this.xmlManager = new MapLoader(xmlPath,councilManager);
 		this.track = new NobleTrack();
 		this.councilManager = new CouncilorPool(councPerColor,concSize,colors);
 		try{
@@ -33,20 +34,20 @@ public class Board {
 		}catch(CouncilorNotAvailableException cnae){
 			throw new ConfigurationErrorException();
 		}
-		this.regions = new Region[xmlManager.getRegionsNumber()];
+		this.regions=xmlManager.getRegions();
 	}
 
 	// Regions part
 	public int getRegionsNumber() {
-		return this.regions.length;
+		return this.regions.size();
 	}
 
 	public Region getRegion(int posArray) {
-		return regions[posArray];
+		return regions.get(posArray);
 	}
 
 	public Council getRegionCouncil(int posArray) {
-		return regions[posArray].getCouncil();
+		return regions.get(posArray).getCouncil();
 	}
 
 	// Noble track part

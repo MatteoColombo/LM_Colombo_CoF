@@ -12,6 +12,7 @@ public class CouncilorPool {
 	private CouncilorColorAvailability[] availCounc;
 	private List<Color> colors;
 	private int generatedCouncils;
+	
 	public CouncilorPool(int councPerColor, int councilSize,List<Color> colors) {
 		this.CONC_PER_COLOR = councPerColor;
 		this.COUNCIL_SIZE=councilSize;

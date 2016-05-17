@@ -14,8 +14,7 @@ public class Player {
 	private ArrayList<Color> pickedColours;
 	private int mainActions;
 	private boolean extraAction;
-	private final int DEFAULTMAINACTION=1;
-	
+	private final int DEFAULTMAINACTION = 1;
 
 	public Player(int money, int helper, int draw, int maxEmp, ArrayList<Color> pickedColours) {
 		this.coins = new Coins(money);
@@ -26,13 +25,13 @@ public class Player {
 		this.permissionCard = new ArrayList<PermissionCard>();
 		this.emporium = new ArrayList<Emporium>();
 		for (int i = 0; i < draw; i++)
-			politicCard.add(new PoliticCard(pickedColours));		
+			politicCard.add(new PoliticCard(pickedColours));
 		for (int i = 0; i < maxEmp; i++)
-			emporium.add(new Emporium(this));		
-		this.mainActions=DEFAULTMAINACTION;
-		this.extraAction=true;
-		this.pickedColours=pickedColours;
-		
+			emporium.add(new Emporium(this));
+		this.mainActions = DEFAULTMAINACTION;
+		this.extraAction = true;
+		this.pickedColours = pickedColours;
+
 	}
 
 	public Coins getCoins() {

@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import game.reward.*;
 
 public class MapLoader {
 	private final String xmlPath;
@@ -62,9 +63,9 @@ public class MapLoader {
 					for (String temp : connectedCities)
 						connections.add(new CityConnection(name, temp));
 					if (isCapital)
-						cities.add(new City(Color.decode(color), name, new Reward()));
+						cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(),1,40)));
 					else
-						cities.add(new City(Color.decode(color), name, new Reward(), isCapital));
+						cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(),1,40), isCapital));
 				}
 				regions.add(new Region("name", cities, pool.getCouncil(), 2));
 			}

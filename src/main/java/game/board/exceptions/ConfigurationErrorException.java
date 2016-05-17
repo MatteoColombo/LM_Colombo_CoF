@@ -1,4 +1,4 @@
-package game.board;
+package game.board.exceptions;
 
 public class ConfigurationErrorException extends Exception{
 	public ConfigurationErrorException(){

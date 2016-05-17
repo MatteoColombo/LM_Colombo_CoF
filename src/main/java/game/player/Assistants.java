@@ -1,5 +1,7 @@
 package game.player;
 
+import game.board.exceptions.NegativeException;
+
 public class Assistants {
 	private int amount;
 

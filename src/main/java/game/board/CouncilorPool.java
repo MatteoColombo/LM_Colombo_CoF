@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import game.board.exceptions.CouncilorNotAvailableException;
+import game.board.exceptions.NegativeException;
+import game.board.exceptions.OverMaxValueException;
+
 public class CouncilorPool {
 	private final int CONCPERCOLOR;
 	private final int COUNCILSIZE;

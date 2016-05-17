@@ -1,5 +1,7 @@
 package game.reward;
 
+import game.player.Player;
+
 public abstract class Bonus {
 	
 	private static final Bonus[] allStandardBonus = { 
@@ -26,7 +28,5 @@ public abstract class Bonus {
 	
 	public abstract int getValue();
 	public abstract Bonus newCopy(int amount);
-	
-	// TODO assignBonusTo(Player) when player is ready
-	
+	public abstract void assignBonusTo(Player p);
 }

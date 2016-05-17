@@ -1,5 +1,7 @@
 package game.reward;
 
+import game.player.Player;
+
 public class BPoliticCards extends Bonus {
 
 	private static final int VALUE = 30;
@@ -16,6 +18,13 @@ public class BPoliticCards extends Bonus {
 	@Override
 	public int getValue() {
 		return VALUE;
+	}
+
+	@Override
+	public void assignBonusTo(Player p) {
+		for(int i = 0; i < this.getAmount(); i++) {
+			p.drawAPoliticCard();
+		}
 	}
 	
 }

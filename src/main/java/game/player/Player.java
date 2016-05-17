@@ -82,5 +82,9 @@ public class Player {
 	public ArrayList<Color> getAvailableColors() {
 		return this.pickedColours;
 	}
+	
+	public void drawAPoliticCard() {
+		this.politicCard.add(new PoliticCard(this.pickedColours));
+	}
 
 }

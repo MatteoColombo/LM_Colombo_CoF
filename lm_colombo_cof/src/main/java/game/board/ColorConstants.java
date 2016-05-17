@@ -1,4 +1,4 @@
-package game;
+package game.board;
 
 public class ColorConstants {
 	public static final int NUM_COUNCILOR_COLORS = 6;

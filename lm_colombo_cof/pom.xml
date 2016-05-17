@@ -4,7 +4,7 @@
     http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>it.polimi.ingsw</groupId>
-  <artifactId>LM_Colombo</artifactId>
+  <artifactId>LM_20</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>LM_Colombo_CoF</name>
   <properties>

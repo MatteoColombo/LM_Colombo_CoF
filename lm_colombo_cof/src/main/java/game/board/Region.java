@@ -1,6 +1,8 @@
-package game;
+package game.board;
 
+import java.util.ArrayList;
 import java.util.List;
+import game.player.*;
 
 public class Region {
 	private final int NUM_CARDS;
@@ -36,7 +38,10 @@ public class Region {
 	}
 
 	private void generatePermissionCard(int posArray) {
-		permissionCards[posArray] = new PermissionCard();
+		ArrayList<String> citiesToString= new ArrayList<>();
+		for(City c: cities)
+			citiesToString.add(c.getName());
+		permissionCards[posArray] = new PermissionCard(citiesToString);
 	}
 
 	public PermissionCard getPermissionCard(int posArray) {

@@ -1,9 +1,9 @@
-package game;
+package game.board;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
+import game.player.*;
 public class City {
 	private String cityName;
 	private Color cityColor;

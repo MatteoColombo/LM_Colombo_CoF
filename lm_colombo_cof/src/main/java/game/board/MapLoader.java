@@ -1,4 +1,4 @@
-package game;
+package game.board;
 
 
 import org.w3c.dom.*;

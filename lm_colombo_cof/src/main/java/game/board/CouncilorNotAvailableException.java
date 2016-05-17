@@ -1,4 +1,4 @@
-package game;
+package game.board;
 
 public class CouncilorNotAvailableException extends Exception{
 	public CouncilorNotAvailableException(){

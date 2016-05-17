@@ -1,4 +1,4 @@
-package game;
+package game.board;
 
 import java.awt.Color;
 import java.util.List;

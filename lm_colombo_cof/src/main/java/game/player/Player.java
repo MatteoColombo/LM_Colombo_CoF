@@ -62,4 +62,25 @@ public class Player {
 		return this.emporium;
 	}
 
+	public int getMainActionsLeft() {
+		return this.mainActions;
+	}
+
+	public void increseMainAction() {
+		this.mainActions++;
+	}
+
+	public boolean getIfExtraActionDone() {
+		return this.extraAction;
+	}
+
+	public void actionsReset() {
+		this.mainActions = DEFAULTMAINACTION;
+		this.extraAction = true;
+	}
+
+	public ArrayList<Color> getAvailableColors() {
+		return this.pickedColours;
+	}
+
 }

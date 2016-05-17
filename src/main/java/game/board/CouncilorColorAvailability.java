@@ -20,19 +20,19 @@ public class CouncilorColorAvailability {
 	public int getAvailability() {
 		return availability;
 	}
-	
-	public boolean isFull(){
-		if(availability==maxAvailability)
+
+	public boolean isFull() {
+		if (availability == maxAvailability)
 			return true;
 		return false;
 	}
 
-	public void incAvailability(){
-			availability++;
+	public void incAvailability() {
+		availability++;
 	}
 
-	public void decAvailability(){
-			availability++;
+	public void decAvailability() {
+		availability++;
 	}
 
 }

@@ -3,16 +3,17 @@ package game.board;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import game.board.exceptions.EmporiumExistsException;
 import game.player.*;
 import game.reward.*;
+
 public class City {
 	private String cityName;
 	private Color cityColor;
 	private Reward cityReward;
 	private List<Emporium> emporiums;
 	private final boolean capital;
+	
 	public City(Color cityColor, String cityName, Reward cityReward) {
 		this.cityName = cityName;
 		this.cityColor = cityColor;
@@ -41,9 +42,7 @@ public class City {
 		return cityColor;
 	}
 
-	public void addEmporium(Emporium e) throws EmporiumExistsException {
-		if (hasEmporiumOfPlayer(e.getPlayer()))
-			throw new EmporiumExistsException();
+	public void addEmporium(Emporium e){
 		this.emporiums.add(e);
 	}
 

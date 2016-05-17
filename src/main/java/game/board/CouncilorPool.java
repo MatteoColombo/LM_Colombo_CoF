@@ -58,12 +58,7 @@ public class CouncilorPool {
 		return new Councilor(councColor);
 	}
 
-	public Councilor slideCouncilor(Councilor oldCouncilor, Color councColor)
-			throws NegativeException, OverMaxValueException, CouncilorNotAvailableException {
-		if (!isAvailable(councColor))
-			throw new CouncilorNotAvailableException();
-		if (isFull(oldCouncilor.getColor()))
-			throw new OverMaxValueException();
+	public Councilor slideCouncilor(Councilor oldCouncilor, Color councColor){
 		for (CouncilorColorAvailability temp : availCounc) {
 			if (temp.getColor().equals(oldCouncilor.getColor())) {
 				temp.incAvailability();
@@ -77,9 +72,7 @@ public class CouncilorPool {
 		return new Councilor(councColor);
 	}
 
-	public Council getCouncil() throws CouncilorNotAvailableException {
-		if ((generatedCouncils * COUNCILSIZE) > ((COLORSNUMBER * CONCPERCOLOR) - COUNCILSIZE))
-			throw new CouncilorNotAvailableException();
+	public Council getCouncil(){
 		Random r = new Random();
 		ArrayList<Councilor> generatedCouncil = new ArrayList<>();
 		int i = 0;

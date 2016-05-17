@@ -1,12 +1,17 @@
 package game.board;
 
-
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+
+import javax.naming.ConfigurationException;
 import javax.xml.parsers.*;
 import java.awt.Color;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import game.board.exceptions.ConfigurationErrorException;
 import game.reward.*;
 
 public class MapLoader {
@@ -14,7 +19,8 @@ public class MapLoader {
 	private List<Region> regions;
 	private CouncilorPool pool;
 	private List<CityConnection> connections;
-	public MapLoader(String xmlPath, CouncilorPool pool) throws Exception {
+
+	public MapLoader(String xmlPath, CouncilorPool pool) throws SAXException, IOException, ParserConfigurationException{
 		this.xmlPath = xmlPath;
 		this.pool = pool;
 		this.regions = new ArrayList<>();
@@ -22,7 +28,7 @@ public class MapLoader {
 
 	}
 
-	public void loadXML() throws Exception{
+	public void loadXML() throws SAXException, IOException, ParserConfigurationException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		connections = new ArrayList<>();
 		try {
@@ -38,7 +44,8 @@ public class MapLoader {
 				NodeList citiesOfRegion = region.getChildNodes();
 				for (int j = 0; j < citiesOfRegion.getLength(); j++) {
 					Node city = citiesOfRegion.item(j);
-					boolean isCapital = Boolean.parseBoolean(city.getAttributes().getNamedItem("capital").getNodeValue());
+					boolean isCapital = Boolean
+							.parseBoolean(city.getAttributes().getNamedItem("capital").getNodeValue());
 					NodeList cityattr = city.getChildNodes();
 					String name = "";
 					String color = "";
@@ -63,16 +70,21 @@ public class MapLoader {
 					for (String temp : connectedCities)
 						connections.add(new CityConnection(name, temp));
 					if (isCapital)
-						cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(),1,40)));
+						cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(), 1, 40)));
 					else
-						cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(),1,40), isCapital));
+						cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(), 1, 40),
+								isCapital));
 				}
 				regions.add(new Region("name", cities, pool.getCouncil(), 2));
 			}
-
-		} catch (Exception e) {
-			throw e;
+		} catch (ParserConfigurationException pec) {
+			throw pec;
+		}catch(IOException ioe){
+			throw ioe;
+		}catch(SAXException saxe){
+			throw saxe;
 		}
+		
 	}
 
 	public List<Region> getRegions() {

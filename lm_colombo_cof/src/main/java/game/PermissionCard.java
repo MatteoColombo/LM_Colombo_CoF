@@ -1,12 +1,11 @@
 package game;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class PermissionCard {
 
-	private ArrayList<City> cities; // still pending if is better to implement
+	private ArrayList<String> cities; // still pending if is better to implement
 									// that City ArrayList with its own class or
 									// with the String one
 	/* private Bonus */
@@ -14,17 +13,18 @@ public class PermissionCard {
 
 	public PermissionCard(ArrayList<String> citiesOfRegions) { // Bonus missing
 		boolean empty;
+		cities = new ArrayList<String>();
 		do {
 			for (String x : citiesOfRegions) {
 				boolean i = new Random().nextBoolean();
-				if (i = true)
+				if (i == true)
 					this.cities.add(x);
 			}
 			empty = this.cities.isEmpty();
-		} while (empty = true);
+		} while (empty == true);
 	}
 
-	public ArrayList<City> getCardCity() {
+	public ArrayList<String> getCardCity() {
 		return this.cities;
 	}
 
@@ -39,7 +39,7 @@ public class PermissionCard {
 	}
 
 	public void setCardUsed() throws NegativeException {
-		if (this.used = false)
+		if (this.used == false)
 			this.used = true;
 		else
 			throw new NegativeException();

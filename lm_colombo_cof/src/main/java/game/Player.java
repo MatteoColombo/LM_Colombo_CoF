@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Player {
@@ -11,7 +12,7 @@ public class Player {
 	private ArrayList<PermissionCard> permissionCard;
 	private ArrayList<Emporium> emporium;
 
-	public Player(int money, int helper, int draw, int maxEmp, ArrayList<String> pickedColours) {
+	public Player(int money, int helper, int draw, int maxEmp, ArrayList<Color> pickedColours) {
 		this.coins = new Coins(money);
 		this.assistants = new Assistants(helper);
 		this.victoryPoints = new VictoryPoints(0);

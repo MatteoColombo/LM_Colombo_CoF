@@ -12,7 +12,7 @@ public class PermissionCard {
 	/* private Bonus */
 	private boolean used;
 
-	public PermissionCard(ArrayList<String> citiesOfRegions) {// Bonus missing
+	public PermissionCard(ArrayList<String> citiesOfRegions) { // Bonus missing
 		boolean empty;
 		do {
 			for (String x : citiesOfRegions) {

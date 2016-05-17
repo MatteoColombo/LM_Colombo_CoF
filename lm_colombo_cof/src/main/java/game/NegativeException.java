@@ -1,5 +1,5 @@
 package game;
 
-public class NegativeException extends Exception {// Error not clear
+public class NegativeException extends Exception { // error not clear
 
 }

@@ -13,11 +13,15 @@ public class PermissionCard {
 	private boolean used;
 
 	public PermissionCard(ArrayList<String> citiesOfRegions) {// Bonus missing
-		for (String x : citiesOfRegions) {
-			boolean i = new Random().nextBoolean();
-			if (i = true)
-				this.cities.add(x);
-		}
+		boolean empty;
+		do {
+			for (String x : citiesOfRegions) {
+				boolean i = new Random().nextBoolean();
+				if (i = true)
+					this.cities.add(x);
+			}
+			empty = this.cities.isEmpty();
+		} while (empty = true);
 	}
 
 	public ArrayList<City> getCardCity() {
@@ -25,11 +29,11 @@ public class PermissionCard {
 	}
 
 	/*
-	 * public Bonus getCardBonus(){ 
-	 * 	return this.Bonus 
+	 * public Bonus getCardBonus(){
+	 * 	return this.Bonus
 	 * }
 	 */
-	
+
 	public boolean getIfCardUsed() {
 		return this.used;
 	}

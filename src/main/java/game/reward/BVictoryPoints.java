@@ -1,5 +1,7 @@
 package game.reward;
 
+import game.player.Player;
+
 public class BVictoryPoints extends Bonus {
 
 	private static final int VALUE = 10;
@@ -16,5 +18,10 @@ public class BVictoryPoints extends Bonus {
 	@Override
 	public int getValue() {
 		return VALUE;
+	}
+
+	@Override
+	public void assignBonusTo(Player p) {
+		p.getVictoryPoints().increment(this.getValue());
 	}
 }

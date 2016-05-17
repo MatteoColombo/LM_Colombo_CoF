@@ -1,5 +1,7 @@
 package game.reward;
 
+import game.player.Player;
+
 public class BNobilityPoints extends Bonus {
 
 	private static final int VALUE = 30;
@@ -18,5 +20,9 @@ public class BNobilityPoints extends Bonus {
 	public int getValue() {
 		return VALUE;
 	}
-	
+
+	@Override
+	public void assignBonusTo(Player p) {
+		p.getNoblePoints().increment(this.getAmount());
+	}
 }

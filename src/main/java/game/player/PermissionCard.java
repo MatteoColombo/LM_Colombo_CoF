@@ -3,6 +3,8 @@ package game.player;
 import java.util.ArrayList;
 import java.util.Random;
 
+import game.board.exceptions.NegativeException;
+
 public class PermissionCard {
 
 	private ArrayList<String> cities; // still pending if is better to implement

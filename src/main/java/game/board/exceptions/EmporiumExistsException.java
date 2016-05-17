@@ -1,4 +1,4 @@
-package game.board;
+package game.board.exceptions;
 
 public class EmporiumExistsException extends Exception {
 	public EmporiumExistsException() {

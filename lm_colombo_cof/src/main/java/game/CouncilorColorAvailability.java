@@ -20,19 +20,19 @@ public class CouncilorColorAvailability {
 	public int getAvailability() {
 		return availability;
 	}
-
-	public void incAvailability() throws OverMaxValueException {
-		if ((availability + 1) <= maxAvailability)
-			availability++;
-		else
-			throw new OverMaxValueException();
+	
+	public boolean isFull(){
+		if(availability==maxAvailability)
+			return true;
+		return false;
 	}
 
-	public void decAvailability() throws NegativeException {
-		if ((availability - 1) >= 0)
+	public void incAvailability(){
 			availability++;
-		else
-			throw new NegativeException();
+	}
+
+	public void decAvailability(){
+			availability++;
 	}
 
 }

@@ -6,26 +6,26 @@ import java.util.List;
 import java.util.Random;
 
 public class CouncilorPool {
-	private final int CONC_PER_COLOR;
-	private final int COUNCIL_SIZE;
-	private final int COLORS_NUMBER;
+	private final int CONCPERCOLOR;
+	private final int COUNCILSIZE;
+	private final int COLORSNUMBER;
 	private CouncilorColorAvailability[] availCounc;
 	private List<Color> colors;
 	private int generatedCouncils;
 
 	public CouncilorPool(int councPerColor, int councilSize, List<Color> colors) {
-		this.CONC_PER_COLOR = councPerColor;
-		this.COUNCIL_SIZE = councilSize;
+		this.CONCPERCOLOR = councPerColor;
+		this.COUNCILSIZE = councilSize;
 		this.colors = colors;
-		this.COLORS_NUMBER = colors.size();
+		this.COLORSNUMBER = colors.size();
 		initializeAvailCounc();
 		generatedCouncils = 0;
 	}
 
 	private void initializeAvailCounc() {
-		availCounc = new CouncilorColorAvailability[COLORS_NUMBER];
-		for (int i = 0; i < COLORS_NUMBER; i++) {
-			availCounc[i] = new CouncilorColorAvailability(CONC_PER_COLOR, colors.get(i));
+		availCounc = new CouncilorColorAvailability[COLORSNUMBER];
+		for (int i = 0; i < COLORSNUMBER; i++) {
+			availCounc[i] = new CouncilorColorAvailability(CONCPERCOLOR, colors.get(i));
 		}
 	}
 
@@ -38,16 +38,19 @@ public class CouncilorPool {
 		return false;
 	}
 
-	private Councilor getCouncilor(Color councColor) {
+	public boolean isFull(Color councColor) {
 		for (CouncilorColorAvailability temp : availCounc) {
-			if (temp.getColor().equals(councColor)) {
-				try {
-					temp.decAvailability();
-				} catch (NegativeException ne) {
-					System.err.println(ne.getMessage());
-				}
+			if (temp.getColor().equals(councColor) && temp.isFull()) {
+				return true;
 			}
 		}
+		return false;
+	}
+
+	private Councilor getCouncilor(Color councColor) {
+		for (CouncilorColorAvailability temp : availCounc)
+			if (temp.getColor().equals(councColor))
+				temp.decAvailability();
 		return new Councilor(councColor);
 	}
 
@@ -55,6 +58,8 @@ public class CouncilorPool {
 			throws NegativeException, OverMaxValueException, CouncilorNotAvailableException {
 		if (!isAvailable(councColor))
 			throw new CouncilorNotAvailableException();
+		if (isFull(oldCouncilor.getColor()))
+			throw new OverMaxValueException();
 		for (CouncilorColorAvailability temp : availCounc) {
 			if (temp.getColor().equals(oldCouncilor.getColor())) {
 				temp.incAvailability();
@@ -69,12 +74,13 @@ public class CouncilorPool {
 	}
 
 	public Council getCouncil() throws CouncilorNotAvailableException {
-		if ((generatedCouncils * COUNCIL_SIZE) > ((COLORS_NUMBER * CONC_PER_COLOR) - COUNCIL_SIZE))
+		if ((generatedCouncils * COUNCILSIZE) > ((COLORSNUMBER * CONCPERCOLOR) - COUNCILSIZE))
 			throw new CouncilorNotAvailableException();
 		Random r = new Random();
-		ArrayList<Councilor> generatedCouncil = new ArrayList<Councilor>();
-		for (int i = 0; i < COUNCIL_SIZE;) {
-			int temp = r.nextInt(COLORS_NUMBER);
+		ArrayList<Councilor> generatedCouncil = new ArrayList<>();
+		int i = 0;
+		while (i < COUNCILSIZE) {
+			int temp = r.nextInt(COLORSNUMBER);
 			if (isAvailable(colors.get(temp))) {
 				generatedCouncil.add(getCouncilor(colors.get(temp)));
 				i++;

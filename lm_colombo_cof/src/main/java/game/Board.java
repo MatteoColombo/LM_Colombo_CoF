@@ -5,7 +5,6 @@ import java.util.List;
 
 
 public class Board {
-	private final int NUM_REG;
 	private final String xmlPath;
 	private final int councPerColor;
 	private final int concSize;
@@ -16,8 +15,7 @@ public class Board {
 	private King mapKing;
 	private CouncilorPool councilManager;
 
-	public Board(int numReg, String xmlPath, int councPerColor, int concSize, List<Color> colors) throws ConfigurationErrorException{
-		this.NUM_REG = numReg;
+	public Board(String xmlPath, int councPerColor, int concSize, List<Color> colors) throws Exception{
 		this.xmlPath = xmlPath;
 		this.concSize = concSize;
 		this.colors=colors;
@@ -25,16 +23,18 @@ public class Board {
 		initializeBoard();
 	}
 
-	private void initializeBoard() throws ConfigurationErrorException{
-		this.xmlManager = new MapLoader(xmlPath,councilManager);
-		this.track = new NobleTrack();
-		this.councilManager = new CouncilorPool(councPerColor,concSize,colors);
+	private void initializeBoard() throws Exception{
 		try{
 			this.mapKing = new King(xmlManager.getKingCity(), councilManager.getCouncil());
-		}catch(CouncilorNotAvailableException cnae){
-			throw new ConfigurationErrorException();
+			this.xmlManager = new MapLoader(xmlPath,councilManager);
+			this.track = new NobleTrack();
+			this.councilManager = new CouncilorPool(councPerColor,concSize,colors);
+		
+		}catch(Exception e){
+			throw e;
 		}
 		this.regions=xmlManager.getRegions();
+		
 	}
 
 	// Regions part

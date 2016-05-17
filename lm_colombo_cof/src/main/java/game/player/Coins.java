@@ -1,9 +1,9 @@
-package game;
+package game.player;
 
-public class Assistants {
+public class Coins {
 	private int amount;
 
-	public Assistants(int value) {
+	public Coins(int value) {
 		this.amount = value;
 	}
 

@@ -1,9 +1,9 @@
-package game;
+package game.player;
 
-public class NoblePoints {
+public class VictoryPoints {
 	private int amount;
 
-	public NoblePoints(int value) {
+	public VictoryPoints(int value) {
 		this.amount = value;
 	}
 

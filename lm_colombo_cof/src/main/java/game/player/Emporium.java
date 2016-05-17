@@ -1,4 +1,4 @@
-package game;
+package game.player;
 
 public class Emporium {
 	private Player player;

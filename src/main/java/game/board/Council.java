@@ -1,16 +1,13 @@
 package game.board;
 
 import java.util.List;
-/**
- * 
- * @author Matteo Colombo
- *
- */
+
 
 public class Council {
 	private List<Councilor> councMembers;
 
 	/**
+	 * Initializes the council with a list of the inital councilors
 	 * 
 	 * @param councMember a list of Councilors
 	 * 
@@ -21,8 +18,8 @@ public class Council {
 
 	/**
 	 * 
-	 * @param councilor a Councilor.
-	 * it works like a queue, it removes the first position and adds the one which receives in tail
+	 * Removes the first councilor in the council and adds the received one in tail
+	 * @param councilor the one Councilor which has to be added in tail
 	 * 
 	 */
 	public void insertCounciler(Councilor councilor) {
@@ -31,8 +28,8 @@ public class Council {
 	}
 	
 	/**
-	 * 
-	 * @param pos the position of the desidered councilor
+	 * Returns a Councilor in the specified position in the array list
+	 * @param pos an integer which indiacates the position
 	 * @return the councilor in the specified position
 	 */
 

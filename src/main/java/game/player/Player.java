@@ -18,7 +18,7 @@ public class Player {
 	private final int DEFAULTMAINACTION;
 
 	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
-			int initialNoble, int defaultMainAction) {
+			int initialNoble) {
 		this.coins = new Coins(money);
 		this.assistants = new Assistants(helper);
 		this.victoryPoints = new VictoryPoints(initalVictory);
@@ -30,7 +30,7 @@ public class Player {
 			politicCard.add(new PoliticCard(pickedColours));
 		for (int i = 0; i < maxEmp; i++)
 			emporium.add(new Emporium(this));
-		this.DEFAULTMAINACTION = defaultMainAction;
+		this.DEFAULTMAINACTION = 1;
 		this.mainActions = DEFAULTMAINACTION;
 		this.extraAction = true;
 		this.pickedColours = pickedColours;

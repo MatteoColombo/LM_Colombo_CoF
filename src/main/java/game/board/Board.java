@@ -1,13 +1,8 @@
 package game.board;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.List;
-
-import javax.naming.ConfigurationException;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
+import game.board.exceptions.XMLFileException;
 
 public class Board {
 	private final String xmlPath;
@@ -21,31 +16,23 @@ public class Board {
 	private King mapKing;
 	private CouncilorPool councilManager;
 
-	public Board(String xmlPath, int nobleTrackSize, int councPerColor, int concSize, List<Color> colors) throws IOException, SAXException, ParserConfigurationException, ConfigurationException{
+	public Board(String xmlPath, int nobleTrackSize, int councPerColor, int concSize, List<Color> colors)
+			throws XMLFileException {
 		this.xmlPath = xmlPath;
 		this.concSize = concSize;
-		this.colors=colors;
+		this.colors = colors;
 		this.councPerColor = councPerColor;
-		this.nobleTrackSize= nobleTrackSize;
+		this.nobleTrackSize = nobleTrackSize;
 		initializeBoard();
 	}
 
-	private void initializeBoard() throws IOException, SAXException, ParserConfigurationException, ConfigurationException{
-		try{
-			this.mapKing = new King(xmlManager.getKingCity(), councilManager.getCouncil());
-			this.xmlManager = new MapLoader(xmlPath,councilManager);
-			this.track = new NobleTrack(nobleTrackSize);
-			this.councilManager = new CouncilorPool(councPerColor,concSize,colors);
-		
-		}catch(IOException ioe){
-			throw ioe;
-		}catch(ParserConfigurationException pec){
-			throw pec;
-		}catch(SAXException saxe){
-			throw saxe;
-		}
-		this.regions=xmlManager.getRegions();
-		
+	private void initializeBoard() throws XMLFileException {
+		this.mapKing = new King(xmlManager.getKingCity(), councilManager.getCouncil());
+		this.xmlManager = new MapLoader(xmlPath, councilManager);
+		this.track = new NobleTrack(nobleTrackSize);
+		this.councilManager = new CouncilorPool(councPerColor, concSize, colors);
+		this.regions = xmlManager.getRegions();
+
 	}
 
 	// Regions part

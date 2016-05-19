@@ -5,19 +5,27 @@ import java.util.List;
 import java.util.Random;
 import game.reward.*;
 
-import game.board.exceptions.NegativeException;
-
+import game.board.City;
+/**
+ * 
+ * @author davidecavallini
+ *
+ */
 public class PermissionCard {
 
-	private List<String> cities;
+	private ArrayList<City> cities;
 	private Reward rewards;
 	private boolean used;
 
-	public PermissionCard(List<String> citiesOfRegions) { // Bonus missing
+	public PermissionCard(List<City> citiesOfRegions) { // Bonus missing
 		boolean empty;
 		cities = new ArrayList<>();
+
+		// this cycle secure that there is at least one city in the reward
+		// TODO there should be a max of it (maybe 3?)
+
 		do {
-			for (String x : citiesOfRegions) {
+			for (City x : citiesOfRegions) {
 				boolean i = new Random().nextBoolean();
 				if (i)
 					this.cities.add(x);
@@ -26,7 +34,8 @@ public class PermissionCard {
 		} while (!empty);
 	}
 
-	public List<String> getCardCity() {
+
+	public List<City> getCardCity() {
 		return this.cities;
 	}
 
@@ -38,11 +47,8 @@ public class PermissionCard {
 		return this.used;
 	}
 
-	public void setCardUsed() throws NegativeException {
-		if (!this.used)
-			this.used = true;
-		else
-			throw new NegativeException();
+	public void setCardUsed(){
+		this.used = true;
 	}
 
 }

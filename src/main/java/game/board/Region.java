@@ -39,10 +39,8 @@ public class Region {
 	}
 
 	private void generatePermissionCard(int posArray) {
-		ArrayList<String> citiesToString= new ArrayList<>();
-		for(City c: cities)
-			citiesToString.add(c.getName());
-		permissionCards[posArray] = new PermissionCard(citiesToString);
+
+		permissionCards[posArray] = new PermissionCard(cities);
 	}
 
 	public PermissionCard getPermissionCard(int posArray) {

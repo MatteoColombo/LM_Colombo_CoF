@@ -56,5 +56,9 @@ public class City {
 	public Reward getReward() {
 		return cityReward;
 	}
+	
+	public int getNumberOfEmporium() {
+		return this.emporiums.size();
+	}
 
 }

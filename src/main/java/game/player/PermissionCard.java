@@ -1,47 +1,45 @@
 package game.player;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import game.reward.*;
 
 import game.board.exceptions.NegativeException;
 
 public class PermissionCard {
 
-	private ArrayList<String> cities; // still pending if is better to implement
-									// that City ArrayList with its own class or
-									// with the String one
-	/* private Bonus */
+	private List<String> cities;
+	private Reward rewards;
 	private boolean used;
 
-	public PermissionCard(ArrayList<String> citiesOfRegions) { // Bonus missing
+	public PermissionCard(List<String> citiesOfRegions) { // Bonus missing
 		boolean empty;
-		cities = new ArrayList<String>();
+		cities = new ArrayList<>();
 		do {
 			for (String x : citiesOfRegions) {
 				boolean i = new Random().nextBoolean();
-				if (i == true)
+				if (i)
 					this.cities.add(x);
 			}
 			empty = this.cities.isEmpty();
-		} while (empty == true);
+		} while (!empty);
 	}
 
-	public ArrayList<String> getCardCity() {
+	public List<String> getCardCity() {
 		return this.cities;
 	}
 
-	/*
-	 * public Bonus getCardBonus(){
-	 * 	return this.Bonus
-	 * }
-	 */
+	public Reward getCardBonus() {
+		return this.rewards;
+	}
 
 	public boolean getIfCardUsed() {
 		return this.used;
 	}
 
 	public void setCardUsed() throws NegativeException {
-		if (this.used == false)
+		if (!this.used)
 			this.used = true;
 		else
 			throw new NegativeException();

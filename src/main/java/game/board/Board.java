@@ -17,7 +17,7 @@ public class Board {
 	private CouncilorPool councilManager;
 
 	/**
-	 * Constructor of the Board, it receives the configuration parameters and calls the initializazion function
+	 * Constructor of the Board, it receives the configuration parameters and calls the initialization function
 	 * @param xmlPath a string, the path to the map's xml file
 	 * @param nobleTrackSize an integer, the lenght of the nobility track
 	 * @param councPerColor an integer, the number of councilor per color

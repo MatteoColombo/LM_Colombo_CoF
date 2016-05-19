@@ -9,7 +9,7 @@ public class CouncilorColorAvailability {
 
 	/**
 	 * Receives the max number of councilors for this color and theirs color
-	 * The availability is also initializaed equals to the max availability
+	 * The availability is also initialized equals to the max availability
 	 * 
 	 * @param availability an integer which is the max number of councilors for the specified color
 	 * @param concColor the Color of these Councilors

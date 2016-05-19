@@ -3,8 +3,8 @@ package game.player;
 public class VictoryPoints {
 	private int amount;
 
-	public VictoryPoints(int value) {
-		this.amount = value;
+	public VictoryPoints(int initialValue) {
+		this.amount = initialValue;
 	}
 
 	public int getAmount() {
@@ -12,6 +12,6 @@ public class VictoryPoints {
 	}
 
 	public void increment(int value) {
-		this.amount = this.amount + value;
+		this.amount += value;
 	}
 }

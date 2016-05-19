@@ -31,7 +31,7 @@ public class PermissionCard {
 					this.cities.add(x);
 			}
 			empty = this.cities.isEmpty();
-		} while (!empty);
+		} while (empty);
 	}
 
 

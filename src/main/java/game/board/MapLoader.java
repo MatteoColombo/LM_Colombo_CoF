@@ -2,8 +2,10 @@ package game.board;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.*;
+
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Color;
 import java.io.*;
 import java.util.ArrayList;
@@ -25,8 +27,8 @@ public class MapLoader {
 		loadXML();
 
 	}
-	
-	public void loadXML() throws XMLFileException{
+
+	public void loadXML() throws XMLFileException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		connections = new ArrayList<>();
 		try {
@@ -65,7 +67,8 @@ public class MapLoader {
 	}
 
 	private City parseCityAttr(Node cityXML) {
-		boolean isCapital = Boolean.parseBoolean(cityXML.getAttributes().getNamedItem("capital").getNodeValue());
+
+		boolean isCapital = false;
 		NodeList cityAttr = cityXML.getChildNodes();
 		String name = "";
 		String color = "";
@@ -83,6 +86,9 @@ public class MapLoader {
 			case "connection":
 				connectedCities.add(attr.getTextContent());
 				break;
+			case "capital":
+				isCapital = Boolean.parseBoolean(attr.getTextContent());
+				break;
 			default:
 				break;
 			}
@@ -90,7 +96,7 @@ public class MapLoader {
 		for (String temp : connectedCities)
 			connections.add(new CityConnection(name, temp));
 		City generatedCity;
-		
+
 		if (isCapital)
 			generatedCity = new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(), 1, 40));
 		else
@@ -111,4 +117,5 @@ public class MapLoader {
 		return regions.size();
 	}
 
+	
 }

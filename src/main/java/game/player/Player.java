@@ -16,11 +16,12 @@ public class Player {
 	private boolean extraAction;
 	private final int DEFAULTMAINACTION = 1;
 
-	public Player(int money, int helper, int draw, int maxEmp, ArrayList<Color> pickedColours) {
+	public Player(int money, int helper, int draw, int maxEmp, ArrayList<Color> pickedColours, int initalVictory,
+			int initialNoble) {
 		this.coins = new Coins(money);
 		this.assistants = new Assistants(helper);
-		this.victoryPoints = new VictoryPoints(0);
-		this.noblePoints = new NoblePoints(0);
+		this.victoryPoints = new VictoryPoints(initalVictory);
+		this.noblePoints = new NoblePoints(initialNoble);
 		this.politicCard = new ArrayList<PoliticCard>();
 		this.permissionCard = new ArrayList<PermissionCard>();
 		this.emporium = new ArrayList<Emporium>();
@@ -82,7 +83,7 @@ public class Player {
 	public ArrayList<Color> getAvailableColors() {
 		return this.pickedColours;
 	}
-	
+
 	public void drawAPoliticCard() {
 		this.politicCard.add(new PoliticCard(this.pickedColours));
 	}

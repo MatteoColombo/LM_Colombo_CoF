@@ -1,7 +1,5 @@
 package game.player;
 
-import game.board.exceptions.NegativeException;
-
 public class Assistants {
 	private int amount;
 
@@ -14,14 +12,11 @@ public class Assistants {
 	}
 
 	public void increment(int value) {
-		this.amount = this.amount + value;
+		this.amount += this.amount;
 	}
 
-	public void decrease(int value) throws NegativeException {
-		if (this.amount > value)
-			this.amount = this.amount - value;
-		else
-			throw new NegativeException();
+	public void decrease(int value) {
+		this.amount -= value;
 	}
 
 }

@@ -3,8 +3,8 @@ package game.player;
 public class NoblePoints {
 	private int amount;
 
-	public NoblePoints(int value) {
-		this.amount = value;
+	public NoblePoints(int initialValue) {
+		this.amount = initialValue;
 	}
 
 	public int getAmount() {
@@ -12,6 +12,6 @@ public class NoblePoints {
 	}
 
 	public void increment(int value) {
-		this.amount = this.amount + value;
+		this.amount += value;
 	}
 }

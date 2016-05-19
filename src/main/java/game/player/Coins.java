@@ -14,14 +14,11 @@ public class Coins {
 	}
 
 	public void increment(int value) {
-		this.amount = this.amount + value;
+		this.amount += value;
 	}
 
 	public void decrease(int value) throws NegativeException {
-		if (this.amount > value)
-			this.amount = this.amount - value;
-		else
-			throw new NegativeException();
+		this.amount -= value;
 	}
 
 }

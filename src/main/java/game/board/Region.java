@@ -16,6 +16,7 @@ public class Region {
 	
 	public Region(String regionName, List<City> cities, Council regionCouncil, int numDisclosedPermCards) {
 		this.NUM_CARDS = numDisclosedPermCards;
+		this.regionName=regionName;
 		this.regionCouncil = regionCouncil;
 		this.cities = cities;
 		this.regionCouncil = regionCouncil;

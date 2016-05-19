@@ -1,14 +1,14 @@
 package game.player;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PoliticCard {
 	private Color color;
 	private boolean isMultipleColor;
 
-	public PoliticCard(ArrayList<Color> possibleColors) {
+	public PoliticCard(List<Color> possibleColors) {
 		Random r = new Random();
 		int i = r.nextInt(possibleColors.size() + 1);
 		if(i== possibleColors.size())

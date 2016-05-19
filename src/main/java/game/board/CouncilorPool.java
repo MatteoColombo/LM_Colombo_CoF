@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import game.board.exceptions.CouncilorNotAvailableException;
-import game.board.exceptions.NegativeException;
-import game.board.exceptions.OverMaxValueException;
-
 public class CouncilorPool {
 	private final int CONCPERCOLOR;
 	private final int COUNCILSIZE;
@@ -123,6 +119,16 @@ public class CouncilorPool {
 		}
 		generatedCouncils++;
 		return new Council(generatedCouncil);
+	}
+	
+	/**
+	 * Checks if it is possible to generate another council
+	 * @return returns true if it possible to generate another council, false otherwise
+	 */
+	public boolean canGenerateCouncil(){
+		if((generatedCouncils*COUNCILSIZE)> (COLORSNUMBER*CONCPERCOLOR-COUNCILSIZE))
+			return false;
+		return true;
 	}
 
 }

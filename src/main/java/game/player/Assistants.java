@@ -12,7 +12,7 @@ public class Assistants {
 	}
 
 	public void increment(int value) {
-		this.amount += this.amount;
+		this.amount += value;
 	}
 
 	public void decrease(int value) {

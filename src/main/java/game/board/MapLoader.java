@@ -3,15 +3,11 @@ package game.board;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-import javax.naming.ConfigurationException;
 import javax.xml.parsers.*;
 import java.awt.Color;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-
-import game.board.exceptions.ConfigurationErrorException;
 import game.reward.*;
 
 public class MapLoader {

@@ -1,6 +1,7 @@
 package game.player;
 
 import java.awt.Color;
+import java.util.List;
 import java.util.ArrayList;
 
 public class Player {
@@ -8,27 +9,28 @@ public class Player {
 	private Assistants assistants;
 	private VictoryPoints victoryPoints;
 	private NoblePoints noblePoints;
-	private ArrayList<PoliticCard> politicCard;
-	private ArrayList<PermissionCard> permissionCard;
-	private ArrayList<Emporium> emporium;
-	private ArrayList<Color> pickedColours;
+	private List<PoliticCard> politicCard;
+	private List<PermissionCard> permissionCard;
+	private List<Emporium> emporium;
+	private List<Color> pickedColours;
 	private int mainActions;
 	private boolean extraAction;
-	private final int DEFAULTMAINACTION = 1;
+	private final int DEFAULTMAINACTION;
 
-	public Player(int money, int helper, int draw, int maxEmp, ArrayList<Color> pickedColours, int initalVictory,
-			int initialNoble) {
+	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
+			int initialNoble, int defaultMainAction) {
 		this.coins = new Coins(money);
 		this.assistants = new Assistants(helper);
 		this.victoryPoints = new VictoryPoints(initalVictory);
 		this.noblePoints = new NoblePoints(initialNoble);
-		this.politicCard = new ArrayList<PoliticCard>();
-		this.permissionCard = new ArrayList<PermissionCard>();
-		this.emporium = new ArrayList<Emporium>();
+		this.politicCard = new ArrayList<>();
+		this.permissionCard = new ArrayList<>();
+		this.emporium = new ArrayList<>();
 		for (int i = 0; i < draw; i++)
 			politicCard.add(new PoliticCard(pickedColours));
 		for (int i = 0; i < maxEmp; i++)
 			emporium.add(new Emporium(this));
+		this.DEFAULTMAINACTION = defaultMainAction;
 		this.mainActions = DEFAULTMAINACTION;
 		this.extraAction = true;
 		this.pickedColours = pickedColours;
@@ -51,15 +53,15 @@ public class Player {
 		return this.noblePoints;
 	}
 
-	public ArrayList<PoliticCard> getPoliticCard() {
+	public List<PoliticCard> getPoliticCard() {
 		return this.politicCard;
 	}
 
-	public ArrayList<PermissionCard> getPermissionCard() {
+	public List<PermissionCard> getPermissionCard() {
 		return this.permissionCard;
 	}
 
-	public ArrayList<Emporium> getEmporium() {
+	public List<Emporium> getEmporium() {
 		return this.emporium;
 	}
 
@@ -80,7 +82,7 @@ public class Player {
 		this.extraAction = true;
 	}
 
-	public ArrayList<Color> getAvailableColors() {
+	public List<Color> getAvailableColors() {
 		return this.pickedColours;
 	}
 

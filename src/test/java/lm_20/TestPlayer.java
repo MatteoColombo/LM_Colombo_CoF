@@ -22,7 +22,7 @@ public class TestPlayer {
 		colorList.add(new Color(255, 255, 255));
 		
 		
-		Player p= new Player(10,1,6,10, colorList,0,0,1);
+		Player p= new Player(10,1,6,10, colorList,0,0);
 		assertEquals(p.getAssistants().getAmount(), 1);
 		assertEquals(p.getPoliticCard().size(), 6);
 		

@@ -1,5 +1,7 @@
 package game.board;
 
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,18 +24,29 @@ public class Council {
 	 * @param councilor the one Councilor which has to be added in tail
 	 * 
 	 */
-	public void insertCounciler(Councilor councilor) {
+	public void insertCouncilor(Councilor councilor) {
 		councMembers.remove(0);
 		councMembers.add(councilor);
 	}
 	
 	/**
-	 * Returns a Councilor in the specified position in the array list
-	 * @param pos an integer which indiacates the position
-	 * @return the councilor in the specified position
+	 * Returns the list of the colors of the councilors in the council
+	 * @return a list of colors
 	 */
-
-	public Councilor getCouncilor(int pos) {
-		return councMembers.get(pos);
+	public List<Color> getCouncilorsColor(){
+		List<Color> colorList= new ArrayList<>();
+		for(Councilor temp: councMembers)
+			colorList.add(temp.getColor());
+		return colorList;
 	}
+	
+	/**
+	 * Returns the color of the councilor in the head of the queue
+	 * @return color
+	 */
+	public Color getHeadColor(){
+		return councMembers.get(0).getColor();
+	}
+	
+	
 }

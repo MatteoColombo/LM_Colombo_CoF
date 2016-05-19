@@ -1,6 +1,5 @@
 package game.player;
 
-import game.board.exceptions.NegativeException;
 
 public class Coins {
 	private int amount;
@@ -17,7 +16,7 @@ public class Coins {
 		this.amount += value;
 	}
 
-	public void decrease(int value) throws NegativeException {
+	public void decrease(int value){
 		this.amount -= value;
 	}
 

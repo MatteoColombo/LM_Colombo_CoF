@@ -21,21 +21,30 @@ public class TestPlayer {
 		colorList.add(new Color(2, 3, 4));
 		colorList.add(new Color(255, 255, 255));
 		
+		
 		Player p= new Player(10,1,6,10, colorList,0,0,1);
 		assertEquals(p.getAssistants().getAmount(), 1);
 		assertEquals(p.getPoliticCard().size(), 6);
 		
 		p.getAssistants().increment(1);
-		try{
-			p.getCoins().getAmount();
-			p.getCoins().decrease(3);
-		}catch(NegativeException ne){
-			System.out.println(ne.getMessage());
-		}
+		
+		p.getCoins().getAmount();
+		p.getCoins().decrease(3);
+		p.getCoins().increment(4);
 		p.drawAPoliticCard();
 		
+		p.getVictoryPoints();
+		
+		p.getNoblePoints();
+		
+		p.getPermissionCard();
+		
+		p.getEmporium();
+	
+		p.getMainActionsLeft();
+		
 		assertEquals(p.getAssistants().getAmount(), 2);
-		assertEquals(p.getCoins().getAmount(),7);
+		assertEquals(p.getCoins().getAmount(),11);
 		assertEquals(p.getPoliticCard().size(), 7);
 		
 		

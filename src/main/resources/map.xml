@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map><region><city capital="true"><name>Milano</name><color>#ffffff</color></city></region></map>
+<map>
+	<region>
+		<city>
+			<name>Milano</name>
+			<color>#ff45dd</color>
+			<connection>Torino</connection>
+		</city>
+	</region>
+	<region>
+		<city>
+			<name>Torino</name>
+			<color>#ff45dd</color>
+			<connection>Milano</connection>
+		</city>
+	</region>
+	<region>
+		<city>
+			<name>Genova</name>
+			<color>#ff45dd</color>
+			<connection>Milano</connection>
+		</city>
+		<city>
+			<name>Venezia</name>
+			<color>#ff45dd</color>
+			<connection>Milano</connection>
+		</city>
+	</region>
+</map>

@@ -16,7 +16,8 @@ public class MapLoader {
 	private CouncilorPool pool;
 	private List<CityConnection> connections;
 
-	public MapLoader(String xmlPath, CouncilorPool pool) throws SAXException, IOException, ParserConfigurationException{
+	public MapLoader(String xmlPath, CouncilorPool pool)
+			throws SAXException, IOException, ParserConfigurationException {
 		this.xmlPath = xmlPath;
 		this.pool = pool;
 		this.regions = new ArrayList<>();
@@ -35,52 +36,58 @@ public class MapLoader {
 			Element root = xmlDoc.getDocumentElement();
 			NodeList regionsList = root.getElementsByTagName("region");
 			for (int i = 0; i < regionsList.getLength(); i++) {
-				List<City> cities = new ArrayList<>();
 				Node region = regionsList.item(i);
 				NodeList citiesOfRegion = region.getChildNodes();
-				for (int j = 0; j < citiesOfRegion.getLength(); j++) {
-					Node city = citiesOfRegion.item(j);
-					boolean isCapital = Boolean
-							.parseBoolean(city.getAttributes().getNamedItem("capital").getNodeValue());
-					NodeList cityattr = city.getChildNodes();
-					String name = "";
-					String color = "";
-					List<String> connectedCities = new ArrayList<>();
-					for (int k = 0; k < cityattr.getLength(); k++) {
-						Node attr = cityattr.item(k);
-						String attrType = attr.getNodeName();
-						switch (attrType) {
-						case "name":
-							name = attr.getTextContent();
-							break;
-						case "color":
-							color = attr.getTextContent();
-							break;
-						case "connection":
-							connectedCities.add(attr.getTextContent());
-							break;
-						default:
-							break;
-						}
-					}
-					for (String temp : connectedCities)
-						connections.add(new CityConnection(name, temp));
-					if (isCapital)
-						cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(), 1, 40)));
-					else
-						cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(), 1, 40),
-								isCapital));
-				}
+				List<City> cities = parseCities(citiesOfRegion);
 				regions.add(new Region("name", cities, pool.getCouncil(), 2));
 			}
 		} catch (ParserConfigurationException pec) {
 			throw pec;
-		}catch(IOException ioe){
+		} catch (IOException ioe) {
 			throw ioe;
-		}catch(SAXException saxe){
+		} catch (SAXException saxe) {
 			throw saxe;
 		}
-		
+
+	}
+
+	private List<City> parseCities(NodeList citiesOfRegion) {
+		List<City> cities = new ArrayList<>();
+		for (int j = 0; j < citiesOfRegion.getLength(); j++) {
+			Node city = citiesOfRegion.item(j);
+			if (city.getNodeType() == Node.ELEMENT_NODE) {
+				boolean isCapital = Boolean.parseBoolean(city.getAttributes().getNamedItem("capital").getNodeValue());
+				NodeList cityattr = city.getChildNodes();
+				String name = "";
+				String color = "";
+				List<String> connectedCities = new ArrayList<>();
+				for (int k = 0; k < cityattr.getLength(); k++) {
+					Node attr = cityattr.item(k);
+					String attrType = attr.getNodeName();
+					switch (attrType) {
+					case "name":
+						name = attr.getTextContent();
+						break;
+					case "color":
+						color = attr.getTextContent();
+						break;
+					case "connection":
+						connectedCities.add(attr.getTextContent());
+						break;
+					default:
+						break;
+					}
+				}
+				for (String temp : connectedCities)
+					connections.add(new CityConnection(name, temp));
+				if (isCapital)
+					cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(), 1, 40)));
+				else
+					cities.add(new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(), 1, 40),
+							isCapital));
+			}
+		}
+		return cities;
 	}
 
 	public List<Region> getRegions() {
@@ -92,6 +99,8 @@ public class MapLoader {
 	}
 
 	public int getRegionsNumber() {
-		return 0;
+		return regions.size();
 	}
+
+	
 }

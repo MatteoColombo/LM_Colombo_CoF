@@ -34,6 +34,12 @@ public class TestCouncilorPool {
 			Council council = cp.getCouncil();
 			Color extractedColor = council.getCouncilor(2).getColor();
 			assertEquals(false, cp.isFull(extractedColor));
+			
+			Color requested = colorList.get(3);
+			council.insertCounciler(cp.slideCouncilor(council.getCouncilor(0), requested));
+			
+			assertEquals(council.getCouncilor(3).getColor(), requested);
+			
 		} catch(Exception e) {
 			fail("a council should be available");
 		}

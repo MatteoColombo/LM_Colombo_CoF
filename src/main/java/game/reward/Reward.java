@@ -4,18 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import game.player.Player;
+/**
+ * a reward is an aggregation of Bonus
+ * @author gianpaolobranca
+ *
+ */
 public class Reward {	
 
 	private ArrayList<Bonus> bonusList = new ArrayList<>();
-
+	/**
+	 * Generic constructor for the reward
+	 * @param bonusList the given list of bonus for initialize the reward
+	 */
 	public Reward(List<Bonus> bonusList) {
 		this.bonusList = (ArrayList<Bonus>) bonusList;
 	}
-	
+	/**
+	 * Constructor for a reward with only one bonus
+	 * @param singleBonus the given bonus that will be inserted in the reward
+	 */
 	public Reward(Bonus singleBonus)  {
 		this.bonusList.add(singleBonus);
 	}
-	
+	/**
+	 * Constructor for a randomly generated Reward from a set of Bonus
+	 * @param availableBonus The Reward choose a Bonus among this array. 
+	 * Usually this should be the allStandardBonus from the Bonus class, but it could be different
+	 * @param differentBonus how much different Bonus should contains the Reward
+	 * @param value a parameter to generate different Rewards.
+	 * The higher it is, the bigger the average generated reward will be.
+	 */
 	public Reward(Bonus[] availableBonus, int differentBonus, int value) {
 		
 		if(differentBonus > availableBonus.length) {
@@ -38,6 +57,12 @@ public class Reward {
 			bonusList.add(buffer);
 			flagTable.flag(indexBonus);
 			bonusToInsert--;
+		}
+	}
+	
+	public void assignBonusTo(Player p) {
+		for(Bonus b: this.bonusList) {
+			b.assignBonusTo(p);
 		}
 	}
 }

@@ -3,14 +3,10 @@ package game.board;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.*;
-
-import static org.junit.Assert.assertEquals;
-
 import java.awt.Color;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import game.board.exceptions.XMLFileException;
 import game.reward.*;
 

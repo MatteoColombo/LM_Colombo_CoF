@@ -5,8 +5,15 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import game.board.NobleTrack;
 import game.board.exceptions.NegativeException;
+import game.player.Assistants;
+import game.player.Coins;
+import game.player.Emporium;
+import game.player.NoblePoints;
 import game.player.Player;
+import game.player.VictoryPoints;
+
 import org.junit.Test;
 
 public class TestPlayer {
@@ -23,31 +30,36 @@ public class TestPlayer {
 		
 		
 		Player p= new Player(10,1,6,10, colorList,0,0);
-		assertEquals(p.getAssistants().getAmount(), 1);
-		assertEquals(p.getPoliticCard().size(), 6);
 		
-		p.getAssistants().increment(1);
+		Coins c= p.getCoins();
+		c.increment(5);
+		c.decrease(3);
+		assertEquals(12, c.getAmount());
 		
-		p.getCoins().getAmount();
-		p.getCoins().decrease(3);
-		p.getCoins().increment(4);
-		p.drawAPoliticCard();
+		Assistants a= p.getAssistants();
+		a.increment(2);
+		a.decrease(1);
+		assertEquals(2, a.getAmount());
 		
-		p.getVictoryPoints();
+		VictoryPoints v = p.getVictoryPoints();
+		v.increment(5);
+		assertEquals(5, v.getAmount());
 		
-		p.getNoblePoints();
+		Emporium e= p.getEmporium().get(0);
+		assertEquals(p, e.getPlayer());
+		assertEquals(null, e.getCity());
 		
-		p.getPermissionCard();
+		NoblePoints n = p.getNoblePoints();
+		n.increment(1);
+		assertEquals(1,n.getAmount());
 		
-		p.getEmporium();
-	
-		p.getMainActionsLeft();
-		
-		assertEquals(p.getAssistants().getAmount(), 2);
-		assertEquals(p.getCoins().getAmount(),11);
-		assertEquals(p.getPoliticCard().size(), 7);
-		
-		
+		p.doExtraAction();
+		assertEquals(true, p.getIfExtraActionDone());
+		p.doMainAction();
+		assertEquals(0, p.getMainActionsLeft());
+		p.actionsReset();
+		assertEquals(1, p.getMainActionsLeft());
+		assertEquals(false, p.getIfExtraActionDone());
 	}
 
 }

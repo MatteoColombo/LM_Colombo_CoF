@@ -90,7 +90,6 @@ public class Player {
 		this.extraAction=true;
 	}
 	
-	
 	public void drawAPoliticCard() {
 		this.politicCard.add(new PoliticCard(this.pickedColours));
 	}

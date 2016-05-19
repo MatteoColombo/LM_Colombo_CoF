@@ -14,31 +14,25 @@ public class TestCouncil {
 
 	@Test
 	public void testStandard() {	
-		Color c1 = new Color(200, 10, 10);
-		Councilor counc1 = new Councilor(c1);
-		Color c2 = new Color(20, 0, 250);
-		Councilor counc2 = new Councilor(c2);
-		Color c3 = new Color(0, 10, 255);
-		Councilor counc3 = new Councilor(c3);
+		ArrayList<Color> colorList = new ArrayList<Color>();
+		colorList.add(new Color(20, 30, 40));
+		colorList.add(new Color(100, 30, 50));
+		colorList.add(new Color(200, 130, 140));
 		
 		ArrayList<Councilor> councList = new ArrayList<>();
-		councList.add(counc1);
-		councList.add(counc2);
-		councList.add(counc3);
+		councList.add(new Councilor(colorList.get(0)));
+		councList.add(new Councilor(colorList.get(1)));
+		councList.add(new Councilor(colorList.get(2)));
 		
 		Council council = new Council(councList);
 		
-		assertEquals(council.getCouncilor(0), counc1);
-		assertEquals(council.getCouncilor(1), counc2);
-		assertEquals(council.getCouncilor(2), counc3);
+		assertEquals(council.getCouncilorsColor(), colorList);
 
 		Councilor counc4 = new Councilor(new Color(100, 100, 100));
 		
-		council.insertCounciler(counc4);
+		council.insertCouncilor(counc4);
 		
-		assertEquals(council.getCouncilor(0), counc2);
-		assertEquals(council.getCouncilor(1), counc3);
-		assertEquals(council.getCouncilor(2), counc4);
+		assertEquals(counc4.getColor(), council.getCouncilorsColor().get(3));
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)
@@ -47,7 +41,7 @@ public class TestCouncil {
 		Council council = new Council(councList);
 		
 		Councilor counc = new Councilor(new Color(100, 100, 100));		
-		council.insertCounciler(counc);		
+		council.insertCouncilor(counc);		
 	}
 	
 }

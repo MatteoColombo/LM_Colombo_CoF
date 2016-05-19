@@ -16,6 +16,15 @@ public class Board {
 	private King mapKing;
 	private CouncilorPool councilManager;
 
+	/**
+	 * Constructor of the Board, it receives the configuration parameters and calls the initializazion function
+	 * @param xmlPath a string, the path to the map's xml file
+	 * @param nobleTrackSize an integer, the lenght of the nobility track
+	 * @param councPerColor an integer, the number of councilor per color
+	 * @param concSize an integer, the number of councilor per council
+	 * @param colors a list of the politic cards and councilor colors
+	 * @throws XMLFileException
+	 */
 	public Board(String xmlPath, int nobleTrackSize, int councPerColor, int concSize, List<Color> colors)
 			throws XMLFileException {
 		this.xmlPath = xmlPath;
@@ -26,6 +35,11 @@ public class Board {
 		initializeBoard();
 	}
 
+	/**
+	 * Initializes the board with all the needed elements
+	 * 
+	 * @throws XMLFileException
+	 */
 	private void initializeBoard() throws XMLFileException {
 		this.mapKing = new King(xmlManager.getKingCity(), councilManager.getCouncil());
 		this.xmlManager = new MapLoader(xmlPath, councilManager);
@@ -35,39 +49,72 @@ public class Board {
 
 	}
 
-	// Regions part
+	/**
+	 * Returns the number of the of the regions
+	 * 
+	 * @return an integer
+	 */
 	public int getRegionsNumber() {
 		return this.regions.size();
 	}
 
+	/**
+	 * Returns the specified region
+	 * 
+	 * @param posArray
+	 *            an integer, the specified region
+	 * @return a region
+	 */
 	public Region getRegion(int posArray) {
 		return regions.get(posArray);
 	}
 
+	/**
+	 * Returns the council of the specified region
+	 * 
+	 * @param posArray
+	 *            an integer, the region
+	 * @return a Council
+	 */
 	public Council getRegionCouncil(int posArray) {
 		return regions.get(posArray).getCouncil();
 	}
 
-	// Noble track part
-
+	/**
+	 * Returns the noble track
+	 * 
+	 * @return a Nobletrack
+	 */
 	public NobleTrack getNobleTrack() {
 		return this.track;
 	}
 
-	// King part
-
+	/**
+	 * Moves the king from its current location to another city
+	 * 
+	 * @param newKingCity
+	 *            the city in which the king has to be moved
+	 */
 	public void moveKing(City newKingCity) {
 		this.mapKing.moveKing(newKingCity);
 	}
 
+	/**
+	 * Returns the city in which the king is
+	 * 
+	 * @return a City
+	 */
 	public City getKingLocation() {
 		return this.mapKing.getKingLocation();
 	}
 
+	/**
+	 * Returns the king's council
+	 * 
+	 * @return a Council
+	 */
 	public Council getKingCouncil() {
 		return this.mapKing.getKingCouncil();
 	}
-
-	// City Part
 
 }

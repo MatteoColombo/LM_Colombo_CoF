@@ -13,12 +13,7 @@ import game.board.Councilor;
 public class TestCouncil {
 
 	@Test
-	public void test() {
-		testStandard();
-		testEmpty();
-	}
-
-	private void testStandard() {	
+	public void testStandard() {	
 		Color c1 = new Color(200, 10, 10);
 		Councilor counc1 = new Councilor(c1);
 		Color c2 = new Color(20, 0, 250);
@@ -46,7 +41,8 @@ public class TestCouncil {
 		assertEquals(council.getCouncilor(2), counc4);
 	}
 	
-	private void testEmpty() {
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void testEmpty() {
 		ArrayList<Councilor> councList = new ArrayList<>();
 		Council council = new Council(councList);
 		

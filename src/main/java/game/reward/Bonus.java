@@ -1,7 +1,11 @@
 package game.reward;
 
 import game.player.Player;
-
+/**
+ * A Bonus is a certain quantity of given game object
+ * @author gianpaolobranca
+ *
+ */
 public abstract class Bonus {
 	
 	private static final Bonus[] allStandardBonus = { 
@@ -13,15 +17,24 @@ public abstract class Bonus {
 			 new BExtraMainAction()}; // 1 by default
 	
 	private int amount;
-	
+	/**
+	 * Create a new Bonus object.
+	 * @param amount any positive integer 
+	 */
 	public Bonus(int amount) {
 		this.amount = amount;
 	}
-	
+	/**
+	 * 
+	 * @return the amount of the basic bonus object
+	 */
 	public int getAmount() {
 		return this.amount;
 	}
-
+	/**
+	 * 
+	 * @return the static array of all standard kind of bonus in the game
+	 */
 	public static Bonus[] getAllStandardBonus() {
 		return allStandardBonus.clone();
 	}

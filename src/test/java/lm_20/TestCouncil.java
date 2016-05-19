@@ -5,43 +5,63 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import game.board.Council;
 import game.board.Councilor;
+import game.board.CouncilorPool;
 
 public class TestCouncil {
+	ArrayList<Color> colorList = new ArrayList<Color>();
+	ArrayList<Councilor> councList = new ArrayList<>();
+	Council council;
+	Councilor councilor;
+	Color color;
+	CouncilorPool cp;
 
-	@Test
-	public void testStandard() {	
-		ArrayList<Color> colorList = new ArrayList<Color>();
+	
+	@Before
+	public void setUp() throws Exception {
 		colorList.add(new Color(20, 30, 40));
 		colorList.add(new Color(100, 30, 50));
 		colorList.add(new Color(200, 130, 140));
-		
-		ArrayList<Councilor> councList = new ArrayList<>();
 		councList.add(new Councilor(colorList.get(0)));
 		councList.add(new Councilor(colorList.get(1)));
 		councList.add(new Councilor(colorList.get(2)));
+		council = new Council(councList);
 		
-		Council council = new Council(councList);
-		
+		color = new Color(100, 100, 100);
+		councilor = new Councilor(color);
+		cp = new CouncilorPool(4, 4, colorList);
+	}
+	
+	@Test
+	public void testCouncilor() {
+		assertEquals(councilor.getColor(), color);
+	}
+	
+	@Test
+	public void testCouncil() {				
 		assertEquals(council.getCouncilorsColor(), colorList);
-
-		Councilor counc4 = new Councilor(new Color(100, 100, 100));
-		
-		council.insertCouncilor(counc4);
-		
-		assertEquals(counc4.getColor(), council.getCouncilorsColor().get(3));
+	
+		council.insertCouncilor(councilor);		
+		assertEquals(councilor.getColor(), color);
 	}
 	
-	@Test(expected=IndexOutOfBoundsException.class)
-	public void testEmpty() {
-		ArrayList<Councilor> councList = new ArrayList<>();
-		Council council = new Council(councList);
+	@Test
+	public void TestCouncilorPool() {
+		assertEquals(true, cp.isFull(colorList.get(0)));
+		assertEquals(true, cp.isFull(colorList.get(1)));
+		assertEquals(true, cp.isFull(colorList.get(2)));
 		
-		Councilor counc = new Councilor(new Color(100, 100, 100));		
-		council.insertCouncilor(counc);		
+		assertEquals(true, cp.isAvailable(colorList.get(0)));
+		assertEquals(true, cp.isAvailable(colorList.get(1)));
+		assertEquals(true, cp.isAvailable(colorList.get(2)));
+		
+		Color requested = colorList.get(1);
+		cp.slideCouncilor(council, colorList.get(1));
+		
+		assertEquals(council.getCouncilorsColor().get(2), requested);
 	}
-	
 }

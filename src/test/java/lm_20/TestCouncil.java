@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.board.CouncilorPool;
 import game.board.council.Council;
 import game.board.council.Councilor;
+import game.board.council.CouncilorPool;
 
 public class TestCouncil {
 	ArrayList<Color> colorList = new ArrayList<Color>();

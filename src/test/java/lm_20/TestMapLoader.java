@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import game.board.CouncilorPool;
 import game.board.MapLoader;
+import game.board.council.CouncilorPool;
 
 public class TestMapLoader {
 

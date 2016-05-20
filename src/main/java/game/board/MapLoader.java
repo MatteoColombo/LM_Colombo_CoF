@@ -10,6 +10,7 @@ import java.util.List;
 
 import game.board.city.City;
 import game.board.city.CityConnection;
+import game.board.council.CouncilorPool;
 import game.exceptions.XMLFileException;
 import game.reward.*;
 
@@ -76,7 +77,6 @@ public class MapLoader {
 			Node cityXML = citiesOfRegion.item(j);
 			if (cityXML.getNodeType() == Node.ELEMENT_NODE) {
 				cities.add(parseCityAttr(cityXML));
-
 			}
 		}
 		return cities;

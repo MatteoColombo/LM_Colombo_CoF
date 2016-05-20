@@ -5,6 +5,7 @@ import java.util.List;
 
 import game.board.city.City;
 import game.board.council.Council;
+import game.board.council.CouncilorPool;
 import game.exceptions.XMLFileException;
 
 public class Board {

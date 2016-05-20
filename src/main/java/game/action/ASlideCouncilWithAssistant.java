@@ -27,15 +27,14 @@ public class ASlideCouncilWithAssistant extends Action{
 	public void execute() throws IllegalActionException {
 		
 		if(player.getAssistants().getAmount() < ACTIONCOST) {
-			throw new IllegalActionException();
+			throw new IllegalActionException("you can not afford it!");
 		}
 		
+		if(!pool.isAvailable(councilorColor)) {
+			throw new IllegalActionException("there are no more councilor available of the choosen color");
+		}
+		
+		pool.slideCouncilor(council, councilorColor);
 		player.getAssistants().decrease(ACTIONCOST);
-		
-		if(pool.isAvailable(councilorColor)) {
-			pool.slideCouncilor(council, councilorColor);
-		} else {
-			throw new IllegalActionException();
-		}
 	}
 }

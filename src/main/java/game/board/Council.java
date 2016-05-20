@@ -47,6 +47,4 @@ public class Council {
 	public Color getHeadColor(){
 		return councMembers.get(0).getColor();
 	}
-	
-	
 }

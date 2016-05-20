@@ -14,7 +14,7 @@ public class ABuyAssistant extends Action {
 	@Override
 	public void execute() throws IllegalActionException {
 		if(player.getCoins().getAmount() < ASSISTANTPRICE) {
-			throw new IllegalActionException();
+			throw new IllegalActionException("you can not afford it!");
 		}
 		
 		player.getCoins().decrease(ASSISTANTPRICE);

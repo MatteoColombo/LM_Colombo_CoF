@@ -22,16 +22,16 @@ public class ABuildEmporium extends Action{
 	public void execute() throws IllegalActionException {
 		
 		if(!permissionCard.getCardCity().contains(city)) {
-			throw new IllegalActionException();
+			throw new IllegalActionException("the chosen city is invalid");
 		}
 		
 		if(city.hasEmporiumOfPlayer(player)) {
-			throw new IllegalActionException();
+			throw new IllegalActionException("you already have an emporium there");
 		}
 		
 		if(city.getNumberOfEmporium() > 0) {
 			if(player.getAssistants().getAmount() < city.getNumberOfEmporium()) {
-				throw new IllegalActionException();
+				throw new IllegalActionException("you can not afford it!");
 			}
 			player.getAssistants().decrease(city.getNumberOfEmporium());
 		}

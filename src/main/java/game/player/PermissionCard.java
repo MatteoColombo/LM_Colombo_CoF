@@ -39,7 +39,7 @@ public class PermissionCard {
 		return this.cities;
 	}
 
-	public Reward getCardBonus() {
+	public Reward getCardReward() {
 		return this.rewards;
 	}
 

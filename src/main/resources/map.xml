@@ -4,6 +4,7 @@
 		<city>
 			<name>Milano</name>
 			<color>#ff45dd</color>
+			<capital>true</capital>
 			<connection>Torino</connection>
 		</city>
 	</region>

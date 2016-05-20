@@ -79,13 +79,17 @@ public class Player {
 
 	public void actionsReset() {
 		this.mainActions = DEFAULTMAINACTION;
-		this.extraAction = true;
+		this.extraAction = false;
 	}
 
-	public List<Color> getAvailableColors() {
-		return this.pickedColours;
+	public void doMainAction(){
+		this.mainActions-=1;
 	}
-
+	
+	public void doExtraAction(){
+		this.extraAction=true;
+	}
+	
 	public void drawAPoliticCard() {
 		this.politicCard.add(new PoliticCard(this.pickedColours));
 	}

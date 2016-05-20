@@ -3,9 +3,9 @@ package game.player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import game.reward.*;
 
-import game.board.City;
+import game.board.city.City;
+import game.reward.*;
 /**
  * 
  * @author davidecavallini
@@ -31,7 +31,7 @@ public class PermissionCard {
 					this.cities.add(x);
 			}
 			empty = this.cities.isEmpty();
-		} while (!empty);
+		} while (empty);
 	}
 
 

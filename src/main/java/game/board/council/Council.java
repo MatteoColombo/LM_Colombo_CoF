@@ -1,4 +1,4 @@
-package game.board;
+package game.board.council;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -47,4 +47,6 @@ public class Council {
 	public Color getHeadColor(){
 		return councMembers.get(0).getColor();
 	}
+	
+	
 }

@@ -14,4 +14,5 @@ public class NoblePoints {
 	public void increment(int value) {
 		this.amount += value;
 	}
+	
 }

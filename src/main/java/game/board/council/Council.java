@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import game.action.IllegalActionException;
+import game.exceptions.IllegalActionException;
 import game.player.PoliticCard;
 
 

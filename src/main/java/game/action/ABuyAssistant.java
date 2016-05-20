@@ -1,5 +1,6 @@
 package game.action;
 
+import game.exceptions.IllegalActionException;
 import game.player.Player;
 
 public class ABuyAssistant extends Action {

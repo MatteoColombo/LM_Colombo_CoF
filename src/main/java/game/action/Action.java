@@ -1,5 +1,7 @@
 package game.action;
 
+import game.exceptions.IllegalActionException;
+
 public abstract class Action {
 	private boolean main;
 	

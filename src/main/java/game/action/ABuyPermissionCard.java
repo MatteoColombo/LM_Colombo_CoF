@@ -3,6 +3,7 @@ package game.action;
 import java.util.List;
 
 import game.board.council.Council;
+import game.exceptions.IllegalActionException;
 import game.player.PermissionCard;
 import game.player.Player;
 import game.player.PoliticCard;

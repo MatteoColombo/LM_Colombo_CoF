@@ -1,6 +1,7 @@
 package game.action;
 
 import game.board.city.City;
+import game.exceptions.IllegalActionException;
 import game.player.Emporium;
 import game.player.PermissionCard;
 import game.player.Player;

@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import game.board.council.Council;
 import game.board.council.CouncilorPool;
+import game.exceptions.IllegalActionException;
 import game.player.Player;
 
 public class ASlideCouncil extends Action{

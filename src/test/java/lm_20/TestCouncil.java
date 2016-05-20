@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.board.Council;
-import game.board.Councilor;
-import game.board.CouncilorPool;
+import game.board.council.Council;
+import game.board.council.Councilor;
+import game.board.council.CouncilorPool;
 
 public class TestCouncil {
 	ArrayList<Color> colorList = new ArrayList<Color>();
@@ -60,8 +60,15 @@ public class TestCouncil {
 		assertEquals(true, cp.isAvailable(colorList.get(2)));
 		
 		Color requested = colorList.get(1);
+
 		cp.slideCouncilor(council, colorList.get(1));
-		
 		assertEquals(council.getCouncilorsColor().get(2), requested);
+		
+		council=cp.getCouncil();
+		assertEquals(false, cp.isFull(council.getHeadColor()));
+
+		
+		
+		
 	}
 }

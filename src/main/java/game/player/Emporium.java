@@ -1,6 +1,6 @@
 package game.player;
 
-import game.board.City;
+import game.board.city.City;
 
 public class Emporium {
 	private Player player;

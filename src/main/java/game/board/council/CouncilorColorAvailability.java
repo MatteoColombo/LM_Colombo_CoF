@@ -1,4 +1,4 @@
-package game.board;
+package game.board.council;
 
 import java.awt.Color;
 

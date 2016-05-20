@@ -2,8 +2,8 @@ package game.action;
 
 import java.awt.Color;
 
-import game.board.Council;
-import game.board.CouncilorPool;
+import game.board.council.Council;
+import game.board.council.CouncilorPool;
 import game.player.Player;
 
 public class ASlideCouncilWithAssistant extends Action{

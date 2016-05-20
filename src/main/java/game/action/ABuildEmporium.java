@@ -1,6 +1,6 @@
 package game.action;
 
-import game.board.City;
+import game.board.city.City;
 import game.player.Emporium;
 import game.player.PermissionCard;
 import game.player.Player;

@@ -32,6 +32,7 @@ public class ABuyPermissionCard extends Action{
 		}
 		
 		int satisfiedCouncilors = 0;
+		
 		int multicoloredCards = filterColoredCard(politicCards);
 		for(Color c: councilorColor) {
 			if(politicCards.isEmpty()) {
@@ -85,7 +86,7 @@ public class ABuyPermissionCard extends Action{
 	
 	private int calculatePrice(int councSize, int satisfiedCouncilors, int multicoloredCards) {
 		int price;
-		int unsatisfiedCouncilors = councSize - satisfiedCouncilors;
+		int unsatisfiedCouncilors = councSize - satisfiedCouncilors - multicoloredCards;
 		if(unsatisfiedCouncilors == 0) {
 			price = multicoloredCards;
 		} else {

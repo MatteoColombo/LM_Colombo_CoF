@@ -31,48 +31,25 @@ public class ABuyPermissionCard extends Action{
 			throw new IllegalActionException("you are using too many cards!");
 		}
 		
-		int unsatisfiedCouncilors = 0;
-		int multicoloredCards = 0;
-		
-		for(PoliticCard card: politicCards) {
-			if(card.isMultipleColor()) {
-				politicCards.remove(card);
-				multicoloredCards++;
-			}
-		}
-		
+		int satisfiedCouncilors = 0;
+		int multicoloredCards = filterColoredCard(politicCards);
 		for(Color c: councilorColor) {
-			if(politicCards.size() == 0) {
-				unsatisfiedCouncilors++;
-				continue;
+			if(politicCards.isEmpty()) {
+				break;
 			}
 			
-			boolean match = false;
-			for(PoliticCard card: politicCards) {
-				if(c.equals(card.getCardColor())) {
-					politicCards.remove(card);
-					match = true;
-					break;
-				}
-			}
-			
-			if(!match) {
-				unsatisfiedCouncilors++;
+			boolean match = removeColoredCard(politicCards, c);
+			if(match) {
+				satisfiedCouncilors++;
 			}
 		}
 		
-		if(politicCards.size() > 0) {
+		if(!politicCards.isEmpty()) {
 			throw new IllegalActionException("some cards are wrong, or you gave no one");
 
 		}
 		
-		int price;
-		if(unsatisfiedCouncilors == 0) {
-			price = multicoloredCards;
-		} else {
-			price = multicoloredCards + unsatisfiedCouncilors * 3 + 1;
-		}
-		
+		int price = calculatePrice(councilorColor.size(), satisfiedCouncilors, multicoloredCards);	
 		if(player.getCoins().getAmount() < price) {
 			throw new IllegalActionException("you can not afford it!");
 		}
@@ -80,5 +57,41 @@ public class ABuyPermissionCard extends Action{
 		player.getCoins().decrease(price);
 		player.getPermissionCard().add(permCard);
 		permCard.getCardReward().assignBonusTo(player);
+	}
+	
+	private int filterColoredCard(List<PoliticCard> lp) {
+		int multicoloredCards = 0;
+		
+		for(PoliticCard card: lp) {
+			if(card.isMultipleColor()) {
+				lp.remove(card);
+				multicoloredCards++;
+			}
+		} 
+		return multicoloredCards;
+	}
+	
+	private boolean removeColoredCard(List<PoliticCard> lp, Color c) {
+		boolean match = false;
+		for(PoliticCard card: lp) {
+			if(c.equals(card.getCardColor())) {
+				lp.remove(card);
+				match = true;
+				break;
+			}
+		}
+		return match;
+	}
+	
+	private int calculatePrice(int councSize, int satisfiedCouncilors, int multicoloredCards) {
+		int price;
+		int unsatisfiedCouncilors = councSize - satisfiedCouncilors;
+		if(unsatisfiedCouncilors == 0) {
+			price = multicoloredCards;
+		} else {
+			price = multicoloredCards + unsatisfiedCouncilors * 3 + 1;
+		}
+		
+		return price;
 	}
 }

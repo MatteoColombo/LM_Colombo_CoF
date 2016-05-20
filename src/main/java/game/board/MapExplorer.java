@@ -1,8 +1,9 @@
-package game.board.city;
+package game.board;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import game.board.city.City;
 import game.player.Player;
 import game.reward.Reward;
 

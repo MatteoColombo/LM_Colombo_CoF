@@ -1,5 +1,8 @@
 package game.board;
 
+import game.board.city.City;
+import game.board.council.Council;
+
 public class King {
 	private City kingLocation;
 	private Council kingCouncil;

@@ -1,4 +1,4 @@
-package game.board;
+package game.board.city;
 
 import java.awt.Color;
 import java.util.ArrayList;

@@ -1,6 +1,9 @@
 package game.board;
 	
 import java.util.List;
+
+import game.board.city.City;
+import game.board.council.Council;
 import game.player.*;
 
 public class Region {

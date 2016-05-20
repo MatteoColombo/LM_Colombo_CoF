@@ -7,7 +7,10 @@ import java.awt.Color;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import game.board.exceptions.XMLFileException;
+
+import game.board.city.City;
+import game.board.city.CityConnection;
+import game.exceptions.XMLFileException;
 import game.reward.*;
 
 public class MapLoader {
@@ -21,9 +24,20 @@ public class MapLoader {
 		this.pool = pool;
 		this.regions = new ArrayList<>();
 		loadXML();
+		loadConnections();
 
 	}
 
+	
+	private void loadConnections(){
+		
+	}
+	
+	/**
+	 * It scans the XML file and extracts the regions, then calls the function which extracts the cities
+	 * when a region is completed, it creates its object
+	 * @throws XMLFileException
+	 */
 	public void loadXML() throws XMLFileException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		connections = new ArrayList<>();
@@ -50,6 +64,12 @@ public class MapLoader {
 
 	}
 
+	/**
+	 * It receives the list of the cities of a region.
+	 * It extracts the single regions and calls the function which generates the City objects
+	 * @param citiesOfRegion a NodeList of the cities
+	 * @return
+	 */
 	private List<City> parseCities(NodeList citiesOfRegion) {
 		List<City> cities = new ArrayList<>();
 		for (int j = 0; j < citiesOfRegion.getLength(); j++) {
@@ -62,8 +82,13 @@ public class MapLoader {
 		return cities;
 	}
 
+	
+	/**
+	 * It receives a City. It extracts the parameters and then it creates the Object 
+	 * @param cityXML the Node of the city
+	 * @return a City object
+	 */
 	private City parseCityAttr(Node cityXML) {
-
 		boolean isCapital = false;
 		NodeList cityAttr = cityXML.getChildNodes();
 		String name = "";
@@ -101,14 +126,26 @@ public class MapLoader {
 		return generatedCity;
 	}
 
+	/**
+	 * Returns the list of the regions
+	 * @return a list
+	 */
 	public List<Region> getRegions() {
 		return regions;
 	}
 
+	/**
+	 * Returns the capital
+	 * @return a City
+	 */
 	public City getKingCity() {
 		return null;
 	}
 
+	/**
+	 * Returns the number of regions
+	 * @return an integer
+	 */
 	public int getRegionsNumber() {
 		return regions.size();
 	}

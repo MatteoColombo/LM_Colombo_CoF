@@ -1,4 +1,4 @@
-package game.board;
+package game.board.city;
 
 import java.util.ArrayList;
 import java.util.List;

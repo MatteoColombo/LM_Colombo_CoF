@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import game.board.council.Council;
+import game.board.council.Councilor;
+import game.board.council.CouncilorColorAvailability;
+
 public class CouncilorPool {
 	private final int CONCPERCOLOR;
 	private final int COUNCILSIZE;

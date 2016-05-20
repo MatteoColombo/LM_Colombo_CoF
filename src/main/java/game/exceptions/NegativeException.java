@@ -1,4 +1,4 @@
-package game.board.exceptions;
+package game.exceptions;
 
 public class NegativeException extends Exception {
 	public NegativeException() {

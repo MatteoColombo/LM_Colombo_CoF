@@ -60,8 +60,15 @@ public class TestCouncil {
 		assertEquals(true, cp.isAvailable(colorList.get(2)));
 		
 		Color requested = colorList.get(1);
+
 		cp.slideCouncilor(council, colorList.get(1));
-		
 		assertEquals(council.getCouncilorsColor().get(2), requested);
+		
+		council=cp.getCouncil();
+		assertEquals(false, cp.isFull(council.getHeadColor()));
+
+		
+		
+		
 	}
 }

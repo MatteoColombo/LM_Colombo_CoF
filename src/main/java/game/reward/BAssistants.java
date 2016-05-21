@@ -22,6 +22,6 @@ public class BAssistants extends Bonus {
 
 	@Override
 	public void assignBonusTo(Player p) {
-		p.getCoins().increment(this.getAmount());
+		p.getAssistants().increment(this.getAmount());
 	}
 }

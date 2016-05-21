@@ -133,7 +133,7 @@ public class Council {
 		for(PoliticCard card: cards){
 			boolean found=false;
 			if(card.isMultipleColor())
-				break;
+				continue;
 			for(int i=0;i <comparableCouncilors.size(); i++)
 				if(comparableCouncilors.get(i).getColor().equals(card.getCardColor())){
 					found=true;

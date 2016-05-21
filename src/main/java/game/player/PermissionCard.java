@@ -13,25 +13,37 @@ import game.reward.*;
  */
 public class PermissionCard {
 
-	private ArrayList<City> cities;
-	private Reward rewards;
+	private List<City> cities;
+	private Reward reward;
 	private boolean used;
-
+	/**
+	 * standard constructor, which assign passed parameter
+	 * @param cities
+	 * @param reward
+	 */
+	public PermissionCard(List<City> cities, Reward reward) {
+		this.cities = cities;
+		this.reward = reward;
+	}
+	
 	public PermissionCard(List<City> citiesOfRegions) { // Bonus missing
 		boolean empty;
 		cities = new ArrayList<>();
-
+		Random r = new Random();
 		// this cycle secure that there is at least one city in the reward
 		// TODO there should be a max of it (maybe 3?)
-
 		do {
 			for (City x : citiesOfRegions) {
-				boolean i = new Random().nextBoolean();
+				boolean i = r.nextBoolean();
 				if (i)
 					this.cities.add(x);
 			}
 			empty = this.cities.isEmpty();
 		} while (empty);
+		
+		final int MAXBONUSES = 3;
+		final int REWARDVALUE = 100;	
+		reward = new Reward(Bonus.getAllStandardBonus(), r.nextInt(MAXBONUSES)+1, REWARDVALUE);
 	}
 
 
@@ -40,7 +52,7 @@ public class PermissionCard {
 	}
 
 	public Reward getCardReward() {
-		return this.rewards;
+		return this.reward;
 	}
 
 	public boolean getIfCardUsed() {

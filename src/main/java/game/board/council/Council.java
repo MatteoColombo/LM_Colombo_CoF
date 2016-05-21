@@ -115,4 +115,40 @@ public class Council {
 		
 		return price;
 	}
+	
+	/**
+	 * Returns the number of councilors not covered by the cards
+	 * First it checks it there are more than 4 cards
+	 * Then it compares the not-multiplecolored cards with the concilors 
+	 * at last it counts the number of multiple colored cards
+	 * @param cards the list of politic cards
+	 * @return an integer, the number of uncovered councilors
+	 * @throws IllegalActionException
+	 */
+	public int compareCardCouncil(List<PoliticCard> cards) throws IllegalActionException{
+		List<Councilor> comparableCouncilors=this.councMembers;
+		if(cards.size()>this.councMembers.size())
+			throw new IllegalActionException("Too many cards");
+		
+		for(PoliticCard card: cards){
+			boolean found=false;
+			if(card.isMultipleColor())
+				break;
+			for(int i=0;i <comparableCouncilors.size(); i++)
+				if(comparableCouncilors.get(i).getColor().equals(card.getCardColor())){
+					found=true;
+					comparableCouncilors.remove(i);
+					break;
+				}
+			if(!found)
+				throw new IllegalActionException("Invalid card/cards");
+		}
+		for(PoliticCard card: cards){
+			if(card.isMultipleColor()){
+				comparableCouncilors.remove(0);
+			}
+		}		
+			
+		return comparableCouncilors.size();
+	}
 }

@@ -134,7 +134,8 @@ public class Council {
 	 * @throws IllegalActionException
 	 */
 	public int compareCardCouncil(List<PoliticCard> cards) throws IllegalActionException{
-		List<Councilor> comparableCouncilors=this.councMembers;
+		List<Councilor> comparableCouncilors= new ArrayList<>();
+		comparableCouncilors.addAll(this.councMembers);
 		checkCardsNumber(cards);
 		for(PoliticCard card: cards){
 			boolean found=false;
@@ -158,7 +159,8 @@ public class Council {
 		return comparableCouncilors.size();
 	}
 	
-	public void checkCardsNumber(List<PoliticCard> cards) throws IllegalActionException{
+	
+	private void checkCardsNumber(List<PoliticCard> cards) throws IllegalActionException{
 		if(cards.size()>this.councMembers.size())
 			throw new IllegalActionException("Too many cards");
 	}

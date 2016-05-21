@@ -43,6 +43,8 @@ public class ABuyPermissionCard extends Action{
 	 * @return an integer, the price
 	 */
 	private int calculatePrice(int difference){
+		if(difference == 0)
+			return 0;
 		return (1+difference*3);
 	}
 	

@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import game.board.NobleTrack;
-import game.exceptions.NegativeException;
 import game.player.Assistants;
 import game.player.Coins;
 import game.player.Emporium;

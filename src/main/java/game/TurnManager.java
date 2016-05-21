@@ -10,6 +10,14 @@ public class TurnManager {
 		this.turnPlayer=turnPlayer;
 		this.turnPlayer.actionsReset();
 		this.gameBoard=gameBoard;
+		startTurn();
+	}
+	private void startTurn(){
+		askPlayerWhatToDo();
+	}
+	
+	private void askPlayerWhatToDo(){
+		
 	}
 	
 }

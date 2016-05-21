@@ -5,7 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import game.player.*;
 import game.reward.*;
-
+/**
+ * The class of the cities.
+ * Each city has a color and a name
+ * It holds the reward and keep track of the connections with the other cities
+ * Emporium of the players are saved in a list
+ * @author Matteo Colombo
+ *
+ */
 public class City {
 	private String cityName;
 	private Color cityColor;

@@ -3,6 +3,11 @@ package game.board.city;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A support class used to created the map
+ * @author Matteo Colombo
+ *
+ */
 public class CityConnection {
 	private List<String> cities;
 	

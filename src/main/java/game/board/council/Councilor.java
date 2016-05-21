@@ -2,6 +2,11 @@ package game.board.council;
 
 import java.awt.Color;
 
+/**
+ * A councilor is characterized by a color and is used in councils
+ * @author Matteo Colombo
+ *
+ */
 public class Councilor {
 	private Color councilorColor;
 

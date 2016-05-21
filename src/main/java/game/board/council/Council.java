@@ -7,6 +7,13 @@ import java.util.List;
 import game.exceptions.IllegalActionException;
 import game.player.PoliticCard;
 
+/**
+ * The class of the council.
+ * a council is composed by councilors and it works like a queue with fixed size
+ * councils are used to buy permit cards or to build an emporium using the king
+ * @author Matteo Colombo
+ *
+ */
 
 public class Council {
 	private List<Councilor> councMembers;

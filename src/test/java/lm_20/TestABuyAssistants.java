@@ -1,4 +1,4 @@
-package lm_20.actions;
+package lm_20;
 
 import static org.junit.Assert.*;
 

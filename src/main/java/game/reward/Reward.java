@@ -31,17 +31,18 @@ public class Reward {
 	 * Constructor for a randomly generated Reward from a set of Bonus
 	 * @param availableBonus The Reward choose a Bonus among this array. 
 	 * Usually this should be the allStandardBonus from the Bonus class, but it could be different
-	 * @param differentBonus how much different Bonus should contains the Reward
+	 * @param differentBonus how much different Bonus should contains the Reward at most
 	 * @param value a parameter to generate different Rewards.
 	 * The higher it is, the bigger the average generated reward will be.
 	 */
-	public Reward(Bonus[] availableBonus, int differentBonus, int value) {
+	public Reward(Bonus[] availableBonus, int maxdifferentBonus, int value) {
 		
-		if(differentBonus > availableBonus.length) {
+		if(maxdifferentBonus > availableBonus.length) {
 			throw new IllegalArgumentException();
 		}
 		FlagTable flagTable = new FlagTable(availableBonus.length);
-		Random r = new Random();		
+		Random r = new Random();
+		int differentBonus = r.nextInt(maxdifferentBonus) +1;
 		int bonusToInsert = differentBonus;
 		
 		while(bonusToInsert > 0) {

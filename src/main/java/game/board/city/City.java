@@ -14,6 +14,7 @@ import game.reward.*;
  *
  */
 public class City {
+	
 	private String cityName;
 	private Color cityColor;
 	private Reward cityReward;
@@ -34,57 +35,24 @@ public class City {
 		this.emporiums = new ArrayList<>();
 		this.cityReward = cityReward;
 		this.capital = false;
-	}
-	
-	/**
-	 * This is the constructor which is used to initialize a non-capital city It
-	 * initializes the list of the emporiums
-	 * @param cityColor a Color, the color of the city
-	 * @param cityName a string, the name of the city
-	 * @param cityReward a Reward, the prices you win when you place an emporium in the city
-	  * @param connectedCities a list, the cities connected to this one 
-	 */
-	public City(Color cityColor, String cityName, Reward cityReward, List<City> connectedCities) {
-		this.cityName = cityName;
-		this.cityColor = cityColor;
-		this.emporiums = new ArrayList<>();
-		this.cityReward = cityReward;
-		this.capital = false;
-		this.connectedCities=connectedCities;
+		this.connectedCities = new ArrayList<City>();
 	}
 
 	/**
-	 * This is the constructor which is used to initialize a non-capital city It
+	 * This is the constructor which is used to initialize the capital city It
 	 * initializes the list of the emporiums
 	 * @param cityColor a Color, the color of the city
 	 * @param cityName a string, the name of the city
 	 * @param cityReward a Reward, the prices you win when you place an emporium in the city
 	 * @param capital a boolean, true if this city is the capital 
 	 */
-	public City(Color cityColor, String cityName, Reward cityReward, boolean capital) {
+	public City(Color cityColor, String cityName) {
 		this.cityName = cityName;
 		this.cityColor = cityColor;
 		this.emporiums = new ArrayList<>();
-		this.cityReward = cityReward;
-		this.capital = capital;
-	}
-
-	/**
-	 * This is the constructor which is used to initialize a non-capital city It
-	 * initializes the list of the emporiums
-	 * @param cityColor a Color, the color of the city
-	 * @param cityName a string, the name of the city
-	 * @param cityReward a Reward, the prices you win when you place an emporium in the city
-	 * @param capital a boolean, true if this city is the capital
-	 * @param connectedCities a list, the cities connected to this one 
-	 */
-	public City(Color cityColor, String cityName, Reward cityReward, boolean capital, List<City> connectedCities) {
-		this.cityName = cityName;
-		this.cityColor = cityColor;
-		this.emporiums = new ArrayList<>();
-		this.cityReward = cityReward;
-		this.capital = capital;
-		this.connectedCities=connectedCities;
+		this.cityReward = null;
+		this.capital = true;
+		this.connectedCities = new ArrayList<City>();
 	}
 	
 	/**

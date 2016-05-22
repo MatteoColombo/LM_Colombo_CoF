@@ -155,10 +155,9 @@ public class MapLoader {
 		City generatedCity;
 
 		if (isCapital)
-			generatedCity = new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(), 1, 40));
+			generatedCity = new City(Color.decode(color), name);
 		else
-			generatedCity = new City(Color.decode(color), name, new Reward(Bonus.getAllStandardBonus(), 1, 40),
-					isCapital);
+			generatedCity = new City(Color.decode(color), name, new RewardCity());
 		return generatedCity;
 	}
 

@@ -24,7 +24,7 @@ public class MapExplorer {
 	 */
 	public List<Reward> getAdiacentRewards(City startingCity, Player p) {
 		resetAdiacents();
-		List<Reward> rewards = new ArrayList<>();;
+		List<Reward> rewards = new ArrayList<>();
 		connectedCities.add(startingCity);
 		for (City temp : connectedCities) {
 			if (temp.hasEmporiumOfPlayer(p)) {

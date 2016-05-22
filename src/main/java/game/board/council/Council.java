@@ -2,7 +2,6 @@ package game.board.council;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.IllegalFormatWidthException;
 import java.util.List;
 
 import game.exceptions.IllegalActionException;

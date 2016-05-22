@@ -40,10 +40,8 @@ public class PermissionCard {
 			}
 			empty = this.cities.isEmpty();
 		} while (empty);
-		
-		final int MAXBONUSES = 3;
-		final int REWARDVALUE = 100;	
-		reward = new Reward(Bonus.getAllStandardBonus(), r.nextInt(MAXBONUSES)+1, REWARDVALUE);
+	
+		reward = new RewardPermission();
 	}
 
 

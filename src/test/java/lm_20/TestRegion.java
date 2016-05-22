@@ -31,14 +31,14 @@ public class TestRegion {
 		members.add(new Councilor(ColorConstants.WHITE));
 		members.add(new Councilor(ColorConstants.ORANGE));
 		members.add(new Councilor(ColorConstants.PURPLE));
-		
+	
 		council = new Council(members);
 		
-		region = new Region("sea", cities, council, 2);
 	}
 
 	@Test
-	public void testRegion() {
+	public void testGetter() {
+		region = new Region("sea", cities, council, 2);
 		assertEquals("sea", region.toString());
 		assertEquals(council, region.getCouncil());
 		assertEquals(cities, region.getCities());

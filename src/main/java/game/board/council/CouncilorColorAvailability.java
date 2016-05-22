@@ -60,7 +60,7 @@ public class CouncilorColorAvailability {
 	 * This means that one has been added to a council
 	 */
 	public void decAvailability() {
-		availability++;
+		availability--;
 	}
 
 }

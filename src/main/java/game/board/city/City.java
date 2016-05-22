@@ -35,7 +35,7 @@ public class City {
 		this.emporiums = new ArrayList<>();
 		this.cityReward = cityReward;
 		this.capital = false;
-		this.connectedCities = new ArrayList<City>();
+		this.connectedCities = new ArrayList<>();
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class City {
 		this.emporiums = new ArrayList<>();
 		this.cityReward = null;
 		this.capital = true;
-		this.connectedCities = new ArrayList<City>();
+		this.connectedCities = new ArrayList<>();
 	}
 	
 	/**

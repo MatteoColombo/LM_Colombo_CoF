@@ -46,7 +46,7 @@ public class ABuyPermissionCard extends Action{
 		if(difference == 0) {
 			return 0;
 		}
-		return (1+difference*3);
+		return difference*3 +1;
 	}
 	
 	/**

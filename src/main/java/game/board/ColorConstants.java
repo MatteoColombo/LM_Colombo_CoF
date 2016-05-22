@@ -5,11 +5,6 @@ import java.awt.Color;
 public class ColorConstants {
 	public static final int NUM_COUNCILOR_COLORS = 6;
 
-	/*
-	 * This constructor is empty because we don't need it
-	 */
-	private ColorConstants() {
-	}
 	// is this hard coded?
 	public static final Color SAPPHIRE = new Color(50, 160, 160);
 	public static final Color BRONZE = new Color(190, 110, 80);
@@ -20,4 +15,10 @@ public class ColorConstants {
 	public static final Color BLACK = new Color(0, 0, 0);
 	public static final Color ORANGE = new Color(220, 150, 70);
 	public static final Color PURPLE = new Color(105, 70, 120);
+	
+	/*
+	 * This constructor is empty because we don't need it
+	 */
+	private ColorConstants() {
+	}
 }

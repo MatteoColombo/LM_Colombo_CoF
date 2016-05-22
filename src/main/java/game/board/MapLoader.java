@@ -34,7 +34,6 @@ public class MapLoader {
 		this.citiesOfMap = new ArrayList<>();
 		loadXML();
 		loadConnections();
-
 	}
 	
 	private void loadConnections() {
@@ -176,6 +175,9 @@ public class MapLoader {
 	 * @return a City
 	 */
 	public City getKingCity() {
+		for(City c: citiesOfMap)
+			if(c.isCapital())
+				return c;
 		return null;
 	}
 
@@ -188,4 +190,5 @@ public class MapLoader {
 		return regions.size();
 	}
 
+	
 }

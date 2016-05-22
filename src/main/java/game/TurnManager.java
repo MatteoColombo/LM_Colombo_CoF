@@ -17,7 +17,7 @@ public class TurnManager {
 	}
 	
 	private void askPlayerWhatToDo(){
-		
+		//TODO
 	}
 	
 }

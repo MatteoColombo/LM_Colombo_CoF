@@ -37,7 +37,11 @@ public class TestSlideCouncilors {
 		this.pool= new CouncilorPool(4, 4, colorList);
 		this.council= pool.getCouncil();
 	}
-
+	
+	/**
+	 * Insert 3 councilors in the council, then it adds another one with the action
+	 * then test if the councilors are the expected and in the correct order
+	 */
 	@Test
 	public void testSlideCouncil(){
 		try{
@@ -55,7 +59,7 @@ public class TestSlideCouncilors {
 			assertEquals(colorList.get(4), colorsFromCouncil.get(3));
 			assertEquals(14, player.getCoins().getAmount());
 		}catch(IllegalActionException iae){
-			
+			System.out.println(iae.getMessage());
 		}
 	}
 }

@@ -11,6 +11,7 @@ import game.player.Coins;
 import game.player.Emporium;
 import game.player.NoblePoints;
 import game.player.Player;
+import game.player.PoliticCard;
 import game.player.VictoryPoints;
 
 import org.junit.Before;
@@ -37,6 +38,9 @@ public class TestPlayer {
 		p = new Player(10, 1, 6, 10, colorList, 0, 0);
 	}
 
+	/**
+	 * Test the coins 
+	 */
 	@Test
 	public void testCoins() {
 		Coins c = p.getCoins();
@@ -45,6 +49,9 @@ public class TestPlayer {
 		assertEquals(12, c.getAmount());
 	}
 
+	/**
+	 * Test the assistants
+	 */
 	@Test
 	public void testAssistants() {
 		Assistants a = p.getAssistants();
@@ -53,6 +60,9 @@ public class TestPlayer {
 		assertEquals(2, a.getAmount());
 	}
 
+	/**
+	 * Test the victory points
+	 */
 	@Test
 	public void testVictoryPoinrs() {
 
@@ -62,6 +72,9 @@ public class TestPlayer {
 
 	}
 
+	/**
+	 * Test the emporiums
+	 */
 	@Test
 	public void testEmporium() {
 		Emporium e = p.getEmporium().get(0);
@@ -69,6 +82,9 @@ public class TestPlayer {
 		assertEquals(null, e.getCity());
 	}
 
+	/**
+	 * Test the pointer to the noble's track
+	 */
 	@Test
 	public void testNoblePoint() {
 		NoblePoints n = p.getNoblePoints();
@@ -78,6 +94,9 @@ public class TestPlayer {
 		assertEquals(3, n.getAmount());
 	}
 
+	/**
+	 * Tests main and extra actions
+	 */
 	@Test
 	public void testActions() {
 		p.doExtraAction();
@@ -87,6 +106,20 @@ public class TestPlayer {
 		p.actionsReset();
 		assertEquals(1, p.getMainActionsLeft());
 		assertEquals(false, p.getIfExtraActionDone());
+		p.doMainAction();
+		p.increseMainAction();
+		assertEquals(1, p.getMainActionsLeft());
+	}
+	
+	/**
+	 * Tests the methods to draw a new cards, checks if it is effectively added
+	 */
+	@Test 
+	public void testPoliticCards(){
+		p.drawAPoliticCard();
+		assertEquals(7, p.getPoliticCard().size());
+		
+		System.out.println(p.getPoliticCard().get(0).isMultipleColor());
 	}
 
 }

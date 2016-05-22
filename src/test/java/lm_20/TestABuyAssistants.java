@@ -35,7 +35,10 @@ public class TestABuyAssistants {
 		p = new Player(10, 1, 6, 10, colorList, 0, 0);
 	}
 	
-	
+	/**
+	 * Buys an assistant when coins are enough
+	 * @throws IllegalActionException
+	 */
 	@Test
 	public void testActionBuyAssistant() throws IllegalActionException {
 		p = new Player(10, 1, 6, 10, colorList, 0, 0);
@@ -45,6 +48,10 @@ public class TestABuyAssistants {
 		assertEquals(2, p.getAssistants().getAmount());
 	}
 	
+	
+	/**
+	 * Tests when coins aren't enough to buy a new assistant
+	 */
 	@Test 
 	public void testActionBuyAssistantFailed(){
 		p = new Player(10, 1, 6, 10, colorList, 0, 0);

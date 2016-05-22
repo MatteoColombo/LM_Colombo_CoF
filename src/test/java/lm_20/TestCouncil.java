@@ -4,67 +4,74 @@ import static org.junit.Assert.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import game.board.ColorConstants;
 import game.board.council.Council;
 import game.board.council.Councilor;
-import game.board.council.CouncilorPool;
+import game.exceptions.IllegalActionException;
+import game.player.PoliticCard;
 
 public class TestCouncil {
-	ArrayList<Color> colorList = new ArrayList<Color>();
-	ArrayList<Councilor> councList = new ArrayList<>();
-	Council council;
-	Councilor councilor;
-	Color color;
-	CouncilorPool cp;
-
+	List<Councilor> members;
 	
 	@Before
 	public void setUp() throws Exception {
-		colorList.add(new Color(20, 30, 40));
-		colorList.add(new Color(100, 30, 50));
-		colorList.add(new Color(200, 130, 140));
-		councList.add(new Councilor(colorList.get(0)));
-		councList.add(new Councilor(colorList.get(1)));
-		councList.add(new Councilor(colorList.get(2)));
-		council = new Council(councList);
-		
-		color = new Color(100, 100, 100);
-		councilor = new Councilor(color);
-		cp = new CouncilorPool(4, 4, colorList);
+		members = new ArrayList<Councilor>();
+		members.add(new Councilor(ColorConstants.BLACK));
+		members.add(new Councilor(ColorConstants.WHITE));
+		members.add(new Councilor(ColorConstants.ORANGE));
+		members.add(new Councilor(ColorConstants.PURPLE));
 	}
-	
-	@Test
-	public void testCouncilor() {
-		assertEquals(councilor.getColor(), color);
-	}
-	
-	@Test
-	public void testCouncil() {				
-		assertEquals(council.getCouncilorsColor(), colorList);
-	
-		council.insertCouncilor(councilor);		
-		assertEquals(councilor.getColor(), color);
-	}
-	
-	@Test
-	public void TestCouncilorPool() {
-		assertEquals(true, cp.isFull(colorList.get(0)));
-		assertEquals(true, cp.isFull(colorList.get(1)));
-		assertEquals(true, cp.isFull(colorList.get(2)));
-		
-		assertEquals(true, cp.isAvailable(colorList.get(0)));
-		assertEquals(true, cp.isAvailable(colorList.get(1)));
-		assertEquals(true, cp.isAvailable(colorList.get(2)));
-		
-		Color requested = colorList.get(1);
 
-		cp.slideCouncilor(council, colorList.get(1));
-		assertEquals(council.getCouncilorsColor().get(2), requested);
-		
-		council=cp.getCouncil();
-		assertEquals(false, cp.isFull(council.getHeadColor()));			
+	@Test
+	public void testGetter() {
+		Council council = new Council(members);
+		assertEquals(council.getHeadColor(), ColorConstants.BLACK);
+		assertEquals(council.getCouncilorsColor().get(3), ColorConstants.PURPLE);
+	}
+	
+	@Test
+	public void testInsert() {
+		Council council = new Council(members);
+		Councilor member = new Councilor(ColorConstants.ORANGE);
+		council.insertCouncilor(member);
+		assertEquals(council.getHeadColor(), ColorConstants.WHITE);
+		assertEquals(council.getCouncilorsColor().get(3), ColorConstants.ORANGE);
+	}
+	
+	@Test
+	public void testSatisfaction() throws IllegalActionException{
+		Council council = new Council(members);
+		List<Color> colors = ColorConstants.getCardsColors();
+		List<PoliticCard> card = new ArrayList<PoliticCard>();
+		card.add(new PoliticCard(colors));
+		assertEquals(3, council.compareCardCouncil(card));
+	}
+	
+	@Test
+	public void testNoCard() throws IllegalActionException{
+		Council council = new Council(members);
+		List<PoliticCard> empty = new ArrayList<>();
+		council.compareCardCouncil(empty);
+		assertEquals(4, council.compareCardCouncil(empty));
+
+	}
+	
+	@Test(expected = IllegalActionException.class)
+	public void testTooManyCards() throws IllegalActionException {
+		Council council = new Council(members);
+		List<Color> colors = ColorConstants.getCardsColors();
+		List<PoliticCard> cards = new ArrayList<>();
+		cards.add(new PoliticCard(colors));
+		cards.add(new PoliticCard(colors));
+		cards.add(new PoliticCard(colors));
+		cards.add(new PoliticCard(colors));
+		cards.add(new PoliticCard(colors));
+		cards.add(new PoliticCard(colors));
+		council.compareCardCouncil(cards);
 	}
 }

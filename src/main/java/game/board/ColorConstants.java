@@ -1,6 +1,8 @@
 package game.board;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColorConstants {
 	public static final int NUM_COUNCILOR_COLORS = 6;
@@ -20,5 +22,15 @@ public class ColorConstants {
 	 * This constructor is empty because we don't need it
 	 */
 	private ColorConstants() {
+	}
+	
+	public static List<Color> getCardsColors() {
+		List<Color> colors = new ArrayList<Color>();
+		colors.add(ColorConstants.PURPLE);
+		colors.add(ColorConstants.WHITE);
+		colors.add(ColorConstants.ORANGE);
+		colors.add(ColorConstants.BLACK);
+		
+		return colors;
 	}
 }

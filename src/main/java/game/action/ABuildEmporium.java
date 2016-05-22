@@ -18,6 +18,9 @@ public class ABuildEmporium extends Action {
 
 	public ABuildEmporium(Player p, PermissionCard permissionCard, City city) throws IllegalActionException{
 		super(true);
+		this.player = p;
+		this.permissionCard = permissionCard;
+		this.city = city;
 		if (!permissionCard.getCardCity().contains(city)) {
 			throw new IllegalActionException("the chosen city is invalid");
 		}
@@ -29,9 +32,7 @@ public class ABuildEmporium extends Action {
 			&& (player.getAssistants().getAmount() < city.getNumberOfEmporium())) {
 				throw new IllegalActionException("you can not afford it!");		
 		}
-		this.player = p;
-		this.permissionCard = permissionCard;
-		this.city = city;
+		
 	}
 
 	@Override

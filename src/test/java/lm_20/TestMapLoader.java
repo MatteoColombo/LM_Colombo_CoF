@@ -25,9 +25,9 @@ public class TestMapLoader {
 		MapLoader ml= new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors));
 		assertEquals(ml.getRegionsNumber(),3);
 		ml.getRegions();
-		ml.getKingCity();
+		//ml.getKingCity();
 		}catch(Exception e){
-			
+			System.out.println(e.getMessage());
 		}
 	}
 

@@ -16,17 +16,8 @@ public class ASlideCouncilWithAssistant extends Action{
 	private Council council;
 	private CouncilorPool pool;
 	
-	public ASlideCouncilWithAssistant(Player player, CouncilorPool pool, Council council, Color color) {
+	public ASlideCouncilWithAssistant(Player player, CouncilorPool pool, Council council, Color color) throws IllegalActionException{
 		super(false);
-		this.player = player;
-		this.pool = pool;
-		this.council = council;
-		this.councilorColor = color;
-	}
-
-	@Override
-	public void execute() throws IllegalActionException {
-		
 		if(player.getAssistants().getAmount() < ACTIONCOST) {
 			throw new IllegalActionException("you can not afford it!");
 		}
@@ -34,7 +25,14 @@ public class ASlideCouncilWithAssistant extends Action{
 		if(!pool.isAvailable(councilorColor)) {
 			throw new IllegalActionException("there are no more councilor available of the choosen color");
 		}
-		
+		this.player = player;
+		this.pool = pool;
+		this.council = council;
+		this.councilorColor = color;
+	}
+
+	@Override
+	public void execute() {
 		pool.slideCouncilor(council, councilorColor);
 		player.getAssistants().decrease(ACTIONCOST);
 	}

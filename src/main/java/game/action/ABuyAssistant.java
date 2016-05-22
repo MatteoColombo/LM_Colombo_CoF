@@ -8,16 +8,15 @@ public class ABuyAssistant extends Action {
 	
 	Player player;
 	
-	public ABuyAssistant(Player player) {
+	public ABuyAssistant(Player player) throws IllegalActionException{
 		super(false);
-		this.player = player;
-	}
-	@Override
-	public void execute() throws IllegalActionException {
 		if(player.getCoins().getAmount() < ASSISTANTPRICE) {
 			throw new IllegalActionException("you can not afford it!");
 		}
-		
+		this.player = player;
+	}
+	@Override
+	public void execute() {
 		player.getCoins().decrease(ASSISTANTPRICE);
 		player.getAssistants().increment(1);
 	}

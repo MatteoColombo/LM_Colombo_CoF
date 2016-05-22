@@ -38,11 +38,20 @@ public class TestRegion {
 	}
 
 	@Test
-	public void test() {
+	public void testRegion() {
 		assertEquals("sea", region.toString());
 		assertEquals(council, region.getCouncil());
 		assertEquals(cities, region.getCities());
 		assertEquals(cities.get(1), region.getCity("Burgen"));
+	}
+	
+	@Test
+	public void testCity() {
+		City castrum = cities.get(2);
+		assertEquals(castrum.getColor(), ColorConstants.SILVER);
+		assertEquals(castrum.isCapital(), false);
+		assertEquals(castrum.getNumberOfEmporium(), 0);
+		assertEquals(castrum.isConnectedTo(cities.get(3)), false);
 	}
 
 }

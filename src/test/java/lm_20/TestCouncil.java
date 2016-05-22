@@ -65,10 +65,6 @@ public class TestCouncil {
 		assertEquals(council.getCouncilorsColor().get(2), requested);
 		
 		council=cp.getCouncil();
-		assertEquals(false, cp.isFull(council.getHeadColor()));
-
-		
-		
-		
+		assertEquals(false, cp.isFull(council.getHeadColor()));			
 	}
 }

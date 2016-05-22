@@ -16,8 +16,11 @@ public class ASlideCouncil extends Action{
 	private Council council;
 	private CouncilorPool pool;
 	
-	public ASlideCouncil(Player player, CouncilorPool pool, Council council, Color color) {
+	public ASlideCouncil(Player player, CouncilorPool pool, Council council, Color color) throws IllegalActionException{
 		super(true);
+		if(!pool.isAvailable(councilorColor)) {
+			throw new IllegalActionException("there are no more councilor available of the choosen color");
+		}
 		this.player = player;
 		this.pool = pool;
 		this.council = council;
@@ -25,12 +28,7 @@ public class ASlideCouncil extends Action{
 	}
 	
 	@Override
-	public void execute() throws IllegalActionException {
-		
-		if(!pool.isAvailable(councilorColor)) {
-			throw new IllegalActionException("there are no more councilor available of the choosen color");
-		}
-		
+	public void execute() {
 		pool.slideCouncilor(council, councilorColor);
 		player.getCoins().increment(GAIN);
 	}

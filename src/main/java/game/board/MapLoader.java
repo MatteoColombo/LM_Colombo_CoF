@@ -70,7 +70,7 @@ public class MapLoader {
 	 * 
 	 * @throws XMLFileException
 	 */
-	public void loadXML() throws XMLFileException {
+	private void loadXML() throws XMLFileException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		connections = new ArrayList<>();
 		try {

@@ -10,10 +10,10 @@ public class ABuyAssistant extends Action {
 	
 	public ABuyAssistant(Player player) throws IllegalActionException{
 		super(false);
+		this.player = player;
 		if(player.getCoins().getAmount() < ASSISTANTPRICE) {
 			throw new IllegalActionException("you can not afford it!");
 		}
-		this.player = player;
 	}
 	@Override
 	public void execute() {

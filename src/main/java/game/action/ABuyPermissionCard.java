@@ -15,17 +15,18 @@ public class ABuyPermissionCard extends Action{
 	List<PoliticCard> politicCards;
 	int price;
 	
-	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politc) throws IllegalActionException{
+	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politic) throws IllegalActionException{
 		super(true);
-		this.politicCards = politc;
+		this.politicCards = politic;
+		this.player = p;
+		this.permCard = permc;
 		int difference= counc.compareCardCouncil(politicCards);
 		price = calculatePrice(difference);
 		price+=calculatePriceMultipleColoredCards();
 		if(player.getCoins().getAmount() < price) {
 			throw new IllegalActionException("you can not afford it!");
 		}
-		this.player = p;
-		this.permCard = permc;
+		
 	}
 	
 	@Override

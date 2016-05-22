@@ -16,11 +16,11 @@ public class Assistants {
 	/**
 	 * Initializes the initial amount of Assistants owned by this {@link Player}.
 	 * 
-	 * @param value
+	 * @param initialValue
 	 *            the initial amount to be set
 	 */
-	public Assistants(int value) {
-		this.amount = value;
+	public Assistants(int initialValue) {
+		this.amount = initialValue;
 	}
 
 	/**

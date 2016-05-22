@@ -22,6 +22,6 @@ public class BCoins extends Bonus {
 
 	@Override
 	public void assignBonusTo(Player p) {
-		p.getCoins().increment(this.getAmount());
+		p.getCoins().increaseAmount(this.getAmount());
 	}
 }

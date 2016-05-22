@@ -40,16 +40,16 @@ public class TestPlayer {
 	@Test
 	public void testCoins() {
 		Coins c = p.getCoins();
-		c.increment(5);
-		c.decrease(3);
+		c.increaseAmount(5);
+		c.decreaseAmount(3);
 		assertEquals(12, c.getAmount());
 	}
 
 	@Test
 	public void testAssistants() {
 		Assistants a = p.getAssistants();
-		a.increment(2);
-		a.decrease(1);
+		a.increaseAmount(2);
+		a.decreaseAmount(1);
 		assertEquals(2, a.getAmount());
 	}
 
@@ -57,7 +57,7 @@ public class TestPlayer {
 	public void testVictoryPoinrs() {
 
 		VictoryPoints v = p.getVictoryPoints();
-		v.increment(5);
+		v.increaseAmount(5);
 		assertEquals(5, v.getAmount());
 
 	}
@@ -72,9 +72,9 @@ public class TestPlayer {
 	@Test
 	public void testNoblePoint() {
 		NoblePoints n = p.getNoblePoints();
-		n.increment(1);
+		n.increaseAmount(1);
 		assertEquals(1, n.getAmount());
-		n.increment(2);
+		n.increaseAmount(2);
 		assertEquals(3, n.getAmount());
 	}
 

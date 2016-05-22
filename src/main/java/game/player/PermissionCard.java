@@ -8,7 +8,7 @@ import game.board.city.City;
 import game.reward.*;
 /**
  * 
- * @author davidecavallini
+ * @author Davide_Cavallini
  *
  */
 public class PermissionCard {
@@ -25,7 +25,10 @@ public class PermissionCard {
 		this.cities = cities;
 		this.reward = reward;
 	}
-	
+	/**
+	 * 
+	 * @param citiesOfRegions
+	 */
 	public PermissionCard(List<City> citiesOfRegions) { // Bonus missing
 		boolean empty;
 		cities = new ArrayList<>();
@@ -43,20 +46,30 @@ public class PermissionCard {
 	
 		reward = new RewardPermission();
 	}
-
+/**
+ * 
+ * @return
+ */
 
 	public List<City> getCardCity() {
 		return this.cities;
 	}
-
+/**
+ * 
+ */
 	public Reward getCardReward() {
 		return this.reward;
 	}
-
+/**
+ * 
+ * @return
+ */
 	public boolean getIfCardUsed() {
 		return this.used;
 	}
-
+/**
+ * 
+ */
 	public void setCardUsed(){
 		this.used = true;
 	}

@@ -30,6 +30,6 @@ public class ASlideCouncil extends Action{
 	@Override
 	public void execute() {
 		pool.slideCouncilor(council, councilorColor);
-		player.getCoins().increment(GAIN);
+		player.getCoins().increaseAmount(GAIN);
 	}
 }

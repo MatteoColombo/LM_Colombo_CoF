@@ -22,6 +22,6 @@ public class BVictoryPoints extends Bonus {
 
 	@Override
 	public void assignBonusTo(Player p) {
-		p.getVictoryPoints().increment(this.getValue());
+		p.getVictoryPoints().increaseAmount(this.getValue());
 	}
 }

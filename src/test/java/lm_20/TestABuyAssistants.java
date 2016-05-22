@@ -48,7 +48,7 @@ public class TestABuyAssistants {
 	@Test 
 	public void testActionBuyAssistantFailed(){
 		p = new Player(10, 1, 6, 10, colorList, 0, 0);
-		p.getCoins().decrease(8);
+		p.getCoins().decreaseAmount(8);
 		assertEquals(2, p.getCoins().getAmount());
 		try{
 			ABuyAssistant action= new ABuyAssistant(this.p);

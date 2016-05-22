@@ -36,7 +36,7 @@ public class ABuildEmporium extends Action {
 
 	@Override
 	public void execute() {
-		player.getAssistants().decrease(city.getNumberOfEmporium());
+		player.getAssistants().decreaseAmount(city.getNumberOfEmporium());
 		player.getPermissionCard().add(permissionCard);
 		assignEmporium();
 		assignRewards();

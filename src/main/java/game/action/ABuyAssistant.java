@@ -17,8 +17,8 @@ public class ABuyAssistant extends Action {
 	}
 	@Override
 	public void execute() {
-		player.getCoins().decrease(ASSISTANTPRICE);
-		player.getAssistants().increment(1);
+		player.getCoins().decreaseAmount(ASSISTANTPRICE);
+		player.getAssistants().increaseAmount(1);
 	}
 	
 }

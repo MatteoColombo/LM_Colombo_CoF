@@ -30,7 +30,7 @@ public class ABuyPermissionCard extends Action{
 	
 	@Override
 	public void execute() {
-		player.getCoins().decrease(price);
+		player.getCoins().decreaseAmount(price);
 		player.getPermissionCard().add(permCard);
 		permCard.getCardReward().assignBonusTo(player);
 	}

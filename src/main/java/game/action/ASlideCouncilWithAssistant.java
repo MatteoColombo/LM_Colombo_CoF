@@ -34,6 +34,6 @@ public class ASlideCouncilWithAssistant extends Action{
 	@Override
 	public void execute() {
 		pool.slideCouncilor(council, councilorColor);
-		player.getAssistants().decrease(ACTIONCOST);
+		player.getAssistants().decreaseAmount(ACTIONCOST);
 	}
 }

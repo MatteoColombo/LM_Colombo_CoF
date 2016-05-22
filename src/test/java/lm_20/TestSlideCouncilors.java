@@ -27,12 +27,12 @@ public class TestSlideCouncilors {
 	@Before
 	public void setUp() {
 		colorList = new ArrayList<Color>();
-		colorList.add(new Color(20, 30, 40));
-		colorList.add(new Color(100, 30, 50));
-		colorList.add(new Color(200, 130, 140));
-		colorList.add(new Color(2, 3, 40));
-		colorList.add(new Color(2, 3, 4));
-		colorList.add(new Color(255, 255, 255));
+		colorList.add(Color.BLACK);
+		colorList.add(Color.BLUE);
+		colorList.add(Color.RED);
+		colorList.add(Color.YELLOW);
+		colorList.add(Color.GREEN);
+		colorList.add(Color.ORANGE);
 		this.player = new Player(10, 1, 6, 10, colorList, 0, 0);
 		this.pool= new CouncilorPool(4, 4, colorList);
 		this.council= pool.getCouncil();
@@ -45,7 +45,6 @@ public class TestSlideCouncilors {
 	@Test
 	public void testSlideCouncil(){
 		try{
-			Color c= council.getHeadColor();
 			pool.slideCouncilor(council, colorList.get(1));
 			pool.slideCouncilor(council, colorList.get(2));
 			pool.slideCouncilor(council, colorList.get(3));

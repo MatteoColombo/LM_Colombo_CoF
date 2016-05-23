@@ -25,13 +25,13 @@ public class MapExplorer {
 	public List<Reward> getAdiacentRewards(City startingCity, Player p) {
 		resetAdiacents();
 		List<Reward> rewards = new ArrayList<>();
-		connectedCities.add(startingCity);
-		for (City temp : connectedCities) {
-			if (temp.hasEmporiumOfPlayer(p)) {
-				adiacentCities.add(temp);
-				if (!temp.isCapital())
-					rewards.add(temp.getReward());
-				addConnectedCities(temp);
+		connectedCities.add(startingCity);	
+		for(int i=0; i<connectedCities.size();i++){
+			if (connectedCities.get(i).hasEmporiumOfPlayer(p)) {
+				adiacentCities.add(connectedCities.get(i));
+				if (!connectedCities.get(i).isCapital())
+					rewards.add(connectedCities.get(i).getReward());
+				addConnectedCities(connectedCities.get(i));
 			}
 		}
 		return rewards;

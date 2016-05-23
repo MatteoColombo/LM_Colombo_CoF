@@ -34,8 +34,8 @@ public class TestMapExplorer {
 		colors.add(new Color(2, 3, 4));
 		colors.add(new Color(255, 255, 255));
 		ml = new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors));
-		plains = ml.getRegions().get(0);
-		mountain = ml.getRegions().get(0);
+		plains = ml.getRegions().get(1);
+		mountain = ml.getRegions().get(2);
 		plains.getCity("Hellar").addEmporium(p.getEmporium().remove(0));
 		plains.getCity("Juvelar").addEmporium(p.getEmporium().remove(0));
 		plains.getCity("Hellar").addEmporium(p2.getEmporium().remove(0));
@@ -53,10 +53,10 @@ public class TestMapExplorer {
 	List<Reward> expected = new ArrayList<Reward>();
 	expected.add(plains.getCity("Hellar").getReward());
 	expected.add(plains.getCity("Juvelar").getReward());
-	expected.add(plains.getCity("Merkatim").getReward());
-	expected.add(plains.getCity("Lyram").getReward());
-	expected.add(plains.getCity("Osium").getReward());
-	expected.add(plains.getCity("Naris").getReward());
+	expected.add(mountain.getCity("Merkatim").getReward());
+	expected.add(mountain.getCity("Lyram").getReward());
+	expected.add(mountain.getCity("Osium").getReward());
+	expected.add(mountain.getCity("Naris").getReward());
 	List<Reward> connectedRewards = new ArrayList<Reward>(explorer.getAdiacentRewards(plains.getCity("Hellar"), p));
 	
 	assertEquals(expected.containsAll(connectedRewards), connectedRewards.containsAll(expected));

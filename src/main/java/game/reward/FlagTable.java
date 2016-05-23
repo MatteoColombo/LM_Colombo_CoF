@@ -10,13 +10,13 @@ public class FlagTable {
 	
 	public void unflagAll() {
 		for(int i = flags.length -1; i >= 0; i--) {
-			flags[i] = false;
+			unflag(i);
 		}
 	}
 	
 	public void flagAll() {
 		for(int i = flags.length -1; i >= 0; i--) {
-			flags[i] = true;
+			flag(i);
 		}
 	}
 	

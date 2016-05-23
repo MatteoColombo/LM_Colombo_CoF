@@ -108,7 +108,7 @@ public class Player {
 /**
  * 
  */
-	public void increseMainAction() {
+	public void increaseMainAction() {
 		this.mainActions++;
 	}
 /**

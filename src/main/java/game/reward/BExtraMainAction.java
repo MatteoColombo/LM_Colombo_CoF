@@ -22,6 +22,6 @@ public class BExtraMainAction extends Bonus {
 
 	@Override
 	public void assignBonusTo(Player p) {
-		p.increseMainAction();
+		p.increaseMainAction();
 	}
 }

@@ -64,7 +64,16 @@ public class Region {
 	private void generatePermissionCard(int posArray) {
 		permissionCards[posArray] = new PermissionCard(cities);
 	}
-
+	
+	/**
+	 * generate a new permission card in all the available slots
+	 */
+	public void shufflePermissionCards() {
+		for (int i = 0; i < permissionCards.length; i++) {
+			generatePermissionCard(i);
+		}
+	}
+	
 	/**
 	 * Returns the permission card without removing it from the map. 
 	 * Use this if you want to check the permission card in a specified slot

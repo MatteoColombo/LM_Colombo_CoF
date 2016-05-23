@@ -6,7 +6,7 @@ import game.player.Player;
 public class ABuyAssistant extends Action {
 	private static final int ASSISTANTPRICE = 3;
 	
-	Player player;
+	private Player player;
 	
 	public ABuyAssistant(Player player) throws IllegalActionException{
 		super(false);
@@ -20,5 +20,4 @@ public class ABuyAssistant extends Action {
 		player.getCoins().decreaseAmount(ASSISTANTPRICE);
 		player.getAssistants().increaseAmount(1);
 	}
-	
 }

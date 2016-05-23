@@ -106,7 +106,7 @@ public class TestPlayer {
 		assertEquals(1, p.getMainActionsLeft());
 		assertEquals(false, p.getIfExtraActionDone());
 		p.doMainAction();
-		p.increseMainAction();
+		p.increaseMainAction();
 		assertEquals(1, p.getMainActionsLeft());
 	}
 	

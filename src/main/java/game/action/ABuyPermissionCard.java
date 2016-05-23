@@ -10,10 +10,10 @@ import game.player.PoliticCard;
 
 public class ABuyPermissionCard extends Action{
 
-	Player player;
-	PermissionCard permCard;
-	List<PoliticCard> politicCards;
-	int price;
+	private Player player;
+	private PermissionCard permCard;
+	private List<PoliticCard> politicCards;
+	private int price;
 	
 	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politic) throws IllegalActionException{
 		super(true);

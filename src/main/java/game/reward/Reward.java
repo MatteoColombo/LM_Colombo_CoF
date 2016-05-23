@@ -65,12 +65,5 @@ public class Reward {
 			b.assignBonusTo(p);
 		}
 	}
-	/* uncomment for test the rewards
-	public static void main(String[] args) {
-		Reward r = new RewardPermission();
-		for(Bonus b: r.bonusList) {
-			System.out.print(b.toString());
-			System.out.println("   " + b.getAmount());
-		}
-	}*/
+	
 }

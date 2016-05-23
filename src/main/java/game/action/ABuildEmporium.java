@@ -5,7 +5,6 @@ import java.util.List;
 import game.board.MapExplorer;
 import game.board.city.City;
 import game.exceptions.IllegalActionException;
-import game.player.Emporium;
 import game.player.PermissionCard;
 import game.player.Player;
 import game.reward.Reward;

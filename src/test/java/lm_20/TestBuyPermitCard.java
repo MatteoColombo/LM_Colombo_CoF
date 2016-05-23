@@ -43,6 +43,9 @@ public class TestBuyPermitCard {
 		this.pcard = new PermissionCard(ml.getRegions().get(0).getCities());
 	}
 
+	/**
+	 * Buys a permit card with a 100% satisfied council
+	 */
 	@Test
 	public void testBuyPermitCardWorking() {
 		List<Color> colorOfCouncil = council.getCouncilorsColor();
@@ -60,11 +63,13 @@ public class TestBuyPermitCard {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		assertEquals(10, player.getCoins().getAmount());
 		assertEquals(1, player.getPermissionCard().size());
 
 	}
-
+	
+	/**
+	 * Tries to buy a not satisfied council but has no money
+	 */
 	@Test
 	public void testBuyPermitCardNotenoughMoney() {
 		List<Color> colorOfCouncil = council.getCouncilorsColor();
@@ -86,10 +91,13 @@ public class TestBuyPermitCard {
 
 	}
 	
+	
+	/**
+	 * Tries to buy a not satisfied council, has to pay
+	 */
 	@Test
 	public void testBuyPermitCardWithMoney() {
 		this.player.getCoins().increaseAmount(2);
-		List<Color> colorOfCouncil = council.getCouncilorsColor();
 		List<PoliticCard> cards = new ArrayList<>();
 		PoliticCard p;
 		do {

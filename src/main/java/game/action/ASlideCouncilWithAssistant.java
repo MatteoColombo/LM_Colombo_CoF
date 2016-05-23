@@ -9,7 +9,7 @@ import game.player.Player;
 
 public class ASlideCouncilWithAssistant extends Action{
 	
-	private static final int ACTIONCOST = 1;
+	private static final int ACTIONCOST = 3;
 	
 	private Player player;
 	private Color councilorColor;
@@ -36,5 +36,6 @@ public class ASlideCouncilWithAssistant extends Action{
 	public void execute() {
 		pool.slideCouncilor(council, councilorColor);
 		player.getAssistants().decreaseAmount(ACTIONCOST);
+		player.doExtraAction();
 	}
 }

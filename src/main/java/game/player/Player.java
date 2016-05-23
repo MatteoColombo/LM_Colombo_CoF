@@ -45,7 +45,7 @@ public class Player {
 			emporium.add(new Emporium(this));
 		this.DEFAULTMAINACTION = 1;
 		this.mainActions = DEFAULTMAINACTION;
-		this.extraAction = true;
+		this.extraAction = false;
 		this.pickedColours = pickedColours;
 
 	}

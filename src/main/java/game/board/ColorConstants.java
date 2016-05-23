@@ -25,7 +25,7 @@ public class ColorConstants {
 	}
 	
 	public static List<Color> getCardsColors() {
-		List<Color> colors = new ArrayList<Color>();
+		List<Color> colors = new ArrayList<>();
 		colors.add(ColorConstants.PURPLE);
 		colors.add(ColorConstants.WHITE);
 		colors.add(ColorConstants.ORANGE);

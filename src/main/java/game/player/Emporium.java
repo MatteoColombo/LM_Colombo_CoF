@@ -1,6 +1,5 @@
 package game.player;
 
-import game.board.city.City;
 /**
  * 
  * @author Davide_Cavallini

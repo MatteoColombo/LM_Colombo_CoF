@@ -52,7 +52,6 @@ public class Reward {
 				indexBonus = r.nextInt(availableBonus.length);
 			}
 			// the following statement generate a balanced amount for the choosen bonus
-			// TODO balancement not tested yet
 			int amount = (r.nextInt(value) / (availableBonus[indexBonus].getValue() * differentBonus)) +1;
 			Bonus buffer = availableBonus[indexBonus].newCopy(amount);
 			bonusList.add(buffer);
@@ -66,4 +65,12 @@ public class Reward {
 			b.assignBonusTo(p);
 		}
 	}
+	/* uncomment for test the rewards
+	public static void main(String[] args) {
+		Reward r = new RewardPermission();
+		for(Bonus b: r.bonusList) {
+			System.out.print(b.toString());
+			System.out.println("   " + b.getAmount());
+		}
+	}*/
 }

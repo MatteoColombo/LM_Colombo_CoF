@@ -31,6 +31,7 @@ public abstract class Bonus {
 	public int getAmount() {
 		return this.amount;
 	}
+	
 	/**
 	 * 
 	 * @return the static array of all standard kind of bonus in the game
@@ -39,6 +40,14 @@ public abstract class Bonus {
 		return allStandardBonus.clone();
 	}
 	
+	public static Bonus[] getCityBonus() {
+		return new Bonus[] { allStandardBonus[0],
+							 allStandardBonus[1],
+							 allStandardBonus[2],
+							 allStandardBonus[3],
+							 allStandardBonus[4]};
+
+	}
 	public abstract int getValue();
 	public abstract Bonus newCopy(int amount);
 	public abstract void assignBonusTo(Player p);

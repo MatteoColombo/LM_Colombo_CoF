@@ -1,6 +1,6 @@
 package game.reward;
 public class RewardCity extends Reward{
-	public RewardCity() {
-		super(Bonus.getAllStandardBonus(), 2, 50);
+	public RewardCity() {	
+		super(Bonus.getCityBonus(), 2, 50);
 	}
 }

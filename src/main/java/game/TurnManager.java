@@ -5,11 +5,9 @@ import game.player.Player;
 
 public class TurnManager {
 	private Player turnPlayer;
-	private Board gameBoard;
 	public TurnManager(Player turnPlayer, Board gameBoard){
 		this.turnPlayer=turnPlayer;
 		this.turnPlayer.actionsReset();
-		this.gameBoard=gameBoard;
 		startTurn();
 	}
 	private void startTurn(){
@@ -19,5 +17,7 @@ public class TurnManager {
 	private void askPlayerWhatToDo(){
 		//TODO
 	}
+	
+	
 	
 }

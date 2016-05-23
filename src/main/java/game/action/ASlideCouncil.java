@@ -31,5 +31,6 @@ public class ASlideCouncil extends Action{
 	public void execute() {
 		pool.slideCouncilor(council, councilorColor);
 		player.getCoins().increaseAmount(GAIN);
+		player.doMainAction();
 	}
 }

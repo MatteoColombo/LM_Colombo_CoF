@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import game.action.ASlideCouncil;
+import game.action.ASlideCouncilWithAssistant;
 import game.board.council.Council;
 import game.board.council.CouncilorPool;
 import game.exceptions.IllegalActionException;
@@ -33,7 +34,7 @@ public class TestSlideCouncilors {
 		colorList.add(Color.YELLOW);
 		colorList.add(Color.GREEN);
 		colorList.add(Color.ORANGE);
-		this.player = new Player(10, 1, 6, 10, colorList, 0, 0);
+		this.player = new Player(10, 3, 6, 10, colorList, 0, 0);
 		this.pool= new CouncilorPool(4, 4, colorList);
 		this.council= pool.getCouncil();
 	}
@@ -57,6 +58,34 @@ public class TestSlideCouncilors {
 			assertEquals(colorList.get(3), colorsFromCouncil.get(2));
 			assertEquals(colorList.get(4), colorsFromCouncil.get(3));
 			assertEquals(14, player.getCoins().getAmount());
+			assertEquals(player.getMainActionsLeft(), 0);
+			assertEquals(player.getIfExtraActionDone(), false);
+		}catch(IllegalActionException iae){
+			System.out.println(iae.getMessage());
+		}
+	}
+	
+	/**
+	 * Insert 3 councilors in the council, then it adds another one with the extra action
+	 * then test if the councilors are the expected and in the correct orderù
+	 * also checks if the assistant are decreased
+	 */
+	@Test
+	public void testSlideCouncilWithExtra(){
+		try{
+			pool.slideCouncilor(council, colorList.get(1));
+			pool.slideCouncilor(council, colorList.get(2));
+			pool.slideCouncilor(council, colorList.get(3));
+			ASlideCouncilWithAssistant action= new ASlideCouncilWithAssistant(player, pool, council, colorList.get(4));
+			action.execute();
+			List<Color> colorsFromCouncil= council.getCouncilorsColor();
+			assertEquals(colorList.get(1), council.getHeadColor());
+			assertEquals(colorList.get(1), colorsFromCouncil.get(0));
+			assertEquals(colorList.get(2), colorsFromCouncil.get(1));
+			assertEquals(colorList.get(3), colorsFromCouncil.get(2));
+			assertEquals(colorList.get(4), colorsFromCouncil.get(3));
+			assertEquals(10, player.getCoins().getAmount());
+			assertEquals(0, player.getAssistants().getAmount());
 		}catch(IllegalActionException iae){
 			System.out.println(iae.getMessage());
 		}

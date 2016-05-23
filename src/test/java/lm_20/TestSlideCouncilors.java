@@ -66,6 +66,25 @@ public class TestSlideCouncilors {
 	}
 	
 	/**
+	 * Tests the extra action when the councilor is not available
+	 */
+	@Test
+	public void testSlideCouncilFailedNoCouncilors(){
+		try{
+			pool.slideCouncilor(council, colorList.get(1));
+			pool.slideCouncilor(council, colorList.get(1));
+			pool.slideCouncilor(council, colorList.get(1));
+			pool.slideCouncilor(council, colorList.get(1));
+			ASlideCouncil action= new ASlideCouncil(player, pool, council, colorList.get(1));
+			action.execute();
+			
+		}catch(IllegalActionException iae){
+			System.out.println(iae.getMessage());
+		}
+	}
+		
+	
+	/**
 	 * Insert 3 councilors in the council, then it adds another one with the extra action
 	 * then test if the councilors are the expected and in the correct orderù
 	 * also checks if the assistant are decreased
@@ -86,6 +105,41 @@ public class TestSlideCouncilors {
 			assertEquals(colorList.get(4), colorsFromCouncil.get(3));
 			assertEquals(10, player.getCoins().getAmount());
 			assertEquals(0, player.getAssistants().getAmount());
+		}catch(IllegalActionException iae){
+			System.out.println(iae.getMessage());
+		}
+	}
+	
+	/**
+	 * Tests the extra action when the councilor is not available
+	 */
+	@Test
+	public void testSlideCouncilWithExtraFailedNoCouncilors(){
+		try{
+			pool.slideCouncilor(council, colorList.get(1));
+			pool.slideCouncilor(council, colorList.get(1));
+			pool.slideCouncilor(council, colorList.get(1));
+			pool.slideCouncilor(council, colorList.get(1));
+			ASlideCouncilWithAssistant action= new ASlideCouncilWithAssistant(player, pool, council, colorList.get(1));
+			action.execute();
+			List<Color> colorsFromCouncil= council.getCouncilorsColor();
+			
+		}catch(IllegalActionException iae){
+			System.out.println(iae.getMessage());
+		}
+	}
+	
+	/**
+	 * Tests the extra action when the money aren't enough
+	 */
+	@Test
+	public void testSlideCouncilWithExtraFailedNoAssistants(){
+		try{
+			player.getAssistants().decreaseAmount(2);
+			ASlideCouncilWithAssistant action= new ASlideCouncilWithAssistant(player, pool, council, colorList.get(1));
+			action.execute();
+			List<Color> colorsFromCouncil= council.getCouncilorsColor();
+			
 		}catch(IllegalActionException iae){
 			System.out.println(iae.getMessage());
 		}

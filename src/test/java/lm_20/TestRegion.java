@@ -12,6 +12,7 @@ import game.board.ColorConstants;
 import game.board.Region;
 import game.board.city.*;
 import game.board.council.*;
+import game.player.Player;
 import game.reward.RewardCity;
 
 public class TestRegion {
@@ -46,12 +47,20 @@ public class TestRegion {
 	}
 	
 	@Test
-	public void testCity() {
-		City castrum = cities.get(2);
-		assertEquals(castrum.getColor(), ColorConstants.SILVER);
-		assertEquals(castrum.isCapital(), false);
-		assertEquals(castrum.getNumberOfEmporium(), 0);
-		assertEquals(castrum.isConnectedTo(cities.get(3)), false);
+	public void testCompleted() {
+		
+		region = new Region("sea", cities, council, 3);
+		Player p = new Player(0, 0, 0, 10, null, 0, 0);
+		assertEquals(region.isCompleted(p), false);
+		
+		Player p2 = new Player(0, 0, 0, 10, null, 0, 0);
+		region.getCities().get(3).addEmporium(p2.getEmporium().remove(0));
+		region.getCities().get(0).addEmporium(p2.getEmporium().remove(0));	
+		assertEquals(region.isCompleted(p2), false);
+		
+		for(City city: region.getCities()) {
+			city.addEmporium(p.getEmporium().remove(0));
+		}	
+		assertEquals(region.isCompleted(p), true);
 	}
-
 }

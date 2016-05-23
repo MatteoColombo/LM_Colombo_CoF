@@ -8,14 +8,12 @@ import game.board.city.City;
  */
 public class Emporium {
 	private Player player;
-	private City city;
 /**
  * 
  * @param player
  */
 	public Emporium(Player player) {
 		this.player = player;
-		this.city = null;
 	}
 /**
  * 
@@ -24,18 +22,5 @@ public class Emporium {
 	public Player getPlayer() {
 		return this.player;
 	}
-/**
- * 
- * @param city
- */
-	public void setCity(City city) {
-		this.city = city;
-	}
-/**
- * 
- * @return
- */
-	public City getCity() {
-		return this.city;
-	}
+
 }

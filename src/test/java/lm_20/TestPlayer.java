@@ -79,7 +79,6 @@ public class TestPlayer {
 	public void testEmporium() {
 		Emporium e = p.getEmporium().get(0);
 		assertEquals(p, e.getPlayer());
-		assertEquals(null, e.getCity());
 	}
 
 	/**

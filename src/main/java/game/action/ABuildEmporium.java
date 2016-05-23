@@ -12,7 +12,6 @@ import game.reward.Reward;
 
 public class ABuildEmporium extends Action {
 	private Player player;
-	private Emporium emporium;
 	private PermissionCard permissionCard;
 	private City city;
 
@@ -38,13 +37,14 @@ public class ABuildEmporium extends Action {
 	@Override
 	public void execute() {
 		player.getAssistants().decreaseAmount(city.getNumberOfEmporium());
-		player.getPermissionCard().add(permissionCard);
+		permissionCard.setCardUsed();
 		assignEmporium();
 		assignRewards();
+		this.player.doMainAction();
 	}
 
 	private void assignEmporium(){
-		this.emporium.setCity(city);
+		this.city.addEmporium(player.getEmporium().remove(0));
 	}
 	
 	private void assignRewards() {

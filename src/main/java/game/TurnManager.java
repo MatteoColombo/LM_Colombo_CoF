@@ -5,7 +5,9 @@ import game.player.Player;
 
 public class TurnManager {
 	private Player turnPlayer;
+	
 	public TurnManager(Player turnPlayer, Board gameBoard){
+		//TODO
 		this.turnPlayer=turnPlayer;
 		this.turnPlayer.actionsReset();
 		startTurn();

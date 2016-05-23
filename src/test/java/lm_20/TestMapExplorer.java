@@ -52,7 +52,7 @@ public class TestMapExplorer {
 	MapExplorer explorer = new MapExplorer();
 	List<Reward> expected = new ArrayList<Reward>();
 	expected.add(plains.getCity("Hellar").getReward());
-	expected.add(plains.getCity("Juvelar").getReward());
+	//expected.add(plains.getCity("Juvelar").getReward());
 	expected.add(mountain.getCity("Merkatim").getReward());
 	expected.add(mountain.getCity("Lyram").getReward());
 	expected.add(mountain.getCity("Osium").getReward());

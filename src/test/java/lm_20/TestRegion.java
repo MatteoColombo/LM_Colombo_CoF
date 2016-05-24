@@ -33,8 +33,7 @@ public class TestRegion {
 		members.add(new Councilor(ColorConstants.ORANGE));
 		members.add(new Councilor(ColorConstants.PURPLE));
 	
-		council = new Council(members);
-		
+		council = new Council(members);	
 	}
 
 	@Test

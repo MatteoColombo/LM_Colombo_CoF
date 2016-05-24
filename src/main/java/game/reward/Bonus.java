@@ -16,6 +16,11 @@ public abstract class Bonus {
 			 new BPoliticCards(1),
 			 new BExtraMainAction()}; // 1 by default
 	
+	private static final Bonus[] nobilityBonus = {
+			new BRewardFromPermissionCard(),
+			new BExtraRewardFromCities(1),
+			new BTakePermissionCard() };
+	
 	private int amount;
 	/**
 	 * Create a new Bonus object.
@@ -47,6 +52,18 @@ public abstract class Bonus {
 							 allStandardBonus[3],
 							 allStandardBonus[4]};
 
+	}
+	
+	public static Bonus[] getAllBonus() {
+		return new Bonus[] { allStandardBonus[0],
+				 			 allStandardBonus[1],
+				 			 allStandardBonus[2],
+				 			 allStandardBonus[3],
+				 			 allStandardBonus[4], 
+				 			 allStandardBonus[5],
+				 			 nobilityBonus[0],
+				 			 nobilityBonus[1],
+				 			 nobilityBonus[2]}; 
 	}
 	public abstract int getValue();
 	public abstract Bonus newCopy(int amount);

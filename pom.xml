@@ -6,7 +6,7 @@
   <groupId>it.polimi.ingsw</groupId>
   <artifactId>LM_20</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>LM_Colombo_CoF</name>
+  <name>LM_20</name>
   <properties>
    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sonar.language>java</sonar.language>

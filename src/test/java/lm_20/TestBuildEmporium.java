@@ -42,53 +42,44 @@ public class TestBuildEmporium {
 	 * after the first emporium it tries to build a second one in the same city
 	 * with the same player, the action is rejected
 	 */
-	@Test
-	public void testBuildWithPermission() {
+	@Test(expected=IllegalActionException.class)
+	public void testBuildWithPermission() throws Exception {
 		MapLoader ml;
 		PermissionCard card;
 		ABuildEmporium action;
-		try {
 			ml = new MapLoader("src/main/resources/map.xml", pool);
 			card = new PermissionCard(ml.getRegions().get(0).getCities());
 			action = new ABuildEmporium(player, card, card.getCardCity().get(0));
 			assertEquals(true, action.isMain());
 			action.execute();
 			action = new ABuildEmporium(player, card, card.getCardCity().get(0));
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
 	}
 
 	/**
 	 * Tries to build an emporium in a city which doesn't satisfies the permit
 	 * card
 	 */
-	@Test
-	public void testBuildWithWrongCity() {
+	@Test(expected=IllegalActionException.class)
+	public void testBuildWithWrongCity() throws Exception{
 		MapLoader ml;
 		PermissionCard card;
 		ABuildEmporium action;
-		try {
 			ml = new MapLoader("src/main/resources/map.xml", pool);
 			card = new PermissionCard(ml.getRegions().get(0).getCities());
 			action = new ABuildEmporium(player, card, card.getCardCity().get(0));
 			action.execute();
 			action = new ABuildEmporium(player, card, ml.getRegions().get(2).getCities().get(0));
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
 	}
 
 	/**
 	 * Tries to build an emporium in a city which already has another emporium
 	 * of another player. The player has no money and the action is rejected
 	 */
-	@Test
-	public void testBuildWithAnotherPlayerEmporium() {
+	@Test(expected=IllegalActionException.class)
+	public void testBuildWithAnotherPlayerEmporium() throws Exception{
 		MapLoader ml;
 		PermissionCard card;
 		ABuildEmporium action;
-		try {
 			ml = new MapLoader("src/main/resources/map.xml", pool);
 			card = new PermissionCard(ml.getRegions().get(0).getCities());
 			Player p2 = new Player(10, 0, 6, 10, colorList, 0, 0);
@@ -96,9 +87,6 @@ public class TestBuildEmporium {
 			action.execute();
 			action = new ABuildEmporium(p2, card, card.getCardCity().get(0));
 			action.execute();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
 	}
 
 	/**

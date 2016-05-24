@@ -1,13 +1,13 @@
 package game.player;
 
 /**
- * This is a class that represents the NoblePoints owned by a {@link Player}.
+ * A class that represents the NoblePoints owned by a Player.
  * <p>
  * Each Player can have a different {@link #getAmount() amount} of them that can
  * be {@link #increaseAmount(int) increased}.
  * 
  * @author Davide_Cavallini
- *
+ * @see Player
  */
 public class NoblePoints {
 	private int amount;
@@ -17,17 +17,19 @@ public class NoblePoints {
 	 * {@link Player}.
 	 * 
 	 * @param initialValue
-	 *            the initial amount to be set
+	 *            the initial amount of NoblePoints to be set
+	 * @see NoblePoints
 	 */
 	public NoblePoints(int initialValue) {
 		this.amount = initialValue;
 	}
 
 	/**
-	 * Returns the amount of NoblePoints owned in that moment by this
+	 * Returns the amount of NoblePoints owned in this moment by this
 	 * {@link Player}.
 	 * 
-	 * @return the actual amount
+	 * @return the actual amount of NoblePoints
+	 * @see NoblePoints
 	 */
 	public int getAmount() {
 		return this.amount;
@@ -37,7 +39,8 @@ public class NoblePoints {
 	 * Increases the amount of NoblePoints owned by this {@link Player}.
 	 * 
 	 * @param value
-	 *            the amount used to increment
+	 *            the amount used to increment the actual NoblePoints
+	 * @see NoblePoints
 	 */
 	public void increaseAmount(int value) {
 		this.amount += value;

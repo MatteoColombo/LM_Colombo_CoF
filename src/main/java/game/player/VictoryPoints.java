@@ -1,13 +1,13 @@
 package game.player;
 
 /**
- * This is a class that represents the VictoryPoints owned by a {@link Player}.
+ * A class that represents the VictoryPoints owned by a Player.
  * <p>
  * Each Player can have a different {@link #getAmount() amount} of them that can
  * be {@link #increaseAmount(int) increased}.
  * 
  * @author Davide_Cavallini
- *
+ * @see Player
  */
 public class VictoryPoints {
 	private int amount;
@@ -17,17 +17,19 @@ public class VictoryPoints {
 	 * {@link Player}.
 	 * 
 	 * @param initialValue
-	 *            the initial amount to be set
+	 *            the initial amount of VictoryPoints to be set
+	 * @see VictoryPoints
 	 */
 	public VictoryPoints(int initialValue) {
 		this.amount = initialValue;
 	}
 
 	/**
-	 * Returns the amount of VictoryPoints owned in that moment by this
+	 * Returns the amount of VictoryPoints owned in this moment by this
 	 * {@link Player}.
 	 * 
-	 * @return the actual amount
+	 * @return the actual amount of VictoryPoints
+	 * @see VictoryPoints
 	 */
 	public int getAmount() {
 		return this.amount;
@@ -37,7 +39,8 @@ public class VictoryPoints {
 	 * Increases the amount of VictoryPoints owned by this {@link Player}.
 	 * 
 	 * @param value
-	 *            the amount used to increment
+	 *            the amount used to increment the actual VictoryPoints
+	 * @see VictoryPoints
 	 */
 	public void increaseAmount(int value) {
 		this.amount += value;

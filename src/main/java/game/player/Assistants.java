@@ -1,14 +1,14 @@
 package game.player;
 
 /**
- * This is a class that represents the Assistants owned by a {@link Player}.
+ * A class that represents the Assistants owned by a Player.
  * <p>
  * Each Player can have a different {@link #getAmount() amount} of them that can
  * be {@link #increaseAmount(int) increased} or {@link #decreaseAmount(int)
  * decreased} according to the context.
  * 
  * @author Davide_Cavallini
- *
+ * @see Player
  */
 public class Assistants {
 	private int amount;
@@ -17,17 +17,19 @@ public class Assistants {
 	 * Initializes the initial amount of Assistants owned by this {@link Player}.
 	 * 
 	 * @param initialValue
-	 *            the initial amount to be set
+	 *            the initial amount of Assistants to be set
+	 * @see Assistants
 	 */
 	public Assistants(int initialValue) {
 		this.amount = initialValue;
 	}
 
 	/**
-	 * Returns the amount of Assistants owned in that moment by this
+	 * Returns the amount of Assistants owned in this moment by this
 	 * {@link Player}.
 	 * 
-	 * @return the actual amount
+	 * @return the actual amount of Assistants
+	 * @see Assistants
 	 */
 	public int getAmount() {
 		return this.amount;
@@ -37,7 +39,8 @@ public class Assistants {
 	 * Increases the amount of Assistants owned by this {@link Player}.
 	 * 
 	 * @param value
-	 *            the amount used to increment
+	 *            the amount used to increment the actual Assistants
+	 * @see Assistants
 	 */
 	public void increaseAmount(int value) {
 		this.amount += value;
@@ -47,7 +50,8 @@ public class Assistants {
 	 * Decreases the amount of Assistants owned by this {@link Player}.
 	 * 
 	 * @param value
-	 *            the amount used to decrement
+	 *            the amount used to decrement the actual Assistants
+	 * @see Assistants
 	 */
 	public void decreaseAmount(int value) {
 		this.amount -= value;

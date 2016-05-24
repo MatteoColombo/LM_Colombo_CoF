@@ -1,14 +1,14 @@
 package game.player;
 
 /**
- * This is a class that represents the Coins owned by a {@link Player}.
+ * A class that represents the Coins owned by a Player.
  * <p>
  * Each Player can have a different {@link #getAmount() amount} of them that can
  * be {@link #increaseAmount(int) increased} or {@link #decreaseAmount(int)
  * decreased} according to the context.
  * 
  * @author Davide_Cavallini
- *
+ * @see Player
  */
 public class Coins {
 	private int amount;
@@ -17,16 +17,18 @@ public class Coins {
 	 * Initializes the initial amount of Coins owned by this {@link Player}.
 	 * 
 	 * @param initialValue
-	 *            the initial amount to be set
+	 *            the initial amount of Coins to be set
+	 * @see Coins
 	 */
 	public Coins(int initialValue) {
 		this.amount = initialValue;
 	}
 
 	/**
-	 * Returns the amount of Coins owned in that moment by this {@link Player}.
+	 * Returns the amount of Coins owned in this moment by this {@link Player}.
 	 * 
-	 * @return the actual amount
+	 * @return the actual amount of Coins
+	 * @see Coins
 	 */
 	public int getAmount() {
 		return this.amount;
@@ -36,7 +38,8 @@ public class Coins {
 	 * Increases the amount of Coins owned by this {@link Player}.
 	 * 
 	 * @param value
-	 *            the amount used to increment
+	 *            the amount used to increment the actual Coins
+	 * @see Coins
 	 */
 	public void increaseAmount(int value) {
 		this.amount += value;
@@ -46,7 +49,8 @@ public class Coins {
 	 * Decreases the amount of Coins owned by this {@link Player}.
 	 * 
 	 * @param value
-	 *            the amount used to decrement
+	 *            the amount used to decrement the actual Coins
+	 * @see Coins
 	 */
 	public void decreaseAmount(int value) {
 		this.amount -= value;

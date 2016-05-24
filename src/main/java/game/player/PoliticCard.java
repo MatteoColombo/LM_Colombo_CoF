@@ -3,7 +3,9 @@ package game.player;
 import java.awt.Color;
 import java.util.List;
 import java.util.Random;
+
 /**
+ * TODO JavaDoc
  * 
  * @author Davide_Cavallini
  *
@@ -11,32 +13,34 @@ import java.util.Random;
 public class PoliticCard {
 	private Color color;
 	private boolean isMultipleColor;
-/**
- * 
- * @param possibleColors
- */
+
+	/**
+	 * 
+	 * @param possibleColors
+	 */
 	public PoliticCard(List<Color> possibleColors) {
 		Random r = new Random();
 		int i = r.nextInt(possibleColors.size() + 1);
-		if(i== possibleColors.size())
-			isMultipleColor=true;
-		else{
-			isMultipleColor=false;
-			color= possibleColors.get(i);
+		if (i == possibleColors.size())
+			isMultipleColor = true;
+		else {
+			isMultipleColor = false;
+			color = possibleColors.get(i);
 		}
 	}
 
-/**
- * 
- * @return
- */
-	public boolean isMultipleColor(){
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isMultipleColor() {
 		return isMultipleColor;
 	}
-/**	
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Color getCardColor() {
 		return this.color;
 	}

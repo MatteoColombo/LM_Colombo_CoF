@@ -13,6 +13,7 @@ import game.action.ABuyPermissionCard;
 import game.board.council.Council;
 import game.board.council.CouncilorPool;
 import game.board.map.MapLoader;
+import game.exceptions.IllegalActionException;
 import game.player.PermissionCard;
 import game.player.Player;
 import game.player.PoliticCard;
@@ -47,7 +48,7 @@ public class TestBuyPermitCard {
 	 * Buys a permit card with a 100% satisfied council
 	 */
 	@Test
-	public void testBuyPermitCardWorking() {
+	public void testBuyPermitCardWorking() throws Exception{
 		List<Color> colorOfCouncil = council.getCouncilorsColor();
 		List<PoliticCard> cards = new ArrayList<>();
 		for (Color c : colorOfCouncil) {
@@ -57,21 +58,19 @@ public class TestBuyPermitCard {
 			} while (p.getCardColor() != c);
 			cards.add(p);
 		}
-		try {
-			ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
-			action.execute();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+
+		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
+		action.execute();
+
 		assertEquals(1, player.getPermissionCard().size());
 
 	}
-	
+
 	/**
 	 * Tries to buy a not satisfied council but has no money
 	 */
-	@Test
-	public void testBuyPermitCardNotenoughMoney() {
+	@Test(expected = IllegalActionException.class)
+	public void testBuyPermitCardNotenoughMoney() throws Exception {
 		List<Color> colorOfCouncil = council.getCouncilorsColor();
 		List<PoliticCard> cards = new ArrayList<>();
 		PoliticCard p;
@@ -80,23 +79,19 @@ public class TestBuyPermitCard {
 		} while (!p.isMultipleColor());
 		cards.add(p);
 
-		try {
-			ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
-			action.execute();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
+		action.execute();
+
 		assertEquals(10, player.getCoins().getAmount());
 		assertEquals(0, player.getPermissionCard().size());
 
 	}
-	
-	
+
 	/**
 	 * Tries to buy a not satisfied council, has to pay
 	 */
 	@Test
-	public void testBuyPermitCardWithMoney() {
+	public void testBuyPermitCardWithMoney() throws Exception {
 		this.player.getCoins().increaseAmount(2);
 		List<PoliticCard> cards = new ArrayList<>();
 		PoliticCard p;
@@ -104,13 +99,8 @@ public class TestBuyPermitCard {
 			p = new PoliticCard(colorList);
 		} while (!p.isMultipleColor());
 		cards.add(p);
-
-		try {
-			ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
-			action.execute();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
+		action.execute();
 		assertEquals(1, player.getPermissionCard().size());
 
 	}

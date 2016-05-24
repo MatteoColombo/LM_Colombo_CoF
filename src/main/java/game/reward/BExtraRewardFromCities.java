@@ -5,7 +5,7 @@ import game.player.Player;
 public class BExtraRewardFromCities extends Bonus{
 	
 	// not really useful here, it may be removed in the future
-	public static int VALUE = 60;
+	public static final int VALUE = 60;
 	
 	public BExtraRewardFromCities(int amount) {
 		super(amount);
@@ -13,7 +13,7 @@ public class BExtraRewardFromCities extends Bonus{
 
 	@Override
 	public int getValue() {
-		return 0;
+		return VALUE;
 	}
 
 	@Override

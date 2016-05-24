@@ -111,7 +111,6 @@ public class TestBuyPermitCard {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		assertEquals(1, player.getCoins().getAmount());
 		assertEquals(1, player.getPermissionCard().size());
 
 	}

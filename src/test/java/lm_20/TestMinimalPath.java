@@ -14,6 +14,8 @@ import game.board.map.MapLoader;
 
 public class TestMinimalPath {
 
+	
+	
 	@Test
 	public void test() {
 		ArrayList<Color> colors = new ArrayList<Color>();
@@ -31,6 +33,9 @@ public class TestMinimalPath {
 			System.out.println(second.getName());
 			MapExplorer mx= new MapExplorer();
 			System.out.println(mx.getDistance(first, second));
+			assertEquals(3,mx.getDistance(first, second));
+			assertEquals(0,mx.getDistance(second, second));
+			mx.getDistance(first, new City(Color.YELLOW, "Milan"));
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}

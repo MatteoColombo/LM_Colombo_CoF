@@ -1,4 +1,4 @@
-package game.board;
+package game.board.map;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.board.Region;
 import game.board.city.City;
 import game.board.city.CityConnection;
 import game.board.council.CouncilorPool;

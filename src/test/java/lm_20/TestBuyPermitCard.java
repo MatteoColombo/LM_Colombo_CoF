@@ -10,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import game.action.ABuyPermissionCard;
-import game.board.MapLoader;
 import game.board.council.Council;
 import game.board.council.CouncilorPool;
+import game.board.map.MapLoader;
 import game.player.PermissionCard;
 import game.player.Player;
 import game.player.PoliticCard;

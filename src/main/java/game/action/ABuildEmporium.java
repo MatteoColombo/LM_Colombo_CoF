@@ -2,8 +2,8 @@ package game.action;
 
 import java.util.List;
 
-import game.board.MapExplorer;
 import game.board.city.City;
+import game.board.map.MapExplorer;
 import game.exceptions.IllegalActionException;
 import game.player.PermissionCard;
 import game.player.Player;

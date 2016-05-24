@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import game.action.ABuildEmporium;
-import game.board.MapLoader;
 import game.board.council.CouncilorPool;
+import game.board.map.MapLoader;
 import game.player.PermissionCard;
 import game.player.Player;
 

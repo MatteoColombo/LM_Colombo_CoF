@@ -9,10 +9,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.board.MapExplorer;
-import game.board.MapLoader;
 import game.board.Region;
 import game.board.council.CouncilorPool;
+import game.board.map.MapExplorer;
+import game.board.map.MapLoader;
 import game.player.Player;
 import game.reward.Reward;
 

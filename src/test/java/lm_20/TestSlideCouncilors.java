@@ -35,113 +35,94 @@ public class TestSlideCouncilors {
 		colorList.add(Color.GREEN);
 		colorList.add(Color.ORANGE);
 		this.player = new Player(10, 3, 6, 10, colorList, 0, 0);
-		this.pool= new CouncilorPool(4, 4, colorList);
-		this.council= pool.getCouncil();
+		this.pool = new CouncilorPool(4, 4, colorList);
+		this.council = pool.getCouncil();
 	}
-	
+
 	/**
-	 * Insert 3 councilors in the council, then it adds another one with the action
-	 * then test if the councilors are the expected and in the correct order
+	 * Insert 3 councilors in the council, then it adds another one with the
+	 * action then test if the councilors are the expected and in the correct
+	 * order
 	 */
 	@Test
-	public void testSlideCouncil(){
-		try{
-			pool.slideCouncilor(council, colorList.get(1));
-			pool.slideCouncilor(council, colorList.get(2));
-			pool.slideCouncilor(council, colorList.get(3));
-			ASlideCouncil action= new ASlideCouncil(player, pool, council, colorList.get(4));
-			action.execute();
-			List<Color> colorsFromCouncil= council.getCouncilorsColor();
-			assertEquals(colorList.get(1), council.getHeadColor());
-			assertEquals(colorList.get(1), colorsFromCouncil.get(0));
-			assertEquals(colorList.get(2), colorsFromCouncil.get(1));
-			assertEquals(colorList.get(3), colorsFromCouncil.get(2));
-			assertEquals(colorList.get(4), colorsFromCouncil.get(3));
-			assertEquals(14, player.getCoins().getAmount());
-			assertEquals(player.getMainActionsLeft(), 0);
-			assertEquals(player.getIfExtraActionDone(), false);
-		}catch(IllegalActionException iae){
-			System.out.println(iae.getMessage());
-		}
+	public void testSlideCouncil() throws Exception {
+		pool.slideCouncilor(council, colorList.get(1));
+		pool.slideCouncilor(council, colorList.get(2));
+		pool.slideCouncilor(council, colorList.get(3));
+		ASlideCouncil action = new ASlideCouncil(player, pool, council, colorList.get(4));
+		action.execute();
+		List<Color> colorsFromCouncil = council.getCouncilorsColor();
+		assertEquals(colorList.get(1), council.getHeadColor());
+		assertEquals(colorList.get(1), colorsFromCouncil.get(0));
+		assertEquals(colorList.get(2), colorsFromCouncil.get(1));
+		assertEquals(colorList.get(3), colorsFromCouncil.get(2));
+		assertEquals(colorList.get(4), colorsFromCouncil.get(3));
+		assertEquals(14, player.getCoins().getAmount());
+		assertEquals(player.getMainActionsLeft(), 0);
+		assertEquals(player.getIfExtraActionDone(), false);
+
 	}
-	
+
 	/**
 	 * Tests the extra action when the councilor is not available
 	 */
-	@Test
-	public void testSlideCouncilFailedNoCouncilors(){
-		try{
-			pool.slideCouncilor(council, colorList.get(1));
-			pool.slideCouncilor(council, colorList.get(1));
-			pool.slideCouncilor(council, colorList.get(1));
-			pool.slideCouncilor(council, colorList.get(1));
-			ASlideCouncil action= new ASlideCouncil(player, pool, council, colorList.get(1));
-			action.execute();
-			
-		}catch(IllegalActionException iae){
-			System.out.println(iae.getMessage());
-		}
+	@Test(expected = IllegalActionException.class)
+	public void testSlideCouncilFailedNoCouncilors() throws Exception {
+		pool.slideCouncilor(council, colorList.get(1));
+		pool.slideCouncilor(council, colorList.get(1));
+		pool.slideCouncilor(council, colorList.get(1));
+		pool.slideCouncilor(council, colorList.get(1));
+		ASlideCouncil action = new ASlideCouncil(player, pool, council, colorList.get(1));
+		action.execute();
 	}
-		
-	
+
 	/**
-	 * Insert 3 councilors in the council, then it adds another one with the extra action
-	 * then test if the councilors are the expected and in the correct orderù
-	 * also checks if the assistant are decreased
+	 * Insert 3 councilors in the council, then it adds another one with the
+	 * extra action then test if the councilors are the expected and in the
+	 * correct orderù also checks if the assistant are decreased
 	 */
 	@Test
-	public void testSlideCouncilWithExtra(){
-		try{
-			pool.slideCouncilor(council, colorList.get(1));
-			pool.slideCouncilor(council, colorList.get(2));
-			pool.slideCouncilor(council, colorList.get(3));
-			ASlideCouncilWithAssistant action= new ASlideCouncilWithAssistant(player, pool, council, colorList.get(4));
-			action.execute();
-			List<Color> colorsFromCouncil= council.getCouncilorsColor();
-			assertEquals(colorList.get(1), council.getHeadColor());
-			assertEquals(colorList.get(1), colorsFromCouncil.get(0));
-			assertEquals(colorList.get(2), colorsFromCouncil.get(1));
-			assertEquals(colorList.get(3), colorsFromCouncil.get(2));
-			assertEquals(colorList.get(4), colorsFromCouncil.get(3));
-			assertEquals(10, player.getCoins().getAmount());
-			assertEquals(0, player.getAssistants().getAmount());
-		}catch(IllegalActionException iae){
-			System.out.println(iae.getMessage());
-		}
+	public void testSlideCouncilWithExtra() throws Exception {
+		pool.slideCouncilor(council, colorList.get(1));
+		pool.slideCouncilor(council, colorList.get(2));
+		pool.slideCouncilor(council, colorList.get(3));
+		ASlideCouncilWithAssistant action = new ASlideCouncilWithAssistant(player, pool, council, colorList.get(4));
+		action.execute();
+		List<Color> colorsFromCouncil = council.getCouncilorsColor();
+		assertEquals(colorList.get(1), council.getHeadColor());
+		assertEquals(colorList.get(1), colorsFromCouncil.get(0));
+		assertEquals(colorList.get(2), colorsFromCouncil.get(1));
+		assertEquals(colorList.get(3), colorsFromCouncil.get(2));
+		assertEquals(colorList.get(4), colorsFromCouncil.get(3));
+		assertEquals(10, player.getCoins().getAmount());
+		assertEquals(0, player.getAssistants().getAmount());
 	}
-	
+
 	/**
 	 * Tests the extra action when the councilor is not available
 	 */
-	@Test
-	public void testSlideCouncilWithExtraFailedNoCouncilors(){
-		try{
-			pool.slideCouncilor(council, colorList.get(1));
-			pool.slideCouncilor(council, colorList.get(1));
-			pool.slideCouncilor(council, colorList.get(1));
-			pool.slideCouncilor(council, colorList.get(1));
-			ASlideCouncilWithAssistant action= new ASlideCouncilWithAssistant(player, pool, council, colorList.get(1));
-			action.execute();
-			List<Color> colorsFromCouncil= council.getCouncilorsColor();
-			
-		}catch(IllegalActionException iae){
-			System.out.println(iae.getMessage());
-		}
+	@Test(expected = IllegalActionException.class)
+	public void testSlideCouncilWithExtraFailedNoCouncilors() throws Exception {
+		pool.slideCouncilor(council, colorList.get(1));
+		pool.slideCouncilor(council, colorList.get(1));
+		pool.slideCouncilor(council, colorList.get(1));
+		pool.slideCouncilor(council, colorList.get(1));
+		ASlideCouncilWithAssistant action = new ASlideCouncilWithAssistant(player, pool, council, colorList.get(1));
+		action.execute();
+		List<Color> colorsFromCouncil = council.getCouncilorsColor();
+
 	}
-	
+
 	/**
 	 * Tests the extra action when the money aren't enough
 	 */
-	@Test
-	public void testSlideCouncilWithExtraFailedNoAssistants(){
-		try{
-			player.getAssistants().decreaseAmount(2);
-			ASlideCouncilWithAssistant action= new ASlideCouncilWithAssistant(player, pool, council, colorList.get(1));
-			action.execute();
-			List<Color> colorsFromCouncil= council.getCouncilorsColor();
-			
-		}catch(IllegalActionException iae){
-			System.out.println(iae.getMessage());
-		}
+	@Test(expected = IllegalActionException.class)
+	public void testSlideCouncilWithExtraFailedNoAssistants() throws Exception {
+
+		player.getAssistants().decreaseAmount(2);
+		ASlideCouncilWithAssistant action = new ASlideCouncilWithAssistant(player, pool, council, colorList.get(1));
+		action.execute();
+		List<Color> colorsFromCouncil = council.getCouncilorsColor();
+
 	}
 }

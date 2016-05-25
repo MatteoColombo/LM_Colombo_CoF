@@ -12,7 +12,7 @@ import game.board.Region;
 import game.board.city.City;
 import game.board.city.CityConnection;
 import game.board.council.CouncilorPool;
-import game.exceptions.XMLFileException;
+import game.exceptions.MapXMLFileException;
 import game.reward.*;
 
 public class MapLoader {
@@ -26,9 +26,9 @@ public class MapLoader {
 	 * 
 	 * @param xmlPath
 	 * @param pool
-	 * @throws XMLFileException
+	 * @throws MapXMLFileException
 	 */
-	public MapLoader(String xmlPath, CouncilorPool pool) throws XMLFileException {
+	public MapLoader(String xmlPath, CouncilorPool pool) throws MapXMLFileException {
 		this.xmlPath = xmlPath;
 		this.pool = pool;
 		this.regions = new ArrayList<>();
@@ -68,9 +68,9 @@ public class MapLoader {
 	 * which extracts the cities when a region is completed, it creates its
 	 * object
 	 * 
-	 * @throws XMLFileException
+	 * @throws MapXMLFileException
 	 */
-	private void loadXML() throws XMLFileException {
+	private void loadXML() throws MapXMLFileException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		connections = new ArrayList<>();
 		try {
@@ -88,11 +88,11 @@ public class MapLoader {
 				regions.add(new Region("name", cities, pool.getCouncil(), 2));
 			}
 		} catch (ParserConfigurationException pec) {
-			throw new XMLFileException(pec);
+			throw new MapXMLFileException(pec);
 		} catch (IOException ioe) {
-			throw new XMLFileException(ioe);
+			throw new MapXMLFileException(ioe);
 		} catch (SAXException saxe) {
-			throw new XMLFileException(saxe);
+			throw new MapXMLFileException(saxe);
 		}
 
 	}

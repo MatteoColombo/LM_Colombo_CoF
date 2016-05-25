@@ -7,7 +7,8 @@ import game.board.city.City;
 import game.board.council.Council;
 import game.board.council.CouncilorPool;
 import game.board.map.MapLoader;
-import game.exceptions.XMLFileException;
+import game.board.nobility.NobleTrack;
+import game.exceptions.MapXMLFileException;
 
 public class Board {
 	private final String xmlPath;
@@ -28,10 +29,10 @@ public class Board {
 	 * @param councPerColor an integer, the number of councilor per color
 	 * @param concSize an integer, the number of councilor per council
 	 * @param colors a list of the politic cards and councilor colors
-	 * @throws XMLFileException
+	 * @throws MapXMLFileException
 	 */
 	public Board(String xmlPath, int nobleTrackSize, int councPerColor, int concSize, List<Color> colors)
-			throws XMLFileException {
+			throws MapXMLFileException {
 		this.xmlPath = xmlPath;
 		this.concSize = concSize;
 		this.colors = colors;
@@ -43,9 +44,9 @@ public class Board {
 	/**
 	 * Initializes the board with all the needed elements
 	 * 
-	 * @throws XMLFileException
+	 * @throws MapXMLFileException
 	 */
-	private void initializeBoard() throws XMLFileException {
+	private void initializeBoard() throws MapXMLFileException {
 		this.mapKing = new King(xmlManager.getKingCity(), councilManager.getCouncil());
 		this.xmlManager = new MapLoader(xmlPath, councilManager);
 		this.track = new NobleTrack(nobleTrackSize);

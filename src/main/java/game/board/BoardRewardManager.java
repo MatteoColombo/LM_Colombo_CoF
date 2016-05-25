@@ -7,31 +7,37 @@ import game.reward.BoardReward;
 
 public class BoardRewardManager {
 	private List<BoardReward> bReward;
-	
-	public BoardRewardManager (List<BoardReward> boardRewardList){
-		this.bReward= boardRewardList;
+
+	public BoardRewardManager(List<BoardReward> boardRewardList) {
+		this.bReward = boardRewardList;
 	}
-	
-	public List<BoardReward> getRemainingRewards(){
+
+	public List<BoardReward> getRemainingRewards() {
 		return this.bReward;
 	}
-	
-	public BVictoryPoints getColourReward(String colourReward){		
-		if (bReward.contains(colourReward)) {
-			
-	
-		}
-	}
-	
-	public BVictoryPoints getRegionReward(String regionReward){
-		if (bReward.contains(regionReward)) {
-			
 
+	public BVictoryPoints getColourReward(String colourReward) {
+		for (BoardReward br : bReward) {
+			if (br != null && br.getBRName().equals(colourReward)) {
+
+			} else {
+
+			}
 		}
 	}
-	
-	public BVictoryPoints getKingReward(){
-		
+
+	public BVictoryPoints getRegionReward(String regionReward) {
+		for (BoardReward br : bReward) {
+			if (br != null && br.getBRName().equals(regionReward)) {
+
+			} else {
+
+			}
+		}
+	}
+
+	public BVictoryPoints getKingReward() {
+
 	}
 
 }

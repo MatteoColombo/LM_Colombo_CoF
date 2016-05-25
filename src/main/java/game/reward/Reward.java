@@ -59,11 +59,13 @@ public class Reward {
 			bonusToInsert--;
 		}
 	}
-	
+	/**
+	 * apply all the bonus in the list to the given player
+	 * @param p the given player
+	 * @see Player
+	 */
 	public void assignBonusTo(Player p) {
-		for(Bonus b: this.bonusList) {
-			b.assignBonusTo(p);
-		}
+		this.bonusList.forEach(bonus -> bonus.assignBonusTo(p));
 	}
 	
 }

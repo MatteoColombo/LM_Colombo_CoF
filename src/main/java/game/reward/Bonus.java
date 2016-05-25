@@ -30,7 +30,7 @@ public abstract class Bonus {
 		this.amount = amount;
 	}
 	/**
-	 * 
+	 * return the cardinality of this object
 	 * @return the amount of the basic bonus object
 	 */
 	public int getAmount() {
@@ -39,12 +39,15 @@ public abstract class Bonus {
 	
 	/**
 	 * 
-	 * @return the static array of all standard kind of bonus in the game
+	 * @return the static array of all standard kind of bonus in the game, available for the permission cards
 	 */
 	public static Bonus[] getAllStandardBonus() {
 		return allStandardBonus.clone();
 	}
-	
+	/**
+	 * 
+	 * @return only the bonus available for the cities
+	 */
 	public static Bonus[] getCityBonus() {
 		return new Bonus[] { allStandardBonus[0],
 							 allStandardBonus[1],
@@ -53,7 +56,10 @@ public abstract class Bonus {
 							 allStandardBonus[4]};
 
 	}
-	
+	/**
+	 * 
+	 * @return all the concrete class that implements Bonus existing in the game
+	 */
 	public static Bonus[] getAllBonus() {
 		return new Bonus[] { allStandardBonus[0],
 				 			 allStandardBonus[1],
@@ -65,7 +71,23 @@ public abstract class Bonus {
 				 			 nobilityBonus[1],
 				 			 nobilityBonus[2]}; 
 	}
+	/**
+	 * the VALUE is a static number in each concrete bonus representing the impact on the game, his power.
+	 * <p> it is used in the random constructor of the reward in order to create balanced reward
+	 * @see Reward
+	 */
 	public abstract int getValue();
+	
+	/**
+	 * factory method to create a new Bonus of the same type of the one calling the method, but with a specified amount
+	 * @param amount the cardinality of the Bonus
+	 */
 	public abstract Bonus newCopy(int amount);
+	
+	/**
+	 * apply the Bonus to the given player, modifying his attributes
+	 * @param Player the given player
+	 * @see Player
+	 */
 	public abstract void assignBonusTo(Player p);
 }

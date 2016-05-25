@@ -40,12 +40,13 @@ public class ABuildEmporiumWithKing extends Action {
 
 	@Override
 	public void execute() {
+		king.moveKing(city);
 		player.getAssistants().decreaseAmount(city.getNumberOfEmporium());
 		player.getCoins().decreaseAmount(priceForMovement);
-		king.moveKing(city);
+		this.player.doMainAction();
 		assignEmporium();
 		assignRewards();
-		this.player.doMainAction();
+
 	}
 
 	private void assignEmporium() {

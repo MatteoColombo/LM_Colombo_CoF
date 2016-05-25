@@ -69,6 +69,10 @@
 			<name>victory</name>
 			<value>5</value>
 		</bonus>
+		<bonus>
+			<name>assistant</name>
+			<value>1</value>
+		</bonus>
 	</cell>
 	<cell>
 		<pos>13</pos>

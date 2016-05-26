@@ -1,46 +1,37 @@
 <track>
-	<cell>
-		<pos>0</pos>
-	</cell>
-	<cell>
-		<pos>1</pos>
-	</cell>
-	<cell>
-		<pos>2</pos>
+	<step>	 
+	</step>
+	<step>
+	</step>
+	<step>
 		<bonus>
 			<name>victory</name>
 			<value>2</value>
 		</bonus>
 		<bonus>
-			<name>coin</name>
+			<name>coins</name>
 			<value>2</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>3</pos>
-	</cell>
-	<cell>
-		<pos>4</pos>
+	</step>
+	<step>
+	</step>
+	<step>
 		<bonus>
 			<name>choice</name>
 			<value>1</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>5</pos>
-	</cell>
-	<cell>
-		<pos>6</pos>
+	</step>
+	<step>
+	</step>
+	<step>
 		<bonus>
 			<name>extra</name>
 			<value>1</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>7</pos>
-	</cell>
-	<cell>
-		<pos>8</pos>
+	</step>
+	<step>
+	</step>
+	<step>
 		<bonus>
 			<name>victory</name>
 			<value>3</value>
@@ -49,73 +40,61 @@
 			<name>politic</name>
 			<value>1</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>9</pos>
-	</cell>
-	<cell>
-		<pos>10</pos>
+	</step>
+	<step>
+	</step>
+	<step>
 		<bonus>
-			<name>permit</name>
+			<name>takePermit</name>
 			<value>1</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>11</pos>
-	</cell>
-	<cell>
-		<pos>12</pos>
+	</step>
+	<step>
+	</step>
+	<step>
 		<bonus>
 			<name>victory</name>
 			<value>5</value>
 		</bonus>
 		<bonus>
-			<name>assistant</name>
+			<name>assistants</name>
 			<value>1</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>13</pos>
-	</cell>
-	<cell>
-		<pos>14</pos>
+	</step>
+	<step>
+	</step>
+	<step>
 		<bonus>
 			<name>fromPermit</name>
 			<value>1</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>15</pos>
-	</cell>
-	<cell>
-		<pos>16</pos>
+	</step>
+	<step>
+	</step>
+	<step>
 		<bonus>
 			<name>fromTwoCities</name>
 			<value>1</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>17</pos>
-	</cell>
-	<cell>
-		<pos>18</pos>
+	</step>
+	<step>
+	</step>
+	<step>
 		<bonus>
 			<name>victory</name>
 			<value>8</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>19</pos>
+	</step>
+	<step>
 		<bonus>
 			<name>victory</name>
 			<value>2</value>
 		</bonus>
-	</cell>
-	<cell>
-		<pos>20</pos>
+	</step>
+	<step>
 		<bonus>
 			<name>victory</name>
 			<value>3</value>
 		</bonus>
-	</cell>
+	</step>
 </track>

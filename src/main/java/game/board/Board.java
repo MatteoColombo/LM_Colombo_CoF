@@ -7,37 +7,47 @@ import game.board.city.City;
 import game.board.council.Council;
 import game.board.council.CouncilorPool;
 import game.board.map.MapLoader;
-import game.board.nobility.NobleTrack;
+import game.board.nobility.NobilityLoader;
+import game.board.nobility.NobilityTrack;
 import game.exceptions.MapXMLFileException;
+import game.exceptions.TrackXMLFileException;
+import game.exceptions.XMLFileException;
 
 public class Board {
-	private final String xmlPath;
+	private final String mapPath;
+	private final String nobilityPath;
 	private final int councPerColor;
 	private final int concSize;
-	private final int nobleTrackSize;
 	private final List<Color> colors;
 	private List<Region> regions;
-	private MapLoader xmlManager;
-	private NobleTrack track;
+	private MapLoader mapManager;
+	private NobilityTrack track;
 	private King mapKing;
 	private CouncilorPool councilManager;
 
 	/**
-	 * Constructor of the Board, it receives the configuration parameters and calls the initialization function
-	 * @param xmlPath a string, the path to the map's xml file
-	 * @param nobleTrackSize an integer, the lenght of the nobility track
-	 * @param councPerColor an integer, the number of councilor per color
-	 * @param concSize an integer, the number of councilor per council
-	 * @param colors a list of the politic cards and councilor colors
+	 * Constructor of the Board, it receives the configuration parameters and
+	 * calls the initialization function
+	 * 
+	 * @param mapPath
+	 *            a string, the path to the map's xml file
+	 * @param nobleTrackSize
+	 *            an integer, the lenght of the nobility track
+	 * @param councPerColor
+	 *            an integer, the number of councilor per color
+	 * @param concSize
+	 *            an integer, the number of councilor per council
+	 * @param colors
+	 *            a list of the politic cards and councilor colors
 	 * @throws MapXMLFileException
 	 */
-	public Board(String xmlPath, int nobleTrackSize, int councPerColor, int concSize, List<Color> colors)
-			throws MapXMLFileException {
-		this.xmlPath = xmlPath;
+	public Board(String mapPath, String nobilityPath, int councPerColor, int concSize,
+			List<Color> colors) throws XMLFileException {
+		this.mapPath = mapPath;
+		this.nobilityPath = nobilityPath;
 		this.concSize = concSize;
 		this.colors = colors;
 		this.councPerColor = councPerColor;
-		this.nobleTrackSize = nobleTrackSize;
 		initializeBoard();
 	}
 
@@ -46,12 +56,22 @@ public class Board {
 	 * 
 	 * @throws MapXMLFileException
 	 */
-	private void initializeBoard() throws MapXMLFileException {
-		this.mapKing = new King(xmlManager.getKingCity(), councilManager.getCouncil());
-		this.xmlManager = new MapLoader(xmlPath, councilManager);
-		this.track = new NobleTrack(nobleTrackSize);
+	private void initializeBoard() throws XMLFileException {
+		NobilityLoader nl;
+		try {
+			this.mapManager = new MapLoader(mapPath, councilManager);
+		} catch (MapXMLFileException mxfe) {
+			throw new XMLFileException(mxfe);
+		}
+		try {
+			 nl = new NobilityLoader(nobilityPath);
+		} catch (TrackXMLFileException txfe) {
+			throw new XMLFileException(txfe);
+		}
+		this.track = new NobilityTrack(nl.getNobilityTrack());
+		this.mapKing = new King(mapManager.getKingCity(), councilManager.getCouncil());
 		this.councilManager = new CouncilorPool(councPerColor, concSize, colors);
-		this.regions = xmlManager.getRegions();
+		this.regions = mapManager.getRegions();
 
 	}
 
@@ -91,7 +111,7 @@ public class Board {
 	 * 
 	 * @return a Nobletrack
 	 */
-	public NobleTrack getNobleTrack() {
+	public NobilityTrack getNobleTrack() {
 		return this.track;
 	}
 

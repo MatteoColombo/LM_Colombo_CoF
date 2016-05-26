@@ -7,7 +7,7 @@ import game.player.Player;
  *
  */
 public abstract class Bonus {
-	
+
 	private static final Bonus[] allStandardBonus = { 
 			 new BCoins(1),
 			 new BAssistants(1),

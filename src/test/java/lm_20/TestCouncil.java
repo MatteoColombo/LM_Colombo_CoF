@@ -21,26 +21,26 @@ public class TestCouncil {
 	@Before
 	public void setUp() throws Exception {
 		members = new ArrayList<Councilor>();
-		members.add(new Councilor(ColorConstants.BLACK));
-		members.add(new Councilor(ColorConstants.WHITE));
-		members.add(new Councilor(ColorConstants.ORANGE));
-		members.add(new Councilor(ColorConstants.PURPLE));
+		members.add(new Councilor(Color.BLACK));
+		members.add(new Councilor(Color.WHITE));
+		members.add(new Councilor(Color.ORANGE));
+		members.add(new Councilor(Color.PINK));
 	}
 
 	@Test
 	public void testGetter() {
 		Council council = new Council(members);
-		assertEquals(council.getHeadColor(), ColorConstants.BLACK);
-		assertEquals(council.getCouncilorsColor().get(3), ColorConstants.PURPLE);
+		assertEquals(council.getHeadColor(), Color.BLACK);
+		assertEquals(council.getCouncilorsColor().get(3), Color.PINK);
 	}
 	
 	@Test
 	public void testInsert() {
 		Council council = new Council(members);
-		Councilor member = new Councilor(ColorConstants.ORANGE);
+		Councilor member = new Councilor(Color.ORANGE);
 		council.insertCouncilor(member);
-		assertEquals(council.getHeadColor(), ColorConstants.WHITE);
-		assertEquals(council.getCouncilorsColor().get(3), ColorConstants.ORANGE);
+		assertEquals(council.getHeadColor(), Color.WHITE);
+		assertEquals(council.getCouncilorsColor().get(3), Color.ORANGE);
 	}
 	
 	@Test

@@ -1,7 +1,7 @@
 package game.board;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ColorConstants {
@@ -13,11 +13,6 @@ public class ColorConstants {
 	public static final Color SILVER = new Color(177, 177, 177);
 	public static final Color GOLD = new Color(195, 170, 95);
 	
-	public static final Color WHITE = new Color(255, 255, 255);
-	public static final Color BLACK = new Color(0, 0, 0);
-	public static final Color ORANGE = new Color(220, 150, 70);
-	public static final Color PURPLE = new Color(105, 70, 120);
-	
 	/*
 	 * This constructor is empty because we don't need it
 	 */
@@ -25,12 +20,6 @@ public class ColorConstants {
 	}
 	
 	public static List<Color> getCardsColors() {
-		List<Color> colors = new ArrayList<>();
-		colors.add(ColorConstants.PURPLE);
-		colors.add(ColorConstants.WHITE);
-		colors.add(ColorConstants.ORANGE);
-		colors.add(ColorConstants.BLACK);
-		
-		return colors;
+		return Arrays.asList(Color.BLACK, Color.WHITE, Color.ORANGE, Color.CYAN, Color.PINK, Color.BLUE);	
 	}
 }

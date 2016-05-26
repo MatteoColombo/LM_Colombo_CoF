@@ -2,6 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +29,10 @@ public class TestRegion {
 		cities.add(new City(ColorConstants.BRONZE, "Esti", new RewardCity()));
 		
 		List<Councilor> members = new ArrayList<Councilor>();
-		members.add(new Councilor(ColorConstants.BLACK));
-		members.add(new Councilor(ColorConstants.WHITE));
-		members.add(new Councilor(ColorConstants.ORANGE));
-		members.add(new Councilor(ColorConstants.PURPLE));
+		members.add(new Councilor(Color.BLACK));
+		members.add(new Councilor(Color.WHITE));
+		members.add(new Councilor(Color.ORANGE));
+		members.add(new Councilor(Color.PINK));
 	
 		council = new Council(members);	
 	}

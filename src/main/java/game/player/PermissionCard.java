@@ -13,8 +13,8 @@ import game.reward.*;
  * Each of them has different features that form its own Bonuses, such as: the
  * {@link #getCardReward() Reward} that is given to the Player who obtains that
  * PermissionCard, the {@link #getCardCity() Cities} where it can be set an
- * Emporium after it {@link #setCardUsed() has been used} and if it
- * {@link #getIfCardUsed() has already been employed or not}.
+ * Emporium after {@link #setCardUsed() it has been used} and if
+ * {@link #getIfCardUsed() it has already been employed or not}.
  * 
  * @author Davide Cavallini
  * @see Bonus

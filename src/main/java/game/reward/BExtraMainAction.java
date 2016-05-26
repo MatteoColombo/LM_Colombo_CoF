@@ -5,7 +5,7 @@ import game.player.Player;
 public class BExtraMainAction extends Bonus {
 
 	private static final int VALUE = 99;
-	
+	private static final String NAME = "extra";
 	public BExtraMainAction() {
 		super(1);
 	}
@@ -23,5 +23,10 @@ public class BExtraMainAction extends Bonus {
 	@Override
 	public void assignBonusTo(Player p) {
 		p.increaseMainAction();
+	}
+	
+	@Override
+	public String getTagName() {
+		return NAME;
 	}
 }

@@ -5,7 +5,7 @@ import game.player.Player;
 public class BNobilityPoints extends Bonus {
 
 	private static final int VALUE = 30;
-
+	private static final String NAME = "nobility";
 	
 	public BNobilityPoints(int amount) {
 		super(amount);
@@ -24,5 +24,10 @@ public class BNobilityPoints extends Bonus {
 	@Override
 	public void assignBonusTo(Player p) {
 		p.getNoblePoints().increaseAmount(this.getAmount());
+	}
+	
+	@Override
+	public String getTagName() {
+		return NAME;
 	}
 }

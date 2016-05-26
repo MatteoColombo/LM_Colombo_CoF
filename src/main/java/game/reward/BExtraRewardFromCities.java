@@ -6,7 +6,7 @@ public class BExtraRewardFromCities extends Bonus{
 	
 	// not really useful here, it may be removed in the future
 	public static final int VALUE = 60;
-	
+	public static final String NAME = "choice";
 	public BExtraRewardFromCities(int amount) {
 		super(amount);
 	}
@@ -26,4 +26,8 @@ public class BExtraRewardFromCities extends Bonus{
 		// TODO ask the player for cities
 	}
 	
+	@Override
+	public String getTagName() {
+		return NAME;
+	}
 }

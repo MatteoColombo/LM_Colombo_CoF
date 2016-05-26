@@ -5,6 +5,7 @@ import game.player.Player;
 public class BVictoryPoints extends Bonus {
 
 	private static final int VALUE = 10;
+	private static final String NAME = "victory";
 	
 	public BVictoryPoints(int amount) {
 		super(amount);
@@ -23,5 +24,10 @@ public class BVictoryPoints extends Bonus {
 	@Override
 	public void assignBonusTo(Player p) {
 		p.getVictoryPoints().increaseAmount(this.getValue());
+	}
+	
+	@Override
+	public String getTagName() {
+		return NAME;
 	}
 }

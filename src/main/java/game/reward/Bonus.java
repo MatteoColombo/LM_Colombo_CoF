@@ -90,4 +90,6 @@ public abstract class Bonus {
 	 * @see Player
 	 */
 	public abstract void assignBonusTo(Player p);
+	
+	public abstract String getTagName();
 }

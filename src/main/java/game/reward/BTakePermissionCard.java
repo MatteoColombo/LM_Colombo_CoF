@@ -6,7 +6,7 @@ public class BTakePermissionCard extends Bonus{
 	
 	// not really useful here, it may be removed in the future
 	private static final int VALUE = 200;
-	
+	private static final String NAME = "takePermit";
 	public BTakePermissionCard() {
 		super(1);
 	}
@@ -26,6 +26,11 @@ public class BTakePermissionCard extends Bonus{
 	public void assignBonusTo(Player p) {
 		// TODO ask the player for a permission card
 		
+	}
+	
+	@Override
+	public String getTagName() {
+		return NAME;
 	}
 
 }

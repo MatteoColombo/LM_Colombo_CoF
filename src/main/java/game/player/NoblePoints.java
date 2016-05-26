@@ -6,7 +6,7 @@ package game.player;
  * Each Player can have a different {@link #getAmount() amount} of them that can
  * be {@link #increaseAmount(int) increased}.
  * 
- * @author Davide_Cavallini
+ * @author Davide Cavallini
  * @see Player
  */
 public class NoblePoints {

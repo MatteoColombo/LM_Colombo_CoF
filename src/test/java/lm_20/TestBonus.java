@@ -13,6 +13,11 @@ import game.reward.Bonus;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 
+ * @author Davide Cavallini
+ *
+ */
 public class TestBonus {
 	private List<Color> colorList;
 	private Player p;

@@ -5,7 +5,7 @@ package game.player;
  * <p>
  * Each of them is assigned to one {@link #getPlayer() Player}.
  * 
- * @author Davide_Cavallini
+ * @author Davide Cavallini
  * @see Player
  */
 public class Emporium {

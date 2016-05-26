@@ -16,7 +16,7 @@ import game.reward.*;
  * Emporium after it {@link #setCardUsed() has been used} and if it
  * {@link #getIfCardUsed() has already been employed or not}.
  * 
- * @author Davide_Cavallini
+ * @author Davide Cavallini
  * @see Bonus
  * @see City
  * @see Emporium

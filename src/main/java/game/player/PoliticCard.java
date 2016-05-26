@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * TODO JavaDoc
  * 
- * @author Davide_Cavallini
+ * @author Davide Cavallini
  *
  */
 public class PoliticCard {

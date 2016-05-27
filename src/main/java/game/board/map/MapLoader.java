@@ -99,6 +99,7 @@ public class MapLoader {
 				List<City> cities = parseCities(citiesOfRegion);
 				citiesOfMap.addAll(cities);
 				regions.add(new Region("name", cities, pool.getCouncil(), 2));
+				addRegionToCities(regions.get(i));
 			}
 		} catch (ParserConfigurationException pec) {
 			throw new MapXMLFileException(pec);
@@ -110,6 +111,15 @@ public class MapLoader {
 
 	}
 
+	/**
+	 * Receives a region and to each city it adds a reference to the region itself
+	 * @param r a region
+	 */
+	private void addRegionToCities(Region r){
+		List<City> cities= r.getCities();
+		cities.forEach(c -> c.setRegion(r));
+	}
+	
 	/**
 	 * It receives the list of the cities of a region. It extracts the single
 	 * regions and calls the function which generates the City objects

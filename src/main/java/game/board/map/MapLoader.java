@@ -36,29 +36,42 @@ public class MapLoader {
 		loadXML();
 		loadConnections();
 	}
-	
+
+	/**
+	 * For each city adds its connection with the other cities. It uses the
+	 * support method addConnection which is the one that
+	 */
 	private void loadConnections() {
 		for (City c : citiesOfMap) {
 			addConnections(c);
 		}
 	}
 
-	private void addConnections(City c){
-		for(CityConnection cityConn: connections){
-			if(cityConn.getFirstCity().equals(c.getName())){
+	/**
+	 * It's the method which actually adds the connection to the cities It scans
+	 * the list of the connections, take those that have the same name of the
+	 * one received as parameters and it adds to it the connections.
+	 * 
+	 * @param c
+	 *            it's the city to which the connection are added
+	 */
+	private void addConnections(City c) {
+		for (CityConnection cityConn : connections) {
+			if (cityConn.getFirstCity().equals(c.getName())) {
 				c.addConnection(searchCity(cityConn.getSecondCity()));
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns the city named as the string received as parameter
-	 * @param cityName 
+	 * 
+	 * @param cityName
 	 * @return
 	 */
-	private City searchCity(String cityName){
-		for(City c: citiesOfMap)
-			if(c.getName().equals(cityName))
+	private City searchCity(String cityName) {
+		for (City c : citiesOfMap)
+			if (c.getName().equals(cityName))
 				return c;
 		return null;
 	}
@@ -176,8 +189,8 @@ public class MapLoader {
 	 * @return a City
 	 */
 	public City getKingCity() {
-		for(City c: citiesOfMap)
-			if(c.isCapital())
+		for (City c : citiesOfMap)
+			if (c.isCapital())
 				return c;
 		return null;
 	}
@@ -191,5 +204,4 @@ public class MapLoader {
 		return regions.size();
 	}
 
-	
 }

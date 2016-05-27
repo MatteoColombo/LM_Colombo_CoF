@@ -3,6 +3,8 @@ package game.board.city;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import game.board.Region;
 import game.player.*;
 import game.reward.*;
 /**
@@ -21,6 +23,7 @@ public class City {
 	private List<Emporium> emporiums;
 	private final boolean capital;
 	private List<City> connectedCities;
+	private Region cityRegion;
 
 	/**
 	 * This is the constructor which is used to initialize a non-capital city It
@@ -145,6 +148,19 @@ public class City {
 	public List<City> getConnectedCities(){
 		return connectedCities;
 	}
+	
+	
+	public void setRegion(Region cityRegion){
+		this.cityRegion=cityRegion;
+	}
+	/**
+	 * Returns the region in which the city is located
+	 * @return a region
+	 */
+	public Region getRegion(){
+		return cityRegion;
+	}
+	
 	
 
 }

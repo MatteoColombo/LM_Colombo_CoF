@@ -26,6 +26,11 @@ public class BoardReward {
 	/**
 	 * Initializes the name and the amount of {@link BVictoryPoints} of this
 	 * BoardReward.
+	 * <p>
+	 * <b>N.B.</b> If the new BoardReward don't have a String as name but it has
+	 * some other kind of "identification attribute", like a {@link Color} that
+	 * has a sequence of numbers, it <b><U>MUST</U></b> be somehow converted
+	 * into a String (such as using the toString() method)!
 	 * 
 	 * @param rewardName
 	 *            the new name of this BoardReward

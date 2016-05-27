@@ -34,7 +34,7 @@ public class PoliticCard {
 	 * @return
 	 */
 	public boolean isMultipleColor() {
-		return isMultipleColor;
+		return this.isMultipleColor;
 	}
 
 	/**

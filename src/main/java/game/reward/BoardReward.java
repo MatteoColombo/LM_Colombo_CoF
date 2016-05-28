@@ -1,5 +1,7 @@
 package game.reward;
 
+import java.awt.Color;
+
 import game.board.*;
 import game.player.*;
 
@@ -7,7 +9,7 @@ import game.player.*;
  * A class that represents a BoardReward obtainable by a Player after he has
  * achieved some prerequisites.
  * <p>
- * Each BoardReward has a {@link #getBRName() name} and a linked
+ * Each BoardReward has a {@link #getBRKey() name} and a linked
  * {@link #getBRBonus() Bonus} with its own amount of BVictoryPoints, that can
  * be different depending on the requirements that have to be satisfied to
  * obtain it.
@@ -19,9 +21,8 @@ import game.player.*;
  * @see Player
  * @see Reward
  */
-public class BoardReward {
-	private String bRName;
-	private BVictoryPoints bRBonus;
+public abstract class BoardReward {
+	private BVictoryPoints bRewardBonus;
 
 	/**
 	 * Initializes the name and the amount of {@link BVictoryPoints} of this
@@ -38,19 +39,8 @@ public class BoardReward {
 	 *            the new amount of BVictoryPoints of this BoardReward
 	 * @see BoardReward
 	 */
-	public BoardReward(String rewardName, int rewardAmount) {
-		this.bRName = rewardName;
-		this.bRBonus = new BVictoryPoints(rewardAmount);
-	}
-
-	/**
-	 * Returns the name of this BoardReward.
-	 * 
-	 * @return the name of this BoardReward
-	 * @see BoardReward
-	 */
-	public String getBRName() {
-		return this.bRName;
+	public BoardReward(int rewardAmount) {
+		this.bRewardBonus = new BVictoryPoints(rewardAmount);
 	}
 
 	/**
@@ -60,6 +50,6 @@ public class BoardReward {
 	 * @see BoardReward
 	 */
 	public BVictoryPoints getBRBonus() {
-		return this.bRBonus;
+		return this.bRewardBonus;
 	}
 }

@@ -27,6 +27,8 @@ import java.awt.Color;
  * @see Action
  * @see Board
  * @see BoardReward
+ * @see BoardColorReward
+ * @see BoardRegionReward
  * @see Bonus
  * @see BVictoryPoints
  * @see City
@@ -38,7 +40,8 @@ import java.awt.Color;
  * @see Reward
  */
 public class BoardRewardsManager {
-	private List<BoardReward> bRewards;
+	private List<BoardColorReward> bColorRewards;
+	private List<BoardRegionReward> bRegionRewards;
 	private List<BVictoryPoints> bKingRewards;
 
 	/**
@@ -54,8 +57,10 @@ public class BoardRewardsManager {
 	 *            the initial list of BoardKingRewards
 	 * @see BoardRewardsManager
 	 */
-	public BoardRewardsManager(List<BoardReward> bRewards, List<BVictoryPoints> bKingRewards) {
-		this.bRewards = bRewards;
+	public BoardRewardsManager(List<BoardColorReward> bColorRewards, List<BoardRegionReward> bRegionRewards,
+			List<BVictoryPoints> bKingRewards) {
+		this.bColorRewards = bColorRewards;
+		this.bRegionRewards = bRegionRewards;
 		this.bKingRewards = bKingRewards;
 	}
 
@@ -66,8 +71,12 @@ public class BoardRewardsManager {
 	 * @return the list of available BoardRewards
 	 * @see BoardRewardsManager
 	 */
-	public List<BoardReward> getRemainingBoardRewards() {
-		return this.bRewards;
+	public List<BoardColorReward> getRemainingBColorRewards() {
+		return this.bColorRewards;
+	}
+
+	public List<BoardRegionReward> getRemainingBRegionRewards() {
+		return this.bRegionRewards;
 	}
 
 	/**
@@ -77,7 +86,7 @@ public class BoardRewardsManager {
 	 * @return the list of available BoardKingRewards
 	 * @see BoardRewardsManager
 	 */
-	public List<BVictoryPoints> getRemainingBoardKingRewards() {
+	public List<BVictoryPoints> getRemainingBKingRewards() {
 		return this.bKingRewards;
 	}
 
@@ -97,13 +106,25 @@ public class BoardRewardsManager {
 	 *         available in the list
 	 * @see BoardRewardsManager
 	 */
-	public BVictoryPoints getBoardReward(String bRewardAwarded) {
-		for (BoardReward br : this.bRewards) {
-			if (br != null && br.getBRName().equals(bRewardAwarded)) {
-				int i = this.bRewards.indexOf(br);
-				BVictoryPoints bReward = this.bRewards.remove(i).getBRBonus();
+	public BVictoryPoints getBoardReward(Color bColorRewardAwarded) {
+		for (BoardColorReward br : this.bColorRewards) {
+			if (br != null && br.getBRKey().equals(bColorRewardAwarded)) {
+				int i = this.bColorRewards.indexOf(br);
+				BVictoryPoints bColorReward = this.bColorRewards.remove(i).getBRBonus();
 				BVictoryPoints bKingReward = getBoardKingReward();
-				return new BVictoryPoints(bReward.getAmount() + bKingReward.getAmount());
+				return new BVictoryPoints(bColorReward.getAmount() + bKingReward.getAmount());
+			}
+		}
+		return new BVictoryPoints(0);
+	}
+
+	public BVictoryPoints getBoardReward(Region bRegionRewardAwarded) {
+		for (BoardRegionReward br : this.bRegionRewards) {
+			if (br != null && br.getBRKey().equals(bRegionRewardAwarded)) {
+				int i = this.bRegionRewards.indexOf(br);
+				BVictoryPoints bRegionReward = this.bRegionRewards.remove(i).getBRBonus();
+				BVictoryPoints bKingReward = getBoardKingReward();
+				return new BVictoryPoints(bRegionReward.getAmount() + bKingReward.getAmount());
 			}
 		}
 		return new BVictoryPoints(0);
@@ -115,18 +136,15 @@ public class BoardRewardsManager {
 	 * <p>
 	 * If the BoardKingRewards list is empty, it only returns zero
 	 * BVictoryPoints.
-	 * <p>
-	 * <b>N.B.</b> <U>This method should not have to be used</U>.
 	 * 
 	 * @return the greatest BoardKingReward left in its list; zero
 	 *         BVictoryPoints if the list is empty
 	 * @see BoardRewardsManager
 	 */
-	public BVictoryPoints getBoardKingReward() {
+	private BVictoryPoints getBoardKingReward() {
 		if (this.bKingRewards.isEmpty())
 			return new BVictoryPoints(0);
 		else
 			return this.bKingRewards.remove(0);
 	}
-
 }

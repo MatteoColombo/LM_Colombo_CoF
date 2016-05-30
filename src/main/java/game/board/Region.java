@@ -126,4 +126,15 @@ public class Region {
 		return null;
 	}
 	
+	/**
+	 * Checks if a player has placed an emporium in each city of the region
+	 * @param player the player who placed the emporiums
+	 * @return true if the region is complete, false otherwise
+	 */
+	public boolean isRegionComplete(Player p){
+		for(City c: cities)
+			if(!c.hasEmporiumOfPlayer(p))
+				return false;
+		return true;
+	}
 }

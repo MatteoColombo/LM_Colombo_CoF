@@ -3,6 +3,8 @@ package game.board.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.prism.paint.Color;
+
 import game.board.city.City;
 import game.exceptions.IllegalActionException;
 import game.player.Player;
@@ -113,5 +115,19 @@ public class MapExplorer {
 				return true;
 		return false;
 		
+	}
+	
+	/**
+	 * Checks if the player has built an emporium in every city of a determined color
+	 * @param player the player who built the emporium
+	 * @param cityColor the color of the cities
+	 * @param cities the list of all the cities
+	 * @return true if the player completed the color, false otherwise
+	 */
+	public boolean isColorComplete(Player p, Color cityColor, List<City> cities){
+		for(City c: cities)
+			if(!c.hasEmporiumOfPlayer(p) && c.getColor().equals(cityColor))
+				return false;
+		return true;
 	}
 }

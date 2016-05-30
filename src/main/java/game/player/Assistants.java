@@ -7,7 +7,7 @@ package game.player;
  * be {@link #increaseAmount(int) increased} or {@link #decreaseAmount(int)
  * decreased} according to the context.
  * 
- * @author Davide_Cavallini
+ * @author Davide Cavallini
  * @see Player
  */
 public class Assistants {

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 /**
  * 
- * @author Davide_Cavallini
+ * @author Davide Cavallini
  *
  */
 public class Player {

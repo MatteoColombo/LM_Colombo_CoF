@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import game.board.nobility.NobilityLoader;
+import game.exceptions.TrackXMLFileException;
 import game.player.Player;
 import game.reward.Reward;
 
@@ -31,4 +32,8 @@ public class TestNobilityLoader {
 		assertEquals(12, p.getCoins().getAmount());
 	}
 
+	@Test(expected=TrackXMLFileException.class)
+	public void testExceptionTrackXML() throws Exception{
+		NobilityLoader nl= new NobilityLoader("src/file.xml");
+	}
 }

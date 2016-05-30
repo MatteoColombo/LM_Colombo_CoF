@@ -1,6 +1,5 @@
 package game;
 
-import connections.rmi.Local;
 import game.action.ABuyAssistant;
 import game.action.AExtraMainAction;
 import game.action.Action;

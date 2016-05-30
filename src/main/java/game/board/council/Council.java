@@ -68,8 +68,7 @@ public class Council {
 	 * @throws IllegalActionException
 	 */
 	public int compareCardCouncil(List<PoliticCard> cards) throws IllegalActionException{
-		List<Councilor> comparableCouncilors= new ArrayList<>();
-		comparableCouncilors.addAll(this.councMembers);
+		List<Councilor> comparableCouncilors= new ArrayList<>(this.councMembers);
 		checkCardsNumber(cards);
 		for(PoliticCard card: cards){
 			boolean found=false;
@@ -92,7 +91,6 @@ public class Council {
 			
 		return comparableCouncilors.size();
 	}
-	
 	
 	private void checkCardsNumber(List<PoliticCard> cards) throws IllegalActionException{
 		if(cards.size()>this.councMembers.size())

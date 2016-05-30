@@ -1,10 +1,8 @@
 package game.board.map;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.sun.prism.paint.Color;
-
 import game.board.city.City;
 import game.exceptions.IllegalActionException;
 import game.player.Player;

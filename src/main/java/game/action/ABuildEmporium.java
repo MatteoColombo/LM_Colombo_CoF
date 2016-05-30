@@ -41,6 +41,7 @@ public class ABuildEmporium extends Action {
 		assignRewards();
 		this.player.doMainAction();
 		
+		
 	}
 
 	private void assignEmporium(){

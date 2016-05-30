@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * TODO JavaDoc
  * 
- * @author Davide_Cavallini
+ * @author Davide Cavallini
  *
  */
 public class PoliticCard {
@@ -34,7 +34,7 @@ public class PoliticCard {
 	 * @return
 	 */
 	public boolean isMultipleColor() {
-		return isMultipleColor;
+		return this.isMultipleColor;
 	}
 
 	/**

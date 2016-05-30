@@ -149,10 +149,14 @@ public class City {
 		return connectedCities;
 	}
 	
-	
+	/**
+	 * Sets the reference the the region in which the city is contained
+	 * @param cityRegion
+	 */
 	public void setRegion(Region cityRegion){
 		this.cityRegion=cityRegion;
 	}
+	
 	/**
 	 * Returns the region in which the city is located
 	 * @return a region

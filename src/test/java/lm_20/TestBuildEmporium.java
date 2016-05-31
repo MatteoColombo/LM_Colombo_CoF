@@ -28,10 +28,10 @@ public class TestBuildEmporium {
 	private List<Color> colorList;
 	private Player player;
 	private CouncilorPool pool;
-	private List<BoardColorReward> bColorRewards;
+/*	private List<BoardColorReward> bColorRewards;
 	private List<BoardRegionReward> bRegionRewards;
 	private List<BVictoryPoints> bKingRewards;
-	private BoardRewardsManager bRewardManager;
+	private BoardRewardsManager bRewardManager;*/
 
 	@Before
 	public void setUp() throws MapXMLFileException {
@@ -44,7 +44,7 @@ public class TestBuildEmporium {
 		colorList.add(Color.ORANGE);
 		this.player = new Player(10, 3, 6, 10, colorList, 0, 0);
 		this.pool = new CouncilorPool(4, 4, colorList);
-		bColorRewards = new ArrayList<>();
+		/*bColorRewards = new ArrayList<>();
 		bKingRewards = new ArrayList<>();
 		bRegionRewards = new ArrayList<>();
 		bColorRewards.add(new BoardColorReward(Color.decode("#008000"), 10));
@@ -53,7 +53,7 @@ public class TestBuildEmporium {
 		bColorRewards.add(new BoardColorReward(Color.decode("#f44343"), 20));
 		MapLoader ml = new MapLoader("src/main/resources/map.xml", pool);
 		bRegionRewards.add(new BoardRegionReward(ml.getRegions().get(0), 20));
-		this.bRewardManager = new BoardRewardsManager(bColorRewards, bRegionRewards, bKingRewards);
+		this.bRewardManager = new BoardRewardsManager(bColorRewards, bRegionRewards, bKingRewards);*/
 
 	}
 

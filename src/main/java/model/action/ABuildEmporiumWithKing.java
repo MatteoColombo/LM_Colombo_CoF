@@ -54,7 +54,7 @@ public class ABuildEmporiumWithKing extends Action {
 		assignEmporium();
 		assignRewards();
 		MapExplorer mp = new MapExplorer();
-		if (mp.isColorComplete(this.player, this.chosenCity.getColor(), this.cities)) {
+		/*if (mp.isColorComplete(this.player, this.chosenCity.getColor(), this.cities)) {
 			if (!chosenCity.isCapital()) {
 				BVictoryPoints playerBReward = this.bRewardsManager.getBoardColorReward(chosenCity.getColor());
 				playerBReward.assignBonusTo(player);
@@ -63,7 +63,7 @@ public class ABuildEmporiumWithKing extends Action {
 		if (chosenCity.getRegion().isCompleted(this.player)) {
 			BVictoryPoints playerBReward = this.bRewardsManager.getBoardRegionReward(chosenCity.getRegion());
 			playerBReward.assignBonusTo(player);
-		}
+		}*/
 
 	}
 

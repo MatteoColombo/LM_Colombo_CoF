@@ -9,12 +9,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.board.ColorConstants;
-import game.board.Region;
-import game.board.city.*;
-import game.board.council.*;
-import game.player.Player;
-import game.reward.RewardCity;
+import model.board.ColorConstants;
+import model.board.Region;
+import model.board.city.*;
+import model.board.council.*;
+import model.player.Player;
+import model.reward.RewardCity;
 
 public class TestRegion {
 	Region region;

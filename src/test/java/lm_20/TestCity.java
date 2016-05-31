@@ -3,11 +3,11 @@ package lm_20;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import game.board.ColorConstants;
-import game.board.city.City;
-import game.player.Player;
-import game.reward.Reward;
-import game.reward.RewardCity;
+import model.board.ColorConstants;
+import model.board.city.City;
+import model.player.Player;
+import model.reward.Reward;
+import model.reward.RewardCity;
 
 public class TestCity {
 	

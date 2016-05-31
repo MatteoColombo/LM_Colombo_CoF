@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import game.player.Coins;
+import model.player.Coins;
 
 public class TestCoins {
 

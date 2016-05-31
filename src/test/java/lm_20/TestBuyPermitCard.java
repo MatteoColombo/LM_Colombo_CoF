@@ -9,14 +9,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.action.ABuyPermissionCard;
-import game.board.council.Council;
-import game.board.council.CouncilorPool;
-import game.board.map.MapLoader;
-import game.exceptions.IllegalActionException;
-import game.player.PermissionCard;
-import game.player.Player;
-import game.player.PoliticCard;
+import model.action.ABuyPermissionCard;
+import model.board.council.Council;
+import model.board.council.CouncilorPool;
+import model.board.map.MapLoader;
+import model.exceptions.IllegalActionException;
+import model.player.PermissionCard;
+import model.player.Player;
+import model.player.PoliticCard;
 
 public class TestBuyPermitCard {
 	private List<Color> colorList;

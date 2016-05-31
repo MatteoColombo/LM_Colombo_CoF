@@ -10,14 +10,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.action.ABuildEmporium;
-import game.action.ABuildEmporiumWithKing;
-import game.board.King;
-import game.board.council.CouncilorPool;
-import game.board.map.MapLoader;
-import game.exceptions.IllegalActionException;
-import game.player.PermissionCard;
-import game.player.Player;
+import model.action.ABuildEmporium;
+import model.action.ABuildEmporiumWithKing;
+import model.board.King;
+import model.board.council.CouncilorPool;
+import model.board.map.MapLoader;
+import model.exceptions.IllegalActionException;
+import model.player.PermissionCard;
+import model.player.Player;
 
 public class TestBuildEmporium {
 	private List<Color> colorList;

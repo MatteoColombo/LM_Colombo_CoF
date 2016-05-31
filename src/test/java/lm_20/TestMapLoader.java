@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.board.council.CouncilorPool;
-import game.board.map.MapLoader;
-import game.exceptions.MapXMLFileException;
-import game.exceptions.XMLFileException;
+import model.board.council.CouncilorPool;
+import model.board.map.MapLoader;
+import model.exceptions.MapXMLFileException;
+import model.exceptions.XMLFileException;
 
 public class TestMapLoader {
 

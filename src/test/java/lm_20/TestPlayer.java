@@ -6,16 +6,16 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import game.player.Assistants;
-import game.player.Coins;
-import game.player.Emporium;
-import game.player.NoblePoints;
-import game.player.Player;
-import game.player.PoliticCard;
-import game.player.VictoryPoints;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import model.player.Assistants;
+import model.player.Coins;
+import model.player.Emporium;
+import model.player.NoblePoints;
+import model.player.Player;
+import model.player.PoliticCard;
+import model.player.VictoryPoints;
 
 public class TestPlayer {
 

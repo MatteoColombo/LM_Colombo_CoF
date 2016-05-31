@@ -5,7 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.logging.Logger;
 
-import game.Game;
+import model.Game;
 
 public class Server implements ServerInt{
 	private List<Game> games;

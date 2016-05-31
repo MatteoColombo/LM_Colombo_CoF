@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.board.council.Council;
-import game.board.council.CouncilorPool;
+import model.board.council.Council;
+import model.board.council.CouncilorPool;
 
 public class TestCouncilorPool {
 	ArrayList<Color> colorList = new ArrayList<Color>();

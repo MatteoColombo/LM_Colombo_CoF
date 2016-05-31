@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import game.action.AExtraMainAction;
-import game.action.Action;
-import game.exceptions.IllegalActionException;
-import game.player.Player;
+import model.action.AExtraMainAction;
+import model.action.Action;
+import model.exceptions.IllegalActionException;
+import model.player.Player;
 
 public class TestAExtraMainAction {
 	Player p;

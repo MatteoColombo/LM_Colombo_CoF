@@ -10,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.notification.Failure;
 
-import game.action.ABuyAssistant;
-import game.exceptions.IllegalActionException;
-import game.player.Player;
+import model.action.ABuyAssistant;
+import model.exceptions.IllegalActionException;
+import model.player.Player;
 
 public class TestABuyAssistants {
 

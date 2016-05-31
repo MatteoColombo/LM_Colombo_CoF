@@ -8,10 +8,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import game.board.nobility.NobilityLoader;
-import game.exceptions.TrackXMLFileException;
-import game.player.Player;
-import game.reward.Reward;
+import model.board.nobility.NobilityLoader;
+import model.exceptions.TrackXMLFileException;
+import model.player.Player;
+import model.reward.Reward;
 
 public class TestNobilityLoader {
 

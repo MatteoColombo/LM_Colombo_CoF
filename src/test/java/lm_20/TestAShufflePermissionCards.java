@@ -8,15 +8,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.action.AShufflePermissionCards;
-import game.action.Action;
-import game.board.ColorConstants;
-import game.board.Region;
-import game.board.city.City;
-import game.exceptions.IllegalActionException;
-import game.player.PermissionCard;
-import game.player.Player;
-import game.reward.RewardCity;
+import model.action.AShufflePermissionCards;
+import model.action.Action;
+import model.board.ColorConstants;
+import model.board.Region;
+import model.board.city.City;
+import model.exceptions.IllegalActionException;
+import model.player.PermissionCard;
+import model.player.Player;
+import model.reward.RewardCity;
 
 public class TestAShufflePermissionCards {
 	Region plains;

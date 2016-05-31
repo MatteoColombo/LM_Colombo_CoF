@@ -9,11 +9,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.board.ColorConstants;
-import game.board.council.Council;
-import game.board.council.Councilor;
-import game.exceptions.IllegalActionException;
-import game.player.PoliticCard;
+import model.board.ColorConstants;
+import model.board.council.Council;
+import model.board.council.Councilor;
+import model.exceptions.IllegalActionException;
+import model.player.PoliticCard;
 
 public class TestCouncil {
 	List<Councilor> members;

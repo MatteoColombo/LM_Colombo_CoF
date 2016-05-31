@@ -9,12 +9,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.board.Region;
-import game.board.council.CouncilorPool;
-import game.board.map.MapExplorer;
-import game.board.map.MapLoader;
-import game.player.Player;
-import game.reward.Reward;
+import model.board.Region;
+import model.board.council.CouncilorPool;
+import model.board.map.MapExplorer;
+import model.board.map.MapLoader;
+import model.player.Player;
+import model.reward.Reward;
 
 public class TestMapExplorer {
 	ArrayList<Color> colors;

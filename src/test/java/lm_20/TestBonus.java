@@ -6,12 +6,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import game.player.Player;
-import game.reward.BAssistants;
-import game.reward.Bonus;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import model.player.Player;
+import model.reward.BAssistants;
+import model.reward.Bonus;
 
 /**
  * 

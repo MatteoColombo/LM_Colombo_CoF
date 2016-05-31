@@ -2,11 +2,13 @@ package game.action;
 
 import java.util.List;
 
+import game.board.BoardRewardsManager;
 import game.board.King;
 import game.board.city.City;
 import game.board.map.MapExplorer;
 import game.exceptions.IllegalActionException;
 import game.player.Player;
+import game.reward.BVictoryPoints;
 import game.reward.Reward;
 
 public class ABuildEmporiumWithKing extends Action {
@@ -16,14 +18,16 @@ public class ABuildEmporiumWithKing extends Action {
 	private MapExplorer mx;
 	private int priceForMovement;
 	private final int PRICEPERROUTE = 2;
+	private BoardRewardsManager bRewardsManager;
 
-	public ABuildEmporiumWithKing(Player p, King king, City city)
+	public ABuildEmporiumWithKing(Player p, King king, City city, BoardRewardsManager bRewardsManager)
 			throws IllegalActionException {
 		super(true);
 		this.king = king;
 		this.player = p;
 		this.city = city;
 		this.mx = new MapExplorer();
+		this.bRewardsManager = bRewardsManager;
 		if (city.hasEmporiumOfPlayer(player)) {
 			throw new IllegalActionException("you already have an emporium there");
 		}
@@ -46,6 +50,16 @@ public class ABuildEmporiumWithKing extends Action {
 		this.player.doMainAction();
 		assignEmporium();
 		assignRewards();
+		{// TODO if (check for color)
+			if (!city.isCapital()) {
+				BVictoryPoints playerBReward = this.bRewardsManager.getBoardColorReward(city.getColor());
+				playerBReward.assignBonusTo(player);
+			}
+		}
+		if (city.getRegion().isCompleted(this.player)) {
+			BVictoryPoints playerBReward = this.bRewardsManager.getBoardRegionReward(city.getRegion());
+			playerBReward.assignBonusTo(player);
+		}
 
 	}
 

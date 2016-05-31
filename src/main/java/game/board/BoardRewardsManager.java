@@ -9,6 +9,7 @@ import game.player.*;
 import game.reward.*;
 import game.board.city.*;
 import java.awt.Color;
+//TODO a reference to the object of this class should be saved somewhere so that we have to create it only once 
 
 /**
  * A class that manages the BoardRewards.

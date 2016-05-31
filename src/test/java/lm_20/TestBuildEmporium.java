@@ -49,10 +49,10 @@ public class TestBuildEmporium {
 		ABuildEmporium action;
 			ml = new MapLoader("src/main/resources/map.xml", pool);
 			card = new PermissionCard(ml.getRegions().get(0).getCities());
-			action = new ABuildEmporium(player, card, card.getCardCity().get(0));
+			action = new ABuildEmporium(player, card, card.getCardCity().get(0), null);
 			assertEquals(true, action.isMain());
 			action.execute();
-			action = new ABuildEmporium(player, card, card.getCardCity().get(0));
+			action = new ABuildEmporium(player, card, card.getCardCity().get(0), null);
 	}
 
 	/**
@@ -66,9 +66,9 @@ public class TestBuildEmporium {
 		ABuildEmporium action;
 			ml = new MapLoader("src/main/resources/map.xml", pool);
 			card = new PermissionCard(ml.getRegions().get(0).getCities());
-			action = new ABuildEmporium(player, card, card.getCardCity().get(0));
+			action = new ABuildEmporium(player, card, card.getCardCity().get(0), null);
 			action.execute();
-			action = new ABuildEmporium(player, card, ml.getRegions().get(2).getCities().get(0));
+			action = new ABuildEmporium(player, card, ml.getRegions().get(2).getCities().get(0), null);
 	}
 
 	/**
@@ -83,9 +83,9 @@ public class TestBuildEmporium {
 			ml = new MapLoader("src/main/resources/map.xml", pool);
 			card = new PermissionCard(ml.getRegions().get(0).getCities());
 			Player p2 = new Player(10, 0, 6, 10, colorList, 0, 0);
-			action = new ABuildEmporium(player, card, card.getCardCity().get(0));
+			action = new ABuildEmporium(player, card, card.getCardCity().get(0), null);
 			action.execute();
-			action = new ABuildEmporium(p2, card, card.getCardCity().get(0));
+			action = new ABuildEmporium(p2, card, card.getCardCity().get(0), null);
 			action.execute();
 	}
 
@@ -101,11 +101,11 @@ public class TestBuildEmporium {
 
 			ml = new MapLoader("src/main/resources/map.xml", pool);
 			king = new King(ml.getKingCity(), pool.getCouncil());
-			action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0));
+			action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null);
 			assertEquals(true, action.isMain());
 			action.execute();
 			assertEquals(1, ml.getRegions().get(0).getCities().get(0).getNumberOfEmporium() );
-			action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0));
+			action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null);
 		
 	}
 
@@ -122,7 +122,7 @@ public class TestBuildEmporium {
 		
 			ml = new MapLoader("src/main/resources/map.xml", pool);
 			king = new King(ml.getKingCity(), pool.getCouncil());
-			action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0));
+			action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null);
 			assertEquals(true, action.isMain());
 			action.execute();
 			assertEquals(10, player.getCoins().getAmount());

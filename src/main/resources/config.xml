@@ -1,0 +1,31 @@
+<config>
+	<player>
+		<money>10</money>
+		<helpers>1</helpers>
+		<politic>6</politic>
+		<emporiums>10</emporiums>
+		<victory>0</victory>
+		<nobility>0</nobility>
+		<max>10</max>
+	</player>
+	<connection>
+		<type>socket</type><!-- rmi -->a
+		<ip>127.0.0.1</ip>
+		<port>1994</port>
+	</connection>
+	<colors>
+		<color>#ffffff</color>
+		<color>#000000</color>
+		<color>#ff9900</color>
+		<color>#0066ff</color>
+		<color>#ff99cc</color>
+		<color>#cc33ff</color>
+	</colors>
+	<council>
+		<size>4</size>
+		<councilorPerColor>4</councilorPerColor>
+	</council>
+	<region>
+		<discolosed>2</discolosed>
+	</region>
+</config>

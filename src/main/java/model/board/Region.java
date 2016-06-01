@@ -137,4 +137,11 @@ public class Region {
 				return false;
 		return true;
 	}
+	
+	/**
+	 * checks how many permission are on the table
+	 */
+	public int getPermissionSlotsNumber() {
+		return this.permissionCards.length;
+	}
 }

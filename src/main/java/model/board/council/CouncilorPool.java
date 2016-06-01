@@ -130,5 +130,9 @@ public class CouncilorPool {
 			return false;
 		return true;
 	}
+	
+	public List<Color> getListColor() {
+		return this.colors;
+	}
 
 }

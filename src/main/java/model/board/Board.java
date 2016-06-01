@@ -142,8 +142,12 @@ public class Board {
 	public Council getKingCouncil() {
 		return this.mapKing.getKingCouncil();
 	}
-	
+	// TODO check this out if necessary
 	public City getCity(String s) {
 		return this.mapManager.getCity(s);
+	}
+	
+	public CouncilorPool getCouncilorPool() {
+		return this.councilManager;
 	}
 }

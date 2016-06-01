@@ -10,19 +10,13 @@ import org.apache.commons.cli.*;
 
 import model.action.*;
 import model.board.Board;
+import model.board.city.City;
 import model.exceptions.IllegalActionException;
+import model.player.PermissionCard;
 import model.player.Player;
 
 public class Controller {
-	private static final Options opt = new Options()
-			.addOption("council", true, "")
-			.addOption("council", true, "")
-			.addOption("cards", true, "")
-			.addOption("city", true, "")
-			.addOption("king", false, "")
-			.addOption("region", true, "")
-			.addOption("permission", true, "");
-	
+	private Options opt;
 	private Player player;
 	private Board board;
 	private CommandLineParser parser = new DefaultParser();
@@ -40,6 +34,19 @@ public class Controller {
 		actionWithName.put("shuffle", AShufflePermissionCards.class);
 		actionWithName.put("slide council", ASlideCouncil.class);
 		actionWithName.put("slide council with assistant", ASlideCouncilWithAssistant.class);
+		
+		opt = new Options()
+		.addOption("council", true, "")
+		.addOption("city", true, "")
+		.addOption("king", false, "")
+		.addOption("region", true, "")
+		.addOption("permission", true, "");
+		
+		Option cards = new Option("cards", true, "");
+		// should be 4 but whatever...
+		cards.setArgs(10);
+		
+		opt.addOption(cards);
 	}
 	
 	public Action computeRequest(String request) throws IllegalActionException {
@@ -48,15 +55,23 @@ public class Controller {
 			throw new IllegalActionException("such action does not exist!");
 		}
 		
+		@SuppressWarnings("unchecked")
 		Class<Action> selected = (Class<Action>) actionWithName.get(args[0]);
+		List<Object> objArgs = new ArrayList<Object>();
+		objArgs.add(player);
+		
+		Class[] actionArgs = selected.getConstructors()[0].getParameterTypes();
+		
+		for(Class arg: actionArgs) {
+			String optClassName = arg.getSimpleName().toLowerCase();
+			String optValue = parsedInput.getOptionValue(optClassName);
+		}
 
 		try {
 			parsedInput = parser.parse(opt, args);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
-		return build(selected);
 			// TODO understand the request
 			/*
 			 * possible requests:
@@ -76,16 +91,26 @@ public class Controller {
 			 * buildEmporiumKing -city Irori -cards blue,blue,pink
 			 * 
 			 */
-	}
-	
-	private Action build(Class<Action> actionClass) {
-		if(!parsedInput.getOptionValue("city").isEmpty()) {
-
-		}
 		return null;
 	}
 	
-	/*private Action actionBuilder(Class<Action> Class, Object[] args) throws Exception{
-		return (Action) Class.getConstructors()[0].newInstance(args);		
-	}*/
+	private Action instanceABuyAssistant() throws IllegalActionException{
+		return new ABuyAssistant(player);
+	}	
+	
+	private Action instanceAExtraMainAction() throws IllegalActionException{
+		return new AExtraMainAction(player);
+	}
+	
+	private Action instanceABuildEmporium() throws IllegalActionException{
+		int permCardNumber = Integer.parseInt(parsedInput.getOptionValue("permission"));
+		PermissionCard permCard = player.getPermissionCard().get(permCardNumber-1); // -1 cause the user start from 1
+		// TODO wait for Davide
+		return null;
+	}
+	
+	private Action instanceASlideCouncil() throws IllegalActionException {
+		return null;
+	}
+	
 }

@@ -214,5 +214,17 @@ public class MapLoader {
 	public int getRegionsNumber() {
 		return regions.size();
 	}
-
+	/**
+	 * search for a city
+	 * @param name the city's name
+	 * @return the first city with that name, null if nothing found
+	 */
+	public City getCity(String name) {
+		for(City c: citiesOfMap) {
+			if(c.getName().equals(name)) {
+				return c;
+			}
+		} return null;
+	}
+	
 }

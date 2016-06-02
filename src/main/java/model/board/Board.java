@@ -24,6 +24,7 @@ public class Board {
 	private NobilityTrack track;
 	private King mapKing;
 	private CouncilorPool councilManager;
+	private BoardRewardsManager bRewardsManager;
 
 	/**
 	 * Constructor of the Board, it receives the configuration parameters and
@@ -41,8 +42,8 @@ public class Board {
 	 *            a list of the politic cards and councilor colors
 	 * @throws MapXMLFileException
 	 */
-	public Board(String mapPath, String nobilityPath, int councPerColor, int concSize,
-			List<Color> colors) throws XMLFileException {
+	public Board(String mapPath, String nobilityPath, int councPerColor, int concSize, List<Color> colors)
+			throws XMLFileException {
 		this.mapPath = mapPath;
 		this.nobilityPath = nobilityPath;
 		this.concSize = concSize;
@@ -64,7 +65,7 @@ public class Board {
 			throw new XMLFileException(mxfe);
 		}
 		try {
-			 nl = new NobilityLoader(nobilityPath);
+			nl = new NobilityLoader(nobilityPath);
 		} catch (TrackXMLFileException txfe) {
 			throw new XMLFileException(txfe);
 		}
@@ -141,6 +142,14 @@ public class Board {
 	 */
 	public Council getKingCouncil() {
 		return this.mapKing.getKingCouncil();
+	}
+
+	public BoardRewardsManager getBoardRewardsManager() {
+		return this.bRewardsManager;
+	}
+
+	public void setBoardRewardsManager(BoardRewardsManager bRewardsManager) {
+		this.bRewardsManager = bRewardsManager;
 	}
 
 }

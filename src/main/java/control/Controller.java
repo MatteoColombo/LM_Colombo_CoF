@@ -52,7 +52,10 @@ public class Controller {
 				return;
 			case "permission": tm.performAction(builder.makeAShufflePermissionCards(player, cmd));
 				return;
-			// TODO case emporium and emporium with king
+			case "emporium": tm.performAction(builder.makeABuildEmporium(player, cmd));
+				return;
+			case "king": tm.performAction(builder.makeABuildEmporiumWithKing(player, cmd));
+				return;
 			default: // client.tell("wrong action")
 				return;
 			}

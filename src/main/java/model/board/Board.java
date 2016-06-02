@@ -144,6 +144,10 @@ public class Board {
 		return this.mapKing.getKingCouncil();
 	}
 
+	public King getKing() {
+		return this.mapKing;
+	}
+	
 	public BoardRewardsManager getBoardRewardsManager() {
 		return this.bRewardsManager;
 	}
@@ -151,13 +155,12 @@ public class Board {
 	public void setBoardRewardsManager(BoardRewardsManager bRewardsManager) {
 		this.bRewardsManager = bRewardsManager;
 	}
-
-	// TODO check this out if necessary
-	public City getCity(String s) {
-		return this.mapManager.getCity(s);
-	}
 	
 	public CouncilorPool getCouncilorPool() {
 		return this.councilManager;
+	}
+	
+	public MapLoader getMap() {
+		return this.mapManager;
 	}
 }

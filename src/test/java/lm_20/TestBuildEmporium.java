@@ -121,11 +121,11 @@ public class TestBuildEmporium {
 
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		king = new King(ml.getKingCity(), pool.getCouncil());
-		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null, null);
+		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null, null, null);
 		assertEquals(true, action.isMain());
 		action.execute();
 		assertEquals(1, ml.getRegions().get(0).getCities().get(0).getNumberOfEmporium());
-		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null, null);
+		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null, null, null);
 
 	}
 
@@ -142,7 +142,7 @@ public class TestBuildEmporium {
 
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		king = new King(ml.getKingCity(), pool.getCouncil());
-		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null, null);
+		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null, null, null);
 		assertEquals(true, action.isMain());
 		action.execute();
 		assertEquals(10, player.getCoins().getAmount());

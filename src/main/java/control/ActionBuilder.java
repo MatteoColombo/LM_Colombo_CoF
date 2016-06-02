@@ -11,6 +11,7 @@ import org.apache.commons.cli.ParseException;
 import model.action.*;
 import model.board.Board;
 import model.board.Region;
+import model.board.city.City;
 import model.board.council.Council;
 import model.exceptions.IllegalActionException;
 import model.player.PermissionCard;
@@ -29,8 +30,36 @@ public class ActionBuilder {
 		this.board = board;
 	}
 	
-	// TODO makeABuildEmporium
-	// TODO makeAbuildEmporiumWithKing
+	/**
+	 * factory for the ABuildEmporium Action
+	 * @param p the player requesting the action
+	 * @param cmd the cli arguments
+	 * @return the new created action
+	 * @throws ParseException
+	 * @throws IllegalActionException
+	 */
+	public Action makeABuildEmporium(Player p, CommandLine cmd) throws ParseException, IllegalActionException {
+		
+		PermissionCard permCard = parsePermissionCard(p, cmd.getOptionValue("permission"));
+		City city = parseCity(cmd.getOptionValue("city"));
+		
+		return new ABuildEmporium(p, permCard, city, board.getMap().getCitiesList(), board.getBoardRewardsManager());
+	}
+	/**
+	 * factory for the ABuildEmporiumWithKing Action
+	 * @param p the player requesting the action
+	 * @param cmd the cli arguments
+	 * @return the new created action
+	 * @throws ParseException
+	 * @throws IllegalActionException
+	 */
+	public Action makeABuildEmporiumWithKing(Player p, CommandLine cmd) throws ParseException, IllegalActionException {
+		
+		City city = parseCity(cmd.getOptionValue("city"));
+		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues("cards"));
+
+		return new ABuildEmporiumWithKing(p, board.getKing(), city, board.getMap().getCitiesList(), politicCards, board.getBoardRewardsManager());
+	}
 	/**
 	 * factory for the ASlideCouncil Action
 	 * @param p the player requesting the action
@@ -175,7 +204,7 @@ public class ActionBuilder {
 			throw new ParseException("no permission given");
 		}
 		try {
-			int cardNumber = Integer.parseInt(strPerm);
+			int cardNumber = Integer.parseUnsignedInt(strPerm);
 			if(cardNumber > r.getPermissionSlotsNumber()) {
 				throw new ParseException("illegal permissionCard");
 			}
@@ -195,7 +224,7 @@ public class ActionBuilder {
 			throw new ParseException("no region given");
 		}
 		try {
-			int regionNumber = Integer.parseInt(strRegion);
+			int regionNumber = Integer.parseUnsignedInt(strRegion);
 			if(regionNumber > board.getRegionsNumber()) {
 				throw new ParseException("illegal region/council: too high number");
 			}
@@ -220,7 +249,7 @@ public class ActionBuilder {
 		List<PoliticCard> cards= new ArrayList<PoliticCard>();
 		for(String strCard: strCards) {
 			try {
-				int cardNumber = Integer.parseInt(strCard);
+				int cardNumber = Integer.parseUnsignedInt(strCard);
 				List<PoliticCard> playerHand = p.getPoliticCard();
 				if(cardNumber > playerHand.size()) {
 					throw new ParseException("illegal cards: too high number");
@@ -232,5 +261,47 @@ public class ActionBuilder {
 		}
 		
 		return cards;
+	}
+	/**
+	 * parser for the permission option
+	 * @param p the player
+	 * @param strPerm the number of the permission in string format
+	 * @return the permission found
+	 * @throws ParseException
+	 */
+	private PermissionCard parsePermissionCard(Player p, String strPerm) throws ParseException {
+		if(strPerm == null) {
+			throw new ParseException("no permission given");
+		}
+		
+		try {
+			int cardNumber = Integer.parseUnsignedInt(strPerm);
+			if(cardNumber > p.getPermissionCard().size()) {
+				throw new ParseException("illegal permission: too high number");
+			}
+			return p.getPermissionCard().get(cardNumber-1);
+			
+		} catch(NumberFormatException e) {
+			throw new ParseException("illegal permission");
+		}
+	}
+	/**
+	 * parser for the city.
+	 * It search in the map for a cities with the same name
+	 * @param strCity the city name
+	 * @returnt the found city
+	 * @throws ParseException
+	 */
+	private City parseCity(String strCity) throws ParseException {
+		if(strCity == null) {
+			throw new ParseException("no city given");
+		}
+		
+		City city = board.getMap().getCity(strCity);
+		if(city == null) {
+			throw new ParseException("invalid city");
+		}
+		
+		return city;
 	}
 }

@@ -227,4 +227,8 @@ public class MapLoader {
 		} return null;
 	}
 	
+	public List<City> getCitiesList() {
+		return this.citiesOfMap;
+	}
+	
 }

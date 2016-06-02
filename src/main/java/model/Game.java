@@ -11,6 +11,7 @@ public class Game {
 	private List<ClientInt> players;
 	private boolean complete;
 	private Board board;
+	private TurnManager tm;
 	
 	public Game() {
 		players = new ArrayList<ClientInt>();
@@ -29,5 +30,9 @@ public class Game {
 	
 	public Board getBoard() {
 		return board;
+	}
+	
+	public TurnManager getTurnManager() {
+		return this.tm;
 	}
 }

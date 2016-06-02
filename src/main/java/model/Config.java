@@ -60,5 +60,6 @@ public class Config {
 		for(int i=0; i< playerAttributes.getLength();i++)
 			if(player.item(i).getNodeType()== Node.ELEMENT_NODE)
 				return;
+				
 	}
 }

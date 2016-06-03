@@ -67,5 +67,7 @@ public class Reward {
 	public void assignBonusTo(Player p) {
 		this.bonusList.forEach(bonus -> bonus.assignBonusTo(p));
 	}
-	
+	public ArrayList<Bonus> getGeneratedRewards(){
+		return this.bonusList;
+	}
 }

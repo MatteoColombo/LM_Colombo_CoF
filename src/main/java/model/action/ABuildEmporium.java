@@ -5,7 +5,6 @@ import java.util.List;
 import model.board.BoardRewardsManager;
 import model.board.city.City;
 import model.board.map.MapExplorer;
-import model.board.map.MapLoader;
 import model.exceptions.IllegalActionException;
 import model.player.PermissionCard;
 import model.player.Player;
@@ -17,15 +16,15 @@ public class ABuildEmporium extends Action {
 	private PermissionCard permissionCard;
 	private City chosenCity;
 	private BoardRewardsManager bRewardsManager;
-	private List<City> cities;
+	private List<City> allMapCities;
 
-	public ABuildEmporium(Player p, PermissionCard permissionCard, City chosenCity, List<City> cities,
+	public ABuildEmporium(Player p, PermissionCard permissionCard, City chosenCity, List<City> allMapCities,
 			BoardRewardsManager bRewardsManager) throws IllegalActionException {
 		super(true);
 		this.player = p;
 		this.permissionCard = permissionCard;
 		this.chosenCity = chosenCity;
-		this.cities = cities;
+		this.allMapCities = allMapCities;
 		this.bRewardsManager = bRewardsManager;
 		if (!permissionCard.getCardCity().contains(chosenCity)) {
 			throw new IllegalActionException("the chosen city is invalid");
@@ -49,7 +48,7 @@ public class ABuildEmporium extends Action {
 		assignRewards();
 		this.player.doMainAction();
 		MapExplorer mp = new MapExplorer();
-		/*if (mp.isColorComplete(this.player, this.chosenCity.getColor(), this.cities)) {
+		if (mp.isColorComplete(this.player, this.chosenCity.getColor(), this.allMapCities)) {
 			if (!chosenCity.isCapital()) {
 				BVictoryPoints playerBReward = this.bRewardsManager.getBoardColorReward(chosenCity.getColor());
 				playerBReward.assignBonusTo(player);
@@ -58,7 +57,7 @@ public class ABuildEmporium extends Action {
 		if (chosenCity.getRegion().isCompleted(this.player)) {
 			BVictoryPoints playerBReward = this.bRewardsManager.getBoardRegionReward(chosenCity.getRegion());
 			playerBReward.assignBonusTo(player);
-		}*/
+		}
 
 	}
 

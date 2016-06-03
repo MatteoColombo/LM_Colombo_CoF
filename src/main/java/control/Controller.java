@@ -1,6 +1,6 @@
 package control;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.cli.CommandLine;
@@ -16,7 +16,7 @@ public class Controller {
 	private Game game;
 	private CliParser parser;
 	private ActionBuilder builder;
-	private Map<Client, Player> playersMap = new Hashtable<Client, Player>();
+	private Map<Client, Player> playersMap = new HashMap<>();
 	
 	
 	public void addPlayer(Client client) {
@@ -31,14 +31,14 @@ public class Controller {
 		Player player = playersMap.get(client);
 		if(player == null) {
 			//who is connecting is not in the current game
-			// client.tell("connection refused, cheater!");
+			// TODO client.tell("connection refused, cheater!");
 			return;
 		}
 		String[] args = s.split(" ");
 		try {
 			CommandLine cmd = parser.computeRequest(args);
 			TurnManager tm = game.getTurnManager();
-			// i had no choice but use a switch
+			
 			switch(args[0]) {
 			case "slide": tm.performAction(builder.makeASlideCouncil(player, cmd));
 				return;
@@ -56,7 +56,7 @@ public class Controller {
 				return;
 			case "king": tm.performAction(builder.makeABuildEmporiumWithKing(player, cmd));
 				return;
-			default: // client.tell("wrong action")
+			default: // TODO client.tell("wrong action")
 				return;
 			}
 		} catch (IllegalActionException | ParseException e) {

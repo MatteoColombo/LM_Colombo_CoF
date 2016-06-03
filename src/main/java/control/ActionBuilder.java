@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.ParseException;
 
 import model.action.*;
 import model.board.Board;
@@ -25,6 +24,12 @@ import model.player.PoliticCard;
 public class ActionBuilder {
 	
 	private Board board;
+	private static final String OPTCOUNCIL ="council";
+	private static final String OPTCITY ="city";
+	private static final String OPTPERMISSION ="permission";
+	private static final String OPTREGION ="region";
+	private static final String OPTCARDS ="cards";
+	private static final String OPTCOLOR ="color";
 	
 	public ActionBuilder(Board board) {
 		this.board = board;
@@ -35,13 +40,13 @@ public class ActionBuilder {
 	 * @param p the player requesting the action
 	 * @param cmd the cli arguments
 	 * @return the new created action
-	 * @throws ParseException
+	 * @throws IllegalActionException
 	 * @throws IllegalActionException
 	 */
-	public Action makeABuildEmporium(Player p, CommandLine cmd) throws ParseException, IllegalActionException {
+	public Action makeABuildEmporium(Player p, CommandLine cmd) throws IllegalActionException {
 		
-		PermissionCard permCard = parsePermissionCard(p, cmd.getOptionValue("permission"));
-		City city = parseCity(cmd.getOptionValue("city"));
+		PermissionCard permCard = parsePermissionCard(p, cmd.getOptionValue(OPTPERMISSION));
+		City city = parseCity(cmd.getOptionValue(OPTCITY));
 		
 		return new ABuildEmporium(p, permCard, city, board.getMap().getCitiesList(), board.getBoardRewardsManager());
 	}
@@ -50,13 +55,13 @@ public class ActionBuilder {
 	 * @param p the player requesting the action
 	 * @param cmd the cli arguments
 	 * @return the new created action
-	 * @throws ParseException
+	 * @throws IllegalActionException
 	 * @throws IllegalActionException
 	 */
-	public Action makeABuildEmporiumWithKing(Player p, CommandLine cmd) throws ParseException, IllegalActionException {
+	public Action makeABuildEmporiumWithKing(Player p, CommandLine cmd) throws IllegalActionException {
 		
-		City city = parseCity(cmd.getOptionValue("city"));
-		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues("cards"));
+		City city = parseCity(cmd.getOptionValue(OPTCITY));
+		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues(OPTCARDS));
 
 		return new ABuildEmporiumWithKing(p, board.getKing(), city, board.getMap().getCitiesList(), politicCards, board.getBoardRewardsManager());
 	}
@@ -65,13 +70,13 @@ public class ActionBuilder {
 	 * @param p the player requesting the action
 	 * @param cmd the cli arguments
 	 * @return the new created action
-	 * @throws ParseException
+	 * @throws IllegalActionException
 	 * @throws IllegalActionException
 	 */
-	public Action makeASlideCouncil(Player p, CommandLine cmd) throws ParseException, IllegalActionException {
+	public Action makeASlideCouncil(Player p, CommandLine cmd) throws IllegalActionException {
 		
-		Council council = parseCouncil(cmd.getOptionValue("council"), true);
-		Color color = parseColor(cmd.getOptionValue("color"));
+		Council council = parseCouncil(cmd.getOptionValue(OPTCOUNCIL), true);
+		Color color = parseColor(cmd.getOptionValue(OPTCOLOR));
 		
 		return new ASlideCouncil(p, board.getCouncilorPool(), council, color);
 	}
@@ -81,13 +86,13 @@ public class ActionBuilder {
 	 * @param p the player requesting the action
 	 * @param cmd the cli arguments
 	 * @return the new created action
-	 * @throws ParseException
+	 * @throws IllegalActionException
 	 * @throws IllegalActionException
 	 */
-	public Action makeASlideCouncilWithAssistant(Player p, CommandLine cmd) throws ParseException, IllegalActionException {
+	public Action makeASlideCouncilWithAssistant(Player p, CommandLine cmd) throws IllegalActionException {
 		
-		Council council = parseCouncil(cmd.getOptionValue("council"), true);
-		Color color = parseColor(cmd.getOptionValue("color"));
+		Council council = parseCouncil(cmd.getOptionValue(OPTCOUNCIL), true);
+		Color color = parseColor(cmd.getOptionValue(OPTCOLOR));
 		
 		return new ASlideCouncilWithAssistant(p, board.getCouncilorPool(), council, color);
 	}
@@ -118,15 +123,15 @@ public class ActionBuilder {
 	 * @return the new created action
 	 * @throws IllegalActionException
 	 */
-	public Action makeABuyPermissionCard(Player p, CommandLine cmd) throws ParseException, IllegalActionException {
+	public Action makeABuyPermissionCard(Player p, CommandLine cmd) throws IllegalActionException {
 		
 		// because there is a 1 to 1 association with region and council
-		String strRegion = cmd.getOptionValue("council");
+		String strRegion = cmd.getOptionValue(OPTCOUNCIL);
 		Region region = parseRegion(strRegion);
 
 		Council council = parseCouncil(strRegion, false);
-		PermissionCard permCard = parsePermissionCard(region, cmd.getOptionValue("permission"));	
-		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues("cards"));
+		PermissionCard permCard = parsePermissionCard(region, cmd.getOptionValue(OPTPERMISSION));	
+		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues(OPTCARDS));
 		
 		return new ABuyPermissionCard(p, permCard, council, politicCards);
 	}
@@ -135,11 +140,10 @@ public class ActionBuilder {
 	 * @param p the player requesting the action
 	 * @param cmd the cli arguments
 	 * @return the new created action
-	 * @throws ParseException
 	 * @throws IllegalActionException
 	 */
-	public Action makeAShufflePermissionCards(Player p, CommandLine cmd) throws ParseException, IllegalActionException {
-		Region region = parseRegion(cmd.getOptionValue("region"));
+	public Action makeAShufflePermissionCards(Player p, CommandLine cmd) throws IllegalActionException {
+		Region region = parseRegion(cmd.getOptionValue(OPTREGION));
 		return new AShufflePermissionCards(p, region);
 	}
 	
@@ -149,18 +153,18 @@ public class ActionBuilder {
 	 * (k for king, a positive integer for regions)
 	 * @param kingAllowed indicate if the king's council is a valid option or not
 	 * @return the Council found
-	 * @throws ParseException
+	 * @throws IllegalActionException
 	 */
-	private Council parseCouncil(String strCouncil, boolean kingAllowed) throws ParseException {
+	private Council parseCouncil(String strCouncil, boolean kingAllowed) throws IllegalActionException {
 		if(strCouncil == null) {
-			throw new ParseException("no council given");
+			throw new IllegalActionException("no council given");
 		}
 			
-		if(strCouncil.equals("k")) {
+		if("k".equals(strCouncil)) {
 			if(kingAllowed) {
 				return board.getKingCouncil();
 			}
-			throw new ParseException("king is not a valid option!");
+			throw new IllegalActionException("king is not a valid option!");
 		}
 		
 		Region r = parseRegion(strCouncil);
@@ -170,68 +174,73 @@ public class ActionBuilder {
 	 * parser for the Color
 	 * @param strColor the string description of the color e.g "white" or "blue"
 	 * @return the color found in the councilor pool
-	 * @throws ParseException if the color is invalid or is no one of the actually used in the game
+	 * @throws IllegalActionException if the color is invalid or is no one of the actually used in the game
 	 */
-	private Color parseColor(String strColor) throws ParseException {
+	private Color parseColor(String strColor) throws IllegalActionException {
 		if(strColor == null) {
-			throw new ParseException("no color given");
+			throw new IllegalActionException("no color given");
 		}
 		List<Color> availableColor = board.getCouncilorPool().getListColor();
 		Color color;
-		try {
-		    Field field = Color.class.getField(strColor);
-		    color = (Color)field.get(null);
-		} catch (Exception e) {
-			throw new ParseException("illegal color");
-		}
+
+		    Field field;
+			try {
+				field = Color.class.getField(strColor);
+				color = (Color)field.get(null);
+			} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+				e.printStackTrace();
+				throw new IllegalActionException("illegal color");
+			}
+		    
+
 		for(Color checked: availableColor) {
 			if(color.equals(checked)) {
 				return checked;
 			}
 		}
 		// no color match
-		throw new ParseException("illegal color");
+		throw new IllegalActionException("illegal color");
 	}
 	/**
 	 * parser for the Permission card on the board
 	 * @param r the region where to search
 	 * @param strPerm a string number index of the card
 	 * @return the found Permission Card
-	 * @throws ParseException if index out of bound or incorrect string
+	 * @throws IllegalActionException if index out of bound or incorrect string
 	 */
-	private PermissionCard parsePermissionCard(Region r, String strPerm) throws ParseException {
+	private PermissionCard parsePermissionCard(Region r, String strPerm) throws IllegalActionException {
 		if(strPerm == null) {
-			throw new ParseException("no permission given");
+			throw new IllegalActionException("no permission given");
 		}
 		try {
 			int cardNumber = Integer.parseUnsignedInt(strPerm);
 			if(cardNumber > r.getPermissionSlotsNumber()) {
-				throw new ParseException("illegal permissionCard");
+				throw new IllegalActionException("illegal permissionCard");
 			}
 			return r.getPermissionCard(cardNumber-1);
 		} catch(NumberFormatException e) {
-			throw new ParseException("illegal permissionCard");
+			throw new IllegalActionException("illegal permissionCard");
 		}
 	}
 	/**
 	 * parser for the region
 	 * @param strRegion
 	 * @return the region found
-	 * @throws ParseException
+	 * @throws IllegalActionException
 	 */
-	private Region parseRegion(String strRegion) throws ParseException {
+	private Region parseRegion(String strRegion) throws IllegalActionException {
 		if(strRegion == null) {
-			throw new ParseException("no region given");
+			throw new IllegalActionException("no region given");
 		}
 		try {
 			int regionNumber = Integer.parseUnsignedInt(strRegion);
 			if(regionNumber > board.getRegionsNumber()) {
-				throw new ParseException("illegal region/council: too high number");
+				throw new IllegalActionException("illegal region/council: too high number");
 			}
 			return board.getRegion(regionNumber-1);
 			
 		} catch(NumberFormatException e) {
-			throw new ParseException("illegal region/council");
+			throw new IllegalActionException("illegal region/council");
 		}
 	}
 	/**
@@ -239,24 +248,24 @@ public class ActionBuilder {
 	 * @param p the player
 	 * @param strCards
 	 * @return the cards picked from the player in a list
-	 * @throws ParseException
+	 * @throws IllegalActionException
 	 */
-	private List<PoliticCard> parsePoliticCards(Player p, String[] strCards) throws ParseException {
+	private List<PoliticCard> parsePoliticCards(Player p, String[] strCards) throws IllegalActionException {
 		if(strCards == null) {
-			throw new ParseException("no card given");
+			throw new IllegalActionException("no card given");
 		}
 		
-		List<PoliticCard> cards= new ArrayList<PoliticCard>();
+		List<PoliticCard> cards= new ArrayList<>();
 		for(String strCard: strCards) {
 			try {
 				int cardNumber = Integer.parseUnsignedInt(strCard);
 				List<PoliticCard> playerHand = p.getPoliticCard();
 				if(cardNumber > playerHand.size()) {
-					throw new ParseException("illegal cards: too high number");
+					throw new IllegalActionException("illegal cards: too high number");
 				}
 				cards.add(playerHand.get(cardNumber-1));
 			} catch(NumberFormatException e) {
-				throw new ParseException("illegal cards");
+				throw new IllegalActionException("illegal cards");
 			}
 		}
 		
@@ -267,22 +276,22 @@ public class ActionBuilder {
 	 * @param p the player
 	 * @param strPerm the number of the permission in string format
 	 * @return the permission found
-	 * @throws ParseException
+	 * @throws IllegalActionException
 	 */
-	private PermissionCard parsePermissionCard(Player p, String strPerm) throws ParseException {
+	private PermissionCard parsePermissionCard(Player p, String strPerm) throws IllegalActionException {
 		if(strPerm == null) {
-			throw new ParseException("no permission given");
+			throw new IllegalActionException("no permission given");
 		}
 		
 		try {
 			int cardNumber = Integer.parseUnsignedInt(strPerm);
 			if(cardNumber > p.getPermissionCard().size()) {
-				throw new ParseException("illegal permission: too high number");
+				throw new IllegalActionException("illegal permission: too high number");
 			}
 			return p.getPermissionCard().get(cardNumber-1);
 			
 		} catch(NumberFormatException e) {
-			throw new ParseException("illegal permission");
+			throw new IllegalActionException("illegal permission");
 		}
 	}
 	/**
@@ -290,16 +299,16 @@ public class ActionBuilder {
 	 * It search in the map for a cities with the same name
 	 * @param strCity the city name
 	 * @returnt the found city
-	 * @throws ParseException
+	 * @throws IllegalActionException
 	 */
-	private City parseCity(String strCity) throws ParseException {
+	private City parseCity(String strCity) throws IllegalActionException {
 		if(strCity == null) {
-			throw new ParseException("no city given");
+			throw new IllegalActionException("no city given");
 		}
 		
 		City city = board.getMap().getCity(strCity);
 		if(city == null) {
-			throw new ParseException("invalid city");
+			throw new IllegalActionException("invalid city");
 		}
 		
 		return city;

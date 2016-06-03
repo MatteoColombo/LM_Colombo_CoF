@@ -14,6 +14,12 @@ public class PoliticCard {
 	private Color color;
 	private boolean isMultipleColor;
 
+	// this is just for deterministic tests
+	public PoliticCard(Color color) {
+		this.color = color;
+		isMultipleColor = false;
+	}
+	
 	/**
 	 * 
 	 * @param possibleColors

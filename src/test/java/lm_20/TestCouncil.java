@@ -46,10 +46,10 @@ public class TestCouncil {
 	@Test
 	public void testSatisfaction() throws IllegalActionException{
 		Council council = new Council(members);
-		List<Color> colors = ColorConstants.getCardsColors();
-		List<PoliticCard> card = new ArrayList<PoliticCard>();
-		card.add(new PoliticCard(colors));
-		assertEquals(3, council.compareCardCouncil(card));
+		List<PoliticCard> card = new ArrayList<>();
+		card.add(new PoliticCard(Color.ORANGE));
+		card.add(new PoliticCard(Color.PINK));
+		assertEquals(2, council.compareCardCouncil(card));
 	}
 	
 	@Test

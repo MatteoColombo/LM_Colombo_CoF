@@ -2,8 +2,6 @@ package control;
 
 import org.apache.commons.cli.*;
 
-import model.exceptions.IllegalActionException;
-
 public class CliParser {
 	private Options opt;
 	private CommandLineParser parser = new DefaultParser();
@@ -12,7 +10,6 @@ public class CliParser {
 
 		opt = new Options()
 			.addOption("council", true, "")
-			.addOption("region", true, "")
 			.addOption("color", true, "")
 			.addOption("city", true, "")
 			.addOption("region", true, "")
@@ -24,7 +21,7 @@ public class CliParser {
 		opt.addOption(cards);
 	}
 	
-	public CommandLine computeRequest(String args[]) throws IllegalActionException, ParseException {
+	public CommandLine computeRequest(String[] args) throws ParseException {
 		return parser.parse(opt, args);
 	}
 }

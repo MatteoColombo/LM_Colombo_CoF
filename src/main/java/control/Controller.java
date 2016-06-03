@@ -19,6 +19,12 @@ public class Controller {
 	private Map<Client, Player> playersMap = new HashMap<>();
 	
 	
+	public Controller(Game game) {
+		this.game = game;
+		this.parser = new CliParser();
+		this.builder = new ActionBuilder(game.getBoard());
+	}
+	
 	public void addPlayer(Client client) {
 		// TODO complete this
 	}

@@ -17,6 +17,7 @@ import model.board.BoardRewardsManager;
 import model.board.King;
 import model.board.city.City;
 import model.board.council.CouncilorPool;
+import model.board.map.MapExplorer;
 import model.board.map.MapLoader;
 import model.exceptions.IllegalActionException;
 import model.exceptions.MapXMLFileException;
@@ -25,6 +26,8 @@ import model.player.Player;
 import model.reward.BVictoryPoints;
 import model.reward.BoardColorReward;
 import model.reward.BoardRegionReward;
+import model.reward.Bonus;
+import model.reward.Reward;
 
 public class TestBuildEmporium {
 	private List<Color> colorList;
@@ -35,6 +38,8 @@ public class TestBuildEmporium {
 	private List<BVictoryPoints> bKingRewards;
 	private BoardRewardsManager bRewardManager;
 	private List<City> allMapCities;
+	private int rewardAmount;
+	MapExplorer mExplorer;
 
 	@Before
 	public void setUp() throws MapXMLFileException {
@@ -64,7 +69,9 @@ public class TestBuildEmporium {
 		bKingRewards.add(new BVictoryPoints(25));
 		bKingRewards.add(new BVictoryPoints(10));
 		this.bRewardManager = new BoardRewardsManager(bColorRewards, bRegionRewards, bKingRewards);
-		this.allMapCities= ml.getCitiesList();
+		this.allMapCities = ml.getCitiesList();
+		this.rewardAmount = 0;
+		this.mExplorer = new MapExplorer();
 
 	}
 
@@ -99,7 +106,8 @@ public class TestBuildEmporium {
 		card = new PermissionCard(ml.getRegions().get(0).getCities());
 		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 		action.execute();
-		action = new ABuildEmporium(player, card, ml.getRegions().get(2).getCities().get(0), this.allMapCities, this.bRewardManager);
+		action = new ABuildEmporium(player, card, ml.getRegions().get(2).getCities().get(0), this.allMapCities,
+				this.bRewardManager);
 	}
 
 	/**
@@ -133,11 +141,13 @@ public class TestBuildEmporium {
 
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		king = new King(ml.getKingCity(), pool.getCouncil());
-		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), this.allMapCities, null, this.bRewardManager);
+		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), this.allMapCities,
+				null, this.bRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
 		assertEquals(1, ml.getRegions().get(0).getCities().get(0).getNumberOfEmporium());
-		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), this.allMapCities, null, this.bRewardManager);
+		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), this.allMapCities,
+				null, this.bRewardManager);
 
 	}
 
@@ -155,10 +165,39 @@ public class TestBuildEmporium {
 
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		king = new King(ml.getKingCity(), pool.getCouncil());
-		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), this.allMapCities, null, this.bRewardManager);
+		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), this.allMapCities,
+				null, this.bRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
 		assertEquals(10, player.getCoins().getAmount());
+	}
+
+	/**
+	 * Tests if the player gains the right amount of VictoryPoints
+	 * 
+	 */
+	@Test
+	public void testBoardRewards() throws Exception {
+		MapLoader ml;
+		PermissionCard card;
+		ABuildEmporium action;
+		ml = new MapLoader("src/main/resources/map.xml", pool);
+		card = new PermissionCard(ml.getRegions().get(0).getCities());
+		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
+		for (Bonus b : card.getCardCity().get(0).getReward().getGeneratedRewards())
+			if (b.getTagName() == "victory")
+				this.rewardAmount = +b.getAmount();
+		for (Reward r : mExplorer.getAdiacentRewards(card.getCardCity().get(0), this.player))
+			for (Bonus b : r.getGeneratedRewards())
+				if (b.getTagName() == "victory")
+					this.rewardAmount = +b.getAmount();
+		assertEquals(true, action.isMain());
+		action.execute();
+		System.out.print(player.getVictoryPoints().getAmount());
+		System.out.print("\n");
+		System.out.print(rewardAmount);
+		assertEquals(player.getVictoryPoints().getAmount(), rewardAmount);
+
 	}
 
 }

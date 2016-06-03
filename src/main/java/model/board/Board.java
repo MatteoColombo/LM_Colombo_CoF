@@ -58,6 +58,7 @@ public class Board {
 	 * @throws MapXMLFileException
 	 */
 	private void initializeBoard() throws XMLFileException {
+		this.councilManager = new CouncilorPool(councPerColor, concSize, colors);
 		NobilityLoader nl;
 		try {
 			this.mapManager = new MapLoader(mapPath, councilManager);
@@ -71,7 +72,6 @@ public class Board {
 		}
 		this.track = new NobilityTrack(nl.getNobilityTrack());
 		this.mapKing = new King(mapManager.getKingCity(), councilManager.getCouncil());
-		this.councilManager = new CouncilorPool(councPerColor, concSize, colors);
 		this.regions = mapManager.getRegions();
 
 	}

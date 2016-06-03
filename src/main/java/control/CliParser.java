@@ -16,8 +16,9 @@ public class CliParser {
 			.addOption("permission", true, "");	
 		
 		Option cards = new Option("cards", true, "");
-		// should be 4 but whatever...
-		cards.setArgs(10);
+		// TODO check if it should be more than 4
+		cards.setArgs(4);
+		cards.setOptionalArg(true);
 		opt.addOption(cards);
 	}
 	

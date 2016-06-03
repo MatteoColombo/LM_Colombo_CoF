@@ -184,20 +184,16 @@ public class TestBuildEmporium {
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		card = new PermissionCard(ml.getRegions().get(0).getCities());
 		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
-		for (Bonus b : card.getCardCity().get(0).getReward().getGeneratedRewards())
-			if (b.getTagName() == "victory")
-				this.rewardAmount = +b.getAmount();
-		for (Reward r : mExplorer.getAdiacentRewards(card.getCardCity().get(0), this.player))
-			for (Bonus b : r.getGeneratedRewards())
-				if (b.getTagName() == "victory")
-					this.rewardAmount = +b.getAmount();
 		assertEquals(true, action.isMain());
 		action.execute();
+		for (Reward r : mExplorer.getAdiacentRewards(card.getCardCity().get(0), this.player))
+			for (Bonus b : r.getGeneratedRewards())
+				if (b.getTagName().equals("victory"))
+					this.rewardAmount = +b.getAmount();
 		System.out.print(player.getVictoryPoints().getAmount());
 		System.out.print("\n");
 		System.out.print(rewardAmount);
 		assertEquals(player.getVictoryPoints().getAmount(), rewardAmount);
-
 	}
 
 }

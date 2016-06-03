@@ -21,27 +21,27 @@ public class ABuildEmporiumWithKing extends Action {
 	private final int PRICEPERROUTE = 2;
 	private int priceForTheKingCouncil;
 	private BoardRewardsManager bRewardsManager;
-	private List<City> cities;
+	private List<City> allMapCities;
 	private List<PoliticCard> politicCards;
 
-	public ABuildEmporiumWithKing(Player p, King king, City chosenCity, List<City> cities,
-			List<PoliticCard> politic, BoardRewardsManager bRewardsManager) throws IllegalActionException {
+	public ABuildEmporiumWithKing(Player p, King king, City chosenCity, List<City> allMapCities, List<PoliticCard> politic,
+			BoardRewardsManager bRewardsManager) throws IllegalActionException {
 		super(true);
 		this.king = king;
 		this.player = p;
 		this.chosenCity = chosenCity;
-		this.cities = cities;
+		this.allMapCities = allMapCities;
 		this.politicCards = politic;
 		this.mx = new MapExplorer();
 		this.bRewardsManager = bRewardsManager;
-		
-		int difference= king.getKingCouncil().compareCardCouncil(politicCards);
+
+		int difference = king.getKingCouncil().compareCardCouncil(politicCards);
 		priceForTheKingCouncil = calculatePrice(difference);
-		priceForTheKingCouncil+=calculatePriceMultipleColoredCards();
-		if(player.getCoins().getAmount() < priceForTheKingCouncil) {
+		priceForTheKingCouncil += calculatePriceMultipleColoredCards();
+		if (player.getCoins().getAmount() < priceForTheKingCouncil) {
 			throw new IllegalActionException("you can not afford it!");
 		}
-		
+
 		if (chosenCity.hasEmporiumOfPlayer(player)) {
 			throw new IllegalActionException("you already have an emporium there");
 		}
@@ -66,7 +66,7 @@ public class ABuildEmporiumWithKing extends Action {
 		assignEmporium();
 		assignRewards();
 		MapExplorer mp = new MapExplorer();
-		/*if (mp.isColorComplete(this.player, this.chosenCity.getColor(), this.cities)) {
+		if (mp.isColorComplete(this.player, this.chosenCity.getColor(), this.allMapCities)) {
 			if (!chosenCity.isCapital()) {
 				BVictoryPoints playerBReward = this.bRewardsManager.getBoardColorReward(chosenCity.getColor());
 				playerBReward.assignBonusTo(player);
@@ -75,11 +75,10 @@ public class ABuildEmporiumWithKing extends Action {
 		if (chosenCity.getRegion().isCompleted(this.player)) {
 			BVictoryPoints playerBReward = this.bRewardsManager.getBoardRegionReward(chosenCity.getRegion());
 			playerBReward.assignBonusTo(player);
-		}*/
-		
+		}
 		// remove used cards
 		List<PoliticCard> playerHand = player.getPoliticCard();
-		for(PoliticCard used: politicCards) {
+		for (PoliticCard used : politicCards) {
 			playerHand.remove(used);
 		}
 	}
@@ -95,28 +94,33 @@ public class ABuildEmporiumWithKing extends Action {
 			rew.assignBonusTo(this.player);
 		}
 	}
-	
+
 	// I KNOW SONAR THIS IS DUPLICATE BUT STFU I'LL FIX LATER
 	/**
 	 * Calculate the money that can be paid instead of cards
-	 * @param difference the number of missing cards
+	 * 
+	 * @param difference
+	 *            the number of missing cards
 	 * @return an integer, the price
 	 */
-	private int calculatePrice(int difference){
-		if(difference == 0) {
+	private int calculatePrice(int difference) {
+		if (difference == 0) {
 			return 0;
 		}
-		return difference*3 +1;
+		return difference * 3 + 1;
 	}
+
 	// ALSO THIS
 	/**
-	 * Calculate the extra money that have to be paid because of multiple colored cards
+	 * Calculate the extra money that have to be paid because of multiple
+	 * colored cards
+	 * 
 	 * @return an integer, the extra price
 	 */
-	private int calculatePriceMultipleColoredCards(){
-		int multipCards=0;
-		for(PoliticCard card: politicCards)
-			if(card.isMultipleColor())
+	private int calculatePriceMultipleColoredCards() {
+		int multipCards = 0;
+		for (PoliticCard card : politicCards)
+			if (card.isMultipleColor())
 				multipCards++;
 		return multipCards;
 	}

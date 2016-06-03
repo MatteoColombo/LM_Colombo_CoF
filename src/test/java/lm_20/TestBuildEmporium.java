@@ -15,6 +15,7 @@ import model.action.ABuildEmporium;
 import model.action.ABuildEmporiumWithKing;
 import model.board.BoardRewardsManager;
 import model.board.King;
+import model.board.city.City;
 import model.board.council.CouncilorPool;
 import model.board.map.MapLoader;
 import model.exceptions.IllegalActionException;
@@ -29,10 +30,11 @@ public class TestBuildEmporium {
 	private List<Color> colorList;
 	private Player player;
 	private CouncilorPool pool;
-/*	private List<BoardColorReward> bColorRewards;
+	private List<BoardColorReward> bColorRewards;
 	private List<BoardRegionReward> bRegionRewards;
 	private List<BVictoryPoints> bKingRewards;
-	private BoardRewardsManager bRewardManager;*/
+	private BoardRewardsManager bRewardManager;
+	private List<City> allMapCities;
 
 	@Before
 	public void setUp() throws MapXMLFileException {
@@ -45,16 +47,24 @@ public class TestBuildEmporium {
 		colorList.add(Color.ORANGE);
 		this.player = new Player(10, 3, 6, 10, colorList, 0, 0);
 		this.pool = new CouncilorPool(4, 4, colorList);
-		/*bColorRewards = new ArrayList<>();
+		bColorRewards = new ArrayList<>();
 		bKingRewards = new ArrayList<>();
 		bRegionRewards = new ArrayList<>();
-		bColorRewards.add(new BoardColorReward(Color.decode("#008000"), 10));
-		bColorRewards.add(new BoardColorReward(Color.decode("#2268df"), 1));
+		bColorRewards.add(new BoardColorReward(Color.decode("#008000"), 35));
+		bColorRewards.add(new BoardColorReward(Color.decode("#2268df"), 15));
 		bColorRewards.add(new BoardColorReward(Color.decode("#ffd700"), 50));
-		bColorRewards.add(new BoardColorReward(Color.decode("#f44343"), 20));
+		bColorRewards.add(new BoardColorReward(Color.decode("#f44343"), 25));
 		MapLoader ml = new MapLoader("src/main/resources/map.xml", pool);
-		bRegionRewards.add(new BoardRegionReward(ml.getRegions().get(0), 20));
-		this.bRewardManager = new BoardRewardsManager(bColorRewards, bRegionRewards, bKingRewards);*/
+		bRegionRewards.add(new BoardRegionReward(ml.getRegions().get(0), 25));
+		bRegionRewards.add(new BoardRegionReward(ml.getRegions().get(1), 45));
+		bRegionRewards.add(new BoardRegionReward(ml.getRegions().get(2), 35));
+		bKingRewards.add(new BVictoryPoints(70));
+		bKingRewards.add(new BVictoryPoints(55));
+		bKingRewards.add(new BVictoryPoints(40));
+		bKingRewards.add(new BVictoryPoints(25));
+		bKingRewards.add(new BVictoryPoints(10));
+		this.bRewardManager = new BoardRewardsManager(bColorRewards, bRegionRewards, bKingRewards);
+		this.allMapCities= ml.getCitiesList();
 
 	}
 
@@ -70,10 +80,10 @@ public class TestBuildEmporium {
 		ABuildEmporium action;
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		card = new PermissionCard(ml.getRegions().get(0).getCities());
-		action = new ABuildEmporium(player, card, card.getCardCity().get(0), null, null);
+		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
-		action = new ABuildEmporium(player, card, card.getCardCity().get(0), null, null);
+		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 	}
 
 	/**
@@ -87,9 +97,9 @@ public class TestBuildEmporium {
 		ABuildEmporium action;
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		card = new PermissionCard(ml.getRegions().get(0).getCities());
-		action = new ABuildEmporium(player, card, card.getCardCity().get(0), null, null);
+		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 		action.execute();
-		action = new ABuildEmporium(player, card, ml.getRegions().get(2).getCities().get(0), null, null);
+		action = new ABuildEmporium(player, card, ml.getRegions().get(2).getCities().get(0), this.allMapCities, this.bRewardManager);
 	}
 
 	/**
@@ -104,9 +114,9 @@ public class TestBuildEmporium {
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		card = new PermissionCard(ml.getRegions().get(0).getCities());
 		Player p2 = new Player(10, 0, 6, 10, colorList, 0, 0);
-		action = new ABuildEmporium(player, card, card.getCardCity().get(0), null, null);
+		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 		action.execute();
-		action = new ABuildEmporium(p2, card, card.getCardCity().get(0), null, null);
+		action = new ABuildEmporium(p2, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 		action.execute();
 	}
 
@@ -123,11 +133,11 @@ public class TestBuildEmporium {
 
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		king = new King(ml.getKingCity(), pool.getCouncil());
-		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null, null, null);
+		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), this.allMapCities, null, this.bRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
 		assertEquals(1, ml.getRegions().get(0).getCities().get(0).getNumberOfEmporium());
-		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null, null, null);
+		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), this.allMapCities, null, this.bRewardManager);
 
 	}
 
@@ -145,7 +155,7 @@ public class TestBuildEmporium {
 
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		king = new King(ml.getKingCity(), pool.getCouncil());
-		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), null, null, null);
+		action = new ABuildEmporiumWithKing(player, king, ml.getRegions().get(0).getCities().get(0), this.allMapCities, null, this.bRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
 		assertEquals(10, player.getCoins().getAmount());

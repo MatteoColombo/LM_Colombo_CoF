@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import control.Controller;
 import model.Game;
+import model.exceptions.ConfigurationErrorException;
 
 public class Server{
 	private static List<Game> games;
@@ -19,17 +20,27 @@ public class Server{
 	private static final int socketPort = 2344;
 	private static ServerSocket socketServer;
 
-	public static void login(ClientInt client) {
+	public static synchronized void login(ClientInt client) {
 		if (games.isEmpty() || games.get(0).isComplete()) {
-			Game newGame = new Game();
+			Game newGame;
+			try {
+				newGame = new Game();
+			} catch (ConfigurationErrorException e) {
+				e.printStackTrace();
+				return;
+			}
 			newGame.addPlayer(client);
 			games.add(0, newGame);
 			controllers.add(0,new Controller(newGame));
 			client.setController(controllers.get(0));
 		} else {
 			games.get(0).addPlayer(client);
+			if(games.get(0).getPlayersNumber()==2){
+				new InitializationTimeLimitManager(games.get(0));
+			}
 			client.setController(controllers.get(0));
-			//TODO if game.isComplete()..?
+			if(games.get(0).isComplete())
+				games.get(0).start();
 		}
 		return;
 	}

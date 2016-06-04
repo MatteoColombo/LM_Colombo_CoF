@@ -188,7 +188,6 @@ public class ActionBuilder {
 				field = Color.class.getField(strColor);
 				color = (Color)field.get(null);
 			} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-				e.printStackTrace();
 				throw new IllegalActionException("illegal color");
 			}
 		    
@@ -215,11 +214,11 @@ public class ActionBuilder {
 		try {
 			int cardNumber = Integer.parseUnsignedInt(strPerm);
 			if(cardNumber > r.getPermissionSlotsNumber()) {
-				throw new IllegalActionException("illegal permissionCard");
+				throw new IllegalActionException("illegal permissionCard: index out of bound");
 			}
 			return r.getPermissionCard(cardNumber-1);
 		} catch(NumberFormatException e) {
-			throw new IllegalActionException("illegal permissionCard");
+			throw new IllegalActionException("illegal permissionCard, number expected");
 		}
 	}
 	/**
@@ -305,7 +304,6 @@ public class ActionBuilder {
 		if(strCity == null) {
 			throw new IllegalActionException("no city given");
 		}
-		
 		City city = board.getMap().getCity(strCity);
 		if(city == null) {
 			throw new IllegalActionException("invalid city");

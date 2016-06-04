@@ -2,6 +2,9 @@ package model.player;
 
 import java.awt.Color;
 import java.util.List;
+
+import server.ClientInt;
+
 import java.util.ArrayList;
 /**
  * 
@@ -20,6 +23,8 @@ public class Player {
 	private int mainActions;
 	private boolean extraAction;
 	private final int DEFAULTMAINACTION;
+	private ClientInt client;
+	private boolean isSuspended;
 /**
  * 
  * @param money
@@ -31,7 +36,8 @@ public class Player {
  * @param initialNoble
  */
 	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
-			int initialNoble) {
+			int initialNoble, ClientInt client) {
+		this.client=client;
 		this.coins = new Coins(money);
 		this.assistants = new Assistants(helper);
 		this.victoryPoints = new VictoryPoints(initalVictory);
@@ -47,7 +53,28 @@ public class Player {
 		this.mainActions = DEFAULTMAINACTION;
 		this.extraAction = false;
 		this.pickedColours = pickedColours;
-
+		this.isSuspended=false;
+	}
+	
+	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
+			int initialNoble) {
+		this.client=null;
+		this.coins = new Coins(money);
+		this.assistants = new Assistants(helper);
+		this.victoryPoints = new VictoryPoints(initalVictory);
+		this.noblePoints = new NoblePoints(initialNoble);
+		this.politicCard = new ArrayList<>();
+		this.permissionCard = new ArrayList<>();
+		this.emporium = new ArrayList<>();
+		for (int i = 0; i < draw; i++)
+			politicCard.add(new PoliticCard(pickedColours));
+		for (int i = 0; i < maxEmp; i++)
+			emporium.add(new Emporium(this));
+		this.DEFAULTMAINACTION = 1;
+		this.mainActions = DEFAULTMAINACTION;
+		this.extraAction = false;
+		this.pickedColours = pickedColours;
+		this.isSuspended=false;
 	}
 /**
  * 
@@ -142,6 +169,22 @@ public class Player {
  */
 	public void drawAPoliticCard() {
 		this.politicCard.add(new PoliticCard(this.pickedColours));
+	}
+	
+	/**
+	 * Returns the Client interface which is used to dialogue with the view
+	 * @return the Client Interface
+	 */
+	public ClientInt getClient(){
+		return this.client;
+	}
+	
+	public void setSuspension(boolean suspendedStatus){
+		this.isSuspended=suspendedStatus;
+	}
+	
+	public boolean getSuspended(){
+		return this.isSuspended;
 	}
 
 }

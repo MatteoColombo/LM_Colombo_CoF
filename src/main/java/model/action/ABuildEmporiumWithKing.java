@@ -39,7 +39,7 @@ public class ABuildEmporiumWithKing extends Action {
 		priceForTheKingCouncil = calculatePrice(difference);
 		priceForTheKingCouncil += calculatePriceMultipleColoredCards();
 		if (player.getCoins().getAmount() < priceForTheKingCouncil) {
-			throw new IllegalActionException("you can not afford it!");
+			throw new IllegalActionException("you can not afford the king's council price!");
 		}
 
 		if (chosenCity.hasEmporiumOfPlayer(player)) {
@@ -48,11 +48,11 @@ public class ABuildEmporiumWithKing extends Action {
 
 		if ((chosenCity.getNumberOfEmporium() > 0)
 				&& (player.getAssistants().getAmount() < (chosenCity.getNumberOfEmporium()))) {
-			throw new IllegalActionException("you can not afford it!");
+			throw new IllegalActionException("you can not afford the building, you need more assistants!");
 		}
 		this.priceForMovement = PRICEPERROUTE * mx.getDistance(king.getKingLocation(), chosenCity);
 		if ((priceForMovement > 0) && (player.getCoins().getAmount() < priceForMovement + priceForTheKingCouncil)) {
-			throw new IllegalActionException("you can not afford it!");
+			throw new IllegalActionException("you can not pay the king's travel!");
 		}
 
 	}
@@ -95,7 +95,7 @@ public class ABuildEmporiumWithKing extends Action {
 		}
 	}
 
-	// I KNOW SONAR THIS IS DUPLICATE BUT STFU I'LL FIX LATER
+	// I KNOW SONAR THIS IS DUPLICATE BUT STFU WE'LL FIX LATER
 	/**
 	 * Calculate the money that can be paid instead of cards
 	 * 

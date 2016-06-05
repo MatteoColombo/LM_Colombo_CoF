@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import java.security.acl.Permission;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -40,6 +42,7 @@ public class TestBuildEmporium {
 	private List<City> allMapCities;
 	private int rewardAmount;
 	MapExplorer mExplorer;
+	private final int ALLCITIES = 15;
 
 	@Before
 	public void setUp() throws MapXMLFileException {
@@ -173,7 +176,8 @@ public class TestBuildEmporium {
 	}
 
 	/**
-	 * Tests if the player gains the right amount of VictoryPoints
+	 * Tests if the player gains the right amount of VictoryPoints using a
+	 * PermissionCard
 	 * 
 	 */
 	@Test
@@ -190,6 +194,48 @@ public class TestBuildEmporium {
 			for (Bonus b : r.getGeneratedRewards())
 				if (b.getTagName().equals("victory"))
 					this.rewardAmount = +b.getAmount();
+		assertEquals(player.getVictoryPoints().getAmount(), rewardAmount);
+	}
+
+	/**
+	 * Tests if the player gains the right amount of VictoryPoints after
+	 * multiple Emporiums
+	 * 
+	 */
+	@Test
+	public void testAdvancedBoardRewards() throws Exception {
+		MapLoader ml;
+		PermissionCard card;
+		ABuildEmporium action;
+		Random rnd = new Random();
+		List<Integer> numbers = new ArrayList<Integer>();
+		for (int i = rnd.nextInt(5); i >= 0; i--)// it won't end if random >2
+			numbers.add(i);
+		Collections.shuffle(numbers);
+		do {
+			int n = numbers.remove(0);
+			int x, y;
+			if (n <= 4) {
+				x = 0;
+				y = n;
+			} else if (n > 4 && n <= 9) {
+				x = 1;
+				y = n - 5;
+			} else {
+				x = 2;
+				y = n - 10;
+			}
+			ml = new MapLoader("src/main/resources/map.xml", pool);
+			card = new PermissionCard(ml.getRegions().get(x).getCities(), null);
+			action = new ABuildEmporium(player, card, ml.getRegions().get(x).getCities().get(y), this.allMapCities,
+					this.bRewardManager);
+			assertEquals(true, action.isMain());
+			action.execute();
+			for (Reward r : mExplorer.getAdiacentRewards(ml.getRegions().get(x).getCities().get(y), this.player))
+				for (Bonus b : r.getGeneratedRewards())
+					if (b.getTagName().equals("victory"))
+						this.rewardAmount = +b.getAmount();
+		} while (!numbers.isEmpty());
 		System.out.print(player.getVictoryPoints().getAmount());
 		System.out.print("\n");
 		System.out.print(rewardAmount);

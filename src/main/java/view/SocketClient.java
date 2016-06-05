@@ -44,4 +44,10 @@ public class SocketClient implements ClientInt {
 		}
 		controller.PerformAction(this, action);
 	}
+
+	@Override
+	public void configGame() {
+		// TODO Auto-generated method stub
+		controller.configGame(this);
+	}
 }

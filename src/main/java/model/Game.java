@@ -13,17 +13,13 @@ public class Game extends Thread {
 	private List<Player> players;
 	private Board gameBoard;
 	private TurnManager turnManager;
-	private boolean isAddingPlayers;
 	private int winningPlayer;
 	private Config config;
-	private boolean isComplete;
-	private int maxNumberOfPlayers;
-
+	private int maxNumberOfPlayers =10;
+	
 	public Game() throws ConfigurationErrorException {
 		this.config = new Config();
 		players = new ArrayList<>();
-		isAddingPlayers = false;
-		isComplete = false;
 	}
 
 	public synchronized Player addPlayer(ClientInt client) {
@@ -34,7 +30,7 @@ public class Game extends Thread {
 	}
 
 	public boolean isComplete() {
-		return players.size() == 10;
+		return players.size() == maxNumberOfPlayers;
 	}
 
 	public Board getBoard() {
@@ -74,9 +70,6 @@ public class Game extends Thread {
 		}
 	}
 
-	public synchronized void logTimeIsUp() {
-		this.isComplete = true;
-	}
 
 	public void publishWinner() {
 		// TODO
@@ -85,4 +78,6 @@ public class Game extends Thread {
 	public int getPlayersNumber() {
 		return players.size();
 	}
+	
+	
 }

@@ -10,6 +10,7 @@ import model.Game;
 import model.TurnManager;
 import model.exceptions.IllegalActionException;
 import model.player.Player;
+import server.Server;
 import view.ClientInt;
 
 public class Controller {
@@ -22,6 +23,10 @@ public class Controller {
 		this.game = game;
 		this.parser = new CliParser();
 		this.builder = new ActionBuilder(game.getBoard());
+	}
+	
+	public void configGame(ClientInt client){
+		Server.acceptPlayers(game);
 	}
 	
 	public void addPlayer(ClientInt client) {

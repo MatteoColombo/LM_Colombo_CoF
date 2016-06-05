@@ -9,4 +9,6 @@ public interface ClientInt {
 	public void setController(Controller controller);
 	
 	public void askPlayerWhatActionToDo() throws IOException;
+	
+	public void configGame();
 }

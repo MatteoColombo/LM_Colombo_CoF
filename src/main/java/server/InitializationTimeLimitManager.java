@@ -18,8 +18,7 @@ public class InitializationTimeLimitManager extends Thread{
 			e.printStackTrace();
 		}
 		if(!startingGame.isComplete()){
-			startingGame.logTimeIsUp();
-			startingGame.start();
+			Server.startGame(startingGame);
 		}
 	}
 }

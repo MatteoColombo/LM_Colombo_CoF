@@ -1,7 +1,9 @@
-package server;
+package view;
 
 import java.io.IOException;
 import java.net.Socket;
+
+import server.Server;
 
 public class SocketClientConnectionHandler extends Thread {
 	private Socket clientSocket;

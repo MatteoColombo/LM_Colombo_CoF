@@ -1,4 +1,4 @@
-package server;
+package view;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +36,12 @@ public class SocketClient implements ClientInt {
 	public void askPlayerWhatActionToDo() throws IOException {
 		out.writeObject("actionToDo");
 		out.flush();
-		//controller.PerformAction(this, in.readObject());
+		String action="";
+		try{
+			action=(String)in.readObject();
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		controller.PerformAction(this, action);
 	}
 }

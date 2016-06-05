@@ -3,7 +3,7 @@ package model.player;
 import java.awt.Color;
 import java.util.List;
 
-import server.ClientInt;
+import view.ClientInt;
 
 import java.util.ArrayList;
 /**

@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 import control.Controller;
 import model.Game;
 import model.exceptions.ConfigurationErrorException;
+import view.ClientInt;
+import view.SocketClientConnectionHandler;
 
 public class Server{
 	private static List<Game> games;
@@ -29,9 +31,9 @@ public class Server{
 				e.printStackTrace();
 				return;
 			}
-			newGame.addPlayer(client);
 			games.add(0, newGame);
 			controllers.add(0,new Controller(newGame));
+			controllers.get(0).addPlayer(client);
 			client.setController(controllers.get(0));
 		} else {
 			games.get(0).addPlayer(client);

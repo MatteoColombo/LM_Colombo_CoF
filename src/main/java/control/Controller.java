@@ -10,13 +10,13 @@ import model.Game;
 import model.TurnManager;
 import model.exceptions.IllegalActionException;
 import model.player.Player;
-import view.Client;
+import view.ClientInt;
 
 public class Controller {
 	private Game game;
 	private CliParser parser;
 	private ActionBuilder builder;
-	private Map<Client, Player> playersMap = new HashMap<>();
+	private Map<ClientInt, Player> playersMap = new HashMap<>();
 	
 	public Controller(Game game) {
 		this.game = game;
@@ -24,15 +24,15 @@ public class Controller {
 		this.builder = new ActionBuilder(game.getBoard());
 	}
 	
-	public void addPlayer(Client client) {
-		// TODO complete this
+	public void addPlayer(ClientInt client) {
+		playersMap.put(client, game.addPlayer(client));
 	}
 	/**
 	 * translate a string action request from the client into its object representation
 	 * It notify the client if something went wrong
 	 * @param s the input from the cli
 	 */
-	public void PerformAction(Client client, String s) {
+	public void PerformAction(ClientInt client, String s) {
 		Player player = playersMap.get(client);
 		if(player == null) {
 			//who is connecting is not in the current game

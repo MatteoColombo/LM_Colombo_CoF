@@ -1,7 +1,5 @@
 package model;
 
-import server.ClientInt;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +7,10 @@ import java.util.List;
 import model.board.Board;
 import model.exceptions.ConfigurationErrorException;
 import model.player.Player;
+import view.ClientInt;
 
 public class Game extends Thread {
-	private List<ClientInt> players;
-	private List<Player> listOfPlayers;
+	private List<Player> players;
 	private Board gameBoard;
 	private TurnManager turnManager;
 	private boolean isAddingPlayers;
@@ -23,16 +21,16 @@ public class Game extends Thread {
 
 	public Game() throws ConfigurationErrorException {
 		this.config = new Config();
-		players = new ArrayList<ClientInt>();
-		listOfPlayers = new ArrayList<>();
+		players = new ArrayList<>();
 		isAddingPlayers = false;
 		isComplete = false;
 	}
 
-	public synchronized void addPlayer(ClientInt client) {
-		players.add(client);
-		if (players.size() == maxNumberOfPlayers)
-			isComplete = true;
+	public synchronized Player addPlayer(ClientInt client) {
+		int playersInGame= players.size();
+		Player p= new Player(10+playersInGame, 1+playersInGame, 6, 10, null, 0, 0,client);
+		players.add(p);
+		return p;
 	}
 
 	public boolean isComplete() {
@@ -52,10 +50,10 @@ public class Game extends Thread {
 		boolean someoneWon = false;
 		// This loops is for the regular game
 		for (int i = 0; !someoneWon; i = (i + 1) % players.size()) {
-			if (listOfPlayers.get(i).getSuspended())
+			if (players.get(i).getSuspended())
 				continue;
-			turnManager = new TurnManager(listOfPlayers.get(i), gameBoard);
-			if (listOfPlayers.get(i).getEmporium().size() == 0) {
+			turnManager = new TurnManager(players.get(i), gameBoard);
+			if (players.get(i).getEmporium().size() == 0) {
 				winningPlayer = i;
 				someoneWon = true;
 			}
@@ -63,20 +61,16 @@ public class Game extends Thread {
 		// This loop is for the last round after that a player placed his 10th
 		// emporium
 		for (int j = (winningPlayer + 1) % players.size(); j != winningPlayer; j = (j + 1) % players.size()) {
-			if (listOfPlayers.get(j).getSuspended())
+			if (players.get(j).getSuspended())
 				continue;
-			turnManager = new TurnManager(listOfPlayers.get(j), gameBoard);
+			turnManager = new TurnManager(players.get(j), gameBoard);
 		}
 		publishWinner();
 	}
 
 	public void initializePlayers() {
 		for (int i = 0; i < players.size(); i++) {
-			/*
-			 * listOfPlayers.add(new Player(config.getMoney() + i,
-			 * config.getHelpers() + i, config.getPolitic(), 10,
-			 * config.getColors(), 0, 0, players.get(i)));
-			 */
+			
 		}
 	}
 

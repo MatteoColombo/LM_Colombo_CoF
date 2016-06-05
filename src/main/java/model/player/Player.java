@@ -35,30 +35,14 @@ public class Player {
  * @param initalVictory
  * @param initialNoble
  */
-	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
+	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initialVictory,
 			int initialNoble, ClientInt client) {
+		this(money, helper, draw, maxEmp, pickedColours, initialVictory, initialNoble);
 		this.client=client;
-		this.coins = new Coins(money);
-		this.assistants = new Assistants(helper);
-		this.victoryPoints = new VictoryPoints(initalVictory);
-		this.noblePoints = new NoblePoints(initialNoble);
-		this.politicCard = new ArrayList<>();
-		this.permissionCard = new ArrayList<>();
-		this.emporium = new ArrayList<>();
-		for (int i = 0; i < draw; i++)
-			politicCard.add(new PoliticCard(pickedColours));
-		for (int i = 0; i < maxEmp; i++)
-			emporium.add(new Emporium(this));
-		this.DEFAULTMAINACTION = 1;
-		this.mainActions = DEFAULTMAINACTION;
-		this.extraAction = false;
-		this.pickedColours = pickedColours;
-		this.isSuspended=false;
 	}
 	
 	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
 			int initialNoble) {
-		this.client=null;
 		this.coins = new Coins(money);
 		this.assistants = new Assistants(helper);
 		this.victoryPoints = new VictoryPoints(initalVictory);

@@ -190,6 +190,7 @@ public class TestBuildEmporium {
 	 * multiple Emporiums
 	 * 
 	 */
+	@Ignore
 	@Test
 	public void testAdvancedBoardRewards() throws Exception {
 		PermissionCard card;

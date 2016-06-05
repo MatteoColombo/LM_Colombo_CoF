@@ -24,12 +24,6 @@ import model.player.PoliticCard;
 public class ActionBuilder {
 	
 	private Board board;
-	private static final String OPTCOUNCIL ="council";
-	private static final String OPTCITY ="city";
-	private static final String OPTPERMISSION ="permission";
-	private static final String OPTREGION ="region";
-	private static final String OPTCARDS ="cards";
-	private static final String OPTCOLOR ="color";
 	
 	public ActionBuilder(Board board) {
 		this.board = board;
@@ -45,8 +39,8 @@ public class ActionBuilder {
 	 */
 	public Action makeABuildEmporium(Player p, CommandLine cmd) throws IllegalActionException {
 		
-		PermissionCard permCard = parsePermissionCard(p, cmd.getOptionValue(OPTPERMISSION));
-		City city = parseCity(cmd.getOptionValue(OPTCITY));
+		PermissionCard permCard = parsePermissionCard(p, cmd.getOptionValue(CliParser.OPTPERMISSION));
+		City city = parseCity(cmd.getOptionValue(CliParser.OPTCITY));
 		
 		return new ABuildEmporium(p, permCard, city, board.getMap().getCitiesList(), board.getBoardRewardsManager());
 	}
@@ -60,9 +54,8 @@ public class ActionBuilder {
 	 */
 	public Action makeABuildEmporiumWithKing(Player p, CommandLine cmd) throws IllegalActionException {
 		
-		City city = parseCity(cmd.getOptionValue(OPTCITY));
-		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues(OPTCARDS));
-
+		City city = parseCity(cmd.getOptionValue(CliParser.OPTCITY));
+		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues(CliParser.OPTCARDS));
 		return new ABuildEmporiumWithKing(p, board.getKing(), city, board.getMap().getCitiesList(), politicCards, board.getBoardRewardsManager());
 	}
 	/**
@@ -75,8 +68,8 @@ public class ActionBuilder {
 	 */
 	public Action makeASlideCouncil(Player p, CommandLine cmd) throws IllegalActionException {
 		
-		Council council = parseCouncil(cmd.getOptionValue(OPTCOUNCIL), true);
-		Color color = parseColor(cmd.getOptionValue(OPTCOLOR));
+		Council council = parseCouncil(cmd.getOptionValue(CliParser.OPTCOUNCIL), true);
+		Color color = parseColor(cmd.getOptionValue(CliParser.OPTCOLOR));
 		
 		return new ASlideCouncil(p, board.getCouncilorPool(), council, color);
 	}
@@ -91,8 +84,8 @@ public class ActionBuilder {
 	 */
 	public Action makeASlideCouncilWithAssistant(Player p, CommandLine cmd) throws IllegalActionException {
 		
-		Council council = parseCouncil(cmd.getOptionValue(OPTCOUNCIL), true);
-		Color color = parseColor(cmd.getOptionValue(OPTCOLOR));
+		Council council = parseCouncil(cmd.getOptionValue(CliParser.OPTCOUNCIL), true);
+		Color color = parseColor(cmd.getOptionValue(CliParser.OPTCOLOR));
 		
 		return new ASlideCouncilWithAssistant(p, board.getCouncilorPool(), council, color);
 	}
@@ -126,12 +119,12 @@ public class ActionBuilder {
 	public Action makeABuyPermissionCard(Player p, CommandLine cmd) throws IllegalActionException {
 		
 		// because there is a 1 to 1 association with region and council
-		String strRegion = cmd.getOptionValue(OPTCOUNCIL);
+		String strRegion = cmd.getOptionValue(CliParser.OPTCOUNCIL);
 		Region region = parseRegion(strRegion);
 
 		Council council = parseCouncil(strRegion, false);
-		PermissionCard permCard = parsePermissionCard(region, cmd.getOptionValue(OPTPERMISSION));	
-		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues(OPTCARDS));
+		PermissionCard permCard = parsePermissionCard(region, cmd.getOptionValue(CliParser.OPTPERMISSION));	
+		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues(CliParser.OPTCARDS));
 		
 		return new ABuyPermissionCard(p, permCard, council, politicCards);
 	}
@@ -143,7 +136,7 @@ public class ActionBuilder {
 	 * @throws IllegalActionException
 	 */
 	public Action makeAShufflePermissionCards(Player p, CommandLine cmd) throws IllegalActionException {
-		Region region = parseRegion(cmd.getOptionValue(OPTREGION));
+		Region region = parseRegion(cmd.getOptionValue(CliParser.OPTREGION));
 		return new AShufflePermissionCards(p, region);
 	}
 	

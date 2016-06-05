@@ -37,7 +37,9 @@ public class ABuildEmporium extends Action {
 				&& (player.getAssistants().getAmount() < chosenCity.getNumberOfEmporium())) {
 			throw new IllegalActionException("you can not afford it!");
 		}
-
+		if (this.player.getEmporium().isEmpty()) {
+			throw new IllegalActionException("you have no emporiums left!");
+		}
 	}
 
 	@Override

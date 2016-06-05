@@ -43,7 +43,7 @@ public class TestBuildEmporium {
 	private int rewardAmount;
 	MapExplorer mExplorer;
 	MapLoader mLoader;
-	private final int ALLCITIES = 15;
+	private final int ALLCITIES = 14;
 
 	@Before
 	public void setUp() throws MapXMLFileException {
@@ -106,8 +106,8 @@ public class TestBuildEmporium {
 		card = new PermissionCard(this.mLoader.getRegions().get(0).getCities());
 		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 		action.execute();
-		action = new ABuildEmporium(player, card, this.mLoader.getRegions().get(2).getCities().get(0), this.allMapCities,
-				this.bRewardManager);
+		action = new ABuildEmporium(player, card, this.mLoader.getRegions().get(2).getCities().get(0),
+				this.allMapCities, this.bRewardManager);
 	}
 
 	/**
@@ -136,13 +136,13 @@ public class TestBuildEmporium {
 		King king;
 		ABuildEmporiumWithKing action;
 		king = new King(this.mLoader.getKingCity(), pool.getCouncil());
-		action = new ABuildEmporiumWithKing(player, king, this.mLoader.getRegions().get(0).getCities().get(0), this.allMapCities,
-				null, this.bRewardManager);
+		action = new ABuildEmporiumWithKing(player, king, this.mLoader.getRegions().get(0).getCities().get(0),
+				this.allMapCities, null, this.bRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
 		assertEquals(1, this.mLoader.getRegions().get(0).getCities().get(0).getNumberOfEmporium());
-		action = new ABuildEmporiumWithKing(player, king, this.mLoader.getRegions().get(0).getCities().get(0), this.allMapCities,
-				null, this.bRewardManager);
+		action = new ABuildEmporiumWithKing(player, king, this.mLoader.getRegions().get(0).getCities().get(0),
+				this.allMapCities, null, this.bRewardManager);
 
 	}
 
@@ -157,8 +157,8 @@ public class TestBuildEmporium {
 		ABuildEmporiumWithKing action;
 		this.player.getCoins().decreaseAmount(3);
 		king = new King(this.mLoader.getKingCity(), pool.getCouncil());
-		action = new ABuildEmporiumWithKing(player, king, this.mLoader.getRegions().get(0).getCities().get(0), this.allMapCities,
-				null, this.bRewardManager);
+		action = new ABuildEmporiumWithKing(player, king, this.mLoader.getRegions().get(0).getCities().get(0),
+				this.allMapCities, null, this.bRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
 		assertEquals(10, player.getCoins().getAmount());
@@ -174,7 +174,8 @@ public class TestBuildEmporium {
 		PermissionCard card;
 		ABuildEmporium action;
 		card = new PermissionCard(this.mLoader.getRegions().get(0).getCities());
-		action = new ABuildEmporium(this.player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
+		action = new ABuildEmporium(this.player, card, card.getCardCity().get(0), this.allMapCities,
+				this.bRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
 		for (Reward r : this.mExplorer.getAdiacentRewards(card.getCardCity().get(0), this.player))
@@ -194,12 +195,12 @@ public class TestBuildEmporium {
 		PermissionCard card;
 		ABuildEmporium action;
 		Random rnd = new Random();
-		List<Integer> numbers = new ArrayList<Integer>();
-		for (int i = 0; i < rnd.nextInt(ALLCITIES); i++)
-			numbers.add(i);
-		Collections.shuffle(numbers);
+		List<Integer> cityNumbers = new ArrayList<Integer>();
+		for (int i = 0; i <= rnd.nextInt(ALLCITIES); i++)
+			cityNumbers.add(i);
+		Collections.shuffle(cityNumbers);
 		do {
-			int n = numbers.remove(0);
+			int n = cityNumbers.remove(0);
 			int region, city;
 			if (n <= 4) {
 				region = 0;
@@ -212,15 +213,16 @@ public class TestBuildEmporium {
 				city = n - 10;
 			}
 			card = new PermissionCard(this.mLoader.getRegions().get(region).getCities(), null);
-			action = new ABuildEmporium(this.player, card, this.mLoader.getRegions().get(region).getCities().get(city), this.allMapCities,
-					this.bRewardManager);
+			action = new ABuildEmporium(this.player, card, this.mLoader.getRegions().get(region).getCities().get(city),
+					this.allMapCities, this.bRewardManager);
 			assertEquals(true, action.isMain());
 			action.execute();
-			for (Reward r : this.mExplorer.getAdiacentRewards(this.mLoader.getRegions().get(region).getCities().get(city), this.player))
+			for (Reward r : this.mExplorer
+					.getAdiacentRewards(this.mLoader.getRegions().get(region).getCities().get(city), this.player))
 				for (Bonus b : r.getGeneratedRewards())
 					if (b.getTagName().equals("victory"))
 						this.rewardAmount = +b.getAmount();
-		} while (!numbers.isEmpty() && this.player.getEmporium().size()>0);
+		} while ((!cityNumbers.isEmpty()) && (!this.player.getEmporium().isEmpty()));
 		System.out.print(this.player.getVictoryPoints().getAmount());
 		System.out.print("\n");
 		System.out.print(this.rewardAmount);

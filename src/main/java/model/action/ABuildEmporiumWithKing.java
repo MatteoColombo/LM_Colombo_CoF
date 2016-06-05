@@ -24,8 +24,8 @@ public class ABuildEmporiumWithKing extends Action {
 	private List<City> allMapCities;
 	private List<PoliticCard> politicCards;
 
-	public ABuildEmporiumWithKing(Player p, King king, City chosenCity, List<City> allMapCities, List<PoliticCard> politic,
-			BoardRewardsManager bRewardsManager) throws IllegalActionException {
+	public ABuildEmporiumWithKing(Player p, King king, City chosenCity, List<City> allMapCities,
+			List<PoliticCard> politic, BoardRewardsManager bRewardsManager) throws IllegalActionException {
 		super(true);
 		this.king = king;
 		this.player = p;
@@ -53,6 +53,9 @@ public class ABuildEmporiumWithKing extends Action {
 		this.priceForMovement = PRICEPERROUTE * mx.getDistance(king.getKingLocation(), chosenCity);
 		if ((priceForMovement > 0) && (player.getCoins().getAmount() < priceForMovement + priceForTheKingCouncil)) {
 			throw new IllegalActionException("you can not pay the king's travel!");
+		}
+		if (this.player.getEmporium().isEmpty()) {
+			throw new IllegalActionException("you have no emporiums left!");
 		}
 
 	}

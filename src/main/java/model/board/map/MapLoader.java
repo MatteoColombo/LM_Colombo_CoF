@@ -7,6 +7,7 @@ import model.board.Region;
 import model.board.city.City;
 import model.board.city.CityConnection;
 import model.board.council.CouncilorPool;
+import model.exceptions.ConfigurationErrorException;
 import model.exceptions.MapXMLFileException;
 import model.reward.*;
 
@@ -99,6 +100,9 @@ public class MapLoader {
 				NodeList citiesOfRegion = region.getChildNodes();
 				List<City> cities = parseCities(citiesOfRegion);
 				citiesOfMap.addAll(cities);
+				if(!pool.canGenerateCouncil()){
+					throw new MapXMLFileException(new ConfigurationErrorException("You need more councilors"));
+				}
 				regions.add(new Region("name", cities, pool.getCouncil(), 2));
 				addRegionToCities(regions.get(i));
 			}

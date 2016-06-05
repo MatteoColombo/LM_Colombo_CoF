@@ -181,7 +181,7 @@ public class TestBuildEmporium {
 		for (Reward r : this.mExplorer.getAdiacentRewards(card.getCardCity().get(0), this.player))
 			for (Bonus b : r.getGeneratedRewards())
 				if (b.getTagName().equals("victory"))
-					this.rewardAmount = +b.getAmount();
+					this.rewardAmount += b.getAmount();
 		assertEquals(this.player.getVictoryPoints().getAmount(), this.rewardAmount);
 	}
 
@@ -205,6 +205,7 @@ public class TestBuildEmporium {
 		for (int i = 0; i <= rndNum; i++)
 			cityNumbers.add(i);
 		Collections.shuffle(cityNumbers);
+		System.out.println("Cities that are going to by assigned to this player: " + (rndNum += 1));
 		do {
 			int n = cityNumbers.remove(0);
 			int region, city;
@@ -223,31 +224,38 @@ public class TestBuildEmporium {
 					this.allMapCities, this.bRewardManager);
 			assertEquals(true, action.isMain());
 			action.execute();
+			System.out.print("VPoints form cities: ");
 			for (Reward r : this.mExplorer
 					.getAdiacentRewards(this.mLoader.getRegions().get(region).getCities().get(city), this.player))
 				for (Bonus b : r.getGeneratedRewards())
-					if (b.getTagName().equals("victory"))
-						this.rewardAmount = +b.getAmount();
+					if (b.getTagName().equals("victory")) {
+						this.rewardAmount += b.getAmount();
+						System.out.printf("%d + ", b.getAmount());
+					}
+			System.out.println("0");
 			if (this.mExplorer.isColorComplete(this.player,
 					this.mLoader.getRegions().get(region).getCities().get(city).getColor(), this.allMapCities)) {
 				if (!this.mLoader.getRegions().get(region).getCities().get(city).isCapital()) {
 					BVictoryPoints playerBReward = bRewardManageCopy.getBoardColorReward(
 							this.mLoader.getRegions().get(region).getCities().get(city).getColor());
-					this.rewardAmount = +playerBReward.getAmount();
-					System.out.printf("Color %s achieved\n",
+					this.rewardAmount += playerBReward.getAmount();
+					System.out.printf("Color %s achieved: ",
 							this.mLoader.getRegions().get(region).getCities().get(city).getColor());
+					System.out.println(playerBReward.getAmount());
 				}
 			}
 			if (this.mLoader.getRegions().get(region).isCompleted(this.player)) {
 				BVictoryPoints playerBReward = bRewardManageCopy
 						.getBoardRegionReward(this.mLoader.getRegions().get(region));
-				this.rewardAmount = +playerBReward.getAmount();
-				System.out.printf("Region %d achieved\n", region);
+				this.rewardAmount += playerBReward.getAmount();
+				System.out.printf("Region %d achieved: ", region);
+				System.out.println(playerBReward.getAmount());
 			}
 		} while ((!cityNumbers.isEmpty()) && (!this.player.getEmporium().isEmpty()));
-		System.out.println(this.player.getVictoryPoints().getAmount());
-		System.out.println(this.rewardAmount);
+		System.out.println();
+		System.out
+				.println("Total VPoints effectly awarded by the player: " + this.player.getVictoryPoints().getAmount());
+		System.out.print("Total VPoints that should be awarded to the player: " + this.rewardAmount);
 		assertEquals(this.player.getVictoryPoints().getAmount(), this.rewardAmount);
 	}
-
 }

@@ -11,20 +11,21 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import control.Controller;
+import model.Config;
 import model.Game;
 import model.exceptions.ConfigurationErrorException;
 import view.ClientInt;
 import view.SocketClientConnectionHandler;
 
 public class Server {
-	private static List<Game> runningGames;
+	
 	private static List<Game> startingGames;
 	private static List<Game> configuringGames;
 	private static Map<Game,Controller> gameControMap;
 	private static final String NAME = "ServerInt";
 	private static Logger logger = Logger.getGlobal();
-	private static final int socketPort = 2344;
 	private static ServerSocket socketServer;
+	private static Config gamesConfig;
 
 	public static synchronized void login(ClientInt client) {
 		if(startingGames.isEmpty()){
@@ -62,16 +63,23 @@ public class Server {
 	}
 
 	public static void main(String[] args) {
+		try {
+			gamesConfig = new Config();
+		} catch (ConfigurationErrorException e1) {
+			logger.info("Configuration error, servers can't start");
+			e1.printStackTrace();
+			return;
+		}
 		gameControMap= new HashMap<>();
 		startingGames= new ArrayList<>();
 		configuringGames = new ArrayList<>();
 		try {
 			ServerInt room = new RMIServer();
 			ServerInt stub = (ServerInt) UnicastRemoteObject.exportObject(room, 0);
-			Registry registry = LocateRegistry.createRegistry(1099);
+			Registry registry = LocateRegistry.createRegistry(gamesConfig.getRmiPort());
 			registry.rebind(NAME, stub);
 			logger.info("RMI server ready");
-			socketServer = new ServerSocket(socketPort);
+			socketServer = new ServerSocket(gamesConfig.getSocketPort());
 			logger.info("Socket server ready");
 			while (true) {
 				new SocketClientConnectionHandler(socketServer.accept());

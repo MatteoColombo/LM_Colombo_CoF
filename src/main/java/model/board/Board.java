@@ -163,4 +163,8 @@ public class Board {
 	public MapLoader getMap() {
 		return this.mapManager;
 	}
+	
+	public List<Region> getRegions() {
+		return this.regions;
+	}
 }

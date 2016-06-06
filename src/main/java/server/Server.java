@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import control.Controller;
-import model.Config;
+import model.Configuration;
 import model.Game;
 import model.exceptions.ConfigurationErrorException;
 import view.ClientInt;
@@ -25,13 +25,13 @@ public class Server {
 	private static final String NAME = "ServerInt";
 	private static Logger logger = Logger.getGlobal();
 	private static ServerSocket socketServer;
-	private static Config gamesConfig;
+	private static Configuration gamesConfig;
 
 	public static synchronized void login(ClientInt client) {
 		if(startingGames.isEmpty()){
 			Game newGame;	
 			try {
-				newGame = new Game();
+				newGame = new Game(gamesConfig);
 			} catch (ConfigurationErrorException e) {
 				e.printStackTrace();
 				return;
@@ -64,7 +64,7 @@ public class Server {
 
 	public static void main(String[] args) {
 		try {
-			gamesConfig = new Config();
+			gamesConfig = new Configuration();
 		} catch (ConfigurationErrorException e1) {
 			logger.info("Configuration error, servers can't start");
 			e1.printStackTrace();

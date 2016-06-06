@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
 
 import model.exceptions.ConfigurationErrorException;
 
-public class Config {
+public class Configuration {
 	private static final String configPath = "src/main/resources/config.xml";
 	private int initialPlayerMoney;
 	private int initialPlayerHelpers;
@@ -52,7 +52,7 @@ public class Config {
 	private final String mapPath = "/config/map/";
 	private final String serverPath = "/config/server/";
 
-	public Config() throws ConfigurationErrorException {
+	public Configuration() throws ConfigurationErrorException {
 		loadXMLFile();
 	}
 

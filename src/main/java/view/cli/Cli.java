@@ -9,7 +9,9 @@ import model.board.ColorConstants;
 import model.board.Region;
 import model.board.city.City;
 import model.exceptions.XMLFileException;
+import model.player.Emporium;
 import model.player.Player;
+import model.reward.Bonus;
 
 /**
  * 
@@ -80,7 +82,9 @@ public class Cli {
 		for(Region region: regions) {
 			writer.println("---------------------------------------");
 			for(City city: region.getCities()) {
-				writer.print("| " + city.getName() + " -->");
+				writer.print("| ");
+				printBonus(city);
+				writer.print(city.getName() + " -->");
 				for(City connected: city.getConnectedCities()) {
 					writer.print(" " + connected.getName());
 				}
@@ -102,11 +106,31 @@ public class Cli {
 		writer.println("---------------------------------------");
 	}
 	
+	private void printBonus(City city) {
+		writer.print("(");
+		if(city.isCapital()) {
+			writer.print("Capital");
+		} else {
+			if(city.getNumberOfEmporium() > 0) {
+				for(Bonus b: city.getReward().getGeneratedRewards()) {
+					writer.print(b.getTagName().substring(0, 1).toUpperCase() + b.getAmount());
+				}
+			} else {
+				writer.print("???");
+			}
+		}
+		writer.print(") ");
+	}
+	
 	public static void main(String[] args) {
 		Cli cli = new Cli();
 		cli.showCoolInitMenu();
+		Player p = new Player(0, 0, 0, 0, null, 0, 0);
 		try {
 			Board board = new Board("src/main/resources/map.xml", "src/main/resources/nobtrack.xml", 6, 4, ColorConstants.getCardsColors());
+			for(City city: board.getMap().getCitiesList()) {
+				city.addEmporium(new Emporium(p));
+			}
 			cli.printCities(board.getRegions());
 		} catch (XMLFileException e) {
 			e.printStackTrace();

@@ -14,11 +14,12 @@ public class Game extends Thread {
 	private Board gameBoard;
 	private TurnManager turnManager;
 	private int winningPlayer;
-	private Config config;
-	private int maxNumberOfPlayers =10;
+	private final Configuration config;
+	private final int maxNumberOfPlayers;
 	
-	public Game() throws ConfigurationErrorException {
-		this.config = new Config();
+	public Game(Configuration gameConfig) throws ConfigurationErrorException {
+		this.config=gameConfig;
+		this.maxNumberOfPlayers= config.getMaxNumberOfPlayer();
 		players = new ArrayList<>();
 	}
 

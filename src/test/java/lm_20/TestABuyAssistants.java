@@ -32,7 +32,7 @@ public class TestABuyAssistants {
 		colorList.add(new Color(2, 3, 4));
 		colorList.add(new Color(255, 255, 255));
 
-		p = new Player(10, 1, 6, 10, colorList, 0, 0);
+		p = new Player(10, 1, 6, 10, colorList, 0, 0,null);
 	}
 
 	/**

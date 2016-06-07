@@ -6,6 +6,7 @@ import java.util.List;
 
 import model.board.Board;
 import model.exceptions.ConfigurationErrorException;
+import model.exceptions.XMLFileException;
 import model.player.Player;
 import view.ClientInt;
 
@@ -16,16 +17,22 @@ public class Game extends Thread {
 	private int winningPlayer;
 	private final Configuration config;
 	private final int maxNumberOfPlayers;
-	
+
 	public Game(Configuration gameConfig) throws ConfigurationErrorException {
 		this.config=gameConfig;
 		this.maxNumberOfPlayers= config.getMaxNumberOfPlayer();
 		players = new ArrayList<>();
+		try {
+			this.gameBoard= new Board(gameConfig);
+		} catch (XMLFileException e) {
+			e.printStackTrace();
+			throw new ConfigurationErrorException(e);
+		}
 	}
 
 	public synchronized Player addPlayer(ClientInt client) {
-		int playersInGame= players.size();
-		Player p= new Player(10+playersInGame, 1+playersInGame, 6, 10, null, 0, 0,client);
+		int playersInGame = players.size();
+		Player p = new Player(10 + playersInGame, 1 + playersInGame, 6, 10, null, 0, 0, client);
 		players.add(p);
 		return p;
 	}
@@ -43,7 +50,7 @@ public class Game extends Thread {
 	}
 
 	public void run() {
-		initializePlayers();
+		
 		boolean someoneWon = false;
 		// This loops is for the regular game
 		for (int i = 0; !someoneWon; i = (i + 1) % players.size()) {
@@ -65,12 +72,6 @@ public class Game extends Thread {
 		publishWinner();
 	}
 
-	public void initializePlayers() {
-		for (int i = 0; i < players.size(); i++) {
-			
-		}
-	}
-
 
 	public void publishWinner() {
 		// TODO
@@ -79,6 +80,5 @@ public class Game extends Thread {
 	public int getPlayersNumber() {
 		return players.size();
 	}
-	
-	
+
 }

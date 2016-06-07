@@ -3,6 +3,7 @@ package model.board;
 import java.awt.Color;
 import java.util.List;
 
+import model.Configuration;
 import model.board.city.City;
 import model.board.council.Council;
 import model.board.council.CouncilorPool;
@@ -50,6 +51,11 @@ public class Board {
 		this.colors = colors;
 		this.councPerColor = councPerColor;
 		initializeBoard();
+	}
+
+	public Board(Configuration config) throws XMLFileException {
+		this(config.getMaps().get(0), config.getNobility(), config.getCouncilorsPerColor(), config.getCouncilSize(),
+				config.getColorsList());
 	}
 
 	/**
@@ -147,7 +153,7 @@ public class Board {
 	public King getKing() {
 		return this.mapKing;
 	}
-	
+
 	public BoardRewardsManager getBoardRewardsManager() {
 		return this.bRewardsManager;
 	}
@@ -155,15 +161,15 @@ public class Board {
 	public void setBoardRewardsManager(BoardRewardsManager bRewardsManager) {
 		this.bRewardsManager = bRewardsManager;
 	}
-	
+
 	public CouncilorPool getCouncilorPool() {
 		return this.councilManager;
 	}
-	
+
 	public MapLoader getMap() {
 		return this.mapManager;
 	}
-	
+
 	public List<Region> getRegions() {
 		return this.regions;
 	}

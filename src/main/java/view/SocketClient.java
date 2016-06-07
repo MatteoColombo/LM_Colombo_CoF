@@ -18,13 +18,20 @@ public class SocketClient implements ClientInt {
 	private OutputStream outputStream;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
-
+	private String clientName;
+	
 	public SocketClient(Socket clientSocket) throws IOException {
 		this.clientSocket = clientSocket;
 		this.inputStream = clientSocket.getInputStream();
 		this.outputStream = clientSocket.getOutputStream();
 		this.out = new ObjectOutputStream(outputStream);
 		this.in = new ObjectInputStream(inputStream);
+	}
+	
+	public void askPlayerName() throws IOException{
+		out.writeObject("name");
+		out.flush();
+		
 	}
 
 	@Override

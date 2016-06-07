@@ -3,17 +3,14 @@ package model;
 import java.io.IOException;
 
 import model.action.Action;
-import model.board.Board;
 import model.player.Player;
 
 public class TurnManager {
 	private Player turnPlayer;
-	private Board gameBoard;
 	private boolean playerWantsToExit;
 
-	public TurnManager(Player turnPlayer, Board gameBoard) {
+	public TurnManager(Player turnPlayer) {
 		playerWantsToExit = false;
-		this.gameBoard = gameBoard;
 		this.turnPlayer = turnPlayer;
 		this.turnPlayer.actionsReset();
 		startTurn();

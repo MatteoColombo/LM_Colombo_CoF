@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +63,7 @@ public class Game extends Thread {
 		for (int i = 0; !someoneWon; i = (i + 1) % players.size()) {
 			if (players.get(i).getSuspended())
 				continue;
-			turnManager = new TurnManager(players.get(i), gameBoard);
+			turnManager = new TurnManager(players.get(i));
 			if (players.get(i).getEmporium().size() == 0) {
 				winningPlayer = i;
 				someoneWon = true;
@@ -75,7 +74,7 @@ public class Game extends Thread {
 		for (int j = (winningPlayer + 1) % players.size(); j != winningPlayer; j = (j + 1) % players.size()) {
 			if (players.get(j).getSuspended())
 				continue;
-			turnManager = new TurnManager(players.get(j), gameBoard);
+			turnManager = new TurnManager(players.get(j));
 		}
 		publishWinner();
 	}

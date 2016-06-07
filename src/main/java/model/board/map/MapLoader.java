@@ -228,7 +228,8 @@ public class MapLoader {
 			if(c.getName().equals(name)) {
 				return c;
 			}
-		} return null;
+		} 
+		return null;
 	}
 	
 	public List<City> getCitiesList() {

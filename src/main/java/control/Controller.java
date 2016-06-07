@@ -19,10 +19,8 @@ public class Controller {
 	private CliParser parser;
 	private ActionBuilder builder;
 	private Map<ClientInt, Player> playersMap = new HashMap<>();
-	private Configuration config;
 	public Controller(Game game, Configuration config) {
 		this.game = game;
-		this.config=config;
 		this.parser = new CliParser();
 		this.builder = new ActionBuilder(game.getBoard(),config);
 	}

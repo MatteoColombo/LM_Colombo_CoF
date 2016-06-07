@@ -7,7 +7,6 @@ public class InitializationTimeLimitManager extends Thread{
 	private final static long WAIT_TIME=20000;
 	public InitializationTimeLimitManager(Game startingGame){
 		this.startingGame=startingGame;
-		this.start();
 	}
 	
 	public void run(){

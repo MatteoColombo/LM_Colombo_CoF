@@ -46,7 +46,7 @@ public class Server {
 			gameControllerMap.get(startingGames.get(0)).addPlayer(client);
 			client.setController(gameControllerMap.get(startingGames.get(0)));
 			if(startingGames.get(0).getPlayersNumber()==2 && !startingGames.get(0).isComplete())
-				new InitializationTimeLimitManager(startingGames.get(0));
+				new InitializationTimeLimitManager(startingGames.get(0)).start();
 			if(startingGames.get(0).isComplete())
 				startingGames.remove(0).start();
 		}
@@ -82,7 +82,7 @@ public class Server {
 			socketServer = new ServerSocket(gamesConfig.getSocketPort());
 			logger.info("Socket server ready");
 			while (true) {
-				new SocketClientConnectionHandler(socketServer.accept());
+				new SocketClientConnectionHandler(socketServer.accept()).start();
 			}
 		} catch (Exception e) {
 			System.err.println("Chat Server exception:");

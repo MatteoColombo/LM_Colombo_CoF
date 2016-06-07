@@ -9,7 +9,6 @@ public class SocketClientConnectionHandler extends Thread {
 	private Socket clientSocket;
 	public SocketClientConnectionHandler(Socket clientSocket){
 		this.clientSocket=clientSocket;
-		this.start();
 	}
 	public void run(){
 		try {

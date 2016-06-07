@@ -3,7 +3,7 @@ package model.market;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.exceptions.IllegalActionException;
+import model.exceptions.*;
 import model.player.*;
 
 public class Market {
@@ -14,6 +14,8 @@ public class Market {
 	public Market(List<Player> allPlayers) {
 		this.allPlayers = allPlayers;
 		this.allGoodsBundle = new ArrayList<>();
+		for (Player player : this.allPlayers)
+			this.allGoodsBundle.add(new GoodsBundle(player));
 	}
 
 	public List<Player> getAllPlayers() {
@@ -24,22 +26,15 @@ public class Market {
 		return this.allGoodsBundle;
 	}
 
-	public GoodsBundle getPlayerBundle(Player bundleOwner) throws IllegalActionException {
+	public GoodsBundle getPlayerBundle(Player bundleOwner) throws NegativeException {
 		for (GoodsBundle goodsBundle : this.allGoodsBundle)
 			if (goodsBundle.getPlayerOwner().equals(bundleOwner))
 				return goodsBundle;
-		throw new IllegalActionException("this player has no bundle yet!");
-	}
-
-	public void newBundle(Player bundleOwner) throws IllegalActionException {
-		for (GoodsBundle goodsBundle : this.allGoodsBundle)
-			if (goodsBundle.getPlayerOwner().equals(bundleOwner))
-				throw new IllegalActionException("this player has already a bundle!");
-		this.allGoodsBundle.add(new GoodsBundle(bundleOwner));
+		throw new NegativeException("something went wrong");
 	}
 
 	public void addMerchandiseToBundle(Player bundleOwner, PermissionCard sellingPermissionCard, int askedPrice)
-			throws IllegalActionException {
+			throws IllegalActionException, NegativeException {
 		GoodsBundle goodsBundle = getPlayerBundle(bundleOwner);
 		for (PermissionCard permissionCard : bundleOwner.getPermissionCard())
 			if (permissionCard.equals(sellingPermissionCard)) {
@@ -55,7 +50,7 @@ public class Market {
 	}
 
 	public void addMerchandiseToBundle(Player bundleOwner, PoliticCard sellingPoliticCard, int askedPrice)
-			throws IllegalActionException {
+			throws IllegalActionException, NegativeException {
 		GoodsBundle goodsBundle = getPlayerBundle(bundleOwner);
 		for (PoliticCard politicCard : bundleOwner.getPoliticCard())
 			if (politicCard.equals(sellingPoliticCard)) {
@@ -68,7 +63,7 @@ public class Market {
 	}
 
 	public void addMerchandiseToBundle(Player bundleOwner, int amountOfSellingAssistants, int askedPriceForEachOne)
-			throws IllegalActionException {
+			throws IllegalActionException, NegativeException {
 		GoodsBundle goodsBundle = getPlayerBundle(bundleOwner);
 		if (amountOfSellingAssistants <= bundleOwner.getAssistants().getAmount()) {
 			bundleOwner.getAssistants().decreaseAmount(amountOfSellingAssistants);
@@ -78,7 +73,7 @@ public class Market {
 		throw new IllegalActionException("this player doesn't have enough of this merchandise!");
 	}
 
-	public void giveBackUnsoldGoods(Player bundleOwner) throws IllegalActionException {
+	public void giveBackUnsoldGoods(Player bundleOwner) throws IllegalActionException, NegativeException {
 		GoodsBundle goodsBundle = getPlayerBundle(bundleOwner);
 		if (!goodsBundle.getSellingPermissionCards().isEmpty()) {
 			for (MPermissionCard mPermissionCard : goodsBundle.getSellingPermissionCards()) {

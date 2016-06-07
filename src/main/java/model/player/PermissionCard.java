@@ -42,6 +42,7 @@ public class PermissionCard {
 	public PermissionCard(List<City> cities, Reward reward) {
 		this.cities = cities;
 		this.reward = reward;
+		this.used=false;
 	}
 
 	/**
@@ -59,7 +60,7 @@ public class PermissionCard {
 	 */
 	public PermissionCard(List<City> citiesOfRegions) {
 		boolean empty;
-		cities = new ArrayList<>();
+		this.cities = new ArrayList<>();
 		Random r = new Random();
 		do {
 			for (City x : citiesOfRegions) {
@@ -69,7 +70,8 @@ public class PermissionCard {
 			}
 			empty = this.cities.isEmpty();
 		} while (empty);
-		reward = new RewardPermission();
+		this.reward = new RewardPermission();
+		this.used=false;
 	}
 
 	/**

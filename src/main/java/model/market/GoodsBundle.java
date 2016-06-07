@@ -10,12 +10,13 @@ public class GoodsBundle {
 	private List<MPermissionCard> sellingPermissionCards;
 	private List<MPoliticCard> sellingPoliticCards;
 	private MAssistants sellingAssistants;
+	private final int DEFAULT = 0;
 
 	public GoodsBundle(Player playerOwner) {
 		this.playerOwner = playerOwner;
 		this.sellingPermissionCards = new ArrayList<>();
 		this.sellingPoliticCards = new ArrayList<>();
-		this.sellingAssistants = new MAssistants(0, 0);
+		this.sellingAssistants = new MAssistants(DEFAULT, DEFAULT);
 	}
 
 	public Player getPlayerOwner() {
@@ -44,19 +45,19 @@ public class GoodsBundle {
 	}
 
 	public Coins getPermissionCardsPrice() {
-		int i = 0;
+		int permissionCardsPrice = DEFAULT;
 		if (!this.sellingPermissionCards.isEmpty())
 			for (MPermissionCard mPermissionCard : this.sellingPermissionCards)
-				i += mPermissionCard.getPrice().getAmount();
-		return new Coins(i);
+				permissionCardsPrice += mPermissionCard.getPrice().getAmount();
+		return new Coins(permissionCardsPrice);
 	}
 
 	public Coins getPoliticCardsPrice() {
-		int i = 0;
+		int politicCardsPrice = DEFAULT;
 		if (!this.sellingPoliticCards.isEmpty())
 			for (MPoliticCard mPoliticCard : this.sellingPoliticCards)
-				i += mPoliticCard.getPrice().getAmount();
-		return new Coins(i);
+				politicCardsPrice += mPoliticCard.getPrice().getAmount();
+		return new Coins(politicCardsPrice);
 	}
 
 	public Coins getAssistantsPrice() {
@@ -65,9 +66,9 @@ public class GoodsBundle {
 	}
 
 	public Coins getBundlePrice() {
-		int i = getPoliticCardsPrice().getAmount() + getPermissionCardsPrice().getAmount()
+		int bundlePrice = getPoliticCardsPrice().getAmount() + getPermissionCardsPrice().getAmount()
 				+ getAssistantsPrice().getAmount();
-		return new Coins(i);
+		return new Coins(bundlePrice);
 	}
 
 }

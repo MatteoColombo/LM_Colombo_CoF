@@ -3,7 +3,6 @@ package lm_20;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
-import java.security.acl.Permission;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +30,7 @@ import model.reward.BoardRegionReward;
 import model.reward.Bonus;
 import model.reward.Reward;
 
-public class TestBuildEmporium {
+public class TestABuildEmporium {
 	private List<Color> colorList;
 	private Player player;
 	private CouncilorPool pool;

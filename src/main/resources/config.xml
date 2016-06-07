@@ -9,30 +9,62 @@
 		<max>10</max>
 	</player>
 	<server>
-		<rmi>socket</rmi>
+		<rmi>1099</rmi>
 		<socket>1994</socket>
 	</server>>
 	<colors>
-		<color>#ffffff</color>
-		<color>#000000</color>
-		<color>#ff9900</color>
-		<color>#0066ff</color>
-		<color>#ff99cc</color>
-		<color>#cc33ff</color>
+		<color>
+			<value>#ffffff</value>
+			<name>white</name>
+		</color>
+		<color>
+			<value>#000000</value>
+			<name>black</name>
+		</color>
+		<color>
+			<value>#ff9900</value>
+			<name>orange</name>
+		</color>
+		<color>
+			<value>#0066ff</value>
+			<name>blue</name>
+		</color>
+		<color>
+			<value>#ff99cc</value>
+			<name>pink</name>
+		</color>
+		<color>
+			<value>#cc33ff</value>
+			<name>violet</name>
+		</color>
 	</colors>
 	<council>
 		<size>4</size>
 		<councilorPerColor>4</councilorPerColor>
 	</council>
 	<region>
-		<discolosed>2</discolosed>
+		<disclosed>2</disclosed>
 		<award>5</award>
 	</region>
+	<!--  these depend on the city map!  -->
 	<city>
-		<value>20</value>
-		<value>12</value>
-		<value>8</value>
-		<value>5</value>
+		<reward>
+			<value>20</value>
+			<color>#ffd700</color>
+		</reward>
+		<reward>
+			<color>#008000</color>
+			<value>12</value>
+		</reward>
+		<reward>
+			<color>#f44343</color>
+			<value>8</value>
+		</reward>
+		<reward>
+			<value>5</value>
+			<color>#2268df</color>
+		</reward>
+		
 	</city>
 	<board>
 		<value>25</value>
@@ -41,4 +73,11 @@
 		<value>7</value>
 		<value>3</value>
 	</board>
+	<nobility>
+		<path>src/main/resources/nobtrack.xml</path>
+	</nobility>
+	<map>
+		<path>src/main/resources/map.xml</path>
+	</map>
+
 </config>

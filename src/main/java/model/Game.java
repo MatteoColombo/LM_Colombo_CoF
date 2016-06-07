@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +17,22 @@ public class Game extends Thread {
 	private TurnManager turnManager;
 	private int winningPlayer;
 	private final Configuration config;
-	private final int maxNumberOfPlayers;
+	private int maxNumberOfPlayers;
+	private int choosenMap;
 
-	public Game(Configuration gameConfig) throws ConfigurationErrorException {
-		this.config=gameConfig;
-		this.maxNumberOfPlayers= config.getMaxNumberOfPlayer();
-		players = new ArrayList<>();
+	public Game(Configuration gameConfig, ClientInt initialClient) throws ConfigurationErrorException {
+		this.config = gameConfig;
+		this.players = new ArrayList<>();
+		this.maxNumberOfPlayers = config.getMaxNumberOfPlayer();
 		try {
-			this.gameBoard= new Board(gameConfig);
+			initialClient.askMaxNumberOfPlayers(this.maxNumberOfPlayers);
+			initialClient.askWichMapToUse(config.getMaps());
+		} catch (IOException ioe) {
+			initialClient.close();
+			throw new ConfigurationErrorException(ioe);
+		}
+		try {
+			this.gameBoard = new Board(gameConfig,choosenMap);
 		} catch (XMLFileException e) {
 			e.printStackTrace();
 			throw new ConfigurationErrorException(e);
@@ -49,8 +58,7 @@ public class Game extends Thread {
 		return this.turnManager;
 	}
 
-	public void run() {
-		
+	public void run() { 
 		boolean someoneWon = false;
 		// This loops is for the regular game
 		for (int i = 0; !someoneWon; i = (i + 1) % players.size()) {
@@ -72,7 +80,6 @@ public class Game extends Thread {
 		publishWinner();
 	}
 
-
 	public void publishWinner() {
 		// TODO
 	}
@@ -81,4 +88,11 @@ public class Game extends Thread {
 		return players.size();
 	}
 
+	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
+		this.maxNumberOfPlayers = maxNumberOfPlayers;
+	}
+
+	public void setChoosenMap(int map) {
+		this.choosenMap = map;
+	}
 }

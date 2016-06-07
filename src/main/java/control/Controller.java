@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 
+import model.Configuration;
 import model.Game;
 import model.TurnManager;
 import model.exceptions.IllegalActionException;
@@ -18,15 +19,32 @@ public class Controller {
 	private CliParser parser;
 	private ActionBuilder builder;
 	private Map<ClientInt, Player> playersMap = new HashMap<>();
-	
-	public Controller(Game game) {
+	private Configuration config;
+	public Controller(Game game, Configuration config) {
 		this.game = game;
+		this.config=config;
 		this.parser = new CliParser();
-		this.builder = new ActionBuilder(game.getBoard());
+		this.builder = new ActionBuilder(game.getBoard(),config);
 	}
 	
 	public void configGame(ClientInt client){
 		Server.acceptPlayers(game);
+	}
+	
+	/**
+	 * Sets the max number of player that connect to a game
+	 * @param maxNumberOfPlayers the max number of players
+	 */
+	public void setMaxNumberOfPlayers(int maxNumberOfPlayers){
+		game.setMaxNumberOfPlayers(maxNumberOfPlayers);
+	}
+	
+	/**
+	 * Sets the number of the choosen map in the game
+	 * @param choosenMap the number of the choosen map in the maps' list
+	 */
+	public void setChoosenMap(int choosenMap){
+		game.setChoosenMap(choosenMap);
 	}
 	
 	public void addPlayer(ClientInt client) {

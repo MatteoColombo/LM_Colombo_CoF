@@ -21,7 +21,7 @@ public class Server {
 	
 	private static List<Game> startingGames;
 	private static List<Game> configuringGames;
-	private static Map<Game,Controller> gameControMap;
+	private static Map<Game,Controller> gameControllerMap;
 	private static final String NAME = "ServerInt";
 	private static Logger logger = Logger.getGlobal();
 	private static ServerSocket socketServer;
@@ -31,20 +31,20 @@ public class Server {
 		if(startingGames.isEmpty()){
 			Game newGame;	
 			try {
-				newGame = new Game(gamesConfig);
+				newGame = new Game(gamesConfig, client);
 			} catch (ConfigurationErrorException e) {
 				e.printStackTrace();
 				return;
 			}
 			configuringGames.add(newGame);
-			gameControMap.put(newGame, new Controller(newGame));
-			client.setController(gameControMap.get(newGame));
-			configuringGames.add(newGame);
+			gameControllerMap.put(newGame, new Controller(newGame,gamesConfig));
+			client.setController(gameControllerMap.get(newGame));
+			gameControllerMap.get(newGame).addPlayer(client);
 			client.configGame();
 			
 		}else{
-			gameControMap.get(startingGames.get(0)).addPlayer(client);
-			client.setController(gameControMap.get(startingGames.get(0)));
+			gameControllerMap.get(startingGames.get(0)).addPlayer(client);
+			client.setController(gameControllerMap.get(startingGames.get(0)));
 			if(startingGames.get(0).getPlayersNumber()==2 && !startingGames.get(0).isComplete())
 				new InitializationTimeLimitManager(startingGames.get(0));
 			if(startingGames.get(0).isComplete())
@@ -70,7 +70,7 @@ public class Server {
 			e1.printStackTrace();
 			return;
 		}
-		gameControMap= new HashMap<>();
+		gameControllerMap= new HashMap<>();
 		startingGames= new ArrayList<>();
 		configuringGames = new ArrayList<>();
 		try {

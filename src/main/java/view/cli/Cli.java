@@ -4,10 +4,12 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
+import model.Configuration;
 import model.board.Board;
 import model.board.ColorConstants;
 import model.board.Region;
 import model.board.city.City;
+import model.exceptions.ConfigurationErrorException;
 import model.exceptions.XMLFileException;
 import model.player.Emporium;
 import model.player.Player;
@@ -122,12 +124,12 @@ public class Cli {
 		writer.print(") ");
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ConfigurationErrorException {
 		Cli cli = new Cli();
 		cli.showCoolInitMenu();
 		Player p = new Player(0, 0, 0, 0, null, 0, 0);
 		try {
-			Board board = new Board("src/main/resources/map.xml", "src/main/resources/nobtrack.xml", 6, 4, ColorConstants.getCardsColors());
+			Board board = new Board(new Configuration(),0);
 			for(City city: board.getMap().getCitiesList()) {
 				city.addEmporium(new Emporium(p));
 			}

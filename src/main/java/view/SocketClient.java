@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+
 import control.Controller;
 
 public class SocketClient implements ClientInt {
@@ -31,7 +33,12 @@ public class SocketClient implements ClientInt {
 	public void askPlayerName() throws IOException{
 		out.writeObject("name");
 		out.flush();
-		
+		try {
+			clientName= (String)in.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -56,5 +63,37 @@ public class SocketClient implements ClientInt {
 	public void configGame() {
 		// TODO Auto-generated method stub
 		controller.configGame(this);
+	}
+
+	@Override
+	public String getName() {
+		return clientName;
+	}
+
+	@Override
+	public void askMaxNumberOfPlayers(Integer maxNumberOfPlayers) throws IOException {
+		int maxNumber=10;
+		try {
+			maxNumber = (Integer)in.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		controller.setMaxNumberOfPlayers(maxNumber);
+	}
+
+	@Override
+	public void askWichMapToUse(List<String> maps) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void close() {
+		try {
+			clientSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 	}
 }

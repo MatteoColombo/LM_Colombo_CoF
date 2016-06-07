@@ -1,7 +1,9 @@
 package model.board;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import model.Configuration;
 import model.board.city.City;
@@ -13,6 +15,9 @@ import model.board.nobility.NobilityTrack;
 import model.exceptions.MapXMLFileException;
 import model.exceptions.TrackXMLFileException;
 import model.exceptions.XMLFileException;
+import model.reward.BVictoryPoints;
+import model.reward.BoardColorReward;
+import model.reward.BoardRegionReward;
 
 public class Board {
 	private final String mapPath;
@@ -26,6 +31,8 @@ public class Board {
 	private King mapKing;
 	private CouncilorPool councilManager;
 	private BoardRewardsManager bRewardsManager;
+	private Configuration config;
+	private BoardRewardsManager boardRewManager;
 
 	/**
 	 * Constructor of the Board, it receives the configuration parameters and
@@ -43,19 +50,21 @@ public class Board {
 	 *            a list of the politic cards and councilor colors
 	 * @throws MapXMLFileException
 	 */
-	public Board(String mapPath, String nobilityPath, int councPerColor, int concSize, List<Color> colors)
+	private Board(String mapPath, String nobilityPath, int councPerColor, int concSize, List<Color> colors)
 			throws XMLFileException {
 		this.mapPath = mapPath;
 		this.nobilityPath = nobilityPath;
 		this.concSize = concSize;
 		this.colors = colors;
 		this.councPerColor = councPerColor;
-		initializeBoard();
+		
 	}
 
-	public Board(Configuration config) throws XMLFileException {
-		this(config.getMaps().get(0), config.getNobility(), config.getCouncilorsPerColor(), config.getCouncilSize(),
-				config.getColorsList());
+	public Board(Configuration config, int choosenMap) throws XMLFileException {
+		this(config.getMaps().get(choosenMap), config.getNobility(), config.getCouncilorsPerColor(),
+				config.getCouncilSize(), config.getColorsList());
+		this.config = config;
+		initializeBoard();
 	}
 
 	/**
@@ -79,7 +88,33 @@ public class Board {
 		this.track = new NobilityTrack(nl.getNobilityTrack());
 		this.mapKing = new King(mapManager.getKingCity(), councilManager.getCouncil());
 		this.regions = mapManager.getRegions();
-
+		List<BoardColorReward> bColorRew= initializeColorReward();
+		List<BoardRegionReward> bRegionRew = initializeRegionReward();
+		List<BVictoryPoints> bKingRew = initializeKingReward();
+		this.boardRewManager= new BoardRewardsManager(bColorRew, bRegionRew, bKingRew);
+	}
+	
+	public List<BoardColorReward> initializeColorReward(){
+		List<BoardColorReward> bColorRew = new ArrayList<>();
+		Set<Color> cityColors= config.getColorRewards().keySet();
+		for(Color c: cityColors)
+			bColorRew.add(new BoardColorReward(c, config.getColorRewards().get(c)));
+		return bColorRew;
+	}
+	
+	public List<BoardRegionReward> initializeRegionReward(){
+		List<BoardRegionReward> bRegionRew= new ArrayList<>();
+		for(int i=0; i< regions.size();i++)
+			bRegionRew.add(new  BoardRegionReward(regions.get(i), config.getRewardPerRegion()));
+		return bRegionRew;
+	}
+	
+	public List<BVictoryPoints> initializeKingReward(){
+		List<BVictoryPoints> bKingRew= new ArrayList<>();
+		List<Integer> kingRewValues= config.getBoardRewards();
+		for(int value: kingRewValues)
+			bKingRew.add(new BVictoryPoints(value));
+		return bKingRew;
 	}
 
 	/**
@@ -172,5 +207,9 @@ public class Board {
 
 	public List<Region> getRegions() {
 		return this.regions;
+	}
+	
+	public BoardRewardsManager getBoardRewardManager(){
+		return this.boardRewManager;
 	}
 }

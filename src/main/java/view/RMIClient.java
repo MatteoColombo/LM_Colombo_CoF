@@ -1,5 +1,7 @@
 package view;
 
-public class RMIClient {
+import java.rmi.Remote;
+
+public interface RMIClient extends Remote, ClientInt {
 
 }

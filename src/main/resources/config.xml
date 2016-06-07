@@ -8,11 +8,10 @@
 		<nobility>0</nobility>
 		<max>10</max>
 	</player>
-	<connection>
-		<type>socket</type><!-- rmi -->a
-		<ip>127.0.0.1</ip>
-		<port>1994</port>
-	</connection>
+	<server>
+		<rmi>socket</rmi>
+		<socket>1994</socket>
+	</server>>
 	<colors>
 		<color>#ffffff</color>
 		<color>#000000</color>
@@ -27,5 +26,19 @@
 	</council>
 	<region>
 		<discolosed>2</discolosed>
+		<award>5</award>
 	</region>
+	<city>
+		<value>20</value>
+		<value>12</value>
+		<value>8</value>
+		<value>5</value>
+	</city>
+	<board>
+		<value>25</value>
+		<value>18</value>
+		<value>12</value>
+		<value>7</value>
+		<value>3</value>
+	</board>
 </config>

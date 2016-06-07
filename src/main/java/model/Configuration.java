@@ -36,6 +36,7 @@ public class Configuration {
 	private int councilSize;
 
 	private int numberDisclosedCards;
+	private int rewardPerRegion;
 
 	private String nobility;
 
@@ -44,6 +45,10 @@ public class Configuration {
 	private int rmiPort;
 	private int socketPort;
 	
+	private List<Integer> colorRewards;
+	
+	private List<Integer> boardRewards;
+	
 	private final String playerPath = "/config/player/";
 	private final String colorPath = "/config/colors/";
 	private final String councilPath = "/config/council/";
@@ -51,6 +56,9 @@ public class Configuration {
 	private final String nobilityPath = "/config/nobility/";
 	private final String mapPath = "/config/map/";
 	private final String serverPath = "/config/server/";
+	private final String colRewPath = "/config/city/";
+	private final String boardPath = "/config/board/";
+	
 
 	public Configuration() throws ConfigurationErrorException {
 		loadXMLFile();
@@ -118,6 +126,8 @@ public class Configuration {
 	public void loadRegion(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		NodeList list = (NodeList) xpath.compile(regionPath + "disclosed").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.numberDisclosedCards = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
+		list = (NodeList) xpath.compile(regionPath + "award").evaluate(xmlDoc, XPathConstants.NODESET);
+		this.rewardPerRegion = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 	}
 
 	public void loadNobility(XPath xpath, Document xmlDoc) throws XPathExpressionException {
@@ -139,6 +149,20 @@ public class Configuration {
 		this.socketPort= Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 	}
 
+	public void loadColorRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException{
+		colorRewards = new ArrayList<>();
+		NodeList list = (NodeList) xpath.compile(colRewPath + "value").evaluate(xmlDoc, XPathConstants.NODESET);
+		for(int i=0;i < list.getLength();i++)
+			colorRewards.add(Integer.parseInt(list.item(i).getFirstChild().getNodeValue()));
+	}
+	
+	public void loadBoardRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException{
+		boardRewards = new ArrayList<>();
+		NodeList list = (NodeList) xpath.compile(boardPath + "value").evaluate(xmlDoc, XPathConstants.NODESET);
+		for(int i=0;i < list.getLength();i++)
+			boardRewards.add(Integer.parseInt(list.item(i).getFirstChild().getNodeValue()));
+	}
+	
 	public int getInitialPlayerMoney() {
 		return initialPlayerMoney;
 	}
@@ -199,4 +223,15 @@ public class Configuration {
 		return socketPort;
 	}
 
+	public int getRewardPerRegion() {
+		return rewardPerRegion;
+	}
+
+	public List<Integer> getColorRewards() {
+		return colorRewards;
+	}
+
+	public List<Integer> getBoardRewards() {
+		return boardRewards;
+	}
 }

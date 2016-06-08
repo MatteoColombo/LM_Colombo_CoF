@@ -1,4 +1,4 @@
-package server;
+ package server;
 
 import java.net.ServerSocket;
 import java.rmi.registry.LocateRegistry;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import control.Controller;
@@ -27,31 +28,44 @@ public class Server {
 	private static ServerSocket socketServer;
 	private static Configuration gamesConfig;
 
-	public static synchronized void login(ClientInt client) {
+	private Server(){}
+	
+	public static void login(ClientInt client){
 		if(startingGames.isEmpty()){
 			Game newGame;	
 			try {
 				newGame = new Game(gamesConfig, client);
 			} catch (ConfigurationErrorException e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,e.getMessage(),e);
+				client.close();
 				return;
 			}
 			configuringGames.add(newGame);
 			gameControllerMap.put(newGame, new Controller(newGame,gamesConfig));
 			client.setController(gameControllerMap.get(newGame));
 			gameControllerMap.get(newGame).addPlayer(client);
-			client.configGame();
+			try {
+				gameControllerMap.get(newGame).configGame();
+			} catch (ConfigurationErrorException e) {
+				logger.log(Level.SEVERE,e.getMessage(),e);
+				configuringGames.remove(newGame);
+				gameControllerMap.remove(newGame);
+				client.close();
+			}
 			
 		}else{
-			gameControllerMap.get(startingGames.get(0)).addPlayer(client);
-			client.setController(gameControllerMap.get(startingGames.get(0)));
-			if(startingGames.get(0).getPlayersNumber()==2 && !startingGames.get(0).isComplete())
-				new InitializationTimeLimitManager(startingGames.get(0)).start();
-			if(startingGames.get(0).isComplete())
-				startingGames.remove(0).start();
+			loginTogame(client);
 		}
 	}
 	
+	public static synchronized void loginTogame(ClientInt client){
+		gameControllerMap.get(startingGames.get(0)).addPlayer(client);
+		client.setController(gameControllerMap.get(startingGames.get(0)));
+		if(startingGames.get(0).getPlayersNumber()==2 && !startingGames.get(0).isComplete())
+			new InitializationTimeLimitManager(startingGames.get(0)).start();
+		if(startingGames.get(0).isComplete())
+			startingGames.remove(0).start();
+	}
 	public static synchronized void acceptPlayers(Game g){
 		configuringGames.remove(g);
 		startingGames.add(g);
@@ -65,9 +79,8 @@ public class Server {
 	public static void main(String[] args) {
 		try {
 			gamesConfig = new Configuration();
-		} catch (ConfigurationErrorException e1) {
-			logger.info("Configuration error, servers can't start");
-			e1.printStackTrace();
+		} catch (ConfigurationErrorException e) {
+			logger.log(Level.SEVERE,e.getMessage(),e);
 			return;
 		}
 		gameControllerMap= new HashMap<>();
@@ -85,8 +98,7 @@ public class Server {
 				new SocketClientConnectionHandler(socketServer.accept()).start();
 			}
 		} catch (Exception e) {
-			System.err.println("Chat Server exception:");
-			e.printStackTrace();
+			logger.log(Level.SEVERE,e.getMessage(),e);
 		}
 	}
 

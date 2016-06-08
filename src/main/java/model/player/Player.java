@@ -3,9 +3,11 @@ package model.player;
 import java.awt.Color;
 import java.util.List;
 
+import model.Configuration;
 import view.ClientInt;
 
 import java.util.ArrayList;
+
 /**
  * 
  * @author Davide Cavallini
@@ -25,22 +27,42 @@ public class Player {
 	private final int DEFAULTMAINACTION;
 	private ClientInt client;
 	private boolean isSuspended;
-/**
- * 
- * @param money
- * @param helper
- * @param draw
- * @param maxEmp
- * @param pickedColours
- * @param initalVictory
- * @param initialNoble
- */
+
+	/**
+	 * 
+	 * @param money
+	 * @param helper
+	 * @param draw
+	 * @param maxEmp
+	 * @param pickedColours
+	 * @param initalVictory
+	 * @param initialNoble
+	 */
 	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initialVictory,
 			int initialNoble, ClientInt client) {
 		this(money, helper, draw, maxEmp, pickedColours, initialVictory, initialNoble);
+		this.client = client;
+	}
+
+	public Player(Configuration config, int numberOfPlayers, ClientInt client) {
+		this.coins = new Coins(config.getInitialPlayerMoney() + numberOfPlayers);
+		this.assistants = new Assistants(config.getInitialPlayerHelpers() + numberOfPlayers);
+		this.victoryPoints = new VictoryPoints(config.getInitialVictoryPoints());
+		this.noblePoints = new NoblePoints(config.getInitialNobilityPoints());
+		this.politicCard = new ArrayList<>();
+		this.emporium = new ArrayList<>();
+		this.pickedColours = config.getColorsList();
+		for (int i = 0; i < config.getInitialPoliticCards(); i++)
+			politicCard.add(new PoliticCard(pickedColours));
+		for (int i = 0; i < config.getInitialEmporiums(); i++)
+			emporium.add(new Emporium(this));
+		this.DEFAULTMAINACTION = 1;
+		this.mainActions = DEFAULTMAINACTION;
+		this.extraAction = false;
+		this.isSuspended = false;
 		this.client=client;
 	}
-	
+
 	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
 			int initialNoble) {
 		this.coins = new Coins(money);
@@ -58,116 +80,131 @@ public class Player {
 		this.mainActions = DEFAULTMAINACTION;
 		this.extraAction = false;
 		this.pickedColours = pickedColours;
-		this.isSuspended=false;
+		this.isSuspended = false;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Coins getCoins() {
 		return this.coins;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Assistants getAssistants() {
 		return this.assistants;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public VictoryPoints getVictoryPoints() {
 		return this.victoryPoints;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public NoblePoints getNoblePoints() {
 		return this.noblePoints;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public List<PoliticCard> getPoliticCard() {
 		return this.politicCard;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public List<PermissionCard> getPermissionCard() {
 		return this.permissionCard;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Emporium> getEmporium() {
 		return this.emporium;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public int getMainActionsLeft() {
 		return this.mainActions;
 	}
-/**
- * 
- */
+
+	/**
+	 * 
+	 */
 	public void increaseMainAction() {
 		this.mainActions++;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean getIfExtraActionDone() {
 		return this.extraAction;
 	}
-/**
- * 
- */
+
+	/**
+	 * 
+	 */
 	public void actionsReset() {
 		this.mainActions = DEFAULTMAINACTION;
 		this.extraAction = false;
 	}
-/**
- * 
- */
-	public void doMainAction(){
-		this.mainActions-=1;
-	}
+
 	/**
 	 * 
 	 */
-	public void doExtraAction(){
-		this.extraAction=true;
+	public void doMainAction() {
+		this.mainActions -= 1;
 	}
-/**
- * 	
- */
+
+	/**
+	 * 
+	 */
+	public void doExtraAction() {
+		this.extraAction = true;
+	}
+
+	/**
+	 * 	
+	 */
 	public void drawAPoliticCard() {
 		this.politicCard.add(new PoliticCard(this.pickedColours));
 	}
-	
+
 	/**
 	 * Returns the Client interface which is used to dialogue with the view
+	 * 
 	 * @return the Client Interface
 	 */
-	public ClientInt getClient(){
+	public ClientInt getClient() {
 		return this.client;
 	}
-	
-	public void setSuspension(boolean suspendedStatus){
-		this.isSuspended=suspendedStatus;
+
+	public void setSuspension(boolean suspendedStatus) {
+		this.isSuspended = suspendedStatus;
 	}
-	
-	public boolean getSuspended(){
+
+	public boolean getSuspended() {
 		return this.isSuspended;
 	}
 

@@ -2,6 +2,7 @@ package model.exceptions;
 
 public class XMLFileException extends Exception {
 	
+	private static final long serialVersionUID = 6160929647360037079L;
 	private final String error;
 	
 	/**

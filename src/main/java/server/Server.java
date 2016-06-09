@@ -15,8 +15,8 @@ import control.Controller;
 import model.Configuration;
 import model.Game;
 import model.exceptions.ConfigurationErrorException;
-import view.ClientInt;
-import view.SocketClientConnectionHandler;
+import view.server.ClientInt;
+import view.server.SocketClientConnectionHandler;
 
 public class Server {
 	

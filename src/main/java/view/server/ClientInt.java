@@ -1,4 +1,4 @@
-package view;
+package view.server;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,4 +20,8 @@ public interface ClientInt {
 	public void close();
 	
 	public void askPlayerName() throws IOException;
+	
+	public void notifyIllegalAction();
+	
+	public boolean isConnected();
 }

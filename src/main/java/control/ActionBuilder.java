@@ -259,7 +259,7 @@ public class ActionBuilder {
 	 * @param strRegion
 	 * @return the region found
 	 * @throws IllegalActionException
-	 */
+f	 */
 	private Region parseRegion(String strRegion) throws IllegalActionException {
 		if (strRegion == null) {
 			throw new IllegalActionException("no region given");

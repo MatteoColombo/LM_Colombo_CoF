@@ -14,13 +14,14 @@ import model.exceptions.XMLFileException;
 import model.player.Emporium;
 import model.player.Player;
 import model.reward.Bonus;
+import view.client.ViewInterface;
 
 /**
  * 
  * @author gianpaolobranca
  *
  */
-public class Cli {
+public class Cli implements ViewInterface {
 	// NOTE: the following constants does not work in the eclipse console
 	// but they will work in other terminals (i tested it in iTerm2 and OSX Terminal)
 	public static final String ANSI_RESET = "\u001B[0m";
@@ -137,5 +138,38 @@ public class Cli {
 		} catch (XMLFileException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void printAskPlayersNumber(int max) {
+		writer.println("Choose the max number of players");	
+		writer.flush();
+	}
+
+	@Override
+	public void printAskWhichMapToUse(List<String> maps) {
+		writer.println("Choose the number of the map");
+		for (int i = 0; i < maps.size(); i++) {
+			writer.println(i+". "+maps.get(i));
+		}
+		writer.flush();
+	}
+
+	@Override
+	public void printAskWhatActionToDo() {
+		writer.println("Type in the action that you want to do");	
+		writer.flush();	
+	}
+
+	@Override
+	public void printAskPlayerName() {
+		writer.println("What's your name?");	
+		writer.flush();
+	}
+
+	@Override
+	public void printIllegalAction() {
+		writer.println("There's an error with the action");	
+		writer.flush();
 	}
 }

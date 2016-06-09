@@ -41,7 +41,7 @@ public class Board {
 	 * @param mapPath
 	 *            a string, the path to the map's xml file
 	 * @param nobleTrackSize
-	 *            an integer, the lenght of the nobility track
+	 *            an integer, the length of the nobility track
 	 * @param councPerColor
 	 *            an integer, the number of councilor per color
 	 * @param concSize

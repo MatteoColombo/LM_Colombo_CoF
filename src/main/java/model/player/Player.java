@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import model.Configuration;
-import view.ClientInt;
+import view.server.ClientInt;
 
 import java.util.ArrayList;
 

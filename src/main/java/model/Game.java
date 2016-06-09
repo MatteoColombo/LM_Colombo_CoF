@@ -8,7 +8,7 @@ import model.board.Board;
 import model.exceptions.ConfigurationErrorException;
 import model.exceptions.XMLFileException;
 import model.player.Player;
-import view.ClientInt;
+import view.server.ClientInt;
 
 public class Game extends Thread {
 	private List<Player> players;
@@ -88,7 +88,7 @@ public class Game extends Thread {
 	/**
 	 * This is the method which is ran by the game thread.
 	 * it manages the market and the game itself
-	 */
+	 */	
 	@Override
 	public void run() {
 		boolean someoneWon = false;
@@ -97,6 +97,7 @@ public class Game extends Thread {
 			if (players.get(i).getSuspended())
 				continue;
 			turnManager = new TurnManager(players.get(i));
+			turnManager.startTurn();
 			if (players.get(i).getEmporium().isEmpty()) {
 				winningPlayer = i;
 				someoneWon = true;
@@ -108,6 +109,7 @@ public class Game extends Thread {
 			if (players.get(j).getSuspended())
 				continue;
 			turnManager = new TurnManager(players.get(j));
+			turnManager.startTurn();
 		}
 		publishWinner();
 	}

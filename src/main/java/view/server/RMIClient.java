@@ -1,4 +1,4 @@
-package view;
+package view.server;
 
 import java.rmi.Remote;
 

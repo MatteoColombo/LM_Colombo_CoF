@@ -1,4 +1,4 @@
-package view;
+package view.server;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import control.Controller;
+import view.p2pdialogue.DialogueAskMaxPlayersNumber;
+import view.p2pdialogue.DialogueAskPlayerName;
+import view.p2pdialogue.DialogueAskWhatActionToDo;
+import view.p2pdialogue.DialogueAskWichMapToUse;
+import view.p2pdialogue.DialogueIllegalAction;
 
 public class SocketClient implements ClientInt {
 	private Controller controller;
@@ -32,7 +37,7 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askPlayerName() throws IOException {
-		out.writeObject("name");
+		out.writeObject(new DialogueAskPlayerName());
 		out.flush();
 		try {
 			clientName = (String) in.readObject();
@@ -48,7 +53,7 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askPlayerWhatActionToDo() throws IOException {
-		out.writeObject("actionToDo");
+		out.writeObject(new DialogueAskWhatActionToDo());
 		out.flush();
 		String action = "";
 		try {
@@ -66,11 +71,11 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askMaxNumberOfPlayers(Integer maxNumberOfPlayers) throws IOException {
-		int maxNumber = 10;
-		out.writeObject("maxplayer");
+		int maxNumber=maxNumberOfPlayers;
+		out.writeObject(new DialogueAskMaxPlayersNumber(maxNumberOfPlayers));
 		out.flush();
 		try {
-			maxNumber = (Integer) in.readObject();
+			maxNumber = Integer.parseInt((String)in.readObject());
 			controller.setMaxNumberOfPlayers(maxNumber);
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(),e);
@@ -80,16 +85,16 @@ public class SocketClient implements ClientInt {
 	@Override
 	public void askWichMapToUse(List<String> maps) throws IOException {
 		int map = 0;
-		out.writeObject(maps);
+		out.writeObject(new DialogueAskWichMapToUse(maps));
 		out.flush();
 		try {
-			map = (Integer) in.readObject();
+			map = Integer.parseInt((String) in.readObject());
 			controller.setChoosenMap(map);
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(),e);
 		}
 	}
-
+	
 	@Override
 	public void close() {
 		try {
@@ -97,5 +102,22 @@ public class SocketClient implements ClientInt {
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, e.getMessage(),e);
 		}
+	}
+
+	@Override
+	public void notifyIllegalAction() {
+		// TODO Auto-generated method stub
+		try{
+		out.writeObject(new DialogueIllegalAction());
+		out.flush();
+		}catch(IOException e){
+			logger.log(Level.SEVERE, e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public boolean isConnected() {
+		return clientSocket.isConnected();
+		
 	}
 }

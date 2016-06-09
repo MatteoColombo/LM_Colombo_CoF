@@ -1,5 +1,6 @@
 package control;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -15,7 +16,7 @@ import model.exceptions.ConfigurationErrorException;
 import model.exceptions.IllegalActionException;
 import model.player.Player;
 import server.Server;
-import view.ClientInt;
+import view.server.ClientInt;
 
 public class Controller {
 	private Game game;
@@ -23,11 +24,12 @@ public class Controller {
 	private ActionBuilder builder;
 	private Map<ClientInt, Player> playersMap = new HashMap<>();
 	private Logger logger= Logger.getGlobal();
+	private Configuration config;
 	
 	public Controller(Game game, Configuration config) {
 		this.game = game;
+		this.config= config;
 		this.parser = new CliParser();
-		this.builder = new ActionBuilder(game.getBoard(), config);
 	}
 
 	/**
@@ -79,8 +81,10 @@ public class Controller {
 	 * 
 	 * @param s
 	 *            the input from the cli
+	 * @throws IOException 
 	 */
-	public void performAction(ClientInt client, String s) {
+	public void performAction(ClientInt client, String s) throws IOException {
+		this.builder = new ActionBuilder(game.getBoard(), config);
 		Player player = playersMap.get(client);
 		String[] args = s.split(" ");
 		try {
@@ -112,11 +116,13 @@ public class Controller {
 			case "king":
 				tm.performAction(builder.makeABuildEmporiumWithKing(player, cmd));
 				return;
-			default: // TODO client.tell("wrong action")
-				return;
+			default: 
+				throw new IllegalActionException("There is an error with the action");
 			}
 		} catch (IllegalActionException | ParseException e) {
-			logger.log(Level.SEVERE,e.getMessage(),e);
+				logger.log(Level.SEVERE,e.getMessage(),e);
+				client.notifyIllegalAction();
+				client.askPlayerWhatActionToDo();
 		}
 	}
 }

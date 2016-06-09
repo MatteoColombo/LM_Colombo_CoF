@@ -16,16 +16,20 @@ public class TurnManager {
 		playerWantsToExit = false;
 		this.turnPlayer = turnPlayer;
 		this.turnPlayer.actionsReset();
-		startTurn();
 	}
 
-	private void startTurn() {
+	public void startTurn() {
 		while (!playerWantsToExit || (!turnPlayer.getIfExtraActionDone() && turnPlayer.getMainActionsLeft() > 0)) {
 			try {
-				this.turnPlayer.getClient().askPlayerWhatActionToDo();
+				if(this.turnPlayer.getClient().isConnected())				
+					this.turnPlayer.getClient().askPlayerWhatActionToDo();
+				else{
+					System.out.println("questo è down");
+					turnPlayer.setSuspension(true);
+				}
 			} catch (IOException e) {
-				turnPlayer.setSuspension(true);
 				logger.log(Level.WARNING, e.getMessage(), e);
+				break;
 			}
 		}
 	}

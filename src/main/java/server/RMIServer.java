@@ -1,6 +1,6 @@
 package server;
 
-import view.ClientInt;
+import view.server.ClientInt;
 
 public class RMIServer implements ServerInt{
 

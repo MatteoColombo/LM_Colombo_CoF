@@ -69,15 +69,14 @@ public class ABuildEmporiumWithKing extends Action {
 		assignEmporium();
 		assignRewards();
 		MapExplorer mp = new MapExplorer();
-		if (mp.isColorComplete(this.player, this.chosenCity.getColor(), this.allMapCities)) {
-			if (!chosenCity.isCapital()) {
-				BVictoryPoints playerBReward = this.bRewardsManager.getBoardColorReward(chosenCity.getColor());
-				playerBReward.assignBonusTo(player);
-			}
+		if (mp.isColorComplete(this.player, this.chosenCity.getColor(), this.allMapCities)
+				&& !this.chosenCity.isCapital()) {
+			BVictoryPoints playerBReward = this.bRewardsManager.getBoardColorReward(this.chosenCity.getColor());
+			playerBReward.assignBonusTo(this.player);
 		}
-		if (chosenCity.getRegion().isCompleted(this.player)) {
-			BVictoryPoints playerBReward = this.bRewardsManager.getBoardRegionReward(chosenCity.getRegion());
-			playerBReward.assignBonusTo(player);
+		if (this.chosenCity.getRegion().isCompleted(this.player)) {
+			BVictoryPoints playerBReward = this.bRewardsManager.getBoardRegionReward(this.chosenCity.getRegion());
+			playerBReward.assignBonusTo(this.player);
 		}
 		// remove used cards
 		List<PoliticCard> playerHand = player.getPoliticCard();

@@ -31,20 +31,20 @@ public class GoodsBundle {
 		return this.sellingPoliticCards;
 	}
 
-	public void setSellingAssistants(int amountOfSellingAssistants, int askedPriceForEachOne) {
+	public void setSellingAssistants(int amountOfSellingAssistants, int askedPriceForAll) {
 		int previousAssistans = this.sellingAssistants.getSellingAssistants().getAmount();
 		int previousPrice = this.sellingAssistants.getPrice().getAmount();
 		this.sellingAssistants.getSellingAssistants().decreaseAmount(previousAssistans);
 		this.sellingAssistants.getPrice().decreaseAmount(previousPrice);
 		this.sellingAssistants.getSellingAssistants().increaseAmount(amountOfSellingAssistants);
-		this.sellingAssistants.getPrice().increaseAmount(askedPriceForEachOne);
+		this.sellingAssistants.getPrice().increaseAmount(askedPriceForAll);
 	}
 
 	public MAssistants getSellingAssistants() {
 		return this.sellingAssistants;
 	}
 
-	public Coins getPermissionCardsPrice() {
+	public Coins getPermissionCardsTotalPrice() {
 		int permissionCardsPrice = DEFAULT;
 		if (!this.sellingPermissionCards.isEmpty())
 			for (MPermissionCard mPermissionCard : this.sellingPermissionCards)
@@ -52,7 +52,7 @@ public class GoodsBundle {
 		return new Coins(permissionCardsPrice);
 	}
 
-	public Coins getPoliticCardsPrice() {
+	public Coins getPoliticCardsTotalPrice() {
 		int politicCardsPrice = DEFAULT;
 		if (!this.sellingPoliticCards.isEmpty())
 			for (MPoliticCard mPoliticCard : this.sellingPoliticCards)
@@ -60,14 +60,13 @@ public class GoodsBundle {
 		return new Coins(politicCardsPrice);
 	}
 
-	public Coins getAssistantsPrice() {
-		return new Coins(this.sellingAssistants.getSellingAssistants().getAmount()
-				* this.sellingAssistants.getPrice().getAmount());
+	public Coins getAssistantsTotalPrice() {
+		return new Coins(this.sellingAssistants.getPrice().getAmount());
 	}
 
 	public Coins getBundlePrice() {
-		int bundlePrice = getPoliticCardsPrice().getAmount() + getPermissionCardsPrice().getAmount()
-				+ getAssistantsPrice().getAmount();
+		int bundlePrice = getPoliticCardsTotalPrice().getAmount() + getPermissionCardsTotalPrice().getAmount()
+				+ getAssistantsTotalPrice().getAmount();
 		return new Coins(bundlePrice);
 	}
 

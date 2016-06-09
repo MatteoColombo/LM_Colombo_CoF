@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.notification.Failure;
-
 import model.action.ABuyAssistant;
 import model.exceptions.IllegalActionException;
 import model.player.Player;

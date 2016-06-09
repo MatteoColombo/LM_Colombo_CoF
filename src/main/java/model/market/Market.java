@@ -9,6 +9,7 @@ import model.player.*;
 public class Market {
 	private List<Player> allPlayers;
 	private List<GoodsBundle> allGoodsBundle;
+	private GoodsBundle shoppingCart;
 	private final int ZERO = 0;
 
 	public Market(List<Player> allPlayers) {
@@ -30,7 +31,7 @@ public class Market {
 		for (GoodsBundle goodsBundle : this.allGoodsBundle)
 			if (goodsBundle.getPlayerOwner().equals(bundleOwner))
 				return goodsBundle;
-		throw new NegativeException("something went wrong");
+		throw new NegativeException("something went wrong!");
 	}
 
 	public void addMerchandiseToBundle(Player bundleOwner, PermissionCard sellingPermissionCard, int askedPrice)
@@ -62,12 +63,12 @@ public class Market {
 		throw new IllegalActionException("this player doesn't have this merchandise!");
 	}
 
-	public void addMerchandiseToBundle(Player bundleOwner, int amountOfSellingAssistants, int askedPriceForEachOne)
+	public void addMerchandiseToBundle(Player bundleOwner, int amountOfSellingAssistants, int askedPriceForAll)
 			throws IllegalActionException, NegativeException {
 		GoodsBundle goodsBundle = getPlayerBundle(bundleOwner);
 		if (amountOfSellingAssistants <= bundleOwner.getAssistants().getAmount()) {
 			bundleOwner.getAssistants().decreaseAmount(amountOfSellingAssistants);
-			goodsBundle.setSellingAssistants(amountOfSellingAssistants, askedPriceForEachOne);
+			goodsBundle.setSellingAssistants(amountOfSellingAssistants, askedPriceForAll);
 			return;
 		}
 		throw new IllegalActionException("this player doesn't have enough of this merchandise!");
@@ -93,6 +94,34 @@ public class Market {
 			bundleOwner.getAssistants()
 					.increaseAmount(goodsBundle.getSellingAssistants().getSellingAssistants().getAmount());
 			goodsBundle.setSellingAssistants(ZERO, ZERO);
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public void buy(Player buyingPlayer) {
+		this.shoppingCart = new GoodsBundle(buyingPlayer);
+
+	}
+
+	private void reciveBuyedGoods(Player buyingPlayer) throws IllegalActionException, NegativeException {
+		if (!this.shoppingCart.getSellingPermissionCards().isEmpty()) {
+			for (MPermissionCard mPermissionCard : this.shoppingCart.getSellingPermissionCards()) {
+				int index = this.shoppingCart.getSellingPermissionCards().indexOf(mPermissionCard);
+				MPermissionCard returningPermissionCard = this.shoppingCart.getSellingPermissionCards().remove(index);
+				buyingPlayer.getPermissionCard().add(returningPermissionCard.getSellingPermissionCard());
+			}
+		}
+		if (!this.shoppingCart.getSellingPoliticCards().isEmpty()) {
+			for (MPoliticCard mPoliticCard : this.shoppingCart.getSellingPoliticCards()) {
+				int index = this.shoppingCart.getSellingPoliticCards().indexOf(mPoliticCard);
+				MPoliticCard returningPoliticCard = this.shoppingCart.getSellingPoliticCards().remove(index);
+				buyingPlayer.getPoliticCard().add(returningPoliticCard.getSellingPoliticCard());
+			}
+		}
+		if (this.shoppingCart.getSellingAssistants().getSellingAssistants().getAmount() > ZERO) {
+			buyingPlayer.getAssistants()
+					.increaseAmount(this.shoppingCart.getSellingAssistants().getSellingAssistants().getAmount());
+			this.shoppingCart.setSellingAssistants(ZERO, ZERO);
 		}
 	}
 

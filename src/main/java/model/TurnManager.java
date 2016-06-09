@@ -37,5 +37,9 @@ public class TurnManager {
 	public void performAction(Action a) {
 		a.execute();
 	}
+	
+	public void setWantToEnd(){
+		this.playerWantsToExit=true;
+	}
 
 }

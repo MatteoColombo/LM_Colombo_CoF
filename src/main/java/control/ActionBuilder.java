@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 
 import model.Configuration;
+import model.TurnManager;
 import model.action.*;
 import model.board.Board;
 import model.board.Region;
@@ -32,6 +33,10 @@ public class ActionBuilder {
 		this.config= config;
 	}
 
+	public Action makeAEndTurn(Player player, TurnManager turnManager) throws IllegalActionException{
+		return new AEndTurn(player, turnManager);
+	}
+	
 	/**
 	 * factory for the ABuildEmporium Action
 	 * 

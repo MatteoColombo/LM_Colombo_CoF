@@ -116,8 +116,11 @@ public class Controller {
 			case "king":
 				tm.performAction(builder.makeABuildEmporiumWithKing(player, cmd));
 				return;
+			case "end":
+				tm.performAction(builder.makeAEndTurn(player,tm));
+				return;
 			default: 
-				throw new IllegalActionException("There is an error with the action");
+					throw new IllegalActionException("There is an error with the action");
 			}
 		} catch (IllegalActionException | ParseException e) {
 				logger.log(Level.SEVERE,e.getMessage(),e);

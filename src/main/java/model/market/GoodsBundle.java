@@ -7,67 +7,79 @@ import model.player.*;
 
 public class GoodsBundle {
 	private Player playerOwner;
-	private List<MPermissionCard> sellingPermissionCards;
-	private List<MPoliticCard> sellingPoliticCards;
-	private MAssistants sellingAssistants;
+	private List<PermissionCard> sellingPermissionCards;
+	private List<PoliticCard> sellingPoliticCards;
+	private Assistants sellingAssistants;
+	private Coins permissionCardsPrice;
+	private Coins politicCardsPrice;
+	private Coins assistantsPrice;
 	private final int DEFAULT = 0;
 
 	public GoodsBundle(Player playerOwner) {
 		this.playerOwner = playerOwner;
 		this.sellingPermissionCards = new ArrayList<>();
 		this.sellingPoliticCards = new ArrayList<>();
-		this.sellingAssistants = new MAssistants(DEFAULT, DEFAULT);
+		this.sellingAssistants = new Assistants(DEFAULT);
+		this.permissionCardsPrice = new Coins(DEFAULT);
+		this.politicCardsPrice = new Coins(DEFAULT);
+		this.assistantsPrice = new Coins(DEFAULT);
 	}
 
 	public Player getPlayerOwner() {
 		return this.playerOwner;
 	}
 
-	public List<MPermissionCard> getSellingPermissionCards() {
+	public List<PermissionCard> getSellingPermissionCards() {
 		return this.sellingPermissionCards;
 	}
 
-	public List<MPoliticCard> getSellingPoliticCards() {
+	public List<PoliticCard> getSellingPoliticCards() {
 		return this.sellingPoliticCards;
 	}
 
-	public void setSellingAssistants(int amountOfSellingAssistants, int askedPriceForAll) {
-		int previousAssistans = this.sellingAssistants.getSellingAssistants().getAmount();
-		int previousPrice = this.sellingAssistants.getPrice().getAmount();
-		this.sellingAssistants.getSellingAssistants().decreaseAmount(previousAssistans);
-		this.sellingAssistants.getPrice().decreaseAmount(previousPrice);
-		this.sellingAssistants.getSellingAssistants().increaseAmount(amountOfSellingAssistants);
-		this.sellingAssistants.getPrice().increaseAmount(askedPriceForAll);
-	}
-
-	public MAssistants getSellingAssistants() {
+	public Assistants getSellingAssistants() {
 		return this.sellingAssistants;
 	}
 
-	public Coins getPermissionCardsTotalPrice() {
-		int permissionCardsPrice = DEFAULT;
-		if (!this.sellingPermissionCards.isEmpty())
-			for (MPermissionCard mPermissionCard : this.sellingPermissionCards)
-				permissionCardsPrice += mPermissionCard.getPrice().getAmount();
-		return new Coins(permissionCardsPrice);
+	public void setSellingAssistants(int amountOfSellingAssistants) {
+		int previousAssistans = this.sellingAssistants.getAmount();
+		this.sellingAssistants.decreaseAmount(previousAssistans);
+		this.sellingAssistants.increaseAmount(amountOfSellingAssistants);
 	}
 
-	public Coins getPoliticCardsTotalPrice() {
-		int politicCardsPrice = DEFAULT;
-		if (!this.sellingPoliticCards.isEmpty())
-			for (MPoliticCard mPoliticCard : this.sellingPoliticCards)
-				politicCardsPrice += mPoliticCard.getPrice().getAmount();
-		return new Coins(politicCardsPrice);
+	public Coins getPermissionCardsPrice() {
+		return this.permissionCardsPrice;
 	}
 
-	public Coins getAssistantsTotalPrice() {
-		return new Coins(this.sellingAssistants.getPrice().getAmount());
+	public void setPermissionCardsPrice(int askedPermissionCardsPrice) {
+		int previousPrice = this.permissionCardsPrice.getAmount();
+		this.permissionCardsPrice.decreaseAmount(previousPrice);
+		this.permissionCardsPrice.increaseAmount(askedPermissionCardsPrice);
 	}
 
-	public Coins getBundlePrice() {
-		int bundlePrice = getPoliticCardsTotalPrice().getAmount() + getPermissionCardsTotalPrice().getAmount()
-				+ getAssistantsTotalPrice().getAmount();
-		return new Coins(bundlePrice);
+	public Coins getPoliticCardsPrice() {
+		return this.politicCardsPrice;
+	}
+
+	public void setPoliticCardsPrice(int askedPoliticCardsPrice) {
+		int previousPrice = this.politicCardsPrice.getAmount();
+		this.politicCardsPrice.decreaseAmount(previousPrice);
+		this.politicCardsPrice.increaseAmount(askedPoliticCardsPrice);
+	}
+
+	public Coins getAssistantsPrice() {
+		return this.assistantsPrice;
+	}
+
+	public void setAssistantsPrice(int askedAssistantsPrice) {
+		int previousPrice = this.assistantsPrice.getAmount();
+		this.assistantsPrice.decreaseAmount(previousPrice);
+		this.assistantsPrice.increaseAmount(askedAssistantsPrice);
+	}
+
+	public Coins getBundleTotalPrice() {
+		return new Coins(getPermissionCardsPrice().getAmount() + getPoliticCardsPrice().getAmount()
+				+ getAssistantsPrice().getAmount());
 	}
 
 }

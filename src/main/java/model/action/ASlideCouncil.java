@@ -17,7 +17,7 @@ public class ASlideCouncil extends Action{
 	private CouncilorPool pool;
 	
 	public ASlideCouncil(Player player, CouncilorPool pool, Council council, Color color) throws IllegalActionException{
-		super(true);
+		super(true, player);
 		this.player = player;
 		this.pool = pool;
 		this.council = council;

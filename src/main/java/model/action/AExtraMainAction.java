@@ -9,7 +9,7 @@ public class AExtraMainAction extends Action {
 	private Player player;
 	
 	public AExtraMainAction(Player player) throws IllegalActionException{
-		super(false);
+		super(false, player);
 		if(player.getAssistants().getAmount() < ACTIONCOST) {
 			throw new IllegalActionException("you can not afford it!");
 		}

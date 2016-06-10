@@ -6,39 +6,40 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.view.LoginController">
+<BorderPane prefHeight="480.0" prefWidth="640.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.view.LoginController">
    <center>
-      <GridPane maxHeight="150.0" maxWidth="300.0" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="163.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="10.0" prefWidth="137.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="132.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
+      <GridPane maxHeight="150.0" maxWidth="300.0" prefHeight="300.0" prefWidth="300.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
             <Label text="Insert your name" />
             <TextField fx:id="nameField" GridPane.columnIndex="1" />
             <Label text="Select connection" GridPane.rowIndex="1" />
-            <RadioButton fx:id="rmiButton" mnemonicParsing="false" text="RMI" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <RadioButton fx:id="rmiButton" mnemonicParsing="false" text="RMI" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <toggleGroup>
                   <ToggleGroup fx:id="connection" />
-               </toggleGroup></RadioButton>
-            <RadioButton fx:id="socketButton" mnemonicParsing="false" text="Socket" toggleGroup="$connection" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="socketButton" mnemonicParsing="false" text="Socket" textFill="WHITE" toggleGroup="$connection" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="60.0" />
                </GridPane.margin>
             </RadioButton>
             <Button mnemonicParsing="false" onAction="#HandleConnect" text="connect" GridPane.rowIndex="2" />
          </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="129.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="10.0" prefWidth="151.0" />
+         </columnConstraints>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
+         <rowConstraints>
+            <RowConstraints maxHeight="132.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </GridPane>
    </center>
 </BorderPane>

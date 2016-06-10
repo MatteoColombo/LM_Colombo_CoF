@@ -26,7 +26,7 @@ public class ABuildEmporiumWithKing extends Action {
 
 	public ABuildEmporiumWithKing(Player p, King king, City chosenCity, List<City> allMapCities,
 			List<PoliticCard> politic, BoardRewardsManager bRewardsManager) throws IllegalActionException {
-		super(true);
+		super(true, p);
 		this.king = king;
 		this.player = p;
 		this.chosenCity = chosenCity;

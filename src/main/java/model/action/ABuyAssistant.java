@@ -9,7 +9,7 @@ public class ABuyAssistant extends Action {
 	private Player player;
 	
 	public ABuyAssistant(Player player) throws IllegalActionException{
-		super(false);
+		super(false, player);
 		this.player = player;
 		if(player.getCoins().getAmount() < ASSISTANTPRICE) {
 			throw new IllegalActionException("you can not afford it!");

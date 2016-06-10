@@ -16,7 +16,7 @@ public class ABuyPermissionCard extends Action{
 	private int price;
 	
 	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politic) throws IllegalActionException{
-		super(true);
+		super(true, p);
 		this.politicCards = politic;
 		this.player = p;
 		this.permCard = permc;

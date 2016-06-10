@@ -10,7 +10,7 @@ public class AShufflePermissionCards extends Action{
 	private Region region;
 	
 	public AShufflePermissionCards(Player player, Region region) throws IllegalActionException{
-		super(false);
+		super(false, player);
 		if(player.getAssistants().getAmount() < ACTIONCOST) {
 			throw new IllegalActionException("you can not afford it!");
 		}

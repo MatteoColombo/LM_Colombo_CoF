@@ -20,7 +20,7 @@ public class ABuildEmporium extends Action {
 
 	public ABuildEmporium(Player p, PermissionCard permissionCard, City chosenCity, List<City> allMapCities,
 			BoardRewardsManager bRewardsManager) throws IllegalActionException {
-		super(true);
+		super(true, p);
 		this.player = p;
 		this.permissionCard = permissionCard;
 		this.chosenCity = chosenCity;

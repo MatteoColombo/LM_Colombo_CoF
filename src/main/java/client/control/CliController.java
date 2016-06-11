@@ -2,15 +2,21 @@ package client.control;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.Scanner;
 
 import client.view.Cli;
 import client.view.KeyboardListener;
+import client.view.RMIServerManager;
 import client.view.ServerManager;
 import client.view.SocketServerManager;
 import client.view.ViewInterface;
+import server.ServerInt;
 import view.p2pdialogue.Dialogue;
+import view.server.RMIServerManagerInterface;
 
 public class CliController implements Runnable, Controller {
 	private Scanner keyboard;
@@ -53,22 +59,31 @@ public class CliController implements Runnable, Controller {
 			}
 		} while (connectionType != 1 && connectionType != 2);
 		try {
+			keyboardListener = new KeyboardListener(this);
+			keyboardListener.start();
 			switch (connectionType) {
 			case 1:
 				Socket server = new Socket("localhost", 1994);
-				SocketServerManager temp = new SocketServerManager(server, this);
-				temp.start();
-				this.serverManager = temp;
+				SocketServerManager sockettemp = new SocketServerManager(server, this);
+				sockettemp.start();
+				this.serverManager = sockettemp;
 				break;
 			case 2:
-
+				Registry registry= LocateRegistry.getRegistry(1099);
+				ServerInt serv= (ServerInt)registry.lookup("ServerInt");
+				RMIServerManager rmitemp=new RMIServerManager(this);
+				this.serverManager=rmitemp;
+				serv.login(rmitemp);
+				break;
 			default:
 				break;
 			}
 
-			keyboardListener = new KeyboardListener(this);
-			keyboardListener.start();
+	
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

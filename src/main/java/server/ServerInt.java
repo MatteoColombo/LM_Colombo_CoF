@@ -3,7 +3,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import view.server.ClientInt;
+import view.server.RMIServerManagerInterface;
 
 public interface ServerInt extends Remote{
-	public void login(ClientInt client)  throws RemoteException; 
+	public void login(RMIServerManagerInterface client)  throws RemoteException; 
 }

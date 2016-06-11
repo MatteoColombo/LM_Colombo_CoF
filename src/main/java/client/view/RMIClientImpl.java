@@ -1,79 +1,69 @@
-package view.server;
+package client.view;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import java.util.logging.Logger;
 
 import control.Controller;
 import model.player.Player;
-import view.p2pdialogue.DialogueAskMaxPlayersNumber;
-import view.p2pdialogue.DialogueAskPlayerName;
-import view.p2pdialogue.DialogueAskWhatActionToDo;
+import view.server.ClientInt;
 
-public class RMIClient implements ClientInt {
+public class RMIClientImpl implements ClientInt,Serializable{
+
+
+	private static final long serialVersionUID = 1L;
 	private Controller controller;
-	private String clientName;
-	private Logger logger = Logger.getGlobal();
-	private RMIServerManagerInterface client;
-
-	public RMIClient(RMIServerManagerInterface client) {
-		this.client = client;
+	public RMIClientImpl() throws RemoteException{
+		// TODO Auto-generated constructor stub
 	}
-
+	
 	@Override
 	public void setController(Controller controller) {
-		this.controller = controller;
+		this.controller=controller;
 	}
 
 	@Override
 	public void askPlayerWhatActionToDo() throws IOException {
-		String action = client.sendDialogue(new DialogueAskWhatActionToDo());
-		this.controller.performAction(this, action);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public String getName() throws IOException {
-		return this.clientName;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void askMaxNumberOfPlayers(Integer maxNumberOfPlayers) throws IOException {
-		int max = 10;
-		try{
-			max = Integer.parseInt(client.sendDialogue(new DialogueAskMaxPlayersNumber(maxNumberOfPlayers)));
-		}catch(NumberFormatException e){
-			e.printStackTrace();
-		}
-		this.controller.setMaxNumberOfPlayers(max);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void askWichMapToUse(List<String> maps) throws IOException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void close() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void askPlayerName() throws IOException {
-		String name= client.sendDialogue(new DialogueAskPlayerName());
-		this.clientName= name;
+		// TODO Auto-generated method stub
+		System.out.println("prova");
 	}
 
 	@Override
 	public void notifyIllegalAction() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -85,31 +75,31 @@ public class RMIClient implements ClientInt {
 	@Override
 	public void notifyGameLoading() throws IOException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void notifyGameStarted() throws IOException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void notifyYourTurn() throws IOException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void notifyAnotherPlayerTurn() throws IOException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override

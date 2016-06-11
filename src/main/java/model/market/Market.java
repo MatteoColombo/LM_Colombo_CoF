@@ -1,5 +1,6 @@
 package model.market;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,8 @@ import model.player.*;
 public class Market {
 	private List<Player> allPlayers;
 	private List<GoodsBundle> allGoodsBundle;
-	private GoodsBundle shoppingCart;
+	private Player buyingPlayer;
+	private Boolean playerWantToStopBuying;
 	private final int ZERO = 0;
 
 	public Market(List<Player> allPlayers) {
@@ -34,6 +36,7 @@ public class Market {
 		throw new NegativeException("something went wrong!");
 	}
 
+	// Bundles creations
 	public void assignPermissionCardsToBundle(Player bundleOwner, List<PermissionCard> sellingPermissionCards,
 			int askedPermissionCardsPrice) throws IllegalActionException, NegativeException {
 		for (PermissionCard sellingPermissionCard : sellingPermissionCards)
@@ -163,35 +166,145 @@ public class Market {
 		setAssistantsBundlePrice(bundleOwner, ZERO);
 	}
 
-	public void giveBackUnsoldGoods(Player bundleOwner) throws IllegalActionException, NegativeException {
-		removePermissionCardsFromBundle(bundleOwner);
-		removePoliticCardsFromBundle(bundleOwner);
-		removeAssistantsFromBundle(bundleOwner);
+	// Buy merchandises
+	public void startBuying(Player buyingPlayer) throws IllegalActionException {
+		if (this.buyingPlayer.equals(null)) {
+			this.buyingPlayer = buyingPlayer;
+			this.playerWantToStopBuying = false;
+			while (!this.playerWantToStopBuying && this.buyingPlayer.getCoins().getAmount() > ZERO) {
+				try {
+					this.buyingPlayer.getClient().askPlayerWhichMerchandiseBuy(this.buyingPlayer, this.allPlayers);
+				} catch (IOException exc) {
+					System.out.println(exc);
+					break;
+				}
+			}
+			this.buyingPlayer = null;
+			return;
+		}
+		throw new IllegalActionException("only one player can buy at the time!");
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public void buy(Player buyingPlayer) {
-		this.shoppingCart = new GoodsBundle(buyingPlayer);
-
+	public void stopBuying(Player buyingPlayer) throws IllegalActionException {
+		if (this.buyingPlayer.equals(buyingPlayer)) {
+			boolean decision = false;
+			try {
+				decision = this.buyingPlayer.getClient().askPlayerConfirmation();
+			} catch (IOException exc) {
+				System.out.println(exc);
+			}
+			if (decision)
+				this.playerWantToStopBuying = true;
+			return;
+		}
+		throw new IllegalActionException("this player is not buying now!");
 	}
 
-	private void reciveBoughtGoods(Player buyingPlayer) throws IllegalActionException, NegativeException {
-		if (!this.shoppingCart.getSellingPermissionCards().isEmpty()) {
-			for (PermissionCard permissionCard : this.shoppingCart.getSellingPermissionCards()) {
-				int index = this.shoppingCart.getSellingPermissionCards().indexOf(permissionCard);
-				buyingPlayer.getPermissionCard().add(this.shoppingCart.getSellingPermissionCards().remove(index));
+	public void buyPermissionCardsBundle(Player sellingPlayer) throws IllegalActionException, NegativeException {
+		GoodsBundle goodsBundle = getPlayerBundle(sellingPlayer);
+		if (this.buyingPlayer.getCoins().getAmount() >= goodsBundle.getPermissionCardsPrice().getAmount()
+				&& !goodsBundle.getSellingPermissionCards().isEmpty()
+				&& goodsBundle.getPermissionCardsPrice().getAmount() > ZERO) {
+			boolean decision = false;
+			try {
+				decision = this.buyingPlayer.getClient().askPlayerConfirmation();
+			} catch (IOException exc) {
+				System.out.println(exc);
 			}
-		}
-		if (!this.shoppingCart.getSellingPoliticCards().isEmpty()) {
-			for (PoliticCard politicCard : this.shoppingCart.getSellingPoliticCards()) {
-				int index = this.shoppingCart.getSellingPoliticCards().indexOf(politicCard);
-				buyingPlayer.getPoliticCard().add(this.shoppingCart.getSellingPoliticCards().remove(index));
+			if (decision) {
+				for (int index = 0; index < goodsBundle.getSellingPermissionCards().size(); index++)
+					this.buyingPlayer.getPermissionCard().add(goodsBundle.getSellingPermissionCards().remove(index));
+				this.buyingPlayer.getCoins().decreaseAmount(goodsBundle.getPermissionCardsPrice().getAmount());
+				sellingPlayer.getCoins().increaseAmount(goodsBundle.getPermissionCardsPrice().getAmount());
+				setPermissionCardsBundlePrice(sellingPlayer, ZERO);
 			}
+			return;
 		}
-		if (this.shoppingCart.getSellingAssistants().getAmount() > ZERO) {
-			buyingPlayer.getAssistants().increaseAmount(this.shoppingCart.getSellingAssistants().getAmount());
-			this.shoppingCart.setSellingAssistants(ZERO);
-			this.shoppingCart.setSellingAssistants(ZERO);
+		throw new IllegalActionException("this player doesn't have enough coins to buy this!");
+	}
+
+	public void buyPoliticCardsBundle(Player sellingPlayer) throws IllegalActionException, NegativeException {
+		GoodsBundle goodsBundle = getPlayerBundle(sellingPlayer);
+		if (this.buyingPlayer.getCoins().getAmount() >= goodsBundle.getPoliticCardsPrice().getAmount()
+				&& !goodsBundle.getSellingPoliticCards().isEmpty()
+				&& goodsBundle.getPoliticCardsPrice().getAmount() > ZERO) {
+			boolean decision = false;
+			try {
+				decision = this.buyingPlayer.getClient().askPlayerConfirmation();
+			} catch (IOException exc) {
+				System.out.println(exc);
+			}
+			if (decision) {
+				for (int index = 0; index < goodsBundle.getSellingPoliticCards().size(); index++)
+					this.buyingPlayer.getPoliticCard().add(goodsBundle.getSellingPoliticCards().remove(index));
+				this.buyingPlayer.getCoins().decreaseAmount(goodsBundle.getPoliticCardsPrice().getAmount());
+				sellingPlayer.getCoins().increaseAmount(goodsBundle.getPoliticCardsPrice().getAmount());
+				setPoliticCardsBundlePrice(sellingPlayer, ZERO);
+			}
+			return;
+		}
+		throw new IllegalActionException("this player doesn't have enough coins to buy this!");
+	}
+
+	public void buyAssistantsBundle(Player sellingPlayer) throws IllegalActionException, NegativeException {
+		GoodsBundle goodsBundle = getPlayerBundle(sellingPlayer);
+		if (this.buyingPlayer.getCoins().getAmount() >= goodsBundle.getAssistantsPrice().getAmount()
+				&& goodsBundle.getSellingAssistants().getAmount() > ZERO
+				&& goodsBundle.getAssistantsPrice().getAmount() > ZERO) {
+			boolean decision = false;
+			try {
+				decision = this.buyingPlayer.getClient().askPlayerConfirmation();
+			} catch (IOException exc) {
+				System.out.println(exc);
+			}
+			if (decision) {
+				this.buyingPlayer.getAssistants().increaseAmount(goodsBundle.getSellingAssistants().getAmount());
+				this.buyingPlayer.getCoins().decreaseAmount(goodsBundle.getAssistantsPrice().getAmount());
+				sellingPlayer.getCoins().increaseAmount(goodsBundle.getAssistantsPrice().getAmount());
+				assignAssistantsToBundle(sellingPlayer, ZERO, ZERO);
+			}
+			return;
+		}
+		throw new IllegalActionException("this player doesn't have enough coins to buy this!");
+	}
+
+	public void buyFullBundle(Player sellingPlayer) throws IllegalActionException, NegativeException {
+		GoodsBundle goodsBundle = getPlayerBundle(sellingPlayer);
+		if (this.buyingPlayer.getCoins().getAmount() >= goodsBundle.getBundleTotalPrice().getAmount()
+				&& goodsBundle.getBundleTotalPrice().getAmount() > ZERO) {
+			boolean decision = false;
+			try {
+				decision = this.buyingPlayer.getClient().askPlayerConfirmation();
+			} catch (IOException exc) {
+				System.out.println(exc);
+			}
+			if (decision) {
+				for (int index = 0; index < goodsBundle.getSellingPermissionCards().size(); index++)
+					this.buyingPlayer.getPermissionCard().add(goodsBundle.getSellingPermissionCards().remove(index));
+				this.buyingPlayer.getCoins().decreaseAmount(goodsBundle.getPermissionCardsPrice().getAmount());
+				sellingPlayer.getCoins().increaseAmount(goodsBundle.getPermissionCardsPrice().getAmount());
+				setPermissionCardsBundlePrice(sellingPlayer, ZERO);
+				for (int index = 0; index < goodsBundle.getSellingPoliticCards().size(); index++)
+					this.buyingPlayer.getPoliticCard().add(goodsBundle.getSellingPoliticCards().remove(index));
+				this.buyingPlayer.getCoins().decreaseAmount(goodsBundle.getPoliticCardsPrice().getAmount());
+				sellingPlayer.getCoins().increaseAmount(goodsBundle.getPoliticCardsPrice().getAmount());
+				setPoliticCardsBundlePrice(sellingPlayer, ZERO);
+				this.buyingPlayer.getAssistants().increaseAmount(goodsBundle.getSellingAssistants().getAmount());
+				this.buyingPlayer.getCoins().decreaseAmount(goodsBundle.getAssistantsPrice().getAmount());
+				sellingPlayer.getCoins().increaseAmount(goodsBundle.getAssistantsPrice().getAmount());
+				assignAssistantsToBundle(sellingPlayer, ZERO, ZERO);
+			}
+			return;
+		}
+		throw new IllegalActionException("this player doesn't have enough coins to buy this!");
+	}
+
+	// Market end (for this turn(
+	public void giveBackUnsoldGoods() throws IllegalActionException, NegativeException {
+		for (Player player : this.allPlayers) {
+			removePermissionCardsFromBundle(player);
+			removePoliticCardsFromBundle(player);
+			removeAssistantsFromBundle(player);
 		}
 	}
 

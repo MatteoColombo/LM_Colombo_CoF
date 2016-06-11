@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import control.Controller;
+import model.player.Player;
 import view.p2pdialogue.DialogueAskMaxPlayersNumber;
 import view.p2pdialogue.DialogueAskPlayerName;
 import view.p2pdialogue.DialogueAskWhatActionToDo;
@@ -119,5 +120,17 @@ public class SocketClient implements ClientInt {
 	public boolean isConnected() {
 		return clientSocket.isConnected();
 		
+	}
+
+	@Override
+	public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean askPlayerConfirmation() throws IOException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +35,7 @@ public class SocketClient implements ClientInt {
 		this.outputStream = clientSocket.getOutputStream();
 		this.out = new ObjectOutputStream(outputStream);
 		this.in = new ObjectInputStream(inputStream);
+		this.clientSocket.setSoTimeout(60000);
 	}
 
 	@Override
@@ -43,6 +45,9 @@ public class SocketClient implements ClientInt {
 		try {
 			clientName = (String) in.readObject();
 		} catch (ClassNotFoundException e) {
+			logger.log(Level.SEVERE, e.getMessage(),e);
+		}catch(SocketTimeoutException e){
+			clientSocket.close();
 			logger.log(Level.SEVERE, e.getMessage(),e);
 		}
 	}
@@ -119,6 +124,30 @@ public class SocketClient implements ClientInt {
 	@Override
 	public boolean isConnected() {
 		return clientSocket.isConnected();
+		
+	}
+
+	@Override
+	public void notifyGameLoading() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyGameStarted() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyYourTurn() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyAnotherPlayerTurn() throws IOException {
+		// TODO Auto-generated method stub
 		
 	}
 

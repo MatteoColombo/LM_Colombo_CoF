@@ -2,7 +2,7 @@ package view.p2pdialogue;
 
 import java.util.List;
 
-import view.client.ViewInterface;
+import client.view.ViewInterface;
 
 public class DialogueAskWichMapToUse implements Dialogue {
 

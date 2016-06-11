@@ -1,6 +1,6 @@
 package view.p2pdialogue;
 
-import view.client.ViewInterface;
+import client.view.ViewInterface;
 
 public class DialogueAskWhatActionToDo implements Dialogue {
 

@@ -12,22 +12,29 @@ public interface ClientInt {
 
 	public void askPlayerWhatActionToDo() throws IOException;
 
-	public String getName() throws IOException;
+	public String getName()  throws IOException;
 
-	public void askMaxNumberOfPlayers(Integer maxNumberOfPlayers) throws IOException;
+	public void askMaxNumberOfPlayers(Integer maxNumberOfPlayers)  throws IOException;
 
-	public void askWichMapToUse(List<String> maps) throws IOException;
-
+	public void askWichMapToUse(List<String> maps)  throws IOException;
+	
 	public void close();
-
+	
 	public void askPlayerName() throws IOException;
-
+	
 	public void notifyIllegalAction();
-
+	
 	public boolean isConnected();
+	
+	public void notifyGameLoading() throws IOException;
+	
+	public void notifyGameStarted() throws IOException;
+	
+	public void notifyYourTurn() throws IOException;
+	
+	public void notifyAnotherPlayerTurn() throws IOException;
 
 	public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException;
 
 	public boolean askPlayerConfirmation() throws IOException;
-
 }

@@ -10,10 +10,10 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import client.view.Cli;
+import client.view.ViewInterface;
 import fx.MainApp;
 import server.Server;
-import view.cli.Cli;
-import view.client.ViewInterface;
 import view.p2pdialogue.Dialogue;
 
 public class Client extends Thread {
@@ -70,7 +70,7 @@ public class Client extends Thread {
 		}
 
 	}
-
+		
 	public static class ServerListener extends Thread {
 		private Socket s;
 		private ViewInterface v;

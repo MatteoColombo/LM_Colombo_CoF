@@ -1,10 +1,10 @@
-package view.client;
+package client.view;
 
 import java.util.List;
 
 import model.board.Region;
 
-public interface ViewInterface {
+public interface ViewInterface{
 	
 	public void printAskPlayersNumber(int max);
 	
@@ -17,4 +17,9 @@ public interface ViewInterface {
 	public void printAskPlayerName();
 	
 	public void printIllegalAction();
+	
+	public void showInitMenu();
+	
+	public void showGetConnectionType();
+	
 }	

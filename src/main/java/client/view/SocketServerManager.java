@@ -8,14 +8,15 @@ import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 
 import client.control.CliController;
+import client.control.Controller;
 import view.p2pdialogue.Dialogue;
 
 public class SocketServerManager extends Thread implements ServerManager{
-	private CliController controller;
+	private Controller controller;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 
-	public SocketServerManager(Socket server, CliController controller) throws UnknownHostException, IOException {
+	public SocketServerManager(Socket server, Controller controller) throws UnknownHostException, IOException {
 		this.controller = controller;
 		this.out = new ObjectOutputStream(server.getOutputStream());
 		this.in = new ObjectInputStream(server.getInputStream());

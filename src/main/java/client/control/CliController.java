@@ -12,7 +12,7 @@ import client.view.SocketServerManager;
 import client.view.ViewInterface;
 import view.p2pdialogue.Dialogue;
 
-public class CliController implements Runnable {
+public class CliController implements Runnable, Controller {
 	private Scanner keyboard;
 	private ViewInterface view;
 	private ServerManager serverManager;

@@ -1,34 +1,52 @@
 package fx;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.net.Socket;
 import java.util.List;
-
-import client.Client;
+import client.view.ServerManager;
+import client.view.SocketServerManager;
+import client.view.ViewInterface;
 import fx.view.LoginController;
+import client.control.Controller;
 import fx.view.RoomController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.board.Region;
-import view.client.ViewInterface;
+import view.p2pdialogue.Dialogue;
 
-public class MainApp extends Application implements ViewInterface, Runnable {
+public class MainApp extends Application implements ViewInterface, Runnable, Controller {
 
 	private Stage primaryStage;
-    private List<String> clientData = new ArrayList<String>();
+    private ServerManager manager;
+	private boolean canWrite = false;
+	
 
+    
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Council of Four");
-		showLogin();
+		Socket server = new Socket("localhost", 1994);
+		SocketServerManager temp = new SocketServerManager(server, this);
+		this.manager = temp;
+		temp.start();
+		//showLogin();
+	}
+	
+	@Override
+	public void parseDialogue(Dialogue dialog) {
+		Platform.runLater(() -> dialog.execute(this));
+		this.canWrite = true;
 	}
 
+	
 	public void showRoom() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -61,28 +79,33 @@ public class MainApp extends Application implements ViewInterface, Runnable {
 		}
 	}
 
-	/*public static void main(String[] args) {
-		launch();
-	}*/
-
 	public Window getPrimaryStage() {
 		return this.primaryStage;
 	}
-	
-	/*public ClientInt getClient() {
-		return this.client;
-	}*/
-	
-	public List<String> getTestClientData() {
-		return this.clientData;
+
+	public void sendName(String name) throws IOException {
+		manager.publishMessage(name);
 	}
 	
-	public void setTestClientData(String c) {
-		this.clientData.add(c);
+	@Override
+	public void printAskPlayersNumber(int max) {
+		// TODO Auto-generated method stub
+		showRoom();
 	}
 
 	@Override
-	public void printAskPlayersNumber(int max) {
+	public void run() {
+		launch();
+	}
+
+	@Override
+	public void showInitMenu() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showGetConnectionType() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -105,11 +128,6 @@ public class MainApp extends Application implements ViewInterface, Runnable {
 		
 	}
 
-	@Override
-	public void printAskPlayerName() {
-		// TODO Auto-generated method stub
-		showLogin();
-	}
 
 	@Override
 	public void printIllegalAction() {
@@ -118,7 +136,8 @@ public class MainApp extends Application implements ViewInterface, Runnable {
 	}
 
 	@Override
-	public void run() {
-		launch();
+	public void printAskPlayerName() {
+		// TODO Auto-generated method stub
+		showLogin();
 	}
 }

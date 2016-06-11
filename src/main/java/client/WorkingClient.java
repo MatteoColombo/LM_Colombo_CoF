@@ -6,8 +6,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import client.control.CliController;
-import client.view.Cli;
-import client.view.ViewInterface;
 import fx.MainApp;
 
 public class WorkingClient {

@@ -24,19 +24,10 @@ public class RoomController {
 	public RoomController() {
 	}
 	
-	private void initialize() throws IOException {
-		clients  = FXCollections.observableArrayList();
-		for(String testClient: mainApp.getTestClientData()) {
-			clients.add(new SimpleStringProperty(testClient));
-		}
-		clientTable.setItems(clients);
-		clientColumn.setCellValueFactory(cell -> cell.getValue());
-	}
 	private MainApp mainApp;
 	
 	public void setMainApp(MainApp mainApp) throws IOException{
 		this.mainApp = mainApp;
-		initialize();
 	}
 	
 	@FXML

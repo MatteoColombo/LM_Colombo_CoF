@@ -1,5 +1,7 @@
 package fx.view;
 
+import java.io.IOException;
+
 import fx.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -23,8 +25,7 @@ public class LoginController {
 	}
 
 	@FXML
-	private void HandleConnect() {
-		mainApp.setTestClientData(nameField.getText());
-		mainApp.showRoom();
+	private void HandleConnect() throws IOException {
+		mainApp.sendName(nameField.getText());
 	}
 }

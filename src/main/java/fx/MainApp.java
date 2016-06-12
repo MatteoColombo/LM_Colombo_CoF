@@ -27,7 +27,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	
 	private Stage primaryStage;
     private ServerManager manager;
-	private boolean canWrite = false;	
+    
 	@Override
 	public void run() {
 		launch();
@@ -43,7 +43,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	@Override
 	public void parseDialogue(Dialogue dialog) {
 		Platform.runLater(() -> dialog.execute(this));
-		this.canWrite = true;
 	}
 
 	

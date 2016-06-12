@@ -1,5 +1,6 @@
 package fx.view;
 
+import java.io.IOException;
 import java.util.List;
 
 import fx.MainApp;
@@ -36,6 +37,11 @@ public class ConfigGameController {
 		mapColumn.setCellValueFactory(cell -> cell.getValue());
 		
 		// TODO add listener for changes in map table selections
+	}
+	
+	@FXML
+	private void handlePlay() throws IOException {
+		mainApp.sendMsg("" + mapTable.getSelectionModel().getSelectedIndex());
 	}
 
 }

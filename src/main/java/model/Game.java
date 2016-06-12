@@ -36,8 +36,7 @@ public class Game extends Thread {
 	 */
 	public void configGame() throws ConfigurationErrorException {
 		try {
-			initialClient.askMaxNumberOfPlayers(this.maxNumberOfPlayers);
-			initialClient.askWichMapToUse(config.getMaps());
+			initialClient.askConfiguration(config.getMaps(), maxNumberOfPlayers);
 		} catch (IOException ioe) {
 			throw new ConfigurationErrorException(ioe);
 		}

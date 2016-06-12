@@ -3,7 +3,6 @@
 import java.net.ServerSocket;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,9 +87,8 @@ public class Server {
 		configuringGames = new ArrayList<>();
 		try {
 			ServerInt room = new RMIServer();
-			ServerInt stub = (ServerInt) UnicastRemoteObject.exportObject(room, 0);
 			Registry registry = LocateRegistry.createRegistry(gamesConfig.getRmiPort());
-			registry.rebind(NAME, stub);
+			registry.rebind(NAME, room);
 			logger.info("RMI server ready");
 			socketServer = new ServerSocket(gamesConfig.getSocketPort());
 			logger.info("Socket server ready");

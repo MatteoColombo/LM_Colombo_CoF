@@ -299,7 +299,7 @@ public class Market {
 		throw new IllegalActionException("this player doesn't have enough coins to buy this!");
 	}
 
-	// Market end (for this turn(
+	// Market end (for this turn)
 	public void giveBackUnsoldGoods() throws IllegalActionException, NegativeException {
 		for (Player player : this.allPlayers) {
 			removePermissionCardsFromBundle(player);

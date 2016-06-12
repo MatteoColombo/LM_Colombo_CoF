@@ -14,10 +14,8 @@ public interface ClientInt {
 
 	public String getName()  throws IOException;
 
-	public void askMaxNumberOfPlayers(Integer maxNumberOfPlayers)  throws IOException;
-
-	public void askWichMapToUse(List<String> maps)  throws IOException;
-	
+	public void askConfiguration(List<String> maps, int maxNumberOfPlayers) throws IOException;
+		
 	public void close();
 	
 	public void askPlayerName() throws IOException;

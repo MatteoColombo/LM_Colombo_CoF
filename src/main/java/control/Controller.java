@@ -23,12 +23,12 @@ public class Controller {
 	private CliParser parser;
 	private ActionBuilder builder;
 	private Map<ClientInt, Player> playersMap = new HashMap<>();
-	private Logger logger= Logger.getGlobal();
+	private Logger logger = Logger.getGlobal();
 	private Configuration config;
-	
+
 	public Controller(Game game, Configuration config) {
 		this.game = game;
-		this.config= config;
+		this.config = config;
 		this.parser = new CliParser();
 	}
 
@@ -40,9 +40,29 @@ public class Controller {
 	 * @throws ConfigurationErrorException
 	 */
 	public void configGame() throws ConfigurationErrorException {
-		game.configGame(); 
+		game.configGame();
 		Server.acceptPlayers(game);
 	}
+
+	public void parseGameConfiguration(String gameConfigMessage, ClientInt client) throws IOException {
+		String[] parameters = gameConfigMessage.split(" ");
+		System.out.println(gameConfigMessage);
+		int map = 0;
+		int players = 10;
+		try {
+			players = Integer.parseInt(parameters[0]);
+			map = Integer.parseInt(parameters[1]);
+		} catch (NumberFormatException e) {
+			logger.log(Level.WARNING, e.getMessage(), e);
+			client.notifyIllegalAction();
+			client.askConfiguration(config.getMaps(), config.getMaxNumberOfPlayer());
+			return;
+		}
+		setMaxNumberOfPlayers(players);
+		setChoosenMap(map);
+
+	}
+
 
 	/**
 	 * Sets the max number of player that connect to a game
@@ -50,20 +70,22 @@ public class Controller {
 	 * @param maxNumberOfPlayers
 	 *            the max number of players
 	 */
-	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
+	private void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
 		game.setMaxNumberOfPlayers(maxNumberOfPlayers);
 	}
 
+	
 	/**
 	 * Sets the number of the choosen map in the game
 	 * 
 	 * @param choosenMap
 	 *            the number of the choosen map in the maps' list
 	 */
-	public void setChoosenMap(int choosenMap) {
+	private void setChoosenMap(int choosenMap) {
 		game.setChoosenMap(choosenMap);
 	}
 
+	
 	/**
 	 * Notifies the game to generate a player and then adds it with it's client
 	 * to the Player-ClientInt hashmap
@@ -75,13 +97,14 @@ public class Controller {
 		playersMap.put(client, game.addPlayer(client));
 	}
 
+	
 	/**
 	 * translate a string action request from the client into its object
 	 * representation It notify the client if something went wrong
 	 * 
 	 * @param s
 	 *            the input from the cli
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void performAction(ClientInt client, String s) throws IOException {
 		this.builder = new ActionBuilder(game.getBoard(), config);
@@ -117,15 +140,15 @@ public class Controller {
 				tm.performAction(builder.makeABuildEmporiumWithKing(player, cmd));
 				return;
 			case "end":
-				tm.performAction(builder.makeAEndTurn(player,tm));
+				tm.performAction(builder.makeAEndTurn(player, tm));
 				return;
-			default: 
-					throw new IllegalActionException("There is an error with the action");
+			default:
+				throw new IllegalActionException("There is an error with the action");
 			}
 		} catch (IllegalActionException | ParseException e) {
-				logger.log(Level.SEVERE,e.getMessage(),e);
-				client.notifyIllegalAction();
-				client.askPlayerWhatActionToDo();
+			logger.log(Level.SEVERE, e.getMessage(), e);
+			client.notifyIllegalAction();
+			client.askPlayerWhatActionToDo();
 		}
 	}
 }

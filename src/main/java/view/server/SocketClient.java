@@ -13,11 +13,11 @@ import java.util.logging.Logger;
 
 import control.Controller;
 import model.player.Player;
-import view.p2pdialogue.DialogueAskMaxPlayersNumber;
-import view.p2pdialogue.DialogueAskPlayerName;
-import view.p2pdialogue.DialogueAskWhatActionToDo;
-import view.p2pdialogue.DialogueAskWichMapToUse;
-import view.p2pdialogue.DialogueIllegalAction;
+import view.p2pdialogue.combinedrequest.RequestMaxPlayersNumber;
+import view.p2pdialogue.notify.NotifyIllegalAction;
+import view.p2pdialogue.request.RequestPlayerName;
+import view.p2pdialogue.request.RequestWhatActionToDo;
+import view.p2pdialogue.request.RequestWichMapToUse;
 
 public class SocketClient implements ClientInt {
 	private Controller controller;
@@ -40,7 +40,7 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askPlayerName() throws IOException {
-		out.writeObject(new DialogueAskPlayerName());
+		out.writeObject(new RequestPlayerName());
 		out.flush();
 		try {
 			clientName = (String) in.readObject();
@@ -59,7 +59,7 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askPlayerWhatActionToDo() throws IOException {
-		out.writeObject(new DialogueAskWhatActionToDo());
+		out.writeObject(new RequestWhatActionToDo());
 		out.flush();
 		String action = "";
 		try {
@@ -76,29 +76,27 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void askMaxNumberOfPlayers(Integer maxNumberOfPlayers) throws IOException {
-		int maxNumber=maxNumberOfPlayers;
-		out.writeObject(new DialogueAskMaxPlayersNumber(maxNumberOfPlayers));
-		out.flush();
+	public void askConfiguration(List<String> maps, int maxNumberOfPlayers) throws IOException{
+		askMaxNumberOfPlayers(maxNumberOfPlayers);
+		askWichMapToUse(maps);
 		try {
-			maxNumber = Integer.parseInt((String)in.readObject());
-			controller.setMaxNumberOfPlayers(maxNumber);
+			String returnMessage = (String)in.readObject();
+			System.out.println(returnMessage);
+			controller.parseGameConfiguration(returnMessage, this);
 		} catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, e.getMessage(),e);
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
-
-	@Override
-	public void askWichMapToUse(List<String> maps) throws IOException {
-		int map = 0;
-		out.writeObject(new DialogueAskWichMapToUse(maps));
+	
+	
+	private void askMaxNumberOfPlayers(int maxNumberOfPlayers) throws IOException {
+		out.writeObject(new RequestMaxPlayersNumber(maxNumberOfPlayers));
 		out.flush();
-		try {
-			map = Integer.parseInt((String) in.readObject());
-			controller.setChoosenMap(map);
-		} catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, e.getMessage(),e);
-		}
+	}
+
+	private void askWichMapToUse(List<String> maps) throws IOException {
+		out.writeObject(new RequestWichMapToUse(maps));
+		out.flush();
 	}
 	
 	@Override
@@ -114,7 +112,7 @@ public class SocketClient implements ClientInt {
 	public void notifyIllegalAction() {
 		// TODO Auto-generated method stub
 		try{
-		out.writeObject(new DialogueIllegalAction());
+		out.writeObject(new NotifyIllegalAction());
 		out.flush();
 		}catch(IOException e){
 			logger.log(Level.SEVERE, e.getMessage(), e);

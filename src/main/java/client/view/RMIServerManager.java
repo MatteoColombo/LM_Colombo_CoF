@@ -14,36 +14,41 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 	private Controller controller;
 	String message;
 
-	public RMIServerManager(Controller controller) throws RemoteException{
-		this.controller=controller;
+	public RMIServerManager(Controller controller) throws RemoteException {
+		this.controller = controller;
 	}
 
 	@Override
-	public String sendDialogue(Dialogue dialogue) throws RemoteException {
-		this.message="";
+	public String requestAnswer(Dialogue dialogue) throws RemoteException {
+		this.message = "";
 		controller.parseDialogue(dialogue);
 		synchronized (this) {
-			while(this.message.equals("")){
+			while (this.message.equals("")) {
 				try {
-					wait();
+					wait();	
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-				
+
 		}
-		
+
 		return message;
+	}
+
+	@Override
+	public void sendNotify(Dialogue dialogue) throws RemoteException {
+		controller.parseDialogue(dialogue);
 	}
 
 	@Override
 	public void publishMessage(String message) throws IOException {
 		synchronized (this) {
-			this.message=message;		
+			this.message = message;
 			this.notifyAll();
-		}	
-	
+		}
+
 	}
 
 }

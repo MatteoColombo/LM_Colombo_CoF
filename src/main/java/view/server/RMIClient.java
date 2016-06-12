@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 
 import control.Controller;
 import model.player.Player;
-import view.p2pdialogue.DialogueAskMaxPlayersNumber;
-import view.p2pdialogue.DialogueAskPlayerName;
-import view.p2pdialogue.DialogueAskWhatActionToDo;
+import view.p2pdialogue.combinedrequest.RequestMaxPlayersNumber;
+import view.p2pdialogue.request.RequestPlayerName;
+import view.p2pdialogue.request.RequestWhatActionToDo;
 
 public class RMIClient implements ClientInt {
 	private Controller controller;
@@ -32,7 +32,7 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void askPlayerWhatActionToDo() throws IOException {
-		String action = client.sendDialogue(new DialogueAskWhatActionToDo());
+		String action = client.requestAnswer(new RequestWhatActionToDo());
 		this.controller.performAction(this, action);
 	}
 
@@ -40,20 +40,24 @@ public class RMIClient implements ClientInt {
 	public String getName() throws IOException {
 		return this.clientName;
 	}
-
+	
 	@Override
-	public void askMaxNumberOfPlayers(Integer maxNumberOfPlayers) throws IOException {
+	public void askConfiguration(List<String> maps, int maxNumberOfPlayers) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void askMaxNumberOfPlayers(Integer maxNumberOfPlayers) throws IOException {
 		int max = 10;
 		try{
-			max = Integer.parseInt(client.sendDialogue(new DialogueAskMaxPlayersNumber(maxNumberOfPlayers)));
+			max = Integer.parseInt(client.requestAnswer(new RequestMaxPlayersNumber(maxNumberOfPlayers)));
 		}catch(NumberFormatException e){
 			e.printStackTrace();
 		}
-		this.controller.setMaxNumberOfPlayers(max);
+		//this.controller.setMaxNumberOfPlayers(max);
 	}
 
-	@Override
-	public void askWichMapToUse(List<String> maps) throws IOException {
+	private void askWichMapToUse(List<String> maps) throws IOException {
 		// TODO Auto-generated method stub
 
 	}
@@ -66,7 +70,7 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void askPlayerName() throws IOException {
-		String name= client.sendDialogue(new DialogueAskPlayerName());
+		String name= client.requestAnswer(new RequestPlayerName());
 		this.clientName= name;
 	}
 
@@ -117,5 +121,7 @@ public class RMIClient implements ClientInt {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 
 }

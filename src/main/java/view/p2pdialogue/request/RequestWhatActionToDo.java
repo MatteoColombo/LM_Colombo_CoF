@@ -1,8 +1,8 @@
-package view.p2pdialogue;
+package view.p2pdialogue.request;
 
 import client.view.ViewInterface;
 
-public class DialogueAskWhatActionToDo implements Dialogue {
+public class RequestWhatActionToDo implements Request {
 
 	private static final long serialVersionUID = 2369205104999605672L;
 

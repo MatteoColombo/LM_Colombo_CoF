@@ -1,8 +1,8 @@
-package view.p2pdialogue;
+package view.p2pdialogue.notify;
 
 import client.view.ViewInterface;
 
-public class DialogueNotifyGameLoading implements Dialogue {
+public class NotifyGameLoading implements Notify {
 		
 	private static final long serialVersionUID = 7977501288581499309L;
 

@@ -3,9 +3,10 @@ package client.control;
 import java.io.IOException;
 import java.net.Socket;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import client.view.Cli;
@@ -16,7 +17,8 @@ import client.view.SocketServerManager;
 import client.view.ViewInterface;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
-import view.server.RMIServerManagerInterface;
+import view.p2pdialogue.combinedrequest.CombinedDialogue;
+import view.p2pdialogue.request.Request;
 
 public class CliController implements Runnable, Controller {
 	private Scanner keyboard;
@@ -24,27 +26,66 @@ public class CliController implements Runnable, Controller {
 	private ServerManager serverManager;
 	private KeyboardListener keyboardListener;
 	private boolean canWrite;
+	private boolean canEnqueue;
+	private boolean waitingForKeyboard;
+	private List<String> combinedRequestsQueue;
+	private List<Dialogue> combinedDialogue;
 
 	public CliController() {
 		view = new Cli();
 		keyboard = new Scanner(System.in);
 		this.canWrite = false;
+		this.canEnqueue=false;
+		this.waitingForKeyboard= false;
+		this.combinedDialogue = new ArrayList<>();
+		this.combinedRequestsQueue = new ArrayList<>();
 	}
 
-	public void parseDialogue(Dialogue dialog) {
-		dialog.execute(view);
-		this.canWrite = true;
+	public synchronized void parseDialogue(Dialogue dialog) {
+		if(!waitingForKeyboard){
+			dialog.execute(view);
+		if (dialog instanceof Request) {
+			this.canWrite = true;
+			this.waitingForKeyboard= true;
+			this.canEnqueue = false;
+		} else if (dialog instanceof CombinedDialogue) {
+			this.canWrite = false;
+			this.waitingForKeyboard= true;
+			this.canEnqueue = true;
+		} else {
+			this.canWrite = false;
+			this.canEnqueue = false;
+		}
+		}else{
+			combinedDialogue.add(dialog);
+		}
 	}
 
 	public void parseKeyboardMessage(String message) {
 		if (this.canWrite) {
 			try {
-				serverManager.publishMessage(message);
+				String prec = "";
+				for (String temp : this.combinedRequestsQueue)
+					prec = temp + " ";
+				serverManager.publishMessage(prec + message);
+				this.combinedRequestsQueue.clear();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			this.canWrite = false;
+			this.waitingForKeyboard= false;
+			if(combinedDialogue.size()>0)
+				parseDialogue(combinedDialogue.remove(0));
+
+		} else if (this.canEnqueue) {
+			this.combinedRequestsQueue.add(message);
+			this.canEnqueue = false;
+			this.waitingForKeyboard=false;
+			if(combinedDialogue.size()>0)
+				parseDialogue(combinedDialogue.remove(0));
+
 		}
-		this.canWrite = false;
+		
 	}
 
 	public void run() {
@@ -69,17 +110,16 @@ public class CliController implements Runnable, Controller {
 				this.serverManager = sockettemp;
 				break;
 			case 2:
-				Registry registry= LocateRegistry.getRegistry(1099);
-				ServerInt serv= (ServerInt)registry.lookup("ServerInt");
-				RMIServerManager rmitemp=new RMIServerManager(this);
-				this.serverManager=rmitemp;
+				Registry registry = LocateRegistry.getRegistry(1099);
+				ServerInt serv = (ServerInt) registry.lookup("ServerInt");
+				RMIServerManager rmitemp = new RMIServerManager(this);
+				this.serverManager = rmitemp;
 				serv.login(rmitemp);
 				break;
 			default:
 				break;
 			}
 
-	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

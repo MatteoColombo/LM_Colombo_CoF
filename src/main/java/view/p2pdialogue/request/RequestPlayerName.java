@@ -1,8 +1,8 @@
-package view.p2pdialogue;
+package view.p2pdialogue.request;
 
 import client.view.ViewInterface;
 
-public class DialogueAskPlayerName implements Dialogue {
+public class RequestPlayerName implements  Request{
 
 	private static final long serialVersionUID = 7042996601614394078L;
 

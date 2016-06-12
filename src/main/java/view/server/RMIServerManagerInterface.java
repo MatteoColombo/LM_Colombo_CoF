@@ -7,7 +7,8 @@ import view.p2pdialogue.Dialogue;
 
 public interface RMIServerManagerInterface extends Remote {
 	
-	public String sendDialogue(Dialogue dialogue) throws RemoteException;
+	public String requestAnswer(Dialogue dialogue) throws RemoteException;
 	
+	public void sendNotify(Dialogue dialogue) throws RemoteException;
 	
 }

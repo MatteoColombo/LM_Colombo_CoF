@@ -24,10 +24,21 @@ public class Player {
 	private List<Color> pickedColours;
 	private int mainActions;
 	private boolean extraAction;
-	private final int DEFAULTMAINACTION;
+	private int DEFAULTMAINACTION;
 	private ClientInt client;
 	private boolean isSuspended;
 
+	public Player(Player p) {
+		this.coins = new Coins(p.getCoins().getAmount());
+		this.assistants = new Assistants(p.getAssistants().getAmount());
+		this.noblePoints = new NoblePoints(p.getNoblePoints().getAmount());
+		this.victoryPoints = new VictoryPoints(p.getVictoryPoints().getAmount());
+
+		this.politicCard = new ArrayList<>();
+		for(PoliticCard card: p.getPoliticCard()) {
+			this.politicCard.add(new PoliticCard(card.getCardColor()));
+		}
+	}
 	/**
 	 * 
 	 * @param money
@@ -83,6 +94,10 @@ public class Player {
 		this.isSuspended = false;
 	}
 
+	public Player getClientCopy() {
+		return new Player(this);
+	}
+	
 	/**
 	 * 
 	 * @return

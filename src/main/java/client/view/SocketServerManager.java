@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 
-import client.control.CliController;
 import client.control.Controller;
 import view.p2pdialogue.Dialogue;
 

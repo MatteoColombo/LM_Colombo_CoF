@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
+import client.model.GameProperty;
 import model.Configuration;
 import model.board.Board;
 import model.board.ColorConstants;
@@ -170,6 +171,12 @@ public class Cli implements ViewInterface {
 	public void printIllegalAction() {
 		writer.println("There's an error with the action");
 		writer.flush();
+	}
+
+	@Override
+	public GameProperty getLocalModel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

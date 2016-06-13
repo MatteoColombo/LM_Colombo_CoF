@@ -11,14 +11,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 public class ConfigGameController {
 
-	@FXML
-	private TableView<StringProperty> mapTable;
-	
-	@FXML
-	private TableColumn<StringProperty, String> mapColumn;
+	@FXML private TableView<StringProperty> mapTable;
+	@FXML private TableColumn<StringProperty, String> mapColumn;
+	@FXML private TextField playersNumber;
 	
 	private ObservableList<StringProperty> mapList;
 	
@@ -41,7 +40,11 @@ public class ConfigGameController {
 	
 	@FXML
 	private void handlePlay() throws IOException {
-		mainApp.sendMsg("" + mapTable.getSelectionModel().getSelectedIndex());
+		mainApp.sendMsg("" + playersNumber.getText() + " " + mapTable.getSelectionModel().getSelectedIndex());
+	}
+	
+	@FXML private void handleAdd() {
+		this.mapList.add(new SimpleStringProperty("pippo"));
 	}
 
 }

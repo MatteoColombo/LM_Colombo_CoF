@@ -26,7 +26,7 @@
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                <children>
-                  <TextField layoutX="181.0" layoutY="10.0" maxHeight="0.0" maxWidth="50.0" prefWidth="50.0" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="10.0" />
+                  <TextField fx:id="playersNumber" layoutX="181.0" layoutY="10.0" maxHeight="0.0" maxWidth="50.0" prefWidth="50.0" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="10.0" />
                   <Label layoutX="113.0" layoutY="15.0" text="Set number of players" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="15.0" />
                   <Separator layoutX="70.0" layoutY="127.0" prefHeight="3.0" prefWidth="429.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
                   <Button layoutX="316.0" layoutY="10.0" mnemonicParsing="false" text="PLAY" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -35,6 +35,7 @@
                      </font>
                   </Button>
                   <Label layoutX="10.0" layoutY="53.0" text="Preview" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="55.0" />
+                  <Button layoutX="289.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleAdd" text="Button" />
                </children></AnchorPane>
         </items>
       </SplitPane>

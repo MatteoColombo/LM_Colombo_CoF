@@ -8,17 +8,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 public class LoginController {
 
-	@FXML
-	private TextField nameField;
+	@FXML private TextField nameField;
 
-	@FXML
-	private RadioButton rmiButton;
-
-	@FXML
-	private RadioButton socketButton;
+	@FXML private RadioButton rmiButton;
+	@FXML private RadioButton socketButton;
+	@FXML private ImageView background;
 
 	private MainApp mainApp;
 

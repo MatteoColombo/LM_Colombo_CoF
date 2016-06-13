@@ -2,13 +2,10 @@
     -fx-background-color: #1d1d1d;
 }
 
-.root{
-        -fx-background-image: url("cof.jpg");
-		-fx-background-repeat: stretch;
-		-fx-background-width: 100%;
-		-fx-background-position: center center;
-        -fx-background-position: top left;
-    }
+.root {
+	-fx-background-image: url('cof_Fotor.jpg');
+	-fx-background-size: cover;
+}
 
 .label {
     -fx-font-size: 11pt;

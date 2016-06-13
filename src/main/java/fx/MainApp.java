@@ -2,13 +2,20 @@ package fx;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.util.List;
+
+import client.view.RMIServerManager;
 import client.view.ServerManager;
 import client.view.SocketServerManager;
 import client.view.ViewInterface;
 import fx.view.ConfigGameController;
 import fx.view.LoginController;
 import client.control.Controller;
+import client.model.GameProperty;
+import client.model.PlayerProperty;
 import fx.view.RoomController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -19,14 +26,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.board.Region;
+import model.player.Player;
+import server.ServerInt;
 import view.p2pdialogue.Dialogue;
 
 public class MainApp extends Application implements ViewInterface, Runnable, Controller {
 
 	private String myName;
-	
+	private GameProperty localGame = new GameProperty();
 	private Stage primaryStage;
     private ServerManager manager;
+
     
 	@Override
 	public void run() {
@@ -110,11 +120,22 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	
 	public void initSocketManager() {
 		try {
-			SocketServerManager temp;
-			temp = new SocketServerManager(new Socket("localhost", 1994), this);
-			this.manager = temp;
-			temp.start();
+			SocketServerManager manager = new SocketServerManager(new Socket("localhost", 1994), this);
+			this.manager = manager;
+			manager.start();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void initRMIManager() {
+		try {
+			ServerInt server = (ServerInt) LocateRegistry.getRegistry(1099).lookup("ServerInt");
+			RMIServerManager manager = new RMIServerManager(this);
+			this.manager = manager;
+			server.login(manager);
+		} catch (RemoteException | NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -122,18 +143,12 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	
 	@Override
 	public void printAskPlayersNumber(int max) {
-		// FIXME this test-only implementation
-		try {
-			sendMsg("4");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	@Override
 	public void showInitMenu() {
-		// TODO Auto-generated method stub
-		
+		showRoom();
 	}
 
 	@Override
@@ -174,5 +189,10 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public GameProperty getLocalModel() {
+		return this.localGame;
 	}
 }

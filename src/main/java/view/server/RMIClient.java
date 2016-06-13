@@ -15,6 +15,11 @@ import view.p2pdialogue.combinedrequest.RequestMaxPlayersNumber;
 import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 
+/**
+ * 
+ * @author Matteo Colombo
+ *
+ */
 public class RMIClient implements ClientInt {
 	private Controller controller;
 	private String clientName;
@@ -37,7 +42,7 @@ public class RMIClient implements ClientInt {
 	}
 
 	@Override
-	public String getName() throws IOException {
+	public String getName(){
 		return this.clientName;
 	}
 	

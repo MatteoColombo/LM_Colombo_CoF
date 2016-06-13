@@ -131,6 +131,10 @@ public class CouncilorPool {
 		return true;
 	}
 	
+	/**
+	 * This returns the list of the colors of the councilors
+	 * @return
+	 */
 	public List<Color> getListColor() {
 		return this.colors;
 	}

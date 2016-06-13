@@ -45,10 +45,10 @@ public class SocketClient implements ClientInt {
 		try {
 			clientName = (String) in.readObject();
 		} catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, e.getMessage(),e);
-		}catch(SocketTimeoutException e){
+			logger.log(Level.SEVERE, e.getMessage(), e);
+		} catch (SocketTimeoutException e) {
 			clientSocket.close();
-			logger.log(Level.SEVERE, e.getMessage(),e);
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class SocketClient implements ClientInt {
 			action = (String) in.readObject();
 			controller.performAction(this, action);
 		} catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, e.getMessage(),e);
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -76,19 +76,18 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void askConfiguration(List<String> maps, int maxNumberOfPlayers) throws IOException{
+	public void askConfiguration(List<String> maps, int maxNumberOfPlayers) throws IOException {
 		askMaxNumberOfPlayers(maxNumberOfPlayers);
 		askWichMapToUse(maps);
 		try {
-			String returnMessage = (String)in.readObject();
+			String returnMessage = (String) in.readObject();
 			System.out.println(returnMessage);
 			controller.parseGameConfiguration(returnMessage, this);
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
-	
-	
+
 	private void askMaxNumberOfPlayers(int maxNumberOfPlayers) throws IOException {
 		out.writeObject(new RequestMaxPlayersNumber(maxNumberOfPlayers));
 		out.flush();
@@ -98,23 +97,22 @@ public class SocketClient implements ClientInt {
 		out.writeObject(new RequestWichMapToUse(maps));
 		out.flush();
 	}
-	
+
 	@Override
 	public void close() {
 		try {
 			clientSocket.close();
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, e.getMessage(),e);
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
 	@Override
 	public void notifyIllegalAction() {
-		// TODO Auto-generated method stub
-		try{
-		out.writeObject(new NotifyIllegalAction());
-		out.flush();
-		}catch(IOException e){
+		try {
+			out.writeObject(new NotifyIllegalAction());
+			out.flush();
+		} catch (IOException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
@@ -122,37 +120,37 @@ public class SocketClient implements ClientInt {
 	@Override
 	public boolean isConnected() {
 		return clientSocket.isConnected();
-		
+
 	}
 
 	@Override
 	public void notifyGameLoading() throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void notifyGameStarted() throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void notifyYourTurn() throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void notifyAnotherPlayerTurn() throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

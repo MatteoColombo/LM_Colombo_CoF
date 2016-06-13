@@ -14,9 +14,10 @@ public class KeyboardListener extends Thread {
 		this.controller = controller;
 	}
 
+	@Override
 	public void run() {
 		String message = "";
-		while (!message.equals("quit")) {
+		while (!"quit".equals(message)) {
 			message = keyboard.nextLine();
 			controller.parseKeyboardMessage(message);
 		}

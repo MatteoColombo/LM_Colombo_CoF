@@ -1,8 +1,11 @@
 package client.control;
 
+import java.io.Serializable;
+
 import view.p2pdialogue.Dialogue;
 
-public interface Controller {
+@FunctionalInterface
+public interface Controller extends Serializable {
 	
 	void parseDialogue(Dialogue dialogue);
 

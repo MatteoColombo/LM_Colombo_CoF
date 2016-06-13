@@ -13,6 +13,9 @@ public class InitializationTimeLimitManager extends Thread{
 		this.startingGame=startingGame;
 	}
 	
+	/**
+	 * This is the thread which waits for 20 seconds and then it starts the game if it isn't complete
+	 */
 	@Override
 	public void run(){
 		try {

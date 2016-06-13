@@ -10,6 +10,13 @@ import model.exceptions.XMLFileException;
 import model.player.Player;
 import view.server.ClientInt;
 
+/**
+ * This class represents the game class, for every game on the server a new Game
+ * class is instantiated
+ * 
+ * @author Matteo Colombo
+ *
+ */
 public class Game extends Thread {
 	private List<Player> players;
 	private Board gameBoard;
@@ -51,17 +58,19 @@ public class Game extends Thread {
 	 * This generates and initializes a player. The player is added to the
 	 * players list and then returned.
 	 * 
-	 * @param client the ClientInt of the player
+	 * @param client
+	 *            the ClientInt of the player
 	 * @return
 	 */
 	public synchronized Player addPlayer(ClientInt client) {
-		Player p = new Player(config,getPlayersNumber(),client);
+		Player p = new Player(config, getPlayersNumber(), client);
 		players.add(p);
 		return p;
 	}
 
 	/**
 	 * It Checks if the game is complete
+	 * 
 	 * @return true if the game is complete
 	 */
 	public boolean isComplete() {
@@ -70,6 +79,7 @@ public class Game extends Thread {
 
 	/**
 	 * Returns the game board
+	 * 
 	 * @return the Board
 	 */
 	public Board getBoard() {
@@ -78,6 +88,7 @@ public class Game extends Thread {
 
 	/**
 	 * Returns the turn manager
+	 * 
 	 * @return
 	 */
 	public TurnManager getTurnManager() {
@@ -85,9 +96,9 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This is the method which is ran by the game thread.
-	 * it manages the market and the game itself
-	 */	
+	 * This is the method which is ran by the game thread. it manages the market
+	 * and the game itself
+	 */
 	@Override
 	public void run() {
 		boolean someoneWon = false;
@@ -113,13 +124,13 @@ public class Game extends Thread {
 		publishWinner();
 	}
 
-	
 	public void publishWinner() {
 		// TODO
 	}
 
 	/**
 	 * This returns the number of players connected
+	 * 
 	 * @return an integer, the number of players
 	 */
 	public int getPlayersNumber() {
@@ -127,7 +138,9 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This is used to change the max number of players, it is used before the game starts
+	 * This is used to change the max number of players, it is used before the
+	 * game starts
+	 * 
 	 * @param maxNumberOfPlayers
 	 */
 	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
@@ -135,8 +148,11 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This is used to choose the game map, it is used before the board is initialized
-	 * @param map the index of the choosen map in the list
+	 * This is used to choose the game map, it is used before the board is
+	 * initialized
+	 * 
+	 * @param map
+	 *            the index of the choosen map in the list
 	 */
 	public void setChoosenMap(int map) {
 		this.choosenMap = map;

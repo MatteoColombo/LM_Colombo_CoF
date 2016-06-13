@@ -7,7 +7,13 @@ import java.util.logging.Logger;
 
 import server.Server;
 
+/**
+ * This class is the one which is used to handle a new Socket connection to the server
+ * @author Matteo Colombo
+ *
+ */
 public class SocketClientConnectionHandler extends Thread {
+	
 	private Socket clientSocket;
 	private Logger logger= Logger.getGlobal();
 	

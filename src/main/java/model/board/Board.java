@@ -185,6 +185,10 @@ public class Board {
 		return this.mapKing.getKingCouncil();
 	}
 
+	/**
+	 * Returns the king of the board
+	 * @return the King
+	 */
 	public King getKing() {
 		return this.mapKing;
 	}

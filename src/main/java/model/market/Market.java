@@ -2,6 +2,7 @@ package model.market;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import model.exceptions.*;
@@ -67,9 +68,12 @@ public class Market {
 
 	public void removePermissionCardsFromBundle(Player bundleOwner) throws NegativeException, IllegalActionException {
 		GoodsBundle goodsBundle = getPlayerBundle(bundleOwner);
+		Iterator<PermissionCard> permissionCardsIterator = goodsBundle.getSellingPermissionCards().iterator();
 		if (!goodsBundle.getSellingPermissionCards().isEmpty())
-			for (PermissionCard removingPermissionCard : goodsBundle.getSellingPermissionCards())
-				removeOnePermissionCardFromBundle(bundleOwner, removingPermissionCard);
+			while (permissionCardsIterator.hasNext()) {
+				bundleOwner.getPermissionCard().add(permissionCardsIterator.next());
+				permissionCardsIterator.remove();
+			}
 		setPermissionCardsBundlePrice(bundleOwner, ZERO);
 	}
 
@@ -114,9 +118,12 @@ public class Market {
 
 	public void removePoliticCardsFromBundle(Player bundleOwner) throws NegativeException, IllegalActionException {
 		GoodsBundle goodsBundle = getPlayerBundle(bundleOwner);
+		Iterator<PoliticCard> politicCardsIterator = goodsBundle.getSellingPoliticCards().iterator();
 		if (!goodsBundle.getSellingPoliticCards().isEmpty())
-			for (PoliticCard removingPoliticCard : goodsBundle.getSellingPoliticCards())
-				removeOnePoliticCardFromBundle(bundleOwner, removingPoliticCard);
+			while (politicCardsIterator.hasNext()) {
+				bundleOwner.getPoliticCard().add(politicCardsIterator.next());
+				politicCardsIterator.remove();
+			}
 		setPoliticCardsBundlePrice(bundleOwner, ZERO);
 	}
 

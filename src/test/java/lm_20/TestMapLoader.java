@@ -2,7 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -11,7 +11,6 @@ import org.junit.Test;
 import model.board.council.CouncilorPool;
 import model.board.map.MapLoader;
 import model.exceptions.MapXMLFileException;
-import model.exceptions.XMLFileException;
 
 public class TestMapLoader {
 
@@ -20,12 +19,12 @@ public class TestMapLoader {
 	@Before
 	public void setUp() {
 		colors = new ArrayList<Color>();
-		colors.add(new Color(20, 30, 40));
-		colors.add(new Color(100, 30, 50));
-		colors.add(new Color(200, 130, 140));
-		colors.add(new Color(2, 3, 40));
-		colors.add(new Color(2, 3, 4));
-		colors.add(new Color(255, 255, 255));
+		colors.add(Color.ALICEBLUE);
+		colors.add(Color.ANTIQUEWHITE);
+		colors.add(Color.AQUA);
+		colors.add(Color.AQUAMARINE);
+		colors.add(Color.AZURE);
+		colors.add(Color.BEIGE);
 	}
 
 	

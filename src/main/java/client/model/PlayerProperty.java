@@ -4,9 +4,11 @@ import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import model.player.*;
@@ -19,8 +21,19 @@ public class PlayerProperty {
 	private IntegerProperty victory;
 	private ObservableList<ObjectProperty<PoliticCard>> politicCards;
 	private ObservableList<ObjectProperty<PermissionCard>> permissions;
+	
+	public PlayerProperty() {
+		name = new SimpleStringProperty("");
+		coins = new SimpleIntegerProperty(0);
+		assistants = new SimpleIntegerProperty(0);
+		nobility = new SimpleIntegerProperty(0);
+		victory = new SimpleIntegerProperty(0);
+		politicCards = FXCollections.observableArrayList();
+		permissions = FXCollections.observableArrayList();	
+	}
+	
 	/**
-	 * since permission card change not so often as the others,
+	 * since permission cards change not so often as the others,
 	 * this distinction imporve performance
 	 * @param player
 	 * @return
@@ -102,6 +115,14 @@ public class PlayerProperty {
 
 	public void setNobility(int nobility) {
 		this.coins.set(nobility);
+	}
+	
+	public ObservableList<ObjectProperty<PoliticCard>> getPoliticCards() {
+		return this.politicCards;
+	}
+	
+	public ObservableList<ObjectProperty<PermissionCard>> getPermissions() {
+		return this.permissions;
 	}
 	
 	public void setPermissions(List<PermissionCard> cards) {

@@ -2,7 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +28,12 @@ public class TestPlayer {
 	@Before
 	public void setUp() {
 		colorList = new ArrayList<Color>();
-		colorList.add(new Color(20, 30, 40));
-		colorList.add(new Color(100, 30, 50));
-		colorList.add(new Color(200, 130, 140));
-		colorList.add(new Color(2, 3, 40));
-		colorList.add(new Color(2, 3, 4));
-		colorList.add(new Color(255, 255, 255));
+		colorList.add(Color.ALICEBLUE);
+		colorList.add(Color.ANTIQUEWHITE);
+		colorList.add(Color.AQUA);
+		colorList.add(Color.AQUAMARINE);
+		colorList.add(Color.AZURE);
+		colorList.add(Color.BEIGE);
 
 		p = new Player(10, 1, 6, 10, colorList, 0, 0);
 	}

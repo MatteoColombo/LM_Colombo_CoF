@@ -12,6 +12,7 @@ import client.view.ServerManager;
 import client.view.SocketServerManager;
 import client.view.ViewInterface;
 import fx.view.ConfigGameController;
+import fx.view.GameController;
 import fx.view.LoginController;
 import client.control.Controller;
 import client.model.GameProperty;
@@ -100,6 +101,23 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			ConfigGameController config = loader.getController();
 			config.setMainApp(this);
 			config.setMapList(maps);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void showGame() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Game.fxml"));
+			BorderPane game = (BorderPane) loader.load();
+			Scene scene = new Scene(game);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			// Give the controller access to the main app.
+			GameController gameController = loader.getController();
+			gameController.setMainApp(this);
 
 		} catch (IOException e) {
 			e.printStackTrace();

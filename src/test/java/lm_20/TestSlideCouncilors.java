@@ -2,7 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 

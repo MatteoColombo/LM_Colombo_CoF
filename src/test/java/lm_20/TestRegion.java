@@ -2,14 +2,13 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import model.board.ColorConstants;
 import model.board.Region;
 import model.board.city.*;
 import model.board.council.*;
@@ -22,11 +21,11 @@ public class TestRegion {
 	Council council;
 	@Before
 	public void setUp() throws Exception {
-		cities.add(new City(ColorConstants.SAPPHIRE, "Arkon", new RewardCity()));
-		cities.add(new City(ColorConstants.GOLD, "Burgen", new RewardCity()));
-		cities.add(new City(ColorConstants.SILVER, "Castrum", new RewardCity()));
-		cities.add(new City(ColorConstants.SILVER, "Dorful", new RewardCity()));
-		cities.add(new City(ColorConstants.BRONZE, "Esti", new RewardCity()));
+		cities.add(new City(Color.AQUA, "Arkon", new RewardCity()));
+		cities.add(new City(Color.GOLD, "Burgen", new RewardCity()));
+		cities.add(new City(Color.SILVER, "Castrum", new RewardCity()));
+		cities.add(new City(Color.SILVER, "Dorful", new RewardCity()));
+		cities.add(new City(Color.BROWN, "Esti", new RewardCity()));
 		
 		List<Councilor> members = new ArrayList<Councilor>();
 		members.add(new Councilor(Color.BLACK));

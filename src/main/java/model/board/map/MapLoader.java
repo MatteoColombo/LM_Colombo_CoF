@@ -12,7 +12,7 @@ import model.exceptions.MapXMLFileException;
 import model.reward.*;
 
 import javax.xml.parsers.*;
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -183,9 +183,9 @@ public class MapLoader {
 		City generatedCity;
 
 		if (isCapital)
-			generatedCity = new City(Color.decode(color), name);
+			generatedCity = new City(Color.valueOf(color), name);
 		else
-			generatedCity = new City(Color.decode(color), name, new RewardCity());
+			generatedCity = new City(Color.valueOf(color), name, new RewardCity());
 		return generatedCity;
 	}
 

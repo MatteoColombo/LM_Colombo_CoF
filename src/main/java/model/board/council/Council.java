@@ -1,6 +1,6 @@
 package model.board.council;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 

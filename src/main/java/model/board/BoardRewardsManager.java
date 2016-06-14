@@ -7,7 +7,7 @@ import model.board.city.*;
 import model.player.*;
 import model.reward.*;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 
 /**
  * A class that manages the BoardRewards.

@@ -1,6 +1,6 @@
 package model.board.council;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 
 /**
  * A councilor is characterized by a color and is used in councils

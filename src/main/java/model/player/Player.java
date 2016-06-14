@@ -1,6 +1,6 @@
 package model.player;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.List;
 
 import model.Configuration;

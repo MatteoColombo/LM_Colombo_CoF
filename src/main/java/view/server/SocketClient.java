@@ -14,7 +14,12 @@ import java.util.logging.Logger;
 import control.Controller;
 import model.player.Player;
 import view.p2pdialogue.combinedrequest.RequestMaxPlayersNumber;
+import view.p2pdialogue.notify.NotifyGameLoading;
+import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
+import view.p2pdialogue.notify.NotifyPlayerJoined;
+import view.p2pdialogue.notify.NotifyPlayersList;
+import view.p2pdialogue.notify.NotifyYourTurn;
 import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWichMapToUse;
@@ -125,20 +130,20 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void notifyGameLoading() throws IOException {
-		// TODO Auto-generated method stub
-
+		out.writeObject(new NotifyGameLoading());
+		out.flush();
 	}
 
 	@Override
 	public void notifyGameStarted() throws IOException {
-		// TODO Auto-generated method stub
-
+		out.writeObject(new NotifyGameStarted());
+		out.flush();
 	}
 
 	@Override
 	public void notifyYourTurn() throws IOException {
-		// TODO Auto-generated method stub
-
+		out.writeObject(new NotifyYourTurn());
+		out.flush();
 	}
 
 	@Override
@@ -157,5 +162,17 @@ public class SocketClient implements ClientInt {
 	public boolean askPlayerConfirmation() throws IOException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void sendPlayersList(List<Player> players) throws IOException {
+		out.writeObject(new NotifyPlayersList(players));
+		out.flush();
+	}
+
+	@Override
+	public void notifyPlayerJoined(Player player) throws IOException {
+		out.writeObject(new NotifyPlayerJoined(player));
+		out.flush();		
 	}
 }

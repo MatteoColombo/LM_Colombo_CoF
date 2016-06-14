@@ -84,6 +84,7 @@ public class Server {
 	 */
 	private static synchronized void loginTogame(ClientInt client) {
 		gameControllerMap.get(startingGames.get(0)).addPlayer(client);
+		gameControllerMap.get(startingGames.get(0)).notifyPlayerJoined(client);
 		client.setController(gameControllerMap.get(startingGames.get(0)));
 		if (startingGames.get(0).getPlayersNumber() == 2 && !startingGames.get(0).isComplete())
 			new InitializationTimeLimitManager(startingGames.get(0)).start();

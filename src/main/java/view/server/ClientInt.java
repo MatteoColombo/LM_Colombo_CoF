@@ -75,6 +75,10 @@ public interface ClientInt {
 	public void notifyGameStarted() throws IOException;
 
 	public void notifyYourTurn() throws IOException;
+	
+	public void sendPlayersList(List<Player> players) throws IOException;
+	
+	public void notifyPlayerJoined(Player player) throws IOException;
 
 	public void notifyAnotherPlayerTurn() throws IOException;
 

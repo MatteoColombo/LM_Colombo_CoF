@@ -1,8 +1,10 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +27,7 @@ public class Controller {
 	private Map<ClientInt, Player> playersMap = new HashMap<>();
 	private Logger logger = Logger.getGlobal();
 	private Configuration config;
-
+	
 	public Controller(Game game, Configuration config) {
 		this.game = game;
 		this.config = config;
@@ -33,8 +35,39 @@ public class Controller {
 	}
 
 	/**
+	 * Notifies all the players that a new one joined the game
+	 * @param client 
+	 */
+	public void notifyPlayerJoined(ClientInt client){
+		Set<ClientInt> clients = playersMap.keySet();
+		for(ClientInt temp: clients){
+			try {
+				if(client != temp)
+					temp.notifyPlayerJoined(playersMap.get(client));
+			} catch (IOException e) {
+				logger.log(Level.INFO, e.getMessage(), e);
+				playersMap.get(temp).setSuspension(true);
+			}
+		}
+	}
+	
+	
+	public void notifyGameStarted(){
+		Set<ClientInt> clients= playersMap.keySet();
+		for(ClientInt temp: clients){
+			try {
+				temp.notifyGameStarted();
+			} catch (IOException e) {
+				logger.log(Level.INFO, e.getMessage(), e);
+				playersMap.get(temp).setSuspension(true);
+			}
+		}
+	}
+	
+	
+	/**
 	 * Tells the game to launch it's configuration method and then, when the
-	 * configuration is comleted, puts the game in a loading status where i can
+	 * configuration is completed, puts the game in a loading status where i can
 	 * listen for other players
 	 * 
 	 * @throws ConfigurationErrorException
@@ -44,14 +77,24 @@ public class Controller {
 		Server.acceptPlayers(game);
 	}
 
+	/**
+	 * Parses the game configuration and then updates the model
+	 * @param gameConfigMessage this is the string which containts the configuration
+	 * @param client this is the client who is configuring; it is used in case of wrong config
+	 * @throws IOException
+	 */
 	public void parseGameConfiguration(String gameConfigMessage, ClientInt client) throws IOException {
 		String[] parameters = gameConfigMessage.split(" ");
 		int map = 0;
-		int players = 10;
+		int players = config.getMaxNumberOfPlayer();
 		try {
 			players = Integer.parseInt(parameters[0]);
+			if(players > config.getMaxNumberOfPlayer() || players < 0)
+				throw new IllegalActionException("too many players");
 			map = Integer.parseInt(parameters[1]);
-		} catch (NumberFormatException e) {
+			if(map > config.getMaps().size() || map < 0)
+				throw new IllegalActionException("too many players");
+		} catch (NumberFormatException | IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction();
 			client.askConfiguration(config.getMaps(), config.getMaxNumberOfPlayer());
@@ -59,7 +102,6 @@ public class Controller {
 		}
 		setMaxNumberOfPlayers(players);
 		setChoosenMap(map);
-
 	}
 
 
@@ -94,6 +136,12 @@ public class Controller {
 	 */
 	public void addPlayer(ClientInt client) {
 		playersMap.put(client, game.addPlayer(client));
+		try {
+			client.notifyGameLoading();
+			client.sendPlayersList(game.getPlayers());
+		} catch (IOException e) {
+			logger.log(Level.INFO, e.getMessage(), e);
+		}
 	}
 
 	

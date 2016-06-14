@@ -29,17 +29,24 @@ public class TurnManager {
 	 * he wants to end and has completed all its main actions
 	 */
 	public void startTurn() {
+		try {
+			this.turnPlayer.getClient().notifyYourTurn();
+		} catch (IOException e) {
+			logger.log(Level.WARNING, e.getMessage(),e );
+			this.turnPlayer.setSuspension(true);
+			return;
+		}
 		while (!playerWantsToExit || (!turnPlayer.getIfExtraActionDone() && turnPlayer.getMainActionsLeft() > 0)) {
 			try {
 				if (this.turnPlayer.getClient().isConnected())
 					this.turnPlayer.getClient().askPlayerWhatActionToDo();
 				else {
 					turnPlayer.setSuspension(true);
-					break;
+					return;
 				}
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
-				break;
+				return;
 			}
 		}
 	}

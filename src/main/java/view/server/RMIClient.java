@@ -115,4 +115,16 @@ public class RMIClient implements ClientInt {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public void sendPlayersList(List<Player> players) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyPlayerJoined(Player player) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
 }

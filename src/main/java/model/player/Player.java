@@ -27,6 +27,7 @@ public class Player {
 	private int DEFAULTMAINACTION;
 	private ClientInt client;
 	private boolean isSuspended;
+	private String name;
 
 	public Player(Player p) {
 		this.coins = new Coins(p.getCoins().getAmount());
@@ -35,10 +36,11 @@ public class Player {
 		this.victoryPoints = new VictoryPoints(p.getVictoryPoints().getAmount());
 
 		this.politicCard = new ArrayList<>();
-		for(PoliticCard card: p.getPoliticCard()) {
+		for (PoliticCard card : p.getPoliticCard()) {
 			this.politicCard.add(new PoliticCard(card.getCardColor()));
 		}
 	}
+
 	/**
 	 * 
 	 * @param money
@@ -62,6 +64,7 @@ public class Player {
 		this.noblePoints = new NoblePoints(config.getInitialNobilityPoints());
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
+		this.name = client.getName();
 		this.pickedColours = config.getColorsList();
 		for (int i = 0; i < config.getInitialPoliticCards(); i++)
 			politicCard.add(new PoliticCard(pickedColours));
@@ -71,7 +74,7 @@ public class Player {
 		this.mainActions = DEFAULTMAINACTION;
 		this.extraAction = false;
 		this.isSuspended = false;
-		this.client=client;
+		this.client = client;
 	}
 
 	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
@@ -97,7 +100,7 @@ public class Player {
 	public Player getClientCopy() {
 		return new Player(this);
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -215,12 +218,28 @@ public class Player {
 		return this.client;
 	}
 
+	/**
+	 * Sets if the player is suspended or not
+	 * @param suspendedStatus
+	 */
 	public void setSuspension(boolean suspendedStatus) {
 		this.isSuspended = suspendedStatus;
 	}
 
+	/**
+	 * Return if the player is suspended or not
+	 * @return return true if the player is suspended, false otherwise
+	 */
 	public boolean getSuspended() {
 		return this.isSuspended;
+	}
+	
+	/**
+	 * Returns the player's name
+	 * @return
+	 */
+	public String getName(){
+		return this.name;
 	}
 
 }

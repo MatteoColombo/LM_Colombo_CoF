@@ -157,4 +157,12 @@ public class Game extends Thread {
 	public void setChoosenMap(int map) {
 		this.choosenMap = map;
 	}
+	
+	/**
+	 * Return the list of the players
+	 * @return
+	 */
+	public List<Player> getPlayers(){
+		return players;
+	}
 }

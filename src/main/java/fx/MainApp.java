@@ -12,6 +12,7 @@ import client.view.ServerManager;
 import client.view.SocketServerManager;
 import client.view.ViewInterface;
 import fx.view.ConfigGameController;
+import fx.view.GameController;
 //import fx.view.GameController;
 import fx.view.LoginController;
 import client.control.Controller;

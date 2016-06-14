@@ -46,7 +46,6 @@ public class Controller {
 
 	public void parseGameConfiguration(String gameConfigMessage, ClientInt client) throws IOException {
 		String[] parameters = gameConfigMessage.split(" ");
-		System.out.println(gameConfigMessage);
 		int map = 0;
 		int players = 10;
 		try {

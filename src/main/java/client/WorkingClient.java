@@ -10,6 +10,8 @@ import client.control.CliController;
 import fx.MainApp;
 
 public class WorkingClient {
+	
+	private WorkingClient(){}
 	public static void main(String[] args) {
 		PrintWriter pw = new PrintWriter(System.out);
 		Scanner sc = new Scanner(System.in);

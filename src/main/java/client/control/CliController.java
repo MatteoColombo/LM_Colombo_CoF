@@ -21,6 +21,8 @@ import view.p2pdialogue.combinedrequest.CombinedDialogue;
 import view.p2pdialogue.request.Request;
 
 public class CliController implements Runnable, Controller {
+
+	private static final long serialVersionUID = -1895721638081527089L;
 	private Scanner keyboard;
 	private ViewInterface view;
 	private ServerManager serverManager;
@@ -30,7 +32,7 @@ public class CliController implements Runnable, Controller {
 	private boolean waitingForKeyboard;
 	private List<String> combinedRequestsQueue;
 	private List<Dialogue> combinedDialogue;
-
+	
 	public CliController() {
 		view = new Cli();
 		keyboard = new Scanner(System.in);
@@ -41,6 +43,7 @@ public class CliController implements Runnable, Controller {
 		this.combinedRequestsQueue = new ArrayList<>();
 	}
 
+	@Override
 	public synchronized void parseDialogue(Dialogue dialog) {
 		if(!waitingForKeyboard){
 			dialog.execute(view);
@@ -74,20 +77,21 @@ public class CliController implements Runnable, Controller {
 			}
 			this.canWrite = false;
 			this.waitingForKeyboard= false;
-			if(combinedDialogue.size()>0)
+			if(!combinedDialogue.isEmpty())
 				parseDialogue(combinedDialogue.remove(0));
 
 		} else if (this.canEnqueue) {
 			this.combinedRequestsQueue.add(message);
 			this.canEnqueue = false;
 			this.waitingForKeyboard=false;
-			if(combinedDialogue.size()>0)
+			if(!combinedDialogue.isEmpty())
 				parseDialogue(combinedDialogue.remove(0));
 
 		}
 		
 	}
 
+	@Override
 	public void run() {
 		view.showInitMenu();
 		int connectionType = 0;
@@ -96,7 +100,7 @@ public class CliController implements Runnable, Controller {
 				view.showGetConnectionType();
 				connectionType = Integer.parseInt(keyboard.nextLine());
 			} catch (NumberFormatException e) {
-
+				
 			}
 		} while (connectionType != 1 && connectionType != 2);
 		try {
@@ -110,8 +114,7 @@ public class CliController implements Runnable, Controller {
 				this.serverManager = sockettemp;
 				break;
 			case 2:
-				Registry registry = LocateRegistry.getRegistry(1099);
-				ServerInt serv = (ServerInt) registry.lookup("ServerInt");
+				ServerInt serv = (ServerInt) LocateRegistry.getRegistry(1099).lookup("ServerInt");
 				RMIServerManager rmitemp = new RMIServerManager(this);
 				this.serverManager = rmitemp;
 				serv.login(rmitemp);
@@ -120,10 +123,7 @@ public class CliController implements Runnable, Controller {
 				break;
 			}
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
+		} catch (IOException | NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

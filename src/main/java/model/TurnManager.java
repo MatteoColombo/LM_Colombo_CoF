@@ -34,8 +34,8 @@ public class TurnManager {
 				if (this.turnPlayer.getClient().isConnected())
 					this.turnPlayer.getClient().askPlayerWhatActionToDo();
 				else {
-					System.out.println("questo è down");
 					turnPlayer.setSuspension(true);
+					break;
 				}
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);

@@ -77,7 +77,14 @@
 		<path>src/main/resources/nobtrack.xml</path>
 	</nobility>
 	<map>
-		<path>src/main/resources/map.xml</path>
+		<path>src/main/resources/map1.xml</path>
+		<path>src/main/resources/map2.xml</path>
+		<path>src/main/resources/map3.xml</path>
+		<path>src/main/resources/map4.xml</path>
+		<path>src/main/resources/map5.xml</path>
+		<path>src/main/resources/map6.xml</path>
+		<path>src/main/resources/map7.xml</path>
+		<path>src/main/resources/map8.xml</path>
 	</map>
 
 </config>

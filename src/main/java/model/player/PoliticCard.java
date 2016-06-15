@@ -63,6 +63,9 @@ public class PoliticCard implements Serializable, Soldable{
 		return this.color;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public boolean equals(Soldable item) {
 		// TODO Auto-generated method stub

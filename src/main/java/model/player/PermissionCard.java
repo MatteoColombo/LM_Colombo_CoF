@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import model.board.city.City;
+import model.market.Soldable;
 import model.reward.*;
 
 /**
@@ -23,7 +24,7 @@ import model.reward.*;
  * @see Player
  * @see Reward
  */
-public class PermissionCard {
+public class PermissionCard implements Soldable {
 	private List<City> cities;
 	private Reward reward;
 	private boolean used;
@@ -114,6 +115,19 @@ public class PermissionCard {
 	 */
 	public void setCardUsed() {
 		this.used = true;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public boolean equals(Soldable item) {
+		if(!(item instanceof PermissionCard))
+			return false;
+		PermissionCard card=(PermissionCard)item;
+		if(this.cities.equals(card.cities) && this.reward.equals(card.reward) && this.used == card.used)
+			return true;
+		return false;
 	}
 
 }

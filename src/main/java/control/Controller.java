@@ -228,7 +228,7 @@ public class Controller {
 			switch (args[0]) {
 			case "slide":
 				tm.performAction(builder.makeASlideCouncil(player, cmd));
-				updatePlayers(playersMap.get(client));
+				updatePlayers(player);
 				return;
 			case "assistant":
 				tm.performAction(builder.makeABuyAssistant(player));

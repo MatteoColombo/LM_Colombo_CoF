@@ -66,6 +66,9 @@ public class Assistants implements Serializable,Soldable {
 		this.amount -= value;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public boolean equals(Soldable item) {
 		

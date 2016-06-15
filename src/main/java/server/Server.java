@@ -114,6 +114,7 @@ public class Server {
 	 */
 	public static synchronized void startGame(Game g) {
 		startingGames.remove(g);
+		gameControllerMap.get(g).notifyGameStarted();
 		g.start();
 	}
 

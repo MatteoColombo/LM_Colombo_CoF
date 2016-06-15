@@ -56,8 +56,6 @@ public class Controller {
 		}
 	}
 
-	
-	
 	public void parseItemToSell(String item, ClientInt client) {
 		String[] parameters = item.split(" ");
 		Soldable itemOnSale;
@@ -120,6 +118,7 @@ public class Controller {
 		Set<ClientInt> clients = playersMap.keySet();
 		for (ClientInt temp : clients) {
 			try {
+				System.out.println("invio notifica");
 				temp.notifyGameStarted();
 			} catch (IOException e) {
 				logger.log(Level.INFO, e.getMessage(), e);

@@ -91,7 +91,7 @@ public class Server {
 		if (startingGames.get(0).getPlayersNumber() == 2 && !startingGames.get(0).isComplete())
 			new InitializationTimeLimitManager(startingGames.get(0)).start();
 		if (startingGames.get(0).isComplete())
-			startingGames.remove(0).start();
+			startGame();
 	}
 
 	/**
@@ -112,8 +112,8 @@ public class Server {
 	 * 
 	 * @param g
 	 */
-	public static synchronized void startGame(Game g) {
-		startingGames.remove(g);
+	public static synchronized void startGame() {
+		Game g=startingGames.remove(0); 
 		gameControllerMap.get(g).notifyGameStarted();
 		g.start();
 	}

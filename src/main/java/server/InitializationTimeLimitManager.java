@@ -25,7 +25,7 @@ public class InitializationTimeLimitManager extends Thread{
 			logger.info(e.getMessage());
 		}
 		if(!startingGame.isComplete()){
-			Server.startGame(startingGame);
+			Server.startGame();
 		}
 	}
 }

@@ -204,9 +204,10 @@ public class Configuration {
 		return colorsList;
 	}
 
-	public Map<String, Color> getColorsTranslation(){
+	public Map<String, Color> getColorsTranslation() {
 		return colorTranslation;
 	}
+
 	public int getCouncilorsPerColor() {
 		return councilorsPerColor;
 	}
@@ -246,5 +247,5 @@ public class Configuration {
 	public List<Integer> getBoardRewards() {
 		return boardRewards;
 	}
-	
+
 }

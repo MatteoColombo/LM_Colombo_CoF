@@ -17,7 +17,7 @@ import model.Game;
 import model.TurnManager;
 import model.exceptions.ConfigurationErrorException;
 import model.exceptions.IllegalActionException;
-import model.market.OnSaleItem;
+//import model.market.OnSaleItem;
 import model.player.Player;
 import server.Server;
 import view.server.ClientInt;
@@ -83,7 +83,7 @@ public class Controller {
 	 * @param itemIndex
 	 * @param client
 	 */
-	public void parseItemToBuy(List<OnSaleItem> items, String itemIndex, ClientInt client){
+	/*public void parseItemToBuy(List<OnSaleItem> items, String itemIndex, ClientInt client){
 		try{
 			int index= Integer.parseInt(itemIndex);
 			if(index > items.size())
@@ -95,7 +95,7 @@ public class Controller {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction();
 		}
-	}
+	}*/
 	
 	public void notifyGameStarted(){
 		Set<ClientInt> clients= playersMap.keySet();

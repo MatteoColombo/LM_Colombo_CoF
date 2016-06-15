@@ -30,7 +30,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="victoryPointsLabel" text="Label" GridPane.columnIndex="1" />
+                  <Label fx:id="victoryLabel" text="Label" GridPane.columnIndex="1" />
                   <Label fx:id="assistantsLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="coinsLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label fx:id="nobilityLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />

@@ -18,7 +18,7 @@ public class PoliticCard implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 3808938190487455501L;
-	private transient Color color;
+	private Color color;
 	private boolean isMultipleColor;
 	
 	public PoliticCard(Color color) {

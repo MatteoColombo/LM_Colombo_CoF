@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import model.player.*;
+import util.ColorConverter;
 public class PlayerProperty {
 	
 	private StringProperty name;
@@ -19,6 +20,9 @@ public class PlayerProperty {
 	private IntegerProperty assistants;
 	private IntegerProperty nobility;
 	private IntegerProperty victory;
+	/**
+	 * web color repreentation of each politic card color
+	 */
 	private ObservableList<StringProperty> politicCards;
 	private ObservableList<ObjectProperty<PermissionCard>> permissions;
 	
@@ -46,7 +50,11 @@ public class PlayerProperty {
 		
 		politicCards.clear();
 		for(PoliticCard card: player.getPoliticCard()) {
-			politicCards.add(new SimpleStringProperty(card.getCardColor().toString()));
+			if(!card.isMultipleColor()) {
+				politicCards.add(new SimpleStringProperty(ColorConverter.awtToWeb(card.getCardColor())));
+			} else {
+				politicCards.add(new SimpleStringProperty("multi"));
+			}
 		}	
 		return this;
 	}

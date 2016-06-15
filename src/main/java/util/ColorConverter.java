@@ -8,7 +8,7 @@ public class ColorConverter {
 		int red = color.getRed();
 		int green = color.getGreen();
 		int blue = color.getBlue();
-		double alpha = color.getAlpha()/255;
+		double alpha = color.getAlpha()/255.0;
 		return Color.rgb(red, green, blue, alpha);
 	}
 

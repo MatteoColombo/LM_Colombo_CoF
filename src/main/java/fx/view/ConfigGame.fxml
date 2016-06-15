@@ -29,7 +29,7 @@
                   <TextField fx:id="playersNumber" layoutX="181.0" layoutY="10.0" maxHeight="0.0" maxWidth="50.0" prefWidth="50.0" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="10.0" />
                   <Label layoutX="113.0" layoutY="15.0" text="Set number of players" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="15.0" />
                   <Separator layoutX="70.0" layoutY="127.0" prefHeight="3.0" prefWidth="429.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
-                  <Button layoutX="316.0" layoutY="10.0" mnemonicParsing="false" text="PLAY" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <Button fx:id="handlePlay" layoutX="316.0" layoutY="10.0" mnemonicParsing="false" text="PLAY" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="Courier Bold" size="18.0" />
                      </font>

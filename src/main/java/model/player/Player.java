@@ -25,6 +25,7 @@ public class Player implements Serializable{
 	private VictoryPoints victoryPoints;
 	private NoblePoints noblePoints;
 	private List<PoliticCard> politicCard;
+	// FIXME permissions should be serializable
 	private transient List<PermissionCard> permissionCard;
 	private transient List<Emporium> emporium;
 	private transient List<Color> pickedColours;
@@ -34,7 +35,10 @@ public class Player implements Serializable{
 	private transient ClientInt client;
 	private boolean isSuspended;
 	private String name;
-
+	/**
+	 * constructor for cloning an existing player
+	 * @param p
+	 */
 	public Player(Player p) {
 		this.coins = new Coins(p.getCoins().getAmount());
 		this.assistants = new Assistants(p.getAssistants().getAmount());
@@ -104,7 +108,8 @@ public class Player implements Serializable{
 	}
 
 	public Player getClientCopy() {
-		return new Player(this);
+		Player newp = new Player(this);
+		return newp;
 	}
 
 	/**

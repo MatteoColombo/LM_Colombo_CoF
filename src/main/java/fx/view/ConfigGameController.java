@@ -40,26 +40,9 @@ public class ConfigGameController {
 	
 	@FXML private void initialize() {
 		mapColumn.setCellValueFactory(cell -> cell.getValue());
-		mapColumn.setCellFactory(cell -> {
-			return new TableCell<StringProperty, String>() {
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					if(empty) {
-						setText(null);
-						setStyle("");
-					} else {
-					super.updateItem(item, empty);
-					setText(item);
-					setStyle("-fx-background-color:#f0f8ff");
-					}
-				}
-			};
-		}
-		);
 	}
 	
-	@FXML
-	private void handlePlay() throws IOException {
+	@FXML private void handlePlay() throws IOException {
 		mainApp.sendMsg("" + playersNumber.getText() + " " + mapTable.getSelectionModel().getSelectedIndex());
 	}
 	

@@ -50,7 +50,7 @@ public class ConfigGameController {
 					} else {
 					super.updateItem(item, empty);
 					setText(item);
-					setStyle("-fx-background-color:green");
+					setStyle("-fx-background-color:#f0f8ff");
 					}
 				}
 			};

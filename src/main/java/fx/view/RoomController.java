@@ -22,6 +22,7 @@ public class RoomController {
 	
 	@FXML private void initialize() {
 		playerColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
+		
 	}
 	
 	@FXML private void handleDisconnect() {

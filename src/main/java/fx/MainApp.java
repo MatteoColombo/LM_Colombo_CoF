@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RMIServerManager;
@@ -48,7 +49,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Council of Four");
-		//showGame();
 		showLogin();
 	}
 	

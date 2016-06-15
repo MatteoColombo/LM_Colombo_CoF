@@ -185,8 +185,8 @@ public class Controller {
 
 	public void notifyGameLoading(ClientInt client){
 		try {
-			client.notifyGameLoading();
 			client.sendPlayersList(game.getPlayers());
+			client.notifyGameLoading();
 		} catch (IOException e) {
 			logger.log(Level.INFO, e.getMessage(), e);
 		}

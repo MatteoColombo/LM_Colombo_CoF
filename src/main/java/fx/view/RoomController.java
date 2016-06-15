@@ -10,8 +10,8 @@ import javafx.scene.control.TableView;
 
 public class RoomController {
 	
-	@FXML private TableView<PlayerProperty> playerTable = new TableView<>();
-	@FXML private TableColumn<PlayerProperty, String> playerColumn = new TableColumn<>();
+	@FXML private TableView<PlayerProperty> playerTable;
+	@FXML private TableColumn<PlayerProperty, String> playerColumn;
 	
 	private MainApp mainApp;
 	
@@ -19,10 +19,6 @@ public class RoomController {
 		this.mainApp = mainApp;
 		this.playerTable.setItems(mainApp.getLocalModel().getPlayers());
 		playerColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
-
-	}
-	
-	@FXML private void Initialize() {
 	}
 	
 	@FXML private void handleDisconnect() {

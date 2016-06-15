@@ -40,7 +40,7 @@ public class GameController {
 	@FXML private TableColumn<StringProperty, String> politicCardColumn;
 	
 	@FXML private TableView<ObjectProperty<PermissionCard>> permissionCardsTable;
-	@FXML private TableColumn<ObjectProperty<PermissionCard>, Color> permissionCardColumn;
+	@FXML private TableColumn<ObjectProperty<PermissionCard>, String> permissionCardColumn;
 	
 	@FXML private TableView<GoodsBundle> marketTable;
 	@FXML private TableColumn<GoodsBundle, String> marketSellerColumn;
@@ -48,29 +48,22 @@ public class GameController {
 	@FXML private TableColumn<GoodsBundle, String> priceColumn;
 	
 	@FXML private TextArea logger;
-	
-	private ObservableList<StringProperty> test = FXCollections.observableArrayList();
-	
+		
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
-		test.add(new SimpleStringProperty("blue"));
-		test.add(new SimpleStringProperty("green"));
-		politicCardsTable.setItems(test);
-		//politicCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPoliticCards());
-		//permissionCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPermissions());
-	}
-	
-	@FXML private void Initialize() {
+		politicCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPoliticCards());
+		permissionCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPermissions());
+		
 		PlayerProperty myData = mainApp.getLocalModel().getMyPlayerData();
 		
-		coinsLabel.setText("" + myData.getCoins());
-        Bindings.bindBidirectional(coinsLabel.textProperty(), myData.coinsProperty(), new NumberStringConverter());
-		victoryLabel.setText("" + myData.getVictory());
-        Bindings.bindBidirectional(victoryLabel.textProperty(), myData.victoryProperty(), new NumberStringConverter());
-		assistantsLabel.setText("" + myData.getAssistants());
         Bindings.bindBidirectional(assistantsLabel.textProperty(), myData.assistantsProperty(), new NumberStringConverter());
-		nobilityLabel.setText("" + myData.getNobility());
+        Bindings.bindBidirectional(coinsLabel.textProperty(), myData.coinsProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(nobilityLabel.textProperty(), myData.nobilityProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(victoryLabel.textProperty(), myData.victoryProperty(), new NumberStringConverter());
+	}
+	
+	//stupid method that never works
+	/*@FXML private void Initialize() {
 			
 		politicCardColumn.setCellFactory(cell -> {
 			return new TableCell<StringProperty, String>() {
@@ -88,7 +81,7 @@ public class GameController {
 			};
 		}
 		);
-	}
+	}*/
 	
 	@FXML private void handleTestAction() throws IOException {
 		mainApp.sendMsg("slide -council 1 -color pink");

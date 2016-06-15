@@ -74,7 +74,7 @@
                 <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" prefWidth="120.0" text="Slide Council" />
+                  <Button mnemonicParsing="false" onAction="#handleTestAction" prefWidth="120.0" text="Slide Council" />
                   <Button mnemonicParsing="false" prefWidth="120.0" text="Slide Council" GridPane.columnIndex="1" />
                   <Button mnemonicParsing="false" prefWidth="120.0" text="Buy Permission" GridPane.rowIndex="1" />
                   <Button mnemonicParsing="false" prefWidth="120.0" text="But Assistant" GridPane.columnIndex="1" GridPane.rowIndex="1" />

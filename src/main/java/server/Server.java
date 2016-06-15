@@ -64,6 +64,7 @@ public class Server {
 			gameControllerMap.get(newGame).addPlayer(client);
 			try {
 				gameControllerMap.get(newGame).configGame();
+				gameControllerMap.get(newGame).notifyGameLoading(client);
 			} catch (ConfigurationErrorException e) {
 				logger.log(Level.SEVERE, e.getMessage(), e);
 				configuringGames.remove(newGame);
@@ -84,6 +85,7 @@ public class Server {
 	 */
 	private static synchronized void loginTogame(ClientInt client) {
 		gameControllerMap.get(startingGames.get(0)).addPlayer(client);
+		gameControllerMap.get(startingGames.get(0)).notifyGameLoading(client);
 		gameControllerMap.get(startingGames.get(0)).notifyPlayerJoined(client);
 		client.setController(gameControllerMap.get(startingGames.get(0)));
 		if (startingGames.get(0).getPlayersNumber() == 2 && !startingGames.get(0).isComplete())

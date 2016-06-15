@@ -1,7 +1,6 @@
 package view.server;
 
 import java.io.IOException;
-import java.io.*;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,23 +12,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import control.Controller;
+import model.market.OnSaleItem;
 import model.player.Player;
 import view.p2pdialogue.combinedrequest.RequestMaxPlayersNumber;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
 import view.p2pdialogue.notify.NotifyPlayerJoined;
+import view.p2pdialogue.notify.NotifyPlayerUpdate;
 import view.p2pdialogue.notify.NotifyPlayersList;
 import view.p2pdialogue.notify.NotifyYourTurn;
 import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestWhatActionToDo;
+import view.p2pdialogue.request.RequestWhichItemToSell;
 import view.p2pdialogue.request.RequestWichMapToUse;
 
 public class SocketClient implements ClientInt {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5080948966898010492L;
 	private Controller controller;
 	private Socket clientSocket;
 	private InputStream inputStream;
@@ -158,18 +156,6 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean askPlayerConfirmation() throws IOException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void sendPlayersList(List<Player> players) throws IOException {
 		out.writeObject(new NotifyPlayersList(players));
 		out.flush();
@@ -179,5 +165,28 @@ public class SocketClient implements ClientInt {
 	public void notifyPlayerJoined(Player player) throws IOException {
 		out.writeObject(new NotifyPlayerJoined(player));
 		out.flush();		
+	}
+
+	@Override
+	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
+		
+	}
+
+	@Override
+	public void askWichItemToSell() throws IOException {
+		out.writeObject(new RequestWhichItemToSell());
+		out.flush();
+		try{
+			String item=(String)in.readObject();
+			
+		}catch(ClassNotFoundException e){
+			logger.log(Level.SEVERE, e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public void updatePlayer(Player player) throws IOException {
+		out.writeObject(new NotifyPlayerUpdate(player));
+		out.flush();
 	}
 }

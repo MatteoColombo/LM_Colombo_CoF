@@ -17,7 +17,7 @@ import model.market.Market;
 import model.player.*;
 
 public class TestMarket {
-	private List<Color> colorList;
+	/*private List<Color> colorList;
 	private List<Player> allPlayers;
 	private Market market;
 
@@ -233,5 +233,5 @@ public class TestMarket {
 		assertEquals(true, goodsBundle.getSellingPermissionCards().isEmpty());
 		assertEquals(permissionCard2, player.getPermissionCard().get(1));
 	}
-
+*/
 }

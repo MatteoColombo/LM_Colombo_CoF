@@ -2,6 +2,8 @@ package model.player;
 
 import java.io.Serializable;
 
+import model.market.Soldable;
+
 /**
  * A class that represents the Assistants owned by a Player.
  * <p>
@@ -12,7 +14,7 @@ import java.io.Serializable;
  * @author Davide Cavallini
  * @see Player
  */
-public class Assistants implements Serializable {
+public class Assistants implements Serializable,Soldable {
 
 	/**
 	 * 
@@ -62,6 +64,12 @@ public class Assistants implements Serializable {
 	 */
 	public void decreaseAmount(int value) {
 		this.amount -= value;
+	}
+
+	@Override
+	public boolean equals(Soldable item) {
+		
+		return false;
 	}
 
 }

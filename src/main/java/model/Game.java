@@ -7,6 +7,7 @@ import java.util.List;
 import model.board.Board;
 import model.exceptions.ConfigurationErrorException;
 import model.exceptions.XMLFileException;
+import model.market.Market;
 import model.player.Player;
 import view.server.ClientInt;
 
@@ -26,7 +27,7 @@ public class Game extends Thread {
 	private int maxNumberOfPlayers;
 	private int choosenMap;
 	private ClientInt initialClient;
-	//private Market market;
+	private Market market;
 
 	public Game(Configuration gameConfig, ClientInt initialClient) throws ConfigurationErrorException {
 		this.config = gameConfig;
@@ -113,10 +114,10 @@ public class Game extends Thread {
 				winningPlayer = i;
 				someoneWon = true;
 			}
-			/*if(!someoneWon){
+			if(!someoneWon){
 				this.market=new Market(players);
 				this.market.runMarket();
-			}*/
+			}
 		}
 		// This loop is for the last round after that a player placed his 10th
 		// emporium
@@ -171,7 +172,7 @@ public class Game extends Thread {
 		return players;
 	}
 	
-	/*public Market getMarket(){
+	public Market getMarket(){
 		return this.market;
-	}*/
+	}
 }

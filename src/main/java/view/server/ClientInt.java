@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import control.Controller;
+import model.market.OnSaleItem;
 import model.player.Player;
 
 /**
@@ -82,7 +83,13 @@ public interface ClientInt {
 
 	public void notifyAnotherPlayerTurn() throws IOException;
 
-	public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException;
+	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException;
+	
+	public void askWichItemToSell() throws IOException;
+	
+	public void updatePlayer(Player player) throws IOException;
+	
+	//public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException;
 
-	public boolean askPlayerConfirmation() throws IOException;
+	//public boolean askPlayerConfirmation() throws IOException;
 }

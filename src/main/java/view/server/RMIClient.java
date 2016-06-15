@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import client.view.RMIServerManager;
 import control.Controller;
+import model.market.OnSaleItem;
 import model.player.Player;
 import view.p2pdialogue.combinedrequest.RequestMaxPlayersNumber;
 import view.p2pdialogue.notify.NotifyIllegalAction;
@@ -20,7 +21,7 @@ public class RMIClient implements ClientInt {
 	private String clientName;
 	private Logger logger = Logger.getGlobal();
 
-	public RMIClient(RMIServerManagerInterface client){
+	public RMIClient(RMIServerManagerInterface client) {
 		this.client = client;
 	}
 
@@ -36,7 +37,7 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void askPlayerWhatActionToDo() throws IOException {
-		String action= client.requestAnswer(new RequestWhatActionToDo());
+		String action = client.requestAnswer(new RequestWhatActionToDo());
 		controller.performAction(this, action);
 	}
 
@@ -62,7 +63,7 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void close() {
-		//TODO
+		// TODO
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public boolean isConnected() {
-		//TODO
+		// TODO
 		return true;
 	}
 
@@ -105,25 +106,31 @@ public class RMIClient implements ClientInt {
 	}
 
 	@Override
-	public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean askPlayerConfirmation() throws IOException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void sendPlayersList(List<Player> players) throws IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void notifyPlayerJoined(Player player) throws IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void notifyPlayerJoined(Player player) throws IOException {
+	public void askWichItemToSell() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updatePlayer(Player player) throws IOException {
 		// TODO Auto-generated method stub
 		
 	}

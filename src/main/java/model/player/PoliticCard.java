@@ -6,13 +6,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
+import model.market.Soldable;
+
 /**
  * TODO JavaDoc
  * 
  * @author Davide Cavallini
  *
  */
-public class PoliticCard implements Serializable{
+public class PoliticCard implements Serializable, Soldable{
 
 	/**
 	 * 
@@ -59,6 +61,12 @@ public class PoliticCard implements Serializable{
 	 */
 	public Color getCardColor() {
 		return this.color;
+	}
+
+	@Override
+	public boolean equals(Soldable item) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

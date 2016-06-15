@@ -1,6 +1,7 @@
 package view.server;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;

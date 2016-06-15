@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import model.action.AShufflePermissionCards;
 import model.action.Action;
 import model.board.ColorConstants;
@@ -26,11 +26,11 @@ public class TestAShufflePermissionCards {
 	@Before
 	public void setUp() throws Exception {
 		List<City> cities = new ArrayList<City>();
-		cities.add(new City(Color.AQUA, "Arkon", new RewardCity()));
-		cities.add(new City(Color.GOLD, "Burgen", new RewardCity()));
-		cities.add(new City(Color.SILVER, "Castrum", new RewardCity()));
-		cities.add(new City(Color.SILVER, "Dorful", new RewardCity()));
-		cities.add(new City(Color.BROWN, "Esti", new RewardCity()));
+		cities.add(new City(Color.CYAN, "Arkon", new RewardCity()));
+		cities.add(new City(Color.YELLOW, "Burgen", new RewardCity()));
+		cities.add(new City(Color.GRAY, "Castrum", new RewardCity()));
+		cities.add(new City(Color.GRAY, "Dorful", new RewardCity()));
+		cities.add(new City(Color.RED, "Esti", new RewardCity()));
 		plains = new Region("plains", cities, null, 2);
 	}
 

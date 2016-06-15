@@ -2,7 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +21,11 @@ public class TestRegion {
 	Council council;
 	@Before
 	public void setUp() throws Exception {
-		cities.add(new City(Color.AQUA, "Arkon", new RewardCity()));
-		cities.add(new City(Color.GOLD, "Burgen", new RewardCity()));
-		cities.add(new City(Color.SILVER, "Castrum", new RewardCity()));
-		cities.add(new City(Color.SILVER, "Dorful", new RewardCity()));
-		cities.add(new City(Color.BROWN, "Esti", new RewardCity()));
+		cities.add(new City(Color.BLUE, "Arkon", new RewardCity()));
+		cities.add(new City(Color.YELLOW, "Burgen", new RewardCity()));
+		cities.add(new City(Color.GRAY, "Castrum", new RewardCity()));
+		cities.add(new City(Color.GRAY, "Dorful", new RewardCity()));
+		cities.add(new City(Color.RED, "Esti", new RewardCity()));
 		
 		List<Councilor> members = new ArrayList<Councilor>();
 		members.add(new Councilor(Color.BLACK));

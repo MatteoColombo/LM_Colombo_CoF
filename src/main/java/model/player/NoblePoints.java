@@ -1,5 +1,7 @@
 package model.player;
 
+import java.io.Serializable;
+
 /**
  * A class that represents the NoblePoints owned by a Player.
  * <p>
@@ -9,7 +11,11 @@ package model.player;
  * @author Davide Cavallini
  * @see Player
  */
-public class NoblePoints {
+public class NoblePoints implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int amount;
 
 	/**

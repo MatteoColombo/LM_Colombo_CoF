@@ -179,5 +179,17 @@ public class Cli implements ViewInterface {
 		return null;
 	}
 
+	@Override
+	public void showGame() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showRoom() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

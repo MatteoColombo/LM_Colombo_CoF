@@ -1,6 +1,8 @@
 package model.player;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
@@ -10,8 +12,13 @@ import java.util.Random;
  * @author Davide Cavallini
  *
  */
-public class PoliticCard {
-	private Color color;
+public class PoliticCard implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3808938190487455501L;
+	private transient Color color;
 	private boolean isMultipleColor;
 	
 	public PoliticCard(Color color) {

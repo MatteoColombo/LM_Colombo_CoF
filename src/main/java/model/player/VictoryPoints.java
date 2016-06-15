@@ -1,5 +1,7 @@
 package model.player;
 
+import java.io.Serializable;
+
 /**
  * A class that represents the VictoryPoints owned by a Player.
  * <p>
@@ -9,7 +11,12 @@ package model.player;
  * @author Davide Cavallini
  * @see Player
  */
-public class VictoryPoints {
+public class VictoryPoints implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5274845368512859920L;
 	private int amount;
 
 	/**

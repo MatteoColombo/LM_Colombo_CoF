@@ -1,5 +1,7 @@
 package model.player;
 
+import java.io.Serializable;
+
 /**
  * A class that represents the Assistants owned by a Player.
  * <p>
@@ -10,7 +12,12 @@ package model.player;
  * @author Davide Cavallini
  * @see Player
  */
-public class Assistants {
+public class Assistants implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9031524695299977578L;
 	private int amount;
 
 	/**

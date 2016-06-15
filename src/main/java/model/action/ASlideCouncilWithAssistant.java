@@ -1,6 +1,6 @@
 package model.action;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 
 import model.board.council.Council;
 import model.board.council.CouncilorPool;

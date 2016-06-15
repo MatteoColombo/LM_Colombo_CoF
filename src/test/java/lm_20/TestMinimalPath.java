@@ -2,7 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -19,12 +19,12 @@ public class TestMinimalPath {
 	@Test
 	public void test() throws Exception{
 		ArrayList<Color> colors = new ArrayList<Color>();
-		colors.add(Color.ALICEBLUE);
-		colors.add(Color.ANTIQUEWHITE);
-		colors.add(Color.AQUA);
-		colors.add(Color.AQUAMARINE);
-		colors.add(Color.AZURE);
-		colors.add(Color.BEIGE);
+		colors.add(Color.BLACK);
+		colors.add(Color.WHITE);
+		colors.add(Color.YELLOW);
+		colors.add(Color.DARK_GRAY);
+		colors.add(Color.GREEN);
+		colors.add(Color.BLUE);
 			MapLoader ml = new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors));
 			City first=ml.getRegions().get(1).getCities().get(1);
 			System.out.println(first.getName());

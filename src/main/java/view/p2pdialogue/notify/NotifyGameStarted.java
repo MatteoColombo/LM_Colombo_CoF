@@ -8,8 +8,7 @@ public class NotifyGameStarted implements Notify {
 
 	@Override
 	public void execute(ViewInterface view) {
-		// TODO Auto-generated method stub
-
+		view.showGame();
 	}
 
 }

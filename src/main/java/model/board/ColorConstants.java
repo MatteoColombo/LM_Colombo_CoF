@@ -1,6 +1,6 @@
 package model.board;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,6 +14,6 @@ public class ColorConstants {
 	}
 	
 	public static List<Color> getCardsColors() {
-		return Arrays.asList(Color.BLACK, Color.WHITE, Color.ORANGE, Color.CYAN, Color.PINK, Color.PURPLE);	
+		return Arrays.asList(Color.BLACK, Color.WHITE, Color.ORANGE, Color.CYAN, Color.PINK, Color.BLUE);	
 	}
 }

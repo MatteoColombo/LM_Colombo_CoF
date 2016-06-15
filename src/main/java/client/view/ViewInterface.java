@@ -23,6 +23,10 @@ public interface ViewInterface{
 	
 	public void showGetConnectionType();
 	
+	public void showGame();
+	
+	public void showRoom();
+	
 	/**
 	 * this give to the caller (a Dialogue probably) the access to the local model,
 	 * and update the changes done on the model in the server.

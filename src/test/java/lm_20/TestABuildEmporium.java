@@ -2,7 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,10 +58,10 @@ public class TestABuildEmporium {
 		bColorRewards = new ArrayList<>();
 		bKingRewards = new ArrayList<>();
 		bRegionRewards = new ArrayList<>();
-		bColorRewards.add(new BoardColorReward(Color.valueOf("#008000"), 35));
-		bColorRewards.add(new BoardColorReward(Color.valueOf("#2268df"), 15));
-		bColorRewards.add(new BoardColorReward(Color.valueOf("#ffd700"), 50));
-		bColorRewards.add(new BoardColorReward(Color.valueOf("#f44343"), 25));
+		bColorRewards.add(new BoardColorReward(Color.decode("#008000"), 35));
+		bColorRewards.add(new BoardColorReward(Color.decode("#2268df"), 15));
+		bColorRewards.add(new BoardColorReward(Color.decode("#ffd700"), 50));
+		bColorRewards.add(new BoardColorReward(Color.decode("#f44343"), 25));
 		this.mLoader = new MapLoader("src/main/resources/map.xml", pool);
 		bRegionRewards.add(new BoardRegionReward(this.mLoader.getRegions().get(0), 25));
 		bRegionRewards.add(new BoardRegionReward(this.mLoader.getRegions().get(1), 45));

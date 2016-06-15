@@ -1,8 +1,7 @@
 package lm_20;
 
 import static org.junit.Assert.*;
-
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +24,12 @@ public class TestBonus {
 	@Before
 	public void initialization() {
 		colorList = new ArrayList<Color>();
-		colorList.add(Color.ALICEBLUE);
-		colorList.add(Color.ANTIQUEWHITE);
-		colorList.add(Color.AQUA);
-		colorList.add(Color.AQUAMARINE);
-		colorList.add(Color.AZURE);
-		colorList.add(Color.BEIGE);
+		colorList.add(Color.BLACK);
+		colorList.add(Color.WHITE);
+		colorList.add(Color.YELLOW);
+		colorList.add(Color.DARK_GRAY);
+		colorList.add(Color.GREEN);
+		colorList.add(Color.BLUE);
 
 		p = new Player(10, 1, 6, 10, colorList, 0, 0);
 	}

@@ -13,7 +13,6 @@ import client.view.SocketServerManager;
 import client.view.ViewInterface;
 import fx.view.ConfigGameController;
 import fx.view.GameController;
-//import fx.view.GameController;
 import fx.view.LoginController;
 import client.control.Controller;
 import client.model.GameProperty;
@@ -49,6 +48,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Council of Four");
+		//showGame();
 		showLogin();
 	}
 	
@@ -58,7 +58,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	}
 
 	
-	public void showRoom() {
+	public void showWaitingRoom() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/Room.fxml"));
@@ -108,6 +108,14 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 	
+	
+	@Override
+	public void showRoom() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public void showGame() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -162,18 +170,17 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	
 	@Override
 	public void printAskPlayersNumber(int max) {
-
+		// TODO remove
 	}
 
 	@Override
 	public void showInitMenu() {
-		showRoom();
+		// TODO remove this
 	}
 
 	@Override
 	public void showGetConnectionType() {
-		// TODO Auto-generated method stub
-		
+		// TODO remove this
 	}
 
 	@Override

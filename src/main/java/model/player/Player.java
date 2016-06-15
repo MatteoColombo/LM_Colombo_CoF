@@ -1,11 +1,12 @@
 package model.player;
 
-import javafx.scene.paint.Color;
 import java.util.List;
+import java.awt.Color;
 
 import model.Configuration;
 import view.server.ClientInt;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -13,19 +14,24 @@ import java.util.ArrayList;
  * @author Davide Cavallini
  *
  */
-public class Player {
+public class Player implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2872730191434091631L;
 	private Coins coins;
 	private Assistants assistants;
 	private VictoryPoints victoryPoints;
 	private NoblePoints noblePoints;
 	private List<PoliticCard> politicCard;
-	private List<PermissionCard> permissionCard;
-	private List<Emporium> emporium;
-	private List<Color> pickedColours;
-	private int mainActions;
-	private boolean extraAction;
-	private int DEFAULTMAINACTION;
-	private ClientInt client;
+	private transient List<PermissionCard> permissionCard;
+	private transient List<Emporium> emporium;
+	private transient List<Color> pickedColours;
+	private transient int mainActions;
+	private transient boolean extraAction;
+	private transient int DEFAULTMAINACTION;
+	private transient ClientInt client;
 	private boolean isSuspended;
 	private String name;
 

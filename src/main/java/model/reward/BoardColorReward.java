@@ -1,6 +1,6 @@
 package model.reward;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 
 import model.board.*;
 import model.player.*;

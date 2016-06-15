@@ -2,7 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -17,10 +17,10 @@ public class TestCouncilorPool {
 
 	@Before
 	public void setUp() throws Exception {
-		colorList.add(Color.ALICEBLUE);
-		colorList.add(Color.ANTIQUEWHITE);
-		colorList.add(Color.AQUA);
-		colorList.add(Color.AQUAMARINE);
+		colorList.add(Color.WHITE);
+		colorList.add(Color.BLACK);
+		colorList.add(Color.RED);
+		colorList.add(Color.BLUE);
 	}
 	
 	@Test

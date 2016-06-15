@@ -3,7 +3,7 @@ package lm_20;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import model.board.city.City;
 import model.player.Player;
 import model.reward.Reward;
@@ -14,9 +14,9 @@ public class TestCity {
 	@Test
 	public void testGetter() {
 		Reward reward = new RewardCity();
-		City castrum = new City(Color.SILVER, "Castrum", reward);
+		City castrum = new City(Color.GRAY, "Castrum", reward);
 		assertEquals(castrum.getName(), "Castrum");
-		assertEquals(castrum.getColor(), Color.SILVER);
+		assertEquals(castrum.getColor(), Color.GRAY);
 		assertEquals(castrum.isCapital(), false);
 		assertEquals(castrum.getNumberOfEmporium(), 0);
 		assertEquals(castrum.getReward(), reward);
@@ -24,9 +24,9 @@ public class TestCity {
 	
 	@Test
 	public void testConnections() {
-		City castrum = new City(Color.SILVER, "Castrum", new RewardCity());
-		City milan = new City(Color.GOLD, "Milan", new RewardCity());
-		City rome = new City(Color.AQUA, "Milan", new RewardCity());
+		City castrum = new City(Color.GRAY, "Castrum", new RewardCity());
+		City milan = new City(Color.YELLOW, "Milan", new RewardCity());
+		City rome = new City(Color.BLUE, "Milan", new RewardCity());
 		
 		castrum.addConnection(milan);
 		assertEquals(castrum.isConnectedTo(milan), true);
@@ -36,7 +36,7 @@ public class TestCity {
 	
 	@Test
 	public void testEmporium() {
-		City castrum = new City(Color.SILVER, "Castrum", new RewardCity());
+		City castrum = new City(Color.GRAY, "Castrum", new RewardCity());
 		Player p = new Player(0, 0, 0, 10, null, 0, 0);
 		castrum.addEmporium(p.getEmporium().remove(0));
 		assertEquals(castrum.hasEmporiumOfPlayer(p), true);

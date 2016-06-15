@@ -1,6 +1,6 @@
 package model.board.council;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 
 public class CouncilorColorAvailability {
 	private Color concColor;

@@ -2,7 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,12 +27,12 @@ public class TestMapExplorer {
 	@Before
 	public void setUp() throws Exception {
 		colors = new ArrayList<Color>();
-		colors.add(Color.ALICEBLUE);
-		colors.add(Color.ANTIQUEWHITE);
-		colors.add(Color.AQUA);
-		colors.add(Color.AQUAMARINE);
-		colors.add(Color.AZURE);
-		colors.add(Color.BEIGE);
+		colors.add(Color.BLACK);
+		colors.add(Color.WHITE);
+		colors.add(Color.YELLOW);
+		colors.add(Color.DARK_GRAY);
+		colors.add(Color.GREEN);
+		colors.add(Color.BLUE);
 		ml = new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors));
 		plains = ml.getRegions().get(1);
 		mountain = ml.getRegions().get(2);

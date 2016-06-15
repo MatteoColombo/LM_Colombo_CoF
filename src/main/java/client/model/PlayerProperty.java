@@ -19,7 +19,7 @@ public class PlayerProperty {
 	private IntegerProperty assistants;
 	private IntegerProperty nobility;
 	private IntegerProperty victory;
-	private ObservableList<ObjectProperty<PoliticCard>> politicCards;
+	private ObservableList<StringProperty> politicCards;
 	private ObservableList<ObjectProperty<PermissionCard>> permissions;
 	
 	public PlayerProperty() {
@@ -33,8 +33,8 @@ public class PlayerProperty {
 	}
 	
 	/**
-	 * since permission cards change not so often as the others,
-	 * this distinction imporve performance
+	 * since permission cards changes not so often as the others,
+	 * this distinction imprve performance
 	 * @param player
 	 * @return
 	 */
@@ -46,7 +46,7 @@ public class PlayerProperty {
 		
 		politicCards.clear();
 		for(PoliticCard card: player.getPoliticCard()) {
-			politicCards.add(new SimpleObjectProperty<PoliticCard>(card));
+			politicCards.add(new SimpleStringProperty(card.getCardColor().toString()));
 		}	
 		return this;
 	}
@@ -117,7 +117,7 @@ public class PlayerProperty {
 		this.coins.set(nobility);
 	}
 	
-	public ObservableList<ObjectProperty<PoliticCard>> getPoliticCards() {
+	public ObservableList<StringProperty> getPoliticCards() {
 		return this.politicCards;
 	}
 	

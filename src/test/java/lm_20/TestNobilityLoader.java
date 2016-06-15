@@ -2,7 +2,7 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +18,12 @@ public class TestNobilityLoader {
 	@Test
 	public void testNobilityLoader() throws Exception{
 		List<Color> colors = new ArrayList<Color>();
-		colors.add(Color.ALICEBLUE);
-		colors.add(Color.ANTIQUEWHITE);
-		colors.add(Color.AQUA);
-		colors.add(Color.AQUAMARINE);
-		colors.add(Color.AZURE);
-		colors.add(Color.BEIGE);
+		colors.add(Color.BLACK);
+		colors.add(Color.WHITE);
+		colors.add(Color.YELLOW);
+		colors.add(Color.DARK_GRAY);
+		colors.add(Color.GREEN);
+		colors.add(Color.BLUE);
 		Player p= new Player(10, 1, 6, 10, colors, 0, 0);
 		NobilityLoader nl = new NobilityLoader("src/main/resources/nobtrack.xml");
 		List<Reward> rew= nl.getNobilityTrack();

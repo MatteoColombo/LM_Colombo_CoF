@@ -1,6 +1,7 @@
 package view.server;
 
 import java.io.IOException;
+import java.io.*;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,6 +26,10 @@ import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWichMapToUse;
 
 public class SocketClient implements ClientInt {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5080948966898010492L;
 	private Controller controller;
 	private Socket clientSocket;
 	private InputStream inputStream;

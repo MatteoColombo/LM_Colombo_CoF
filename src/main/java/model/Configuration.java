@@ -1,6 +1,6 @@
 package model;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,11 +115,11 @@ public class Configuration {
 		colorTranslation = new HashMap<>();
 		NodeList colors = (NodeList) xpath.compile(COLORPATH + "color/value").evaluate(xmlDoc, XPathConstants.NODESET);
 		for (int i = 0; i < colors.getLength(); i++)
-			colorsList.add(Color.valueOf((colors.item(i).getFirstChild().getNodeValue())));
+			colorsList.add(Color.decode((colors.item(i).getFirstChild().getNodeValue())));
 		NodeList names = (NodeList) xpath.compile(COLORPATH + "color/name").evaluate(xmlDoc, XPathConstants.NODESET);
 		for (int i = 0; i < colors.getLength(); i++)
 			colorTranslation.put(names.item(i).getFirstChild().getNodeValue(),
-					Color.valueOf(colors.item(i).getFirstChild().getNodeValue()));
+					Color.decode(colors.item(i).getFirstChild().getNodeValue()));
 	}
 
 	public void loadCouncil(XPath xpath, Document xmlDoc) throws XPathExpressionException {
@@ -161,7 +161,7 @@ public class Configuration {
 		NodeList values = (NodeList) xpath.compile(COLORREWARDPATH + "value").evaluate(xmlDoc, XPathConstants.NODESET);
 		NodeList colors = (NodeList) xpath.compile(COLORREWARDPATH + "color").evaluate(xmlDoc, XPathConstants.NODESET);
 		for (int i = 0; i < values.getLength(); i++)
-			colorRewards.put(Color.valueOf(colors.item(i).getFirstChild().getNodeValue()),
+			colorRewards.put(Color.decode(colors.item(i).getFirstChild().getNodeValue()),
 					Integer.parseInt(values.item(i).getFirstChild().getNodeValue()));
 	}
 

@@ -1,5 +1,7 @@
 package model.player;
 
+import java.io.Serializable;
+
 /**
  * A class that represents the Coins owned by a Player.
  * <p>
@@ -10,7 +12,12 @@ package model.player;
  * @author Davide Cavallini
  * @see Player
  */
-public class Coins {
+public class Coins implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5634469152427209044L;
 	private int amount;
 
 	/**

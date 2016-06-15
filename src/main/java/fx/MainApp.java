@@ -111,8 +111,20 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	
 	@Override
 	public void showRoom() {
-		// TODO Auto-generated method stub
-		
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Room.fxml"));
+			AnchorPane game = (AnchorPane) loader.load();
+			Scene scene = new Scene(game);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			// Give the controller access to the main app.
+			RoomController roomController = loader.getController();
+			roomController.setMainApp(this);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -219,6 +231,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public GameProperty getLocalModel() {
-		return this.localGame;
+		return localGame;
 	}
 }

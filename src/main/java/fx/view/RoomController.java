@@ -10,22 +10,23 @@ import javafx.scene.control.TableView;
 
 public class RoomController {
 	
-	@FXML private TableView<PlayerProperty> playerTable;
-	@FXML private TableColumn<PlayerProperty, String> playerColumn;
+	@FXML private TableView<PlayerProperty> playerTable = new TableView<>();
+	@FXML private TableColumn<PlayerProperty, String> playerColumn = new TableColumn<>();
 	
 	private MainApp mainApp;
 	
 	public void setMainApp(MainApp mainApp) throws IOException{
 		this.mainApp = mainApp;
-		playerTable.setItems(mainApp.getLocalModel().getPlayers());
+		this.playerTable.setItems(mainApp.getLocalModel().getPlayers());
+		playerColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
+
 	}
 	
-	@FXML private void initialize() {
-		playerColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
-		
+	@FXML private void Initialize() {
 	}
 	
 	@FXML private void handleDisconnect() {
+		// TODO complete
 		mainApp.showLogin();
 	}
 }

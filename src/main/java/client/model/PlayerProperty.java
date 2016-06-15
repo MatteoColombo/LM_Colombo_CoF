@@ -43,6 +43,7 @@ public class PlayerProperty {
 	 * @return
 	 */
 	public PlayerProperty setAllButPermissions(Player player) {
+		name.set(player.getName());
 		assistants.set(player.getAssistants().getAmount());
 		victory.set(player.getVictoryPoints().getAmount());
 		coins.set(player.getCoins().getAmount());

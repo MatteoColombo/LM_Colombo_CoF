@@ -95,7 +95,15 @@ public class GameController {
 	
 	@FXML private void handleTestAction() throws IOException {
 		mainApp.sendMsg("slide -council 1 -color pink");
-		System.out.println("i have done an action");
+	}	
+	@FXML private void handleTestAction2() throws IOException {
+		mainApp.sendMsg("slide -council 1 -color cyan");
+	}	
+	@FXML private void handleTestAction3() throws IOException {
+		mainApp.sendMsg("slide -council 1 -color black");
+	}	
+	@FXML private void handleTestAction4() throws IOException {
+		mainApp.sendMsg("slide -council 1 -color white");
 	}
 	
 }

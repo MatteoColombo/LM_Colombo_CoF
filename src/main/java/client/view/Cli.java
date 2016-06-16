@@ -2,17 +2,10 @@ package client.view;
 
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Scanner;
 
 import client.model.GameProperty;
-import model.Configuration;
-import model.board.Board;
-import model.board.ColorConstants;
 import model.board.Region;
 import model.board.city.City;
-import model.exceptions.ConfigurationErrorException;
-import model.exceptions.XMLFileException;
-import model.player.Emporium;
 import model.player.Player;
 import model.reward.Bonus;
 
@@ -34,6 +27,8 @@ public class Cli implements ViewInterface {
 	public static final String ANSI_PURPLE = "\u001B[35m";
 	public static final String ANSI_CYAN = "\u001B[36m";
 	public static final String ANSI_WHITE = "\u001B[37m";
+	public static final String BLOCK = "\u2588\u2588";
+	public static final String SEPARATOR = "---------------------------------------";
 
 	private PrintWriter writer;
 
@@ -41,6 +36,7 @@ public class Cli implements ViewInterface {
 		writer= new PrintWriter(System.out);
 	}
 
+	@Override
 	public void showGetConnectionType() {
 		writer.print("                             W E L C O M E !\n" + "\n" + "\n"
 				+ "                    Select how do you want to connect:\n"
@@ -49,6 +45,7 @@ public class Cli implements ViewInterface {
 	}
 
 	// thanks to www.chris.com for awsome ascii art
+	@Override
 	public void showInitMenu() {
 		writer.println("" + "                                  /   \\       \n"
 				+ " _                        )      ((   ))     (\n"
@@ -72,15 +69,15 @@ public class Cli implements ViewInterface {
 
 	// this is just a trial for print colored blocks
 	public void printCouncil() {
-		writer.println(ANSI_RED + "\u2588\u2588" + ANSI_RESET + ANSI_YELLOW + "\u2588\u2588" + ANSI_RESET + ANSI_BLUE
-				+ "\u2588\u2588" + ANSI_RESET + ANSI_WHITE + "\u2588\u2588" + ANSI_RESET);
+		writer.println(ANSI_RED + BLOCK + ANSI_RESET + ANSI_YELLOW + BLOCK + ANSI_RESET + ANSI_BLUE
+				+ BLOCK + ANSI_RESET + ANSI_WHITE + BLOCK + ANSI_RESET);
 		writer.flush();
 	}
-
+	@Override
 	public void printCities(List<Region> regions) {
 
 		for (Region region : regions) {
-			writer.println("---------------------------------------");
+			writer.println(SEPARATOR);
 			for (City city : region.getCities()) {
 				writer.print("| ");
 				printBonus(city);
@@ -91,7 +88,7 @@ public class Cli implements ViewInterface {
 				writer.println();
 			}
 		}
-		writer.println("---------------------------------------");
+		writer.println(SEPARATOR);
 		writer.flush();
 	}
 
@@ -100,12 +97,12 @@ public class Cli implements ViewInterface {
 		int index = 1;
 		for (Player player : players) {
 			writer.println(
-					"---------------------------------------\n" + "| Player " + index + "\n" + "| Victory Points: "
+					SEPARATOR + "\n| Player " + index + "\n" + "| Victory Points: "
 							+ player.getVictoryPoints().getAmount() + " Coins: " + player.getCoins().getAmount()
 							+ " Assistants: " + player.getAssistants().getAmount() + "\n" + "| Cards in hand: "
 							+ player.getPoliticCard().size() + "Nobility: " + player.getNoblePoints().getAmount());
 		}
-		writer.println("---------------------------------------");
+		writer.println(SEPARATOR);
 	}
 
 	private void printBonus(City city) {
@@ -124,21 +121,6 @@ public class Cli implements ViewInterface {
 		writer.print(") ");
 	}
 
-	/*
-	public static void main(String[] args) throws ConfigurationErrorException {
-		Cli cli = new Cli();
-		cli.showInitMenu();
-		Player p = new Player(0, 0, 0, 0, null, 0, 0);
-		try {
-			Board board = new Board(new Configuration(), 0);
-			for (City city : board.getMap().getCitiesList()) {
-				city.addEmporium(new Emporium(p));
-			}
-			cli.printCities(board.getRegions());
-		} catch (XMLFileException e) {
-			e.printStackTrace();
-		}
-	}*/
 
 	@Override
 	public void printAskPlayersNumber(int max) {
@@ -191,5 +173,8 @@ public class Cli implements ViewInterface {
 		
 	}
 
-	
+	public static void main(String[] args){
+		new Cli().printCouncil();;
+		
+	}
 }

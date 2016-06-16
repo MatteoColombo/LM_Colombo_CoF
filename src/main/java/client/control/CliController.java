@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import client.view.Cli;
 import client.view.KeyboardListener;
@@ -32,6 +33,7 @@ public class CliController implements Runnable, Controller {
 	private transient boolean waitingForKeyboard;
 	private transient List<String> combinedRequestsQueue;
 	private transient List<Dialogue> combinedDialogue;
+	private transient Logger logger= Logger.getGlobal();
 	
 	public CliController() {
 		view = new Cli();
@@ -73,7 +75,7 @@ public class CliController implements Runnable, Controller {
 				serverManager.publishMessage(prec + message);
 				this.combinedRequestsQueue.clear();
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE, "Connection lost", e);
 			}
 			this.canWrite = false;
 			this.waitingForKeyboard= false;
@@ -100,7 +102,7 @@ public class CliController implements Runnable, Controller {
 				view.showGetConnectionType();
 				connectionType = Integer.parseInt(keyboard.nextLine());
 			} catch (NumberFormatException e) {
-				
+				logger.log(Level.SEVERE, "Error, you didn't insert a number", e);
 			}
 		} while (connectionType != 1 && connectionType != 2);
 		try {
@@ -124,8 +126,7 @@ public class CliController implements Runnable, Controller {
 			}
 
 		} catch (IOException | NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Connection problem, the application will terminate", e);
 		}
 	}
 }

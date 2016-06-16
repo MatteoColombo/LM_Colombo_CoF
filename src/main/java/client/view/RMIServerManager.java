@@ -3,6 +3,8 @@ package client.view;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import client.control.Controller;
 import view.p2pdialogue.Dialogue;
@@ -12,8 +14,9 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 
 	private static final long serialVersionUID = 2758599266722476388L;
 	private Controller controller;
-	String message;
-
+	private String message;
+	private transient Logger logger= Logger.getGlobal();
+	
 	public RMIServerManager(Controller controller) throws RemoteException {
 		this.controller = controller;
 	}
@@ -28,7 +31,7 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 					wait();	
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
-					e.printStackTrace();
+					logger.log(Level.FINEST, "", e);
 				}
 			}
 

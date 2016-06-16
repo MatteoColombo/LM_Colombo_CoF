@@ -74,14 +74,14 @@
                 <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleTestAction" prefWidth="120.0" text="Slide Council" />
-                  <Button mnemonicParsing="false" prefWidth="120.0" text="Slide Council" GridPane.columnIndex="1" />
-                  <Button mnemonicParsing="false" prefWidth="120.0" text="Buy Permission" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" prefWidth="120.0" text="But Assistant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" prefWidth="120.0" text="Shuffle Perm." GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" prefWidth="120.0" text="Build Emporium" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" prefWidth="120.0" text="Extra Action" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Button mnemonicParsing="false" prefWidth="120.0" text="Build with king" GridPane.rowIndex="3" />
+                  <Button fx:id="mainActionButton1" mnemonicParsing="false" onAction="#handleTestAction" prefWidth="120.0" text="Slide Council" />
+                  <Button fx:id="sideActionButton1" mnemonicParsing="false" prefWidth="120.0" text="Slide Council" GridPane.columnIndex="1" />
+                  <Button fx:id="mainActionButton2" mnemonicParsing="false" prefWidth="120.0" text="Buy Permission" GridPane.rowIndex="1" />
+                  <Button fx:id="sideActionButton2" mnemonicParsing="false" prefWidth="120.0" text="But Assistant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="sideActionButton3" mnemonicParsing="false" prefWidth="120.0" text="Shuffle Perm." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="mainActionButton3" mnemonicParsing="false" prefWidth="120.0" text="Build Emporium" GridPane.rowIndex="2" />
+                  <Button fx:id="sideActionButton4" mnemonicParsing="false" prefWidth="120.0" text="Extra Action" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button fx:id="mainActionButton4" mnemonicParsing="false" prefWidth="120.0" text="Build with king" GridPane.rowIndex="3" />
                </children>
                <HBox.margin>
                   <Insets left="10.0" />

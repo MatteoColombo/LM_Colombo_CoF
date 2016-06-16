@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RMIServerManager;
@@ -17,7 +16,6 @@ import fx.view.GameController;
 import fx.view.LoginController;
 import client.control.Controller;
 import client.model.GameProperty;
-import client.model.PlayerProperty;
 import fx.view.RoomController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -28,7 +26,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.board.Region;
-import model.player.Player;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
 

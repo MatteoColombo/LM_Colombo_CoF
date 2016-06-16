@@ -8,8 +8,8 @@ public class NotifyYourTurn implements Notify {
 
 	@Override
 	public void execute(ViewInterface view) {
-		// TODO Auto-generated method stub
-		
+		view.getLocalModel().canNotDoMainAction().set(false);
+		view.getLocalModel().canNotDoSideAction().set(false);
 	}
 
 }

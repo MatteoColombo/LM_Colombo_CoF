@@ -10,9 +10,16 @@ import control.Controller;
 import model.market.OnSaleItem;
 import model.player.Player;
 import view.p2pdialogue.combinedrequest.RequestMaxPlayersNumber;
+import view.p2pdialogue.notify.NotifyGameLoading;
+import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
+import view.p2pdialogue.notify.NotifyPlayerJoined;
+import view.p2pdialogue.notify.NotifyPlayersList;
+import view.p2pdialogue.notify.NotifyUpdatePlayer;
+import view.p2pdialogue.notify.NotifyYourTurn;
 import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestWhatActionToDo;
+import view.p2pdialogue.request.RequestWhichItemToSell;
 import view.p2pdialogue.request.RequestWichMapToUse;
 
 public class RMIClient implements ClientInt {
@@ -63,7 +70,7 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void close() {
-		// TODO
+		
 	}
 
 	@Override
@@ -77,26 +84,28 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public boolean isConnected() {
-		// TODO
+		/*try{
+			client.testConnection();
+			return true;
+		}catch(IOExcetion e){
+			logger.log(Level.SEVERE, e.getMessage(), e);
+		}*/
 		return true;
 	}
 
 	@Override
 	public void notifyGameLoading() throws IOException {
-		// TODO Auto-generated method stub
-
+		client.sendNotify(new NotifyGameLoading());
 	}
 
 	@Override
 	public void notifyGameStarted() throws IOException {
-		// TODO Auto-generated method stub
-
+		client.sendNotify(new NotifyGameStarted());
 	}
 
 	@Override
 	public void notifyYourTurn() throws IOException {
-		// TODO Auto-generated method stub
-
+		client.sendNotify(new NotifyYourTurn());
 	}
 
 	@Override
@@ -107,14 +116,12 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void sendPlayersList(List<Player> players) throws IOException {
-		// TODO Auto-generated method stub
-
+		client.sendNotify(new NotifyPlayersList(players));
 	}
 
 	@Override
 	public void notifyPlayerJoined(Player player) throws IOException {
-		// TODO Auto-generated method stub
-
+		client.sendNotify(new NotifyPlayerJoined(player));
 	}
 
 	@Override
@@ -125,14 +132,13 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void askWichItemToSell() throws IOException {
-		// TODO Auto-generated method stub
-		
+		String item=client.requestAnswer(new RequestWhichItemToSell());			
+		controller.parseItemToSell(item, this);
 	}
 
 
 	@Override
 	public void updatePlayer(Player player, int index) throws IOException {
-		// TODO Auto-generated method stub
-		
+		client.sendNotify(new NotifyUpdatePlayer(player, index));
 	}
 }

@@ -11,7 +11,11 @@ public class GameProperty {
 	private BooleanProperty canNotDoSideAction = new SimpleBooleanProperty(true);
 	
 	private ObservableList<PlayerProperty> players = FXCollections.observableArrayList();
-	private int myIndex = 0;
+	private int myIndex;
+	
+	public void setMyIndex(int i) {
+		myIndex = i;
+	}
 	
 	public BooleanProperty canNotDoMainAction() {
 		return canNotDoMainAction;

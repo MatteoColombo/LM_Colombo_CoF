@@ -22,6 +22,7 @@ public class NotifyPlayersList implements Notify{
 		for(Player player: players) {
 			playersList.add(new PlayerProperty().setAllButPermissions(player));
 		}
+		view.getLocalModel().setMyIndex(players.size()-1);
 	}
 
 }

@@ -19,7 +19,7 @@ import model.player.PermissionCard;
 
 public class GameController {
 	
-	MainApp mainApp;
+	private MainApp mainApp;
 	
 	@FXML private Label playerNameLabel;
 	

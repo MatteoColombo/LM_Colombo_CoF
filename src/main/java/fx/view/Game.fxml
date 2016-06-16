@@ -107,7 +107,7 @@
       </HBox>
    </bottom>
    <right>
-      <VBox prefHeight="701.0" prefWidth="214.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="opponentsBox" prefHeight="701.0" prefWidth="214.0" BorderPane.alignment="CENTER">
          <children>
             <TextArea layoutX="8.0" prefHeight="109.0" prefWidth="242.0" text="Event Logger" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>

@@ -7,12 +7,17 @@ import fx.MainApp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 import model.market.GoodsBundle;
 import model.player.PermissionCard;
@@ -48,6 +53,8 @@ public class GameController {
 	@FXML private TableColumn<GoodsBundle, String> goodsColumn;
 	@FXML private TableColumn<GoodsBundle, String> priceColumn;
 	
+	@FXML private VBox opponentsBox;
+	
 	@FXML private TextArea logger;
 		
 	public void setAll(MainApp mainApp) {
@@ -72,6 +79,32 @@ public class GameController {
         Bindings.bindBidirectional(sideActionButton3.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
         Bindings.bindBidirectional(sideActionButton4.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
 	}
+	
+	public void initOpponentsPanes() {
+		ObservableList<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
+		NumberStringConverter nsc = new NumberStringConverter();
+		int myIndex = mainApp.getLocalModel().getMyIndex();
+		for(int i = players.size()-1; i>=0; i--) {
+			if(i != myIndex) {
+				try {
+					FXMLLoader loader = new FXMLLoader();
+					loader.setLocation(MainApp.class.getResource("view/OpponentPane.fxml"));
+					AnchorPane pane = (AnchorPane) loader.load();
+					opponentsBox.getChildren().add(pane);
+					System.out.println("ciao");
+			        Bindings.bindBidirectional(((Labeled) pane.lookup("#victoryLabel")).textProperty(), players.get(i).victoryProperty(), nsc);
+			        Bindings.bindBidirectional(((Labeled) pane.lookup("#coinsLabel")).textProperty(), players.get(i).coinsProperty(), nsc);
+			        Bindings.bindBidirectional(((Labeled) pane.lookup("#assistantsLabel")).textProperty(), players.get(i).assistantsProperty(), nsc);
+			        Bindings.bindBidirectional(((Labeled) pane.lookup("#nobilityLabel")).textProperty(), players.get(i).nobilityProperty(), nsc);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	
 	
 	/*@FXML private void Initialize() {
 			

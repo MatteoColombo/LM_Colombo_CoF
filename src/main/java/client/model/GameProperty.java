@@ -8,6 +8,10 @@ public class GameProperty {
 	private ObservableList<PlayerProperty> players = FXCollections.observableArrayList();
 	private int myIndex;
 	
+	public int getMyIndex() {
+		return myIndex;
+	}
+	
 	public void setMyIndex(int i) {
 		myIndex = i;
 	}

@@ -69,6 +69,8 @@ public class Controller {
 			case "permit":
 				if (playersMap.get(client).getPermissionCard().size() < index)
 					throw new IllegalActionException("You dont have enough assistants");
+				if (playersMap.get(client).getPermissionCard().get(index).getIfCardUsed())
+					throw new IllegalActionException("Card is already used, can't be sold");
 				itemOnSale = playersMap.get(client).getPermissionCard().remove(index);
 				break;
 			case "politic":
@@ -220,6 +222,7 @@ public class Controller {
 	 */
 	public void performAction(ClientInt client, String s) throws IOException {
 		this.builder = new ActionBuilder(game.getBoard(), config);
+		int playerIndex= game.getPlayers().indexOf(playersMap.get(client));
 		Player player = playersMap.get(client);
 		String[] args = s.split(" ");
 		try {
@@ -229,7 +232,7 @@ public class Controller {
 			switch (args[0]) {
 			case "slide":
 				tm.performAction(builder.makeASlideCouncil(player, cmd));
-				updatePlayers(player);
+				updatePlayers(player, playerIndex);
 				return;
 			case "assistant":
 				tm.performAction(builder.makeABuyAssistant(player));
@@ -266,13 +269,14 @@ public class Controller {
 		}
 	}
 
-	private void updatePlayers(Player p) {
+	private void updatePlayers(Player player, int playerIndex) {
 		Set<ClientInt> clients = playersMap.keySet();
+		Player simplifiedClone= new Player(player);
 		for (ClientInt client : clients) {
 			try {
-				client.updatePlayer(p);
+				client.updatePlayer(simplifiedClone, playerIndex);
 			} catch (IOException e) {
-				p.setSuspension(true);
+				player.setSuspension(true);
 				logger.log(Level.WARNING, e.getMessage(), e);
 			}
 

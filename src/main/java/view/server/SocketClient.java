@@ -185,8 +185,8 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void updatePlayer(Player player) throws IOException {
-		out.writeObject(new NotifyUpdatePlayer(player));
+	public void updatePlayer(Player player, int index) throws IOException {
+		out.writeObject(new NotifyUpdatePlayer(player, index));
 		out.flush();
 	}
 }

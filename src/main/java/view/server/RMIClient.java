@@ -129,8 +129,9 @@ public class RMIClient implements ClientInt {
 		
 	}
 
+
 	@Override
-	public void updatePlayer(Player player) throws IOException {
+	public void updatePlayer(Player player, int index) throws IOException {
 		// TODO Auto-generated method stub
 		
 	}

@@ -87,7 +87,7 @@ public interface ClientInt {
 	
 	public void askWichItemToSell() throws IOException;
 	
-	public void updatePlayer(Player player) throws IOException;
+	public void updatePlayer(Player player, int index) throws IOException;
 	
 	//public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException;
 

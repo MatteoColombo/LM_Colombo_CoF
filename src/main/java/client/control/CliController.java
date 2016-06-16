@@ -23,15 +23,15 @@ import view.p2pdialogue.request.Request;
 public class CliController implements Runnable, Controller {
 
 	private static final long serialVersionUID = -1895721638081527089L;
-	private Scanner keyboard;
-	private ViewInterface view;
-	private ServerManager serverManager;
-	private KeyboardListener keyboardListener;
-	private boolean canWrite;
-	private boolean canEnqueue;
-	private boolean waitingForKeyboard;
-	private List<String> combinedRequestsQueue;
-	private List<Dialogue> combinedDialogue;
+	private transient Scanner keyboard;
+	private transient ViewInterface view;
+	private transient ServerManager serverManager;
+	private transient KeyboardListener keyboardListener;
+	private transient boolean canWrite;
+	private transient boolean canEnqueue;
+	private transient boolean waitingForKeyboard;
+	private transient List<String> combinedRequestsQueue;
+	private transient List<Dialogue> combinedDialogue;
 	
 	public CliController() {
 		view = new Cli();

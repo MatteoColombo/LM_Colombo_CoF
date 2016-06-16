@@ -110,9 +110,7 @@ public class GameController {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
 		            super.updateItem(item, empty);
-
 		            if (item == null || empty) {
-		                setText(null);
 		                setStyle("");
 		            } else {
 	                    setStyle("-fx-background-color:" + item);

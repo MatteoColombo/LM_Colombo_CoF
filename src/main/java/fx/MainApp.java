@@ -34,27 +34,25 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	private String myName;
 	private GameProperty localGame = new GameProperty();
 	private Stage primaryStage;
-    private ServerManager manager;
+	private ServerManager manager;
 
-    
 	@Override
 	public void run() {
 		launch();
 	}
-    
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Council of Four");
 		showLogin();
 	}
-	
+
 	@Override
 	public void parseDialogue(Dialogue dialog) {
 		Platform.runLater(() -> dialog.execute(this));
 	}
 
-	
 	public void showWaitingRoom() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -104,8 +102,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	@Override
 	public void showRoom() {
 		try {
@@ -123,10 +120,11 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void showGame() {
-		endOfTurn(); //set binded disabled action button parameters to true (disable when is not your turn)
+		endOfTurn(); // set binded disabled action button parameters to true
+						// (disable when is not your turn)
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/Game.fxml"));
@@ -141,11 +139,11 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Window getPrimaryStage() {
 		return this.primaryStage;
 	}
-	
+
 	public void setName(String name) {
 		this.myName = name;
 	}
@@ -153,7 +151,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void sendMsg(String msg) throws IOException {
 		manager.publishMessage(msg);
 	}
-	
+
 	public void initSocketManager() {
 		try {
 			SocketServerManager manager = new SocketServerManager(new Socket("localhost", 1994), this);
@@ -164,19 +162,38 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void initRMIManager() {
 		try {
 			ServerInt server = (ServerInt) LocateRegistry.getRegistry(1099).lookup("ServerInt");
 			RMIServerManager manager = new RMIServerManager(this);
 			this.manager = manager;
-			server.login(manager);
+			new RMIUtilityClass(manager, server).start();
 		} catch (RemoteException | NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
+	private class RMIUtilityClass extends Thread {
+		RMIServerManager manager;
+		ServerInt server;
+
+		public RMIUtilityClass(RMIServerManager manager, ServerInt server) {
+			this.server = server;
+			this.manager = manager;
+		}
+
+		public void run() {
+			try {
+				server.login(manager);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 	@Override
 	public void printAskPlayersNumber(int max) {
 		// TODO remove
@@ -201,20 +218,19 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	@Override
 	public void printAskWhatActionToDo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void printCities(List<Region> regions) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 	@Override
 	public void printIllegalAction() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -230,7 +246,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public GameProperty getLocalModel() {
 		return localGame;
 	}
-	
+
 	public void endOfTurn() {
 		localGame.getMyPlayerData().canNotDoMainAction().set(true);
 		localGame.getMyPlayerData().canNotDoSideAction().set(true);

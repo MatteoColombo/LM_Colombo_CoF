@@ -45,7 +45,7 @@ public class LoginController {
 			if(socketButton.isSelected()) {
 				mainApp.initSocketManager();
 			} else {
-				// TODO init rmi manager
+				mainApp.initRMIManager();
 			}
 		}
 	}

@@ -30,8 +30,8 @@ public class Player implements Serializable{
 	private transient List<PermissionCard> permissionCard;
 	private transient List<Emporium> emporium;
 	private transient List<Color> pickedColours;
-	private transient int mainActions;
-	private transient boolean extraAction;
+	private int mainActions;
+	private boolean extraAction;
 	private transient int DEFAULTMAINACTION;
 	private transient ClientInt client;
 	private boolean isSuspended;

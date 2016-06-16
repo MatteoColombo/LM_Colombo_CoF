@@ -2,8 +2,10 @@ package client.model;
 
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,6 +22,8 @@ public class PlayerProperty {
 	private IntegerProperty assistants;
 	private IntegerProperty nobility;
 	private IntegerProperty victory;
+	private BooleanProperty canNotDoMainAction;
+	private BooleanProperty canNotDoSideAction;
 	/**
 	 * web color repreentation of each politic card color
 	 */
@@ -27,6 +31,8 @@ public class PlayerProperty {
 	private ObservableList<ObjectProperty<PermissionCard>> permissions;
 	
 	public PlayerProperty() {
+		canNotDoMainAction = new SimpleBooleanProperty(true);
+		canNotDoSideAction = new SimpleBooleanProperty(true);
 		name = new SimpleStringProperty("");
 		coins = new SimpleIntegerProperty(0);
 		assistants = new SimpleIntegerProperty(0);
@@ -43,6 +49,10 @@ public class PlayerProperty {
 	 * @return
 	 */
 	public PlayerProperty setAllButPermissions(Player player) {
+		if(player.getMainActionsLeft()>0) {
+			canNotDoMainAction.set(false);
+		}
+		canNotDoSideAction.set(player.getIfExtraActionDone());
 		name.set(player.getName());
 		assistants.set(player.getAssistants().getAmount());
 		victory.set(player.getVictoryPoints().getAmount());
@@ -78,6 +88,14 @@ public class PlayerProperty {
 		this.name.set(name);
 	}
 
+	public BooleanProperty canNotDoMainAction() {
+		return this.canNotDoMainAction;
+	}
+	
+	public BooleanProperty canNotDoSideAction() {
+		return this.canNotDoSideAction;
+	}
+	
 	public IntegerProperty coinsProperty() {
 		return coins;
 	}

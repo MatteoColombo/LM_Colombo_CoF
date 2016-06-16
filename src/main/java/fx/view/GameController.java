@@ -63,14 +63,14 @@ public class GameController {
         Bindings.bindBidirectional(nobilityLabel.textProperty(), myData.nobilityProperty(), nsc);
         Bindings.bindBidirectional(victoryLabel.textProperty(), myData.victoryProperty(), nsc);
         
-        Bindings.bindBidirectional(mainActionButton1.disableProperty(), mainApp.getLocalModel().canNotDoMainAction());
-        Bindings.bindBidirectional(mainActionButton2.disableProperty(), mainApp.getLocalModel().canNotDoMainAction());
-        Bindings.bindBidirectional(mainActionButton3.disableProperty(), mainApp.getLocalModel().canNotDoMainAction());
-        Bindings.bindBidirectional(mainActionButton4.disableProperty(), mainApp.getLocalModel().canNotDoMainAction());
-        Bindings.bindBidirectional(sideActionButton1.disableProperty(), mainApp.getLocalModel().canNotDoSideAction());
-        Bindings.bindBidirectional(sideActionButton2.disableProperty(), mainApp.getLocalModel().canNotDoSideAction());
-        Bindings.bindBidirectional(sideActionButton3.disableProperty(), mainApp.getLocalModel().canNotDoSideAction());
-        Bindings.bindBidirectional(sideActionButton4.disableProperty(), mainApp.getLocalModel().canNotDoSideAction());
+        Bindings.bindBidirectional(mainActionButton1.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
+        Bindings.bindBidirectional(mainActionButton2.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
+        Bindings.bindBidirectional(mainActionButton3.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
+        Bindings.bindBidirectional(mainActionButton4.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
+        Bindings.bindBidirectional(sideActionButton1.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
+        Bindings.bindBidirectional(sideActionButton2.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
+        Bindings.bindBidirectional(sideActionButton3.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
+        Bindings.bindBidirectional(sideActionButton4.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
 	}
 	
 	/*@FXML private void Initialize() {
@@ -97,7 +97,7 @@ public class GameController {
 		mainApp.sendMsg("slide -council 1 -color pink");
 	}	
 	@FXML private void handleTestAction2() throws IOException {
-		mainApp.sendMsg("slide -council 1 -color cyan");
+		mainApp.sendMsg("slide -council 1 -color blue");
 	}	
 	@FXML private void handleTestAction3() throws IOException {
 		mainApp.sendMsg("slide -council 1 -color black");

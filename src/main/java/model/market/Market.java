@@ -123,4 +123,13 @@ public class Market {
 		else if (soldItem instanceof PermissionCard)
 			p.getPermissionCard().add((PermissionCard) soldItem);
 	}
+	
+	/**
+	 * Just for tests
+	 * @return the list of the items on sale
+	 */
+	@Deprecated
+	public List<OnSaleItem> getItemsOnSale(){
+		return this.itemsOnSale;
+	}
 }

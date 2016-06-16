@@ -4,28 +4,30 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import client.control.Controller;
 import view.p2pdialogue.Dialogue;
 
-public class SocketServerManager extends Thread implements ServerManager{
+public class SocketServerManager extends Thread implements ServerManager {
 	private Controller controller;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
-
-	public SocketServerManager(Socket server, Controller controller) throws UnknownHostException, IOException {
+	private Logger logger= Logger.getGlobal();
+	public SocketServerManager(Socket server, Controller controller) throws IOException {
 		this.controller = controller;
 		this.out = new ObjectOutputStream(server.getOutputStream());
 		this.in = new ObjectInputStream(server.getInputStream());
 	}
 
-	public void publishMessage(String message) throws IOException, RemoteException {
+	@Override
+	public void publishMessage(String message) throws IOException {
 		out.writeObject(message);
 		out.flush();
 	}
 
+	@Override
 	public void run() {
 		try {
 			while (true) {
@@ -33,13 +35,10 @@ public class SocketServerManager extends Thread implements ServerManager{
 				controller.parseDialogue(dialogue);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Connection lost, the client will terminate", e);
+			} catch (ClassNotFoundException e) {
+			logger.log(Level.SEVERE, "Data corrupted, the client will terminate", e);
 		}
 	}
 
-	
 }

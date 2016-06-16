@@ -88,6 +88,7 @@ public class Controller {
 			}
 			game.getMarket().addItemOnSale(itemOnSale, price, playersMap.get(client));
 		} catch (IllegalActionException e) {
+			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction();
 			return;
 		}
@@ -95,7 +96,7 @@ public class Controller {
 	}
 
 	/**
-	 * Receives the choosen item to buy, check
+	 * Receives the choosen item to buy, checks if can buy it
 	 * 
 	 * @param items
 	 * @param itemIndex
@@ -119,7 +120,6 @@ public class Controller {
 		Set<ClientInt> clients = playersMap.keySet();
 		for (ClientInt temp : clients) {
 			try {
-				System.out.println("invio notifica");
 				temp.notifyGameStarted();
 			} catch (IOException e) {
 				logger.log(Level.INFO, e.getMessage(), e);

@@ -48,7 +48,7 @@
             </GridPane>
             <TableView fx:id="politicCardsTable" layoutX="-11.0" layoutY="-15.0" prefHeight="200.0" prefWidth="142.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn fx:id="politicCardColumn" prefWidth="75.0" text="Politic" />
+                <TableColumn fx:id="politicCardsColumn" prefWidth="75.0" text="Politic" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -56,7 +56,7 @@
             </TableView>
             <TableView fx:id="permissionCardsTable" layoutX="84.0" layoutY="-30.0" prefHeight="170.0" prefWidth="128.0">
               <columns>
-                <TableColumn fx:id="permissionCardColumn" prefWidth="75.0" text="Perm." />
+                <TableColumn fx:id="permissionCardsColumn" prefWidth="75.0" text="Perm." />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

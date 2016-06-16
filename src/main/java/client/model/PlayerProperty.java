@@ -1,6 +1,8 @@
 package client.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -16,6 +18,8 @@ import javafx.collections.ObservableList;
 import model.player.*;
 import util.ColorConverter;
 public class PlayerProperty {
+	
+	//private static Map<String, String> politicToImage = new HashMap<>();
 	
 	private StringProperty name;
 	private IntegerProperty coins;

@@ -137,8 +137,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			// Give the controller access to the main app.
 			GameController gameController = loader.getController();
 			gameController.setAll(this);
-			gameController.initOpponentsPanes();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

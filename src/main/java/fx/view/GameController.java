@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -34,10 +35,10 @@ public class GameController {
 	@FXML private Label nobilityLabel;
 	
 	@FXML private TableView<StringProperty> politicCardsTable;
-	@FXML private TableColumn<StringProperty, String> politicCardColumn;
+	@FXML private TableColumn<StringProperty, String> politicCardsColumn;
 	
 	@FXML private TableView<ObjectProperty<PermissionCard>> permissionCardsTable;
-	@FXML private TableColumn<ObjectProperty<PermissionCard>, String> permissionCardColumn;
+	@FXML private TableColumn<ObjectProperty<PermissionCard>, String> permissionCardsColumn;
 	
 	@FXML private Button mainActionButton1;
 	@FXML private Button mainActionButton2;
@@ -59,18 +60,30 @@ public class GameController {
 		
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
-		politicCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPoliticCards());
-		permissionCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPermissions());
+        initLabels();
+        initButtons(); 
+        initOpponentsPanes();
+        initPoliticTable();
 		
-		PlayerProperty myData = mainApp.getLocalModel().getMyPlayerData();
-		
-		NumberStringConverter nsc = new NumberStringConverter();
-        Bindings.bindBidirectional(assistantsLabel.textProperty(), myData.assistantsProperty(), nsc);
-        Bindings.bindBidirectional(coinsLabel.textProperty(), myData.coinsProperty(), nsc);
-        Bindings.bindBidirectional(nobilityLabel.textProperty(), myData.nobilityProperty(), nsc);
-        Bindings.bindBidirectional(victoryLabel.textProperty(), myData.victoryProperty(), nsc);
-        
-        Bindings.bindBidirectional(mainActionButton1.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
+	}
+	
+	//--------------------DUMMY ACTIONS--------------------
+	@FXML private void handleTestAction() throws IOException {
+		mainApp.sendMsg("slide -council 1 -color pink");
+	}	
+	@FXML private void handleTestAction2() throws IOException {
+		mainApp.sendMsg("slide -council 1 -color blue");
+	}	
+	@FXML private void handleTestAction3() throws IOException {
+		mainApp.sendMsg("slide -council 1 -color black");
+	}	
+	@FXML private void handleTestAction4() throws IOException {
+		mainApp.sendMsg("slide -council 1 -color white");
+	}
+	//------------------------------------------------------
+	
+	private void initButtons() {
+		Bindings.bindBidirectional(mainActionButton1.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
         Bindings.bindBidirectional(mainActionButton2.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
         Bindings.bindBidirectional(mainActionButton3.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
         Bindings.bindBidirectional(mainActionButton4.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
@@ -80,7 +93,36 @@ public class GameController {
         Bindings.bindBidirectional(sideActionButton4.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
 	}
 	
-	public void initOpponentsPanes() {
+	private void initLabels() {
+		PlayerProperty myData = mainApp.getLocalModel().getMyPlayerData();
+		NumberStringConverter nsc = new NumberStringConverter();
+        Bindings.bindBidirectional(assistantsLabel.textProperty(), myData.assistantsProperty(), nsc);
+        Bindings.bindBidirectional(coinsLabel.textProperty(), myData.coinsProperty(), nsc);
+        Bindings.bindBidirectional(nobilityLabel.textProperty(), myData.nobilityProperty(), nsc);
+        Bindings.bindBidirectional(victoryLabel.textProperty(), myData.victoryProperty(), nsc);
+	}
+	
+	private void initPoliticTable() {
+		politicCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPoliticCards());
+		politicCardsColumn.setCellValueFactory(cell -> cell.getValue());
+		politicCardsColumn.setCellFactory(column -> {
+		    return new TableCell<StringProperty, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		                setStyle("");
+		            } else {
+	                    setStyle("-fx-background-color:" + item);
+		            }
+		        }
+		    };
+		});    
+	}
+	
+	private void initOpponentsPanes() {
 		ObservableList<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
 		NumberStringConverter nsc = new NumberStringConverter();
 		int myIndex = mainApp.getLocalModel().getMyIndex();
@@ -96,46 +138,9 @@ public class GameController {
 			        Bindings.bindBidirectional(((Labeled) pane.lookup("#assistantsLabel")).textProperty(), players.get(i).assistantsProperty(), nsc);
 			        Bindings.bindBidirectional(((Labeled) pane.lookup("#nobilityLabel")).textProperty(), players.get(i).nobilityProperty(), nsc);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.appendText(e.getMessage());
 				}
 			}
-		}
-		
+		}	
 	}
-	
-	
-	/*@FXML private void Initialize() {
-			
-		politicCardColumn.setCellFactory(cell -> {
-			return new TableCell<StringProperty, String>() {
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					if(empty) {
-						setText(null);
-						setStyle("");
-					} else {
-					super.updateItem(item, empty);
-					setText(item);
-					setStyle("-fx-background-color:" + item);
-					}
-				}
-			};
-		}
-		);
-	}*/
-	
-	@FXML private void handleTestAction() throws IOException {
-		mainApp.sendMsg("slide -council 1 -color pink");
-	}	
-	@FXML private void handleTestAction2() throws IOException {
-		mainApp.sendMsg("slide -council 1 -color blue");
-	}	
-	@FXML private void handleTestAction3() throws IOException {
-		mainApp.sendMsg("slide -council 1 -color black");
-	}	
-	@FXML private void handleTestAction4() throws IOException {
-		mainApp.sendMsg("slide -council 1 -color white");
-	}
-	
 }

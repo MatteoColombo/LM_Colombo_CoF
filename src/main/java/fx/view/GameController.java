@@ -49,20 +49,20 @@ public class GameController {
 	
 	@FXML private TextArea logger;
 		
-	public void setMainApp(MainApp mainApp) {
+	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
 		politicCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPoliticCards());
 		permissionCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPermissions());
 		
 		PlayerProperty myData = mainApp.getLocalModel().getMyPlayerData();
 		
-        Bindings.bindBidirectional(assistantsLabel.textProperty(), myData.assistantsProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(coinsLabel.textProperty(), myData.coinsProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(nobilityLabel.textProperty(), myData.nobilityProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(victoryLabel.textProperty(), myData.victoryProperty(), new NumberStringConverter());
+		NumberStringConverter nsc = new NumberStringConverter();
+        Bindings.bindBidirectional(assistantsLabel.textProperty(), myData.assistantsProperty(), nsc);
+        Bindings.bindBidirectional(coinsLabel.textProperty(), myData.coinsProperty(), nsc);
+        Bindings.bindBidirectional(nobilityLabel.textProperty(), myData.nobilityProperty(), nsc);
+        Bindings.bindBidirectional(victoryLabel.textProperty(), myData.victoryProperty(), nsc);
 	}
 	
-	//stupid method that never works
 	/*@FXML private void Initialize() {
 			
 		politicCardColumn.setCellFactory(cell -> {
@@ -75,7 +75,7 @@ public class GameController {
 					} else {
 					super.updateItem(item, empty);
 					setText(item);
-					setStyle("-fx-background-color:green");
+					setStyle("-fx-background-color:" + item);
 					}
 				}
 			};

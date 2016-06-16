@@ -9,6 +9,5 @@ public class NotifyGameLoading implements Notify {
 	@Override
 	public void execute(ViewInterface view) {
 		view.showRoom();
-		System.out.println("I was called");
-	}
+		}
 }

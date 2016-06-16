@@ -19,8 +19,8 @@ import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
 import view.p2pdialogue.notify.NotifyPlayerJoined;
-import view.p2pdialogue.notify.NotifyPlayerUpdate;
 import view.p2pdialogue.notify.NotifyPlayersList;
+import view.p2pdialogue.notify.NotifyUpdatePlayer;
 import view.p2pdialogue.notify.NotifyYourTurn;
 import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestWhatActionToDo;
@@ -186,7 +186,7 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void updatePlayer(Player player) throws IOException {
-		out.writeObject(new NotifyPlayerUpdate(player));
+		out.writeObject(new NotifyUpdatePlayer(player));
 		out.flush();
 	}
 }

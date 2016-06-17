@@ -42,7 +42,7 @@ public class PlayerProperty {
 	 * web color repreentation of each politic card color
 	 */
 	private ObservableList<StringProperty> politicCards;
-	private ObservableList<ObjectProperty<PermissionCard>> permissions;
+	private ObservableList<PermissionProperty> permissions;
 	
 	public PlayerProperty() {
 		canNotDoMainAction = new SimpleBooleanProperty(true);
@@ -166,14 +166,14 @@ public class PlayerProperty {
 		return cardsImage;
 	}
 	
-	public ObservableList<ObjectProperty<PermissionCard>> getPermissions() {
+	public ObservableList<PermissionProperty> getPermissions() {
 		return this.permissions;
 	}
 	
 	public void setPermissions(List<PermissionCard> cards) {
 		permissions.clear();
 		for(PermissionCard card: cards) {
-			permissions.add(new SimpleObjectProperty<PermissionCard>(card));
+			permissions.add(new PermissionProperty(card));
 		}
 	}
 }

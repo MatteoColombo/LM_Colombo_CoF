@@ -1,6 +1,5 @@
 package view.p2pdialogue.request;
 
-import java.util.List;
 import client.view.ViewInterface;
 
 public class RequestWichMapToUse implements Request {

@@ -164,14 +164,16 @@ public class Cli implements ViewInterface {
 
 	@Override
 	public void showGame() {
-		// TODO Auto-generated method stub
-		
+		writer.println(SEPARATOR);
+		writer.println("The game started");
+		writer.flush();
+
 	}
 
 	@Override
 	public void showRoom() {
-		// TODO Auto-generated method stub
-		
+		writer.println("\nThe game will start soon");
+		writer.flush();
 	}
 
 	public static void main(String[] args){
@@ -181,14 +183,16 @@ public class Cli implements ViewInterface {
 
 	@Override
 	public void playerJoined(Player p) {
-		// TODO Auto-generated method stub
-		
+		writer.println(p.getName()+ " joined the game");
 	}
 
 	@Override
 	public void setAllPlayers(List<Player> players) {
-		// TODO Auto-generated method stub
-		
+		writer.println("Players list:");
+		for(int i=0; i<players.size();i++){
+			writer.println((i+1)+". "+players.get(i).getName());
+		}
+		writer.flush();
 	}
 
 
@@ -200,8 +204,8 @@ public class Cli implements ViewInterface {
 
 	@Override
 	public void isYourTurn() {
-		// TODO Auto-generated method stub
-		
+		writer.println("\nIt is your turn");
+		writer.flush();
 	}
 
 	@Override

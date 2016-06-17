@@ -15,7 +15,7 @@ import util.ColorConverter;
  *
  */
 public class CouncilProperty {
-	protected ObservableList<StringProperty> councilorsColors;
+	private ObservableList<StringProperty> councilorsColors;
 	
 	public CouncilProperty(Council council) {
 		councilorsColors = FXCollections.observableArrayList();

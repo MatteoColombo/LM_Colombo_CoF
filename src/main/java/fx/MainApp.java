@@ -16,6 +16,7 @@ import fx.view.GameController;
 import fx.view.LoginController;
 import client.control.Controller;
 import client.model.GameProperty;
+import client.model.PlayerProperty;
 import fx.view.RoomController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -26,6 +27,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.board.Region;
+import model.player.Player;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
 
@@ -250,5 +252,19 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void endOfTurn() {
 		localGame.getMyPlayerData().canNotDoMainAction().set(true);
 		localGame.getMyPlayerData().canNotDoSideAction().set(true);
+	}
+
+	@Override
+	public void playerJoined(Player p) {
+		localGame.getPlayers().add(new PlayerProperty().setAllButPermissions(p));
+	}
+
+	@Override
+	public void setAllPlayers(List<Player> players) {
+		localGame.getPlayers().clear();
+		localGame.setMyIndex(players.size()-1);
+		for(Player p: players) {
+			playerJoined(p);
+		}
 	}
 }

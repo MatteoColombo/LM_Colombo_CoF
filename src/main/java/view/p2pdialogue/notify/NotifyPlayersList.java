@@ -2,9 +2,7 @@ package view.p2pdialogue.notify;
 
 import java.util.List;
 
-import client.model.PlayerProperty;
 import client.view.ViewInterface;
-import javafx.collections.ObservableList;
 import model.player.Player;
 
 public class NotifyPlayersList implements Notify{
@@ -17,12 +15,7 @@ public class NotifyPlayersList implements Notify{
 	}
 	@Override
 	public void execute(ViewInterface view) {
-		ObservableList<PlayerProperty> playersList = view.getLocalModel().getPlayers();
-		playersList.clear();
-		for(Player player: players) {
-			playersList.add(new PlayerProperty().setAllButPermissions(player));
-		}
-		view.getLocalModel().setMyIndex(players.size()-1);
+		view.setAllPlayers(players);
 	}
 
 }

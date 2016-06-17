@@ -1,6 +1,5 @@
 package view.p2pdialogue.notify;
 
-import client.model.PlayerProperty;
 import client.view.ViewInterface;
 import model.player.Player;
 
@@ -15,7 +14,7 @@ public class NotifyPlayerJoined implements Notify{
 	
 	@Override
 	public void execute(ViewInterface view) {
-		view.getLocalModel().getPlayers().add(new PlayerProperty().setAllButPermissions(player));
+		view.playerJoined(player);
 	}
 
 }

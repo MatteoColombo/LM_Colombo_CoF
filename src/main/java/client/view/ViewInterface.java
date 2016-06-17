@@ -4,6 +4,7 @@ import java.util.List;
 
 import client.model.GameProperty;
 import model.board.Region;
+import model.player.Player;
 
 public interface ViewInterface{
 	
@@ -26,6 +27,9 @@ public interface ViewInterface{
 	public void showGame();
 	
 	public void showRoom();
+	
+	public void playerJoined(Player p);
+	public void setAllPlayers(List<Player> players);
 	
 	/**
 	 * this give to the caller (a Dialogue probably) the access to the local model,

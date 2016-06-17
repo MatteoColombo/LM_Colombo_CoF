@@ -19,7 +19,7 @@ public class NotifyUpdatePlayer implements Notify {
 
 	@Override
 	public void execute(ViewInterface view) {
-		view.getLocalModel().getPlayers().get(index).setAllButPermissions(player);
+		view.updatePlayer(player, index);
 	}
 
 }

@@ -8,8 +8,7 @@ public class NotifyYourTurn implements Notify {
 
 	@Override
 	public void execute(ViewInterface view) {
-		view.getLocalModel().getMyPlayerData().canNotDoMainAction().set(false);
-		view.getLocalModel().getMyPlayerData().canNotDoSideAction().set(false);
+		view.isYourTurn();
 	}
 
 }

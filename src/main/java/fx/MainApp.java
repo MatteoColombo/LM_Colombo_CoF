@@ -30,6 +30,7 @@ import javafx.stage.Window;
 import model.board.Region;
 import model.exceptions.ConfigurationErrorException;
 import model.player.Player;
+import model.reward.Reward;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
 
@@ -286,5 +287,9 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		localGame.getMyPlayerData().canNotDoSideAction().set(false);
 	}
 
-	
+	@Override
+	public void setCityRewards(List<Reward> bonusList) {
+		// TODO Auto-generated method stub
+		
+	}	
 }

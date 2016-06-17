@@ -76,7 +76,7 @@ public abstract class Bonus {
 	 * <p> it is used in the random constructor of the reward in order to create balanced reward
 	 * @see Reward
 	 */
-	public abstract int getValue();
+	protected abstract int getValue();
 	
 	/**
 	 * factory method to create a new Bonus of the same type of the one calling the method, but with a specified amount

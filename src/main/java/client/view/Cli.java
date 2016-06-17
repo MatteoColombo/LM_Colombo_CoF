@@ -8,6 +8,7 @@ import model.board.Region;
 import model.board.city.City;
 import model.player.Player;
 import model.reward.Bonus;
+import model.reward.Reward;
 
 /**
  * 
@@ -199,6 +200,12 @@ public class Cli implements ViewInterface {
 
 	@Override
 	public void isYourTurn() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCityRewards(List<Reward> bonusList) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -236,7 +236,7 @@ public class TestABuildEmporium {
 			if (this.mExplorer.isColorComplete(this.player,
 					this.mLoader.getRegions().get(region).getCities().get(city).getColor(), this.allMapCities)) {
 				if (!this.mLoader.getRegions().get(region).getCities().get(city).isCapital()) {
-					BVictoryPoints playerBReward = bRewardManageCopy.getBoardColorReward(
+					BVictoryPoints playerBReward = bRewardManageCopy.assingBoardColorReward(
 							this.mLoader.getRegions().get(region).getCities().get(city).getColor());
 					this.rewardAmount += playerBReward.getAmount();
 					System.out.printf("Color %s achieved: ",
@@ -246,7 +246,7 @@ public class TestABuildEmporium {
 			}
 			if (this.mLoader.getRegions().get(region).isCompleted(this.player)) {
 				BVictoryPoints playerBReward = bRewardManageCopy
-						.getBoardRegionReward(this.mLoader.getRegions().get(region));
+						.assingBoardRegionReward(this.mLoader.getRegions().get(region));
 				this.rewardAmount += playerBReward.getAmount();
 				System.out.printf("Region %d achieved: ", region);
 				System.out.println(playerBReward.getAmount());

@@ -45,7 +45,7 @@
         </rowConstraints>
          <children>
             <Label text="Politic" />
-            <Label text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="politicLabel" text="Label" GridPane.columnIndex="1" />
             <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Perm." GridPane.rowIndex="1" />
          </children>

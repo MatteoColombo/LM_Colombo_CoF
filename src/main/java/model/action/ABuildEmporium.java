@@ -52,11 +52,11 @@ public class ABuildEmporium extends Action {
 		MapExplorer mp = new MapExplorer();
 		if (mp.isColorComplete(this.player, this.chosenCity.getColor(), this.allMapCities)
 				&& !this.chosenCity.isCapital()) {
-			BVictoryPoints playerBReward = this.bRewardsManager.getBoardColorReward(this.chosenCity.getColor());
+			BVictoryPoints playerBReward = this.bRewardsManager.assingBoardColorReward(this.chosenCity.getColor());
 			playerBReward.assignBonusTo(this.player);
 		}
 		if (this.chosenCity.getRegion().isCompleted(this.player)) {
-			BVictoryPoints playerBReward = this.bRewardsManager.getBoardRegionReward(this.chosenCity.getRegion());
+			BVictoryPoints playerBReward = this.bRewardsManager.assingBoardRegionReward(this.chosenCity.getRegion());
 			playerBReward.assignBonusTo(this.player);
 		}
 

@@ -82,8 +82,7 @@ public class Region {
 	 */
 	public PermissionCard getPermissionCard(int posArray) {
 		return permissionCards[posArray];
-	}
-	
+	}	
 	/**
 	 * Returns the permission card ad removes it from the map.
 	 * The free slot is filled with another permit card.

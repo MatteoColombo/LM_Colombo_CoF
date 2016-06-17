@@ -15,13 +15,17 @@ import util.ColorConverter;
  *
  */
 public class CouncilProperty {
-	private ObservableList<StringProperty> councilorsColors;
+	protected ObservableList<StringProperty> councilorsColors;
 	
-	public CouncilProperty() {
+	public CouncilProperty(Council council) {
 		councilorsColors = FXCollections.observableArrayList();
+		for(Color c: council.getCouncilorsColor()) {
+			String hexColor = ColorConverter.awtToWeb(c);
+			councilorsColors.add(new SimpleStringProperty(hexColor));
+		}
 	}
 	
-	public ObservableList<StringProperty> getColorsProperties() {
+	public ObservableList<StringProperty> colors() {
 		return this.councilorsColors;
 	}
 	

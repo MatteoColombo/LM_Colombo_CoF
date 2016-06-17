@@ -6,10 +6,12 @@ import client.model.PlayerProperty;
 import fx.MainApp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
@@ -20,7 +22,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.converter.NumberStringConverter;
 import model.market.GoodsBundle;
 import model.player.PermissionCard;
@@ -28,6 +35,8 @@ import model.player.PermissionCard;
 public class GameController {
 	
 	private MainApp mainApp;
+	
+	@FXML private GridPane mapGrid;
 	
 	@FXML private Label playerNameLabel;
 	
@@ -66,7 +75,6 @@ public class GameController {
         initButtons(); 
         initOpponentsPanes();
         initPoliticTable();
-		
 	}
 	
 	//--------------------DUMMY ACTIONS--------------------
@@ -118,10 +126,6 @@ public class GameController {
 		            	setStyle("-fx-background-image: url('"
 		            			+ PlayerProperty.getPoliticCardsImages().get(item)
 		            			+ "'); -fx-background-size:cover;");
-	                    //ImageView image = new ImageView();
-	                    //image.setFitWidth(politicCardsColumn.getWidth());
-	                    //image.setImage(new Image());
-	                    //setGraphic(image);
 		            }
 		        }
 		    };
@@ -148,5 +152,28 @@ public class GameController {
 				}
 			}
 		}	
+	}
+	
+	/*private void initCouncils() {
+		HBox councilBox = (HBox) getNodeFromGridPane(mapGrid, 1, 2);
+		Rectangle c1 = new Rectangle();
+		c1.setHeight(50);
+		c1.setWidth(50);
+		c1.setFill(Color.ANTIQUEWHITE);
+		Rectangle c2 = new Rectangle();
+		c2.setHeight(50);
+		c2.setWidth(50);
+		c2.setFill(Color.BLUEVIOLET);
+		councilBox.getChildren().add(c1);
+		councilBox.getChildren().add(c2);
+	}*/
+
+	private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
+	    for (Node node : gridPane.getChildren()) {
+	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+	            return node;
+	        }
+	    }
+	    return null;
 	}
 }

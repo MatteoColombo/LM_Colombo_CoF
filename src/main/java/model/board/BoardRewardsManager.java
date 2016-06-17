@@ -15,8 +15,8 @@ import java.awt.Color;
  * Whenever a particular condition is satisfied during a Player Action (if he
  * has put an Emporium in each City with the same Color and/or in each City of
  * the same Region), he can be rewarded with a
- * {@link #getBoardColorReward(Color) BoardColorReward} and/or a
- * {@link #getBoardRegionReward(Region) BoardRegionReward}, but only if anybody
+ * {@link #assingBoardColorReward(Color) BoardColorReward} and/or a
+ * {@link #assingBoardRegionReward(Region) BoardRegionReward}, but only if anybody
  * has already received that specific {@link #getRemainingBoardColorRewards()
  * BoardColorReward} or {@link #getRemainingBoardRegionRewards()
  * BoardRegionReward} before him.
@@ -118,12 +118,12 @@ public class BoardRewardsManager {
 	 *         available in its list
 	 * @see BoardRewardsManager
 	 */
-	public BVictoryPoints getBoardColorReward(Color bColorRewardAwarded) {
+	public BVictoryPoints assingBoardColorReward(Color bColorRewardAwarded) {
 		for (BoardColorReward br : this.bColorRewards) {
 			if (br != null && br.getBRKey().equals(bColorRewardAwarded)) {
 				int i = this.bColorRewards.indexOf(br);
 				BVictoryPoints bColorReward = this.bColorRewards.remove(i).getBRBonus();
-				BVictoryPoints bKingReward = getBoardKingReward();
+				BVictoryPoints bKingReward = assingBoardKingReward();
 				return new BVictoryPoints(bColorReward.getAmount() + bKingReward.getAmount());
 			}
 		}
@@ -146,12 +146,12 @@ public class BoardRewardsManager {
 	 *         longer available in its list
 	 * @see BoardRewardsManager
 	 */
-	public BVictoryPoints getBoardRegionReward(Region bRegionRewardAwarded) {
+	public BVictoryPoints assingBoardRegionReward(Region bRegionRewardAwarded) {
 		for (BoardRegionReward br : this.bRegionRewards) {
 			if (br != null && br.getBRKey().equals(bRegionRewardAwarded)) {
 				int i = this.bRegionRewards.indexOf(br);
 				BVictoryPoints bRegionReward = this.bRegionRewards.remove(i).getBRBonus();
-				BVictoryPoints bKingReward = getBoardKingReward();
+				BVictoryPoints bKingReward = assingBoardKingReward();
 				return new BVictoryPoints(bRegionReward.getAmount() + bKingReward.getAmount());
 			}
 		}
@@ -169,7 +169,7 @@ public class BoardRewardsManager {
 	 *         BVictoryPoints if the list is empty
 	 * @see BoardRewardsManager
 	 */
-	private BVictoryPoints getBoardKingReward() {
+	private BVictoryPoints assingBoardKingReward() {
 		if (this.bKingRewards.isEmpty())
 			return new BVictoryPoints(0);
 		else

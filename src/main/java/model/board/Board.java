@@ -212,8 +212,4 @@ public class Board {
 	public List<Region> getRegions() {
 		return this.regions;
 	}
-	
-	public BoardRewardsManager getBoardRewardManager(){
-		return this.boardRewManager;
-	}
 }

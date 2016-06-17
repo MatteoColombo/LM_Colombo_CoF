@@ -5,6 +5,7 @@ import java.util.List;
 import client.model.GameProperty;
 import model.board.Region;
 import model.player.Player;
+import model.reward.Reward;
 
 public interface ViewInterface{
 	
@@ -31,6 +32,7 @@ public interface ViewInterface{
 	public void playerJoined(Player p);
 	public void setAllPlayers(List<Player> players);
 	public void updatePlayer(Player p, int index);
+	public void setCityRewards(List<Reward> bonusList);
 	public void isYourTurn();
 	
 	/**

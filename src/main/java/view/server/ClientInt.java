@@ -44,7 +44,7 @@ public interface ClientInt {
 	 *            the max number of players by configuration
 	 * @throws IOException
 	 */
-	public void askConfiguration(List<String> maps, int maxNumberOfPlayers) throws IOException;
+	public void askConfiguration(int maxNumberOfPlayers) throws IOException;
 
 	/**
 	 * Closes the connection

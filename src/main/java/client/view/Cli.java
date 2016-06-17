@@ -29,7 +29,7 @@ public class Cli implements ViewInterface {
 	public static final String ANSI_WHITE = "\u001B[37m";
 	public static final String BLOCK = "\u2588\u2588";
 	public static final String SEPARATOR = "---------------------------------------";
-
+	
 	private PrintWriter writer;
 
 	public Cli() {
@@ -129,11 +129,11 @@ public class Cli implements ViewInterface {
 	}
 
 	@Override
-	public void printAskWhichMapToUse(List<String> maps) {
-		writer.println("Choose the number of the map");
-		for (int i = 0; i < maps.size(); i++) {
-			writer.println(i + ". " + maps.get(i));
-		}
+	public void printAskWhichMapToUse() {
+		writer.println("Choose the number of the map:");
+		/*for (int i = 0; i < maps.size(); i++) {
+			writer.println((i+1) + ". " + maps.get(i));
+		}*/
 		writer.flush();
 	}
 
@@ -175,6 +175,31 @@ public class Cli implements ViewInterface {
 
 	public static void main(String[] args){
 		new Cli().printCouncil();;
+		
+	}
+
+	@Override
+	public void playerJoined(Player p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setAllPlayers(List<Player> players) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updatePlayer(Player p, int index) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void isYourTurn() {
+		// TODO Auto-generated method stub
 		
 	}
 }

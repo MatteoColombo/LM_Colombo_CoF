@@ -9,7 +9,6 @@ import client.view.RMIServerManager;
 import control.Controller;
 import model.market.OnSaleItem;
 import model.player.Player;
-import view.p2pdialogue.combinedrequest.RequestMaxPlayersNumber;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
@@ -17,6 +16,7 @@ import view.p2pdialogue.notify.NotifyPlayerJoined;
 import view.p2pdialogue.notify.NotifyPlayersList;
 import view.p2pdialogue.notify.NotifyUpdatePlayer;
 import view.p2pdialogue.notify.NotifyYourTurn;
+import view.p2pdialogue.request.RequestMaxPlayersNumber;
 import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
@@ -54,18 +54,18 @@ public class RMIClient implements ClientInt {
 	}
 
 	@Override
-	public void askConfiguration(List<String> maps, int maxNumberOfPlayers) throws IOException {
-		askMaxNumberOfPlayers(maxNumberOfPlayers);
-		String config = askWichMapToUse(maps);
-		controller.parseGameConfiguration(config, this);
+	public void askConfiguration(int maxNumberOfPlayers) throws IOException {
+		String players = askMaxNumberOfPlayers(maxNumberOfPlayers);
+		String map = askWichMapToUse();
+		controller.parseGameConfiguration(players, map, this);
 	}
 
-	private void askMaxNumberOfPlayers(int maxNumberOfPlayers) throws IOException {
-		client.sendNotify(new RequestMaxPlayersNumber(maxNumberOfPlayers));
+	private String askMaxNumberOfPlayers(int maxNumberOfPlayers) throws IOException {
+		return client.requestAnswer(new RequestMaxPlayersNumber(maxNumberOfPlayers));
 	}
 
-	private String askWichMapToUse(List<String> maps) throws IOException {
-		return client.requestAnswer(new RequestWichMapToUse(maps));
+	private String askWichMapToUse() throws IOException {
+		return client.requestAnswer(new RequestWichMapToUse());
 	}
 
 	@Override

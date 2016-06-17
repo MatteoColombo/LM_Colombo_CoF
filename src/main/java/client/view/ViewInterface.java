@@ -10,7 +10,7 @@ public interface ViewInterface{
 	
 	public void printAskPlayersNumber(int max);
 	
-	public void printAskWhichMapToUse(List<String> maps);
+	public void printAskWhichMapToUse();
 	
 	public void printAskWhatActionToDo();
 	

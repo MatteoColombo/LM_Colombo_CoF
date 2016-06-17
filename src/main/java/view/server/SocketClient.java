@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import control.Controller;
 import model.market.OnSaleItem;
 import model.player.Player;
-import view.p2pdialogue.combinedrequest.RequestMaxPlayersNumber;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
@@ -22,6 +21,7 @@ import view.p2pdialogue.notify.NotifyPlayerJoined;
 import view.p2pdialogue.notify.NotifyPlayersList;
 import view.p2pdialogue.notify.NotifyUpdatePlayer;
 import view.p2pdialogue.notify.NotifyYourTurn;
+import view.p2pdialogue.request.RequestMaxPlayersNumber;
 import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
@@ -43,7 +43,7 @@ public class SocketClient implements ClientInt {
 		this.outputStream = clientSocket.getOutputStream();
 		this.out = new ObjectOutputStream(outputStream);
 		this.in = new ObjectInputStream(inputStream);
-		this.clientSocket.setSoTimeout(60000);
+		// this.clientSocket.setSoTimeout(60000);
 	}
 
 	@Override
@@ -84,13 +84,15 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void askConfiguration(List<String> maps, int maxNumberOfPlayers) throws IOException {
-		askMaxNumberOfPlayers(maxNumberOfPlayers);
-		askWichMapToUse(maps);
+	public void askConfiguration(int maxNumberOfPlayers) throws IOException {
 		try {
-			String returnMessage = (String) in.readObject();
-			System.out.println(returnMessage);
-			controller.parseGameConfiguration(returnMessage, this);
+			askMaxNumberOfPlayers(maxNumberOfPlayers);
+			String maxPlayers= (String)in.readObject();
+			
+			askWichMapToUse();
+			String choosenMap = (String) in.readObject();
+
+			controller.parseGameConfiguration(maxPlayers,choosenMap, this);
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
@@ -101,8 +103,8 @@ public class SocketClient implements ClientInt {
 		out.flush();
 	}
 
-	private void askWichMapToUse(List<String> maps) throws IOException {
-		out.writeObject(new RequestWichMapToUse(maps));
+	private void askWichMapToUse() throws IOException {
+		out.writeObject(new RequestWichMapToUse());
 		out.flush();
 	}
 
@@ -164,22 +166,22 @@ public class SocketClient implements ClientInt {
 	@Override
 	public void notifyPlayerJoined(Player player) throws IOException {
 		out.writeObject(new NotifyPlayerJoined(player));
-		out.flush();		
+		out.flush();
 	}
 
 	@Override
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
-		
+
 	}
 
 	@Override
 	public void askWichItemToSell() throws IOException {
 		out.writeObject(new RequestWhichItemToSell());
 		out.flush();
-		try{
-			String item=(String)in.readObject();
-			
-		}catch(ClassNotFoundException e){
+		try {
+			String item = (String) in.readObject();
+
+		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}

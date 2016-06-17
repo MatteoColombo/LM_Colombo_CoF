@@ -61,7 +61,8 @@ public class ConfigGameController {
 			alert.setContentText("Please insert a number between 2 and 10 (included)");
 			alert.show();
 		} else {
-			mainApp.sendMsg("" + playersNumber.getText() + " " + mapTable.getSelectionModel().getSelectedIndex());
+			mainApp.sendMsg(playersNumber.getText());
+			mainApp.sendMsg(String.valueOf(mapTable.getSelectionModel().getSelectedIndex()).toString());
 		}
 	}
 	

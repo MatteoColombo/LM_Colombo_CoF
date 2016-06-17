@@ -150,21 +150,20 @@ public class Controller {
 	 *            wrong config
 	 * @throws IOException
 	 */
-	public void parseGameConfiguration(String gameConfigMessage, ClientInt client) throws IOException {
-		String[] parameters = gameConfigMessage.split(" ");
+	public void parseGameConfiguration(String maxPlayers, String choosenMap, ClientInt client) throws IOException {
 		int map = 0;
 		int players = config.getMaxNumberOfPlayer();
 		try {
-			players = Integer.parseInt(parameters[0]);
+			players = Integer.parseInt(maxPlayers);
 			if (players > config.getMaxNumberOfPlayer() || players < 0)
 				throw new IllegalActionException("too many players");
-			map = Integer.parseInt(parameters[1]);
+			map = Integer.parseInt(choosenMap);
 			if (map > config.getMaps().size() || map < 0)
 				throw new IllegalActionException("too many players");
 		} catch (NumberFormatException | IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction();
-			client.askConfiguration(config.getMaps(), config.getMaxNumberOfPlayer());
+			client.askConfiguration(config.getMaxNumberOfPlayer());
 			return;
 		}
 		setMaxNumberOfPlayers(players);

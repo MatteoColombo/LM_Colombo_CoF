@@ -6,7 +6,6 @@ import client.view.ViewInterface;
 
 @FunctionalInterface
 public interface Dialogue extends Serializable {
-
 	/**
 	 * This is the method which, when called by the client-side controller,
 	 * updates the UI

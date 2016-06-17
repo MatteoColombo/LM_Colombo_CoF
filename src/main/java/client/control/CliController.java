@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +16,7 @@ import client.view.SocketServerManager;
 import client.view.ViewInterface;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
-import view.p2pdialogue.combinedrequest.CombinedDialogue;
+import view.p2pdialogue.notify.Notify;
 import view.p2pdialogue.request.Request;
 
 public class CliController implements Runnable, Controller {
@@ -29,68 +27,34 @@ public class CliController implements Runnable, Controller {
 	private transient ServerManager serverManager;
 	private transient KeyboardListener keyboardListener;
 	private transient boolean canWrite;
-	private transient boolean canEnqueue;
-	private transient boolean waitingForKeyboard;
-	private transient List<String> combinedRequestsQueue;
-	private transient List<Dialogue> combinedDialogue;
-	private transient Logger logger= Logger.getGlobal();
-	
+	private transient Logger logger = Logger.getGlobal();
+
 	public CliController() {
 		view = new Cli();
 		keyboard = new Scanner(System.in);
 		this.canWrite = false;
-		this.canEnqueue=false;
-		this.waitingForKeyboard= false;
-		this.combinedDialogue = new ArrayList<>();
-		this.combinedRequestsQueue = new ArrayList<>();
 	}
 
 	@Override
 	public synchronized void parseDialogue(Dialogue dialog) {
-		if(!waitingForKeyboard){
-			dialog.execute(view);
 		if (dialog instanceof Request) {
 			this.canWrite = true;
-			this.waitingForKeyboard= true;
-			this.canEnqueue = false;
-		} else if (dialog instanceof CombinedDialogue) {
+		} else if (dialog instanceof Notify) {
 			this.canWrite = false;
-			this.waitingForKeyboard= true;
-			this.canEnqueue = true;
-		} else {
-			this.canWrite = false;
-			this.canEnqueue = false;
 		}
-		}else{
-			combinedDialogue.add(dialog);
-		}
+		dialog.execute(view);
 	}
 
 	public void parseKeyboardMessage(String message) {
 		if (this.canWrite) {
 			try {
-				String prec = "";
-				for (String temp : this.combinedRequestsQueue)
-					prec = temp + " ";
-				serverManager.publishMessage(prec + message);
-				this.combinedRequestsQueue.clear();
+				serverManager.publishMessage(message);
 			} catch (IOException e) {
-				logger.log(Level.SEVERE, "Connection lost", e);
+				logger.log(Level.SEVERE, "Connection lost, the client will terminate", e);
 			}
+
 			this.canWrite = false;
-			this.waitingForKeyboard= false;
-			if(!combinedDialogue.isEmpty())
-				parseDialogue(combinedDialogue.remove(0));
-
-		} else if (this.canEnqueue) {
-			this.combinedRequestsQueue.add(message);
-			this.canEnqueue = false;
-			this.waitingForKeyboard=false;
-			if(!combinedDialogue.isEmpty())
-				parseDialogue(combinedDialogue.remove(0));
-
 		}
-		
 	}
 
 	@Override

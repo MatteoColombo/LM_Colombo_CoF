@@ -1,8 +1,8 @@
-package view.p2pdialogue.combinedrequest;
+package view.p2pdialogue.request;
 
 import client.view.ViewInterface;
 
-public class RequestMaxPlayersNumber implements CombinedDialogue {
+public class RequestMaxPlayersNumber implements Request {
 
 	private static final long serialVersionUID = -1604369008870409827L;
 

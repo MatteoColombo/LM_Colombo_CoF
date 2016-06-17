@@ -15,6 +15,7 @@ import fx.view.ConfigGameController;
 import fx.view.GameController;
 import fx.view.LoginController;
 import client.control.Controller;
+import client.model.Configuration;
 import client.model.GameProperty;
 import client.model.PlayerProperty;
 import fx.view.RoomController;
@@ -27,6 +28,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.board.Region;
+import model.exceptions.ConfigurationErrorException;
 import model.player.Player;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
@@ -87,8 +89,13 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
-	public void showConfigGame(List<String> maps) {
+	public void showConfigGame() {
+		
 		try {
+			//TODO this is just a workaround that need to be fixed
+			Configuration clientConfig= new Configuration();
+			List<String> maps= clientConfig.getMaps();
+			//TODO end workaround 
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/ConfigGame.fxml"));
 			AnchorPane configGame = (AnchorPane) loader.load();
@@ -100,7 +107,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			config.setMainApp(this);
 			config.setMapList(maps);
 
-		} catch (IOException e) {
+		} catch (IOException | ConfigurationErrorException e) {
 			e.printStackTrace();
 		}
 	}
@@ -198,7 +205,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void printAskPlayersNumber(int max) {
-		// TODO remove
+		showConfigGame();
 	}
 
 	@Override
@@ -212,9 +219,9 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	}
 
 	@Override
-	public void printAskWhichMapToUse(List<String> maps) {
+	public void printAskWhichMapToUse() {
 		// TODO Auto-generated method stub
-		showConfigGame(maps);
+		
 	}
 
 	@Override
@@ -278,4 +285,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		localGame.getMyPlayerData().canNotDoMainAction().set(false);
 		localGame.getMyPlayerData().canNotDoSideAction().set(false);
 	}
+
+	
 }

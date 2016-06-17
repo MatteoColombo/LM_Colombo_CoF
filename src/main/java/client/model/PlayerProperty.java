@@ -19,7 +19,17 @@ import model.player.*;
 import util.ColorConverter;
 public class PlayerProperty {
 	
-	//private static Map<String, String> politicToImage = new HashMap<>();
+	private static Map<String, String> cardsImage;
+	static {
+		cardsImage = new HashMap<>();
+		cardsImage.put("#ffffff", "http://i.imgur.com/3IpU6RZ.png"); //white
+		cardsImage.put("#000000", "http://i.imgur.com/fx111fM.png"); //black
+		cardsImage.put("#ff9900", "http://i.imgur.com/RkE0x6s.png"); //orange
+		cardsImage.put("#0066ff", "http://i.imgur.com/8OjyOO1.png"); //blue
+		cardsImage.put("#ff99cc", "http://i.imgur.com/QMetxhE.png"); //pink
+		cardsImage.put("#cc33ff", "http://i.imgur.com/jcAOwVA.png"); //purple
+		cardsImage.put("multi", "http://i.imgur.com/ySc0dOQ.png"); //multi
+	}
 	
 	private StringProperty name;
 	private IntegerProperty coins;
@@ -150,6 +160,10 @@ public class PlayerProperty {
 	
 	public ObservableList<StringProperty> getPoliticCards() {
 		return this.politicCards;
+	}
+	
+	public static Map<String, String> getPoliticCardsImages() {
+		return cardsImage;
 	}
 	
 	public ObservableList<ObjectProperty<PermissionCard>> getPermissions() {

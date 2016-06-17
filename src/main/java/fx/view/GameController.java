@@ -17,6 +17,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
@@ -113,7 +115,13 @@ public class GameController {
 		            if (item == null || empty) {
 		                setStyle("");
 		            } else {
-	                    setStyle("-fx-background-color:" + item);
+		            	setStyle("-fx-background-image: url('"
+		            			+ PlayerProperty.getPoliticCardsImages().get(item)
+		            			+ "'); -fx-background-size:cover;");
+	                    //ImageView image = new ImageView();
+	                    //image.setFitWidth(politicCardsColumn.getWidth());
+	                    //image.setImage(new Image());
+	                    //setGraphic(image);
 		            }
 		        }
 		    };

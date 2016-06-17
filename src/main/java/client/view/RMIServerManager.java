@@ -3,6 +3,8 @@ package client.view;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,21 +16,21 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 
 	private static final long serialVersionUID = 2758599266722476388L;
 	private Controller controller;
-	private String message;
-	private transient Logger logger= Logger.getGlobal();
-	
+	private List<String> queue;
+	private transient Logger logger = Logger.getGlobal();
+
 	public RMIServerManager(Controller controller) throws RemoteException {
 		this.controller = controller;
+		this.queue= new ArrayList<>();
 	}
 
 	@Override
 	public String requestAnswer(Dialogue dialogue) throws RemoteException {
-		this.message = "";
 		controller.parseDialogue(dialogue);
 		synchronized (this) {
-			while ("".equals(this.message)) {
+			while (this.queue.isEmpty()) {
 				try {
-					wait();	
+					wait();
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 					logger.log(Level.FINEST, "", e);
@@ -37,7 +39,7 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 
 		}
 
-		return message;
+		return queue.remove(0);
 	}
 
 	@Override
@@ -48,10 +50,9 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 	@Override
 	public void publishMessage(String message) throws IOException {
 		synchronized (this) {
-			this.message = message;
+			this.queue.add(message);
 			this.notifyAll();
 		}
-
 	}
 
 }

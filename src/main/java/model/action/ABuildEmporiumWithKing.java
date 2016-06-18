@@ -2,16 +2,53 @@ package model.action;
 
 import java.util.List;
 
+import java.awt.Color;
+
 import model.board.BoardRewardsManager;
 import model.board.King;
 import model.board.city.City;
+import model.board.council.Council;
 import model.board.map.MapExplorer;
 import model.exceptions.IllegalActionException;
+import model.player.Assistants;
+import model.player.Coins;
+import model.player.PermissionCard;
 import model.player.Player;
 import model.player.PoliticCard;
-import model.reward.BVictoryPoints;
-import model.reward.Reward;
+import model.reward.*;
 
+/**
+ * An Action that is used by a Player to {@link #execute() build a new Emporium}
+ * in a City of his choice using the King for an amount of Coins based on the
+ * number of PoliticCards used to satisfy the King Council and for an other
+ * amount of Coins calculated from the number of adjacent Cities the King has to
+ * move through to arrive at the chosen City; if multicolor PoliticCards are
+ * used, extra Coins have to be payed and one extra Assistant have to be payed
+ * for every other Emporium of the others Players already in that City. The
+ * Player is also awarded with that City Rewards and the ones of all the
+ * adjacent Cities where the Player has already one Emporium and if he has
+ * placed an Emporium in each City of a Region or in each City of the same
+ * Color, he will be also awarded with an extra BoardReward and a
+ * BoardKingRewards, if they are still available.
+ * <p>
+ * This is an main Action.
+ * 
+ * @see Action
+ * @see Assistants
+ * @see BoardKingRewards
+ * @see BoardReward
+ * @see City
+ * @see Coins
+ * @see Color
+ * @see Council
+ * @see Emporium
+ * @see King
+ * @see PermissionCard
+ * @see Player
+ * @see PoliticCards
+ * @see Region
+ * @see Reward
+ */
 public class ABuildEmporiumWithKing extends Action {
 	private Player player;
 	private City chosenCity;
@@ -24,6 +61,33 @@ public class ABuildEmporiumWithKing extends Action {
 	private List<City> allMapCities;
 	private List<PoliticCard> politicCards;
 
+	/**
+	 * Checks if the {@link Player} has enough {@link PoliticCard PoliticCards}
+	 * to satisfy the {@link Council King Council} and the consequent amount of
+	 * {@link Coins} together with an other amount of Coins calculated from the
+	 * number of adjacent {@link City Cities} the {@link King} has to move
+	 * through to arrive at the chosen City to be able to build here an
+	 * {@link Emporium} and also if he has the necessary amount of
+	 * {@link Assistants} to pay if Emporiums of others Player are already
+	 * present in that City; it will throw an exception if the {@link Action}
+	 * conditions are not satisfied.
+	 * 
+	 * @param p
+	 *            the Player who wants to build an Emporium
+	 * @param king
+	 *            the King of the Game with his own Council
+	 * @param chosenCity
+	 *            the City where the Player wants to build an Emporium
+	 * @param allMapCities
+	 *            all the Cities of the Game
+	 * @param politic
+	 *            the PoliticCards this Player want to use to satisfy the King
+	 *            Council
+	 * @param bRewardsManager
+	 *            the manager of the Board Rewards
+	 * @throws IllegalActionException
+	 * @see ABuildEmporiumWithKing
+	 */
 	public ABuildEmporiumWithKing(Player p, King king, City chosenCity, List<City> allMapCities,
 			List<PoliticCard> politic, BoardRewardsManager bRewardsManager) throws IllegalActionException {
 		super(true, p);
@@ -60,6 +124,11 @@ public class ABuildEmporiumWithKing extends Action {
 
 	}
 
+	/**
+	 * Executes the current {@link Action}.
+	 * 
+	 * @see ABuildEmporiumWithKing
+	 */
 	@Override
 	public void execute() {
 		king.moveKing(chosenCity);
@@ -85,10 +154,23 @@ public class ABuildEmporiumWithKing extends Action {
 		}
 	}
 
+	/**
+	 * Assigns an {@link Emporium} of the {@link Player} to the {@link City
+	 * chosen City}.
+	 * 
+	 * @see ABuildEmporiumWithKing
+	 */
 	private void assignEmporium() {
 		this.chosenCity.addEmporium(player.getEmporium().remove(0));
 	}
 
+	/**
+	 * Assigns to the {@link Player} the {@link City chosen City} {@link Reward
+	 * Rewards} and the ones of all the adjacent Cities where the Player has
+	 * already one {@link Emporium}.
+	 * 
+	 * @see ABuildEmporiumWithKing
+	 */
 	private void assignRewards() {
 		MapExplorer explorer = new MapExplorer();
 		List<Reward> rewards = explorer.getAdiacentRewards(this.chosenCity, this.player);

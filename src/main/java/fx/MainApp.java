@@ -279,7 +279,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	@Override
 	public void updatePlayer(Player p, int index) {
 		localGame.getPlayers().get(index).setAllButPermissions(p);
-}
+	}
 
 	@Override
 	public void isYourTurn() {

@@ -5,14 +5,23 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.board.Board;
+import model.exceptions.ConfigurationErrorException;
+import model.exceptions.XMLFileException;
 import model.player.Player;
-import model.reward.Reward;
+import model.Configuration;
 
 public class GameProperty {
 	
 	private ObservableList<PlayerProperty> players = FXCollections.observableArrayList();
 	private SimpleMap map;
 	private int myIndex;
+	
+	public void initMap(int choosen) throws ConfigurationErrorException, XMLFileException  {
+		{ Board b = new Board(new Configuration(), choosen);
+		  this.map = new SimpleMap(b);
+		}
+		// TODO call the garbage collector
+	}
 	
 	public PlayerProperty getMyPlayerData() {
 		return players.get(myIndex);
@@ -34,10 +43,6 @@ public class GameProperty {
 		return myIndex;
 	}
 	
-	public void setMyIndex(int i) {
-		myIndex = i;
-	}
-	
 	public void isYourTurn() {
 		players.get(myIndex).canNotDoMainAction().set(false);
 		players.get(myIndex).canNotDoSideAction().set(false);
@@ -49,7 +54,7 @@ public class GameProperty {
 	}
 	
 	public void setAllPlayers(List<Player> players) {
-		players.clear();
+		this.players.clear();
 		myIndex = players.size()-1;
 		for(Player p: players) {
 			playerJoined(p);

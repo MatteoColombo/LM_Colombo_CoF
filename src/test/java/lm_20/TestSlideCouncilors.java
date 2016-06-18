@@ -95,7 +95,7 @@ public class TestSlideCouncilors {
 		assertEquals(colorList.get(3), colorsFromCouncil.get(2));
 		assertEquals(colorList.get(4), colorsFromCouncil.get(3));
 		assertEquals(10, player.getCoins().getAmount());
-		assertEquals(0, player.getAssistants().getAmount());
+		assertEquals(2, player.getAssistants().getAmount());
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class TestSlideCouncilors {
 	@Test(expected = IllegalActionException.class)
 	public void testSlideCouncilWithExtraFailedNoAssistants() throws Exception {
 
-		player.getAssistants().decreaseAmount(2);
+		player.getAssistants().decreaseAmount(3);
 		ASlideCouncilWithAssistant action = new ASlideCouncilWithAssistant(player, pool, council, colorList.get(1));
 		action.execute();
 		List<Color> colorsFromCouncil = council.getCouncilorsColor();

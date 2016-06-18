@@ -8,16 +8,19 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import client.model.GameProperty;
 import client.view.Cli;
 import client.view.KeyboardListener;
 import client.view.RMIServerManager;
 import client.view.ServerManager;
 import client.view.SocketServerManager;
 import client.view.ViewInterface;
+import model.Game;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
 import view.p2pdialogue.notify.Notify;
 import view.p2pdialogue.request.Request;
+import view.p2pdialogue.update.Update;
 
 public class CliController implements Runnable, Controller {
 
@@ -28,21 +31,31 @@ public class CliController implements Runnable, Controller {
 	private transient KeyboardListener keyboardListener;
 	private transient boolean canWrite;
 	private transient Logger logger = Logger.getGlobal();
+	private transient GameProperty model;
 
 	public CliController() {
-		view = new Cli();
+		this.model = new GameProperty();
+		view = new Cli(this.model);
 		keyboard = new Scanner(System.in);
-		this.canWrite = false;
-	}
+		this.canWrite = false;	}
 
 	@Override
 	public synchronized void parseDialogue(Dialogue dialog) {
 		if (dialog instanceof Request) {
 			this.canWrite = true;
-		} else if (dialog instanceof Notify) {
-			this.canWrite = false;
+			((Request) dialog).execute(view);
 		}
-		dialog.execute(view);
+		if (dialog instanceof Notify) {
+			this.canWrite = false;
+			((Notify) dialog).execute(view);
+		}
+		if (dialog instanceof Update){
+			((Update) dialog).execute(model);
+			if(dialog instanceof Request)
+				this.canWrite=true;
+			else 
+				this.canWrite=false;
+		}
 	}
 
 	public void parseKeyboardMessage(String message) {

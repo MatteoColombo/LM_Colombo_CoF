@@ -29,7 +29,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.converter.NumberStringConverter;
-import model.market.GoodsBundle;
 import model.player.PermissionCard;
 
 public class GameController {
@@ -60,11 +59,7 @@ public class GameController {
 	@FXML private Button sideActionButton3;
 	@FXML private Button sideActionButton4;
 	
-	@FXML private TableView<GoodsBundle> marketTable;
-	@FXML private TableColumn<GoodsBundle, String> marketSellerColumn;
-	@FXML private TableColumn<GoodsBundle, String> goodsColumn;
-	@FXML private TableColumn<GoodsBundle, String> priceColumn;
-	
+
 	@FXML private VBox opponentsBox;
 	
 	@FXML private TextArea logger;

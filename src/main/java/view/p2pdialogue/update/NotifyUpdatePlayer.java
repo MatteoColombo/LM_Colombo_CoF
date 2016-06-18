@@ -1,9 +1,10 @@
-package view.p2pdialogue.notify;
+package view.p2pdialogue.update;
 
+import client.model.GameProperty;
 import client.view.ViewInterface;
 import model.player.Player;
 
-public class NotifyUpdatePlayer implements Notify {
+public class NotifyUpdatePlayer implements Update {
 
 	/**
 	 * 
@@ -17,9 +18,14 @@ public class NotifyUpdatePlayer implements Notify {
 		this.index = index;
 	}
 
-	@Override
+	/*@Override
 	public void execute(ViewInterface view) {
 		view.updatePlayer(player, index);
+	}*/
+
+	@Override
+	public void execute(GameProperty model) {
+		model.updatePlayer(player, index);
 	}
 
 }

@@ -21,7 +21,7 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 
 	public RMIServerManager(Controller controller) throws RemoteException {
 		this.controller = controller;
-		this.queue= new ArrayList<>();
+		this.queue = new ArrayList<>();
 	}
 
 	@Override

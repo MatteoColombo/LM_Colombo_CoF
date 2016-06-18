@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import control.Controller;
+import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
 
@@ -62,7 +63,7 @@ public interface ClientInt {
 	 * Notifies the player that the action that he choose is invalid for some
 	 * reason
 	 */
-	public void notifyIllegalAction();
+	public void notifyIllegalAction(IllegalActionException exception);
 
 	/**
 	 * Returns if the client is still connected

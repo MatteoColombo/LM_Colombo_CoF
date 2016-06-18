@@ -89,7 +89,7 @@ public class Controller {
 			game.getMarket().addItemOnSale(itemOnSale, price, playersMap.get(client));
 		} catch (IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
-			client.notifyIllegalAction();
+			client.notifyIllegalAction(e);
 			return;
 		}
 
@@ -112,7 +112,7 @@ public class Controller {
 			game.getMarket().buyItem(items.get(index), playersMap.get(client));
 		} catch (NumberFormatException | IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
-			client.notifyIllegalAction();
+			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));
 		}
 	}
 
@@ -162,7 +162,7 @@ public class Controller {
 				throw new IllegalActionException("too many players");
 		} catch (NumberFormatException | IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
-			client.notifyIllegalAction();
+			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));
 			client.askConfiguration(config.getMaxNumberOfPlayer());
 			return;
 		}
@@ -257,12 +257,12 @@ public class Controller {
 				tm.performAction(builder.makeAEndTurn(player, tm));
 				return;
 			default:
-				throw new IllegalActionException("There is an error with the action");
+				throw new IllegalActionException("Unrecognized action");
 			}
 
 		} catch (IllegalActionException | ParseException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
-			client.notifyIllegalAction();
+			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));
 			client.askPlayerWhatActionToDo();
 		}
 	}

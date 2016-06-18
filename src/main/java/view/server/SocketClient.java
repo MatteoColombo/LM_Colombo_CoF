@@ -12,20 +12,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import control.Controller;
+import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
-import view.p2pdialogue.notify.NotifyPlayerJoined;
-import view.p2pdialogue.notify.NotifyPlayersList;
-import view.p2pdialogue.notify.NotifyUpdatePlayer;
 import view.p2pdialogue.notify.NotifyYourTurn;
 import view.p2pdialogue.request.RequestMaxPlayersNumber;
 import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
 import view.p2pdialogue.request.RequestWichMapToUse;
+import view.p2pdialogue.update.NotifyPlayerJoined;
+import view.p2pdialogue.update.NotifyPlayersList;
+import view.p2pdialogue.update.NotifyUpdatePlayer;
 
 public class SocketClient implements ClientInt {
 	private Controller controller;
@@ -118,9 +119,9 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void notifyIllegalAction() {
+	public void notifyIllegalAction(IllegalActionException exception) {
 		try {
-			out.writeObject(new NotifyIllegalAction());
+			out.writeObject(new NotifyIllegalAction(exception));
 			out.flush();
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);

@@ -30,12 +30,14 @@ public class TurnManager {
 	 */
 	public void startTurn() {
 		try {
+			System.out.println("ho notificato");
 			this.turnPlayer.getClient().notifyYourTurn();
 		} catch (IOException e) {
 			logger.log(Level.WARNING, e.getMessage(),e );
 			this.turnPlayer.setSuspension(true);
 			return;
 		}
+		
 		while (!playerWantsToExit || (!turnPlayer.getIfExtraActionDone() && turnPlayer.getMainActionsLeft() > 0)) {
 			try {
 				if (this.turnPlayer.getClient().isConnected())
@@ -49,6 +51,7 @@ public class TurnManager {
 				return;
 			}
 		}
+		System.out.println("player è uscito");
 	}
 
 	/**

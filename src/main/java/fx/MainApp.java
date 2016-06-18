@@ -15,7 +15,6 @@ import fx.view.ConfigGameController;
 import fx.view.GameController;
 import fx.view.LoginController;
 import client.control.Controller;
-import client.model.Configuration;
 import client.model.GameProperty;
 import client.model.PlayerProperty;
 import fx.view.RoomController;
@@ -27,12 +26,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import model.Configuration;
 import model.board.Region;
 import model.exceptions.ConfigurationErrorException;
+import model.exceptions.IllegalActionException;
 import model.player.Player;
 import model.reward.Reward;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
+import view.p2pdialogue.notify.Notify;
+import view.p2pdialogue.request.Request;
+import view.p2pdialogue.update.Update;
 
 public class MainApp extends Application implements ViewInterface, Runnable, Controller {
 
@@ -55,13 +59,18 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void parseDialogue(Dialogue dialog) {
-		Platform.runLater(() -> dialog.execute(this));
+		if(dialog instanceof Update)
+			Platform.runLater(() -> ((Update)dialog).execute(localGame));
+		else if(dialog instanceof Notify)
+			Platform.runLater(() -> ((Notify)dialog).execute(this));
+		else if(dialog instanceof Request)
+			Platform.runLater(() -> ((Request)dialog).execute(this));
 	}
 
 	public void showWaitingRoom() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Room.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/Room.fxml"));
 			AnchorPane room = (AnchorPane) loader.load();
 			Scene scene = new Scene(room);
 			primaryStage.setScene(scene);
@@ -76,7 +85,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void showLogin() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Login.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/Login.fxml"));
 			BorderPane loginOverview = (BorderPane) loader.load();
 			Scene scene = new Scene(loginOverview);
 			primaryStage.setScene(scene);
@@ -98,7 +107,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			List<String> maps= clientConfig.getMaps();
 			//TODO end workaround 
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/ConfigGame.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/ConfigGame.fxml"));
 			AnchorPane configGame = (AnchorPane) loader.load();
 			Scene scene = new Scene(configGame);
 			primaryStage.setScene(scene);
@@ -117,7 +126,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void showRoom() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Room.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/Room.fxml"));
 			AnchorPane game = (AnchorPane) loader.load();
 			Scene scene = new Scene(game);
 			primaryStage.setScene(scene);
@@ -137,7 +146,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 						// (disable when is not your turn)
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Game.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/Game.fxml"));
 			BorderPane game = (BorderPane) loader.load();
 			Scene scene = new Scene(game);
 			primaryStage.setScene(scene);
@@ -237,11 +246,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	}
 
-	@Override
-	public void printIllegalAction() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void printAskPlayerName() {
@@ -264,22 +268,15 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void playerJoined(Player p) {
-		localGame.getPlayers().add(new PlayerProperty().setAllButPermissions(p));
 	}
 
 	@Override
 	public void setAllPlayers(List<Player> players) {
-		localGame.getPlayers().clear();
-		localGame.setMyIndex(players.size()-1);
-		for(Player p: players) {
-			playerJoined(p);
-		}
 	}
 
 	@Override
 	public void updatePlayer(Player p, int index) {
-		localGame.getPlayers().get(index).setAllButPermissions(p);
-}
+	}
 
 	@Override
 	public void isYourTurn() {
@@ -289,6 +286,12 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void setCityRewards(List<Reward> bonusList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printIllegalAction(Exception e) {
 		// TODO Auto-generated method stub
 		
 	}	

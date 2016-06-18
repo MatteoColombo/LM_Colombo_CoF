@@ -22,13 +22,13 @@ public class PlayerProperty {
 	private static Map<String, String> cardsImage;
 	static {
 		cardsImage = new HashMap<>();
-		cardsImage.put("#ffffff", "http://i.imgur.com/3IpU6RZ.png"); //white
-		cardsImage.put("#000000", "http://i.imgur.com/fx111fM.png"); //black
-		cardsImage.put("#ff9900", "http://i.imgur.com/RkE0x6s.png"); //orange
-		cardsImage.put("#0066ff", "http://i.imgur.com/8OjyOO1.png"); //blue
-		cardsImage.put("#ff99cc", "http://i.imgur.com/QMetxhE.png"); //pink
-		cardsImage.put("#cc33ff", "http://i.imgur.com/jcAOwVA.png"); //purple
-		cardsImage.put("multi", "http://i.imgur.com/ySc0dOQ.png"); //multi
+		cardsImage.put("#ffffff", "/politicCards/politicWhite.png"); //white http://i.imgur.com/3IpU6RZ.png
+		cardsImage.put("#000000", "/politicCards/politicBlack.png"); //black http://i.imgur.com/fx111fM.png
+		cardsImage.put("#ff9900", "/politicCards/politicOrange.png"); //orange http://i.imgur.com/RkE0x6s.png
+		cardsImage.put("#0066ff", "/politicCards/politicBlue.png"); //blue http://i.imgur.com/8OjyOO1.pnq
+		cardsImage.put("#ff99cc", "/politicCards/politicPink.png"); //pink http://i.imgur.com/QMetxhE.png
+		cardsImage.put("#cc33ff", "/politicCards/politicPurple.png"); //purple http://i.imgur.com/jcAOwVA.png
+		cardsImage.put("multi", "/politicCards/politicMulti.png"); //multi http://i.imgur.com/ySc0dOQ.png
 	}
 	
 	private StringProperty name;
@@ -58,7 +58,7 @@ public class PlayerProperty {
 	
 	/**
 	 * since permission cards changes not so often as the others,
-	 * this distinction imprve performance
+	 * this distinction improve performance
 	 * @param player
 	 * @return
 	 */

@@ -19,7 +19,7 @@ public interface ViewInterface{
 	
 	public void printAskPlayerName();
 	
-	public void printIllegalAction();
+	public void printIllegalAction(Exception e);
 	
 	public void showInitMenu();
 	
@@ -34,6 +34,7 @@ public interface ViewInterface{
 	public void updatePlayer(Player p, int index);
 	public void setCityRewards(List<Reward> bonusList);
 	public void isYourTurn();
+	
 	
 	/**
 	 * this give to the caller (a Dialogue probably) the access to the local model,

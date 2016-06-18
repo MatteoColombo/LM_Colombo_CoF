@@ -19,21 +19,23 @@ public class Cli implements ViewInterface {
 	// NOTE: the following constants does not work in the eclipse console
 	// but they will work in other terminals (i tested it in iTerm2 and OSX
 	// Terminal)
-	public static final String ANSI_RESET = "\u001B[0m";
-	public static final String ANSI_BLACK = "\u001B[30m";
-	public static final String ANSI_RED = "\u001B[31m";
-	public static final String ANSI_GREEN = "\u001B[32m";
-	public static final String ANSI_YELLOW = "\u001B[33m";
-	public static final String ANSI_BLUE = "\u001B[34m";
-	public static final String ANSI_PURPLE = "\u001B[35m";
-	public static final String ANSI_CYAN = "\u001B[36m";
-	public static final String ANSI_WHITE = "\u001B[37m";
-	public static final String BLOCK = "\u2588\u2588";
-	public static final String SEPARATOR = "---------------------------------------";
+	private GameProperty model;
+	private static final String ANSI_RESET = "\u001B[0m";
+	private static final String ANSI_BLACK = "\u001B[30m";
+	private static final String ANSI_RED = "\u001B[31m";
+	private static final String ANSI_GREEN = "\u001B[32m";
+	private static final String ANSI_YELLOW = "\u001B[33m";
+	private static final String ANSI_BLUE = "\u001B[34m";
+	private static final String ANSI_PURPLE = "\u001B[35m";
+	private static final String ANSI_CYAN = "\u001B[36m";
+	private static final String ANSI_WHITE = "\u001B[37m";
+	private static final String BLOCK = "\u2588\u2588";
+	private static final String SEPARATOR = "---------------------------------------";
 	
 	private PrintWriter writer;
 
-	public Cli() {
+	public Cli(GameProperty model) {
+		this.model=model;
 		writer= new PrintWriter(System.out);
 	}
 
@@ -151,8 +153,8 @@ public class Cli implements ViewInterface {
 	}
 
 	@Override
-	public void printIllegalAction() {
-		writer.println("There's an error with the action");
+	public void printIllegalAction(Exception e) {
+		writer.println("Error: "+e.getMessage());
 		writer.flush();
 	}
 
@@ -167,18 +169,12 @@ public class Cli implements ViewInterface {
 		writer.println(SEPARATOR);
 		writer.println("The game started");
 		writer.flush();
-
 	}
 
 	@Override
 	public void showRoom() {
 		writer.println("\nThe game will start soon");
 		writer.flush();
-	}
-
-	public static void main(String[] args){
-		new Cli().printCouncil();;
-		
 	}
 
 	@Override

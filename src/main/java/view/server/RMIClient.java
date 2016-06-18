@@ -7,20 +7,21 @@ import java.util.logging.Logger;
 
 import client.view.RMIServerManager;
 import control.Controller;
+import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
-import view.p2pdialogue.notify.NotifyPlayerJoined;
-import view.p2pdialogue.notify.NotifyPlayersList;
-import view.p2pdialogue.notify.NotifyUpdatePlayer;
 import view.p2pdialogue.notify.NotifyYourTurn;
 import view.p2pdialogue.request.RequestMaxPlayersNumber;
 import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
 import view.p2pdialogue.request.RequestWichMapToUse;
+import view.p2pdialogue.update.NotifyPlayerJoined;
+import view.p2pdialogue.update.NotifyPlayersList;
+import view.p2pdialogue.update.NotifyUpdatePlayer;
 
 public class RMIClient implements ClientInt {
 	private Controller controller;
@@ -74,9 +75,9 @@ public class RMIClient implements ClientInt {
 	}
 
 	@Override
-	public void notifyIllegalAction() {
+	public void notifyIllegalAction(IllegalActionException exception) {
 		try {
-			client.sendNotify(new NotifyIllegalAction());
+			client.sendNotify(new NotifyIllegalAction(exception));
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}

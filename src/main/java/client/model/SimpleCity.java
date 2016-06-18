@@ -1,5 +1,6 @@
 package client.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
@@ -10,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.board.city.City;
 import model.reward.Bonus;
+import model.reward.Reward;
 
 public class SimpleCity {
 	private BooleanProperty hasNoEmporium;
@@ -20,7 +22,7 @@ public class SimpleCity {
 	 */
 	private ObservableList<StringProperty> emporiums;
 	private List<SimpleBonus> bonuses;
-	// TODO connections?
+	private List<String> connections;
 	
 	public SimpleCity(City city) {
 		this.name = new SimpleStringProperty(city.getName());
@@ -32,11 +34,11 @@ public class SimpleCity {
 			this.hasKing = new SimpleBooleanProperty(false);
 		}
 		
-		this.bonuses = FXCollections.observableArrayList();
-		for(Bonus b: city.getReward().getGeneratedRewards()) {
-			SimpleBonus sb = new SimpleBonus(b.getTagName(), b.getAmount());
-			bonuses.add(sb);
+		this.connections = new ArrayList<>();
+		for(City c: city.getConnectedCities()) {
+			this.connections.add(c.getName());
 		}
+		
 	}
 	
 	public BooleanProperty hasNoEmporium() {
@@ -57,5 +59,17 @@ public class SimpleCity {
 	
 	public List<SimpleBonus> getBonuses() {
 		return this.bonuses;
+	}
+	
+	public List<String> getConnections() {
+		return this.connections;
+	}
+	
+	public void setBonuses(Reward reward) {
+		this.bonuses = new ArrayList<>();
+		for(Bonus b: reward.getGeneratedRewards()) {
+			SimpleBonus sb = new SimpleBonus(b.getTagName(), b.getAmount());
+			bonuses.add(sb);
+		}
 	}
 }

@@ -5,14 +5,8 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import model.exceptions.IllegalActionException;
-import model.exceptions.MapXMLFileException;
-import model.exceptions.NegativeException;
-import model.market.GoodsBundle;
 import model.market.Market;
 import model.player.*;
 

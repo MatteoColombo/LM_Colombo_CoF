@@ -29,7 +29,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.converter.NumberStringConverter;
-import model.market.GoodsBundle;
 import model.player.PermissionCard;
 
 public class GameController {
@@ -60,11 +59,7 @@ public class GameController {
 	@FXML private Button sideActionButton3;
 	@FXML private Button sideActionButton4;
 	
-	@FXML private TableView<GoodsBundle> marketTable;
-	@FXML private TableColumn<GoodsBundle, String> marketSellerColumn;
-	@FXML private TableColumn<GoodsBundle, String> goodsColumn;
-	@FXML private TableColumn<GoodsBundle, String> priceColumn;
-	
+
 	@FXML private VBox opponentsBox;
 	
 	@FXML private TextArea logger;
@@ -91,6 +86,11 @@ public class GameController {
 		mainApp.sendMsg("slide -council 1 -color white");
 	}
 	//------------------------------------------------------
+	
+	@FXML private void handlePass() throws IOException {
+		mainApp.sendMsg("end");
+		mainApp.getLocalModel().endOfTurn();
+	}
 	
 	private void initButtons() {
 		Bindings.bindBidirectional(mainActionButton1.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
@@ -124,7 +124,7 @@ public class GameController {
 		                setStyle("");
 		            } else {
 		            	setStyle("-fx-background-image: url('"
-		            			+ PlayerProperty.getPoliticCardsImages().get(item)
+		            			+ GameController.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))
 		            			+ "'); -fx-background-size:cover;");
 		            }
 		        }
@@ -140,9 +140,10 @@ public class GameController {
 			if(i != myIndex) {
 				try {
 					FXMLLoader loader = new FXMLLoader();
-					loader.setLocation(MainApp.class.getResource("view/OpponentPane.fxml"));
+					loader.setLocation(MainApp.class.getResource("/fxml/OpponentPane.fxml"));
 					AnchorPane pane = (AnchorPane) loader.load();
 					opponentsBox.getChildren().add(pane);
+					((Labeled) pane.lookup("#nameLabel")).textProperty().set(players.get(i).getName());
 			        Bindings.bindBidirectional(((Labeled) pane.lookup("#victoryLabel")).textProperty(), players.get(i).victoryProperty(), nsc);
 			        Bindings.bindBidirectional(((Labeled) pane.lookup("#coinsLabel")).textProperty(), players.get(i).coinsProperty(), nsc);
 			        Bindings.bindBidirectional(((Labeled) pane.lookup("#assistantsLabel")).textProperty(), players.get(i).assistantsProperty(), nsc);

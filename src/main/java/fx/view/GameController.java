@@ -138,6 +138,7 @@ public class GameController {
 					loader.setLocation(MainApp.class.getResource("/fxml/OpponentPane.fxml"));
 					AnchorPane pane = (AnchorPane) loader.load();
 					opponentsBox.getChildren().add(pane);
+					((Labeled) pane.lookup("#nameLabel")).textProperty().set(players.get(i).getName());
 			        Bindings.bindBidirectional(((Labeled) pane.lookup("#victoryLabel")).textProperty(), players.get(i).victoryProperty(), nsc);
 			        Bindings.bindBidirectional(((Labeled) pane.lookup("#coinsLabel")).textProperty(), players.get(i).coinsProperty(), nsc);
 			        Bindings.bindBidirectional(((Labeled) pane.lookup("#assistantsLabel")).textProperty(), players.get(i).assistantsProperty(), nsc);

@@ -4,64 +4,104 @@ import java.util.List;
 
 import model.board.council.Council;
 import model.exceptions.IllegalActionException;
-import model.player.PermissionCard;
-import model.player.Player;
-import model.player.PoliticCard;
+import model.player.*;
 
-public class ABuyPermissionCard extends Action{
-
+/**
+ * An Action that is used by this Player to {@link #execute() buy a PermissionCard}
+ * for an amount of Coins based on the number of PoliticCards used to satisfy a
+ * specific Council; if multicolor PoliticCards are used, extra Coins have to be
+ * payed.
+ * <p>
+ * This is a main Action.
+ * 
+ * @see Action
+ * @see Coins
+ * @see Council
+ * @see PermissionCard
+ * @see Player
+ * @see PoliticCard
+ */
+public class ABuyPermissionCard extends Action {
 	private Player player;
 	private PermissionCard permCard;
 	private List<PoliticCard> politicCards;
 	private int price;
-	
-	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politic) throws IllegalActionException{
+
+	/**
+	 * Checks if the {@link Player} has enough {@link PoliticCard PoliticCards}
+	 * to satisfy a {@link Council} and the consequent amount of {@link Coins}
+	 * to buy a specific {@link PermissionCard}; it will throw an exception if
+	 * the {@link Action} conditions are not satisfied.
+	 * 
+	 * @param p
+	 *            the Player who wants to buy the PermissionCard
+	 * @param permc
+	 *            the PermissionCard this Player want to buy
+	 * @param counc
+	 *            the Council this Player want to satisfy
+	 * @param politic
+	 *            the PoliticCards this Player want to use to satisfy a Council
+	 * @throws IllegalActionException
+	 * @see ABuyPermissionCard
+	 */
+	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politic)
+			throws IllegalActionException {
 		super(true, p);
 		this.politicCards = politic;
 		this.player = p;
 		this.permCard = permc;
-		int difference= counc.compareCardCouncil(politicCards);
+		int difference = counc.compareCardCouncil(politicCards);
 		price = calculatePrice(difference);
-		price+=calculatePriceMultipleColoredCards();
-		if(player.getCoins().getAmount() < price) {
+		price += calculatePriceMultipleColoredCards();
+		if (player.getCoins().getAmount() < price) {
 			throw new IllegalActionException("you can not afford it!");
 		}
-		
 	}
-	
+
+	/**
+	 * Executes the current {@link Action}.
+	 * 
+	 * @see ABuyPermissionCard
+	 */
 	@Override
 	public void execute() {
 		player.getCoins().decreaseAmount(price);
 		player.getPermissionCard().add(permCard);
 		permCard.getCardReward().assignBonusTo(player);
-		
+
 		// when the action perform, the card given by the used are destroyed
 		List<PoliticCard> playerHand = player.getPoliticCard();
-		for(PoliticCard used: politicCards) {
+		for (PoliticCard used : politicCards) {
 			playerHand.remove(used);
 		}
 	}
-	
+
 	/**
-	 * Calculate the money that can be paid instead of cards
-	 * @param difference the number of missing cards
-	 * @return an integer, the price
+	 * Calculates the money that can be paid instead of cards.
+	 * 
+	 * @param difference
+	 *            the number of missing cards
+	 * @return the price
+	 * @see ABuyPermissionCard
 	 */
-	private int calculatePrice(int difference){
-		if(difference == 0) {
+	private int calculatePrice(int difference) {
+		if (difference == 0) {
 			return 0;
 		}
-		return difference*3 +1;
+		return difference * 3 + 1;
 	}
-	
+
 	/**
-	 * Calculate the extra money that have to be paid because of multiple colored cards
-	 * @return an integer, the extra price
+	 * Calculates the extra money that have to be paid because of multiple
+	 * colored cards.
+	 * 
+	 * @return the extra price
+	 * @see ABuyPermissionCard
 	 */
-	private int calculatePriceMultipleColoredCards(){
-		int multipCards=0;
-		for(PoliticCard card: politicCards)
-			if(card.isMultipleColor())
+	private int calculatePriceMultipleColoredCards() {
+		int multipCards = 0;
+		for (PoliticCard card : politicCards)
+			if (card.isMultipleColor())
 				multipCards++;
 		return multipCards;
 	}

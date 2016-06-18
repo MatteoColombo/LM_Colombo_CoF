@@ -31,7 +31,7 @@ public class AEndTurn extends Action {
 
 	/**
 	 * This method is called by the turn manager and it is used to say that the
-	 * player decided to end his turn.S
+	 * player decided to end his turn.
 	 */
 	@Override
 	public void execute() {

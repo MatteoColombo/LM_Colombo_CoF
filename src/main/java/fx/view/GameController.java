@@ -119,7 +119,7 @@ public class GameController {
 		                setStyle("");
 		            } else {
 		            	setStyle("-fx-background-image: url('"
-		            			+ PlayerProperty.getPoliticCardsImages().get(item)
+		            			+ GameController.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))
 		            			+ "'); -fx-background-size:cover;");
 		            }
 		        }

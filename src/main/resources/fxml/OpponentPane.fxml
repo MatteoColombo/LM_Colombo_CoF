@@ -53,10 +53,5 @@
             <Insets left="10.0" />
          </padding>
       </GridPane>
-      <ImageView fitHeight="70.0" fitWidth="125.0" layoutX="-37.0" layoutY="-37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <image>
-            <Image url="@../../../../../../../Pictures/690653.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

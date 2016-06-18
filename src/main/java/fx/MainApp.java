@@ -70,7 +70,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void showWaitingRoom() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Room.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/Room.fxml"));
 			AnchorPane room = (AnchorPane) loader.load();
 			Scene scene = new Scene(room);
 			primaryStage.setScene(scene);
@@ -85,7 +85,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void showLogin() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Login.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/Login.fxml"));
 			BorderPane loginOverview = (BorderPane) loader.load();
 			Scene scene = new Scene(loginOverview);
 			primaryStage.setScene(scene);
@@ -107,7 +107,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			List<String> maps= clientConfig.getMaps();
 			//TODO end workaround 
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/ConfigGame.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/ConfigGame.fxml"));
 			AnchorPane configGame = (AnchorPane) loader.load();
 			Scene scene = new Scene(configGame);
 			primaryStage.setScene(scene);
@@ -126,7 +126,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void showRoom() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Room.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/Room.fxml"));
 			AnchorPane game = (AnchorPane) loader.load();
 			Scene scene = new Scene(game);
 			primaryStage.setScene(scene);
@@ -146,7 +146,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 						// (disable when is not your turn)
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Game.fxml"));
+			loader.setLocation(MainApp.class.getResource("/fxml/Game.fxml"));
 			BorderPane game = (BorderPane) loader.load();
 			Scene scene = new Scene(game);
 			primaryStage.setScene(scene);

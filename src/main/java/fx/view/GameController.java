@@ -135,7 +135,7 @@ public class GameController {
 			if(i != myIndex) {
 				try {
 					FXMLLoader loader = new FXMLLoader();
-					loader.setLocation(MainApp.class.getResource("view/OpponentPane.fxml"));
+					loader.setLocation(MainApp.class.getResource("/fxml/OpponentPane.fxml"));
 					AnchorPane pane = (AnchorPane) loader.load();
 					opponentsBox.getChildren().add(pane);
 			        Bindings.bindBidirectional(((Labeled) pane.lookup("#victoryLabel")).textProperty(), players.get(i).victoryProperty(), nsc);

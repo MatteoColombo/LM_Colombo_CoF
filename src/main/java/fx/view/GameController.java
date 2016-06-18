@@ -87,6 +87,11 @@ public class GameController {
 	}
 	//------------------------------------------------------
 	
+	@FXML private void handlePass() throws IOException {
+		mainApp.sendMsg("end");
+		mainApp.getLocalModel().endOfTurn();
+	}
+	
 	private void initButtons() {
 		Bindings.bindBidirectional(mainActionButton1.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
         Bindings.bindBidirectional(mainActionButton2.disableProperty(), mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());

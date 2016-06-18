@@ -58,7 +58,7 @@ public class PlayerProperty {
 	
 	/**
 	 * since permission cards changes not so often as the others,
-	 * this distinction imprve performance
+	 * this distinction improve performance
 	 * @param player
 	 * @return
 	 */

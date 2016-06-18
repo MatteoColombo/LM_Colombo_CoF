@@ -7,6 +7,7 @@ import model.board.Board;
 import model.board.Region;
 import model.reward.BoardReward;
 import model.reward.Bonus;
+import model.reward.Reward;
 
 public class SimpleMap {
 	private List<SimpleRegion> regions;
@@ -54,5 +55,15 @@ public class SimpleMap {
 	
 	public List<Integer> getKingBonuses() {
 		return this.kingBonuses;
+	}
+	
+	public void setCityRewards(List<Reward> bonusList) {
+		int i = 0;
+		for(SimpleRegion r: regions) {
+			for(SimpleCity c: r.getCities()) {
+				c.setBonuses(bonusList.get(i));
+				i++;
+			}
+		}
 	}
 }

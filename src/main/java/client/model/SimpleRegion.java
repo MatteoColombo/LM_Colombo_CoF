@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.board.Region;
 import model.board.city.City;
+import model.player.PermissionCard;
 
 public class SimpleRegion {
 	private List<SimpleCity> cities;
@@ -48,4 +49,9 @@ public class SimpleRegion {
 		this.ConquerBonus = value;
 	}
 	
+	public void setPermissions(PermissionCard[] permissions) {
+		for(int i = 0; i < this.permissions.length; i++) {
+			this.permissions[i] = new PermissionProperty(permissions[i]);
+		}
+	}
 }

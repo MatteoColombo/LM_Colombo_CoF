@@ -9,18 +9,21 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Configuration;
 import model.board.Region;
 import model.board.council.CouncilorPool;
 import model.board.map.MapExplorer;
 import model.board.map.MapLoader;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
 import model.player.Player;
 import model.reward.Reward;
 
 public class TestMapExplorer {
 	ArrayList<Color> colors;
 	MapLoader ml;
-	Player p = new Player(0, 0, 0, 10, null, 0, 0);
-	Player p2 = new Player(0, 0, 0, 10, null, 0, 0);
+	Player p;
+	Player p2;
 	Region plains;
 	Region mountain;
 
@@ -33,6 +36,9 @@ public class TestMapExplorer {
 		colors.add(Color.DARK_GRAY);
 		colors.add(Color.GREEN);
 		colors.add(Color.BLUE);
+		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		p = new Player(0, 0, 0, 10, null, 0, 0,track,null);
+		p2 = new Player(0, 0, 0, 10, null, 0, 0,track,null);
 		ml = new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors));
 		plains = ml.getRegions().get(1);
 		mountain = ml.getRegions().get(2);

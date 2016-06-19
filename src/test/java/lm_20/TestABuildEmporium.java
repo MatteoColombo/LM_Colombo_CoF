@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import model.Configuration;
 import model.action.ABuildEmporium;
 import model.action.ABuildEmporiumWithKing;
 import model.board.BoardRewardsManager;
@@ -20,8 +21,12 @@ import model.board.city.City;
 import model.board.council.CouncilorPool;
 import model.board.map.MapExplorer;
 import model.board.map.MapLoader;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
+import model.exceptions.ConfigurationErrorException;
 import model.exceptions.IllegalActionException;
 import model.exceptions.MapXMLFileException;
+import model.exceptions.TrackXMLFileException;
 import model.player.PermissionCard;
 import model.player.Player;
 import model.reward.BVictoryPoints;
@@ -42,10 +47,11 @@ public class TestABuildEmporium {
 	private int rewardAmount;
 	MapExplorer mExplorer;
 	MapLoader mLoader;
+	private NobilityTrack track;
 	private final int ALLCITIES = 14;
 
 	@Before
-	public void setUp() throws MapXMLFileException {
+	public void setUp() throws MapXMLFileException, TrackXMLFileException, ConfigurationErrorException {
 		colorList = new ArrayList<Color>();
 		colorList.add(Color.BLACK);
 		colorList.add(Color.BLUE);
@@ -53,7 +59,8 @@ public class TestABuildEmporium {
 		colorList.add(Color.YELLOW);
 		colorList.add(Color.GREEN);
 		colorList.add(Color.ORANGE);
-		this.player = new Player(10, 3, 6, 10, colorList, 0, 0);
+		track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		this.player = new Player(10, 3, 6, 10, colorList, 0, 0,track, null);
 		this.pool = new CouncilorPool(4, 4, colorList);
 		bColorRewards = new ArrayList<>();
 		bKingRewards = new ArrayList<>();
@@ -118,7 +125,7 @@ public class TestABuildEmporium {
 		PermissionCard card;
 		ABuildEmporium action;
 		card = new PermissionCard(this.mLoader.getRegions().get(0).getCities());
-		Player p2 = new Player(10, 0, 6, 10, colorList, 0, 0);
+		Player p2 = new Player(10, 0, 6, 10, colorList, 0, 0, track,null);
 		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 		action.execute();
 		action = new ABuildEmporium(p2, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);

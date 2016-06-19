@@ -8,20 +8,28 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import model.Configuration;
 import model.action.ABuyAssistant;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
+import model.exceptions.ConfigurationErrorException;
 import model.exceptions.IllegalActionException;
+import model.exceptions.TrackXMLFileException;
 import model.player.Player;
 
 public class TestABuyAssistants {
 
 	private List<Color> colorList;
 	private Player p;
-
+	private NobilityTrack track;
 	/**
 	 * Creates a list with the colors and it initializes the player
+	 * @throws ConfigurationErrorException 
+	 * @throws TrackXMLFileException 
 	 */
 	@Before
-	public void setUp() {
+	public void setUp() throws TrackXMLFileException, ConfigurationErrorException {
 		colorList = new ArrayList<Color>();
 		colorList.add(Color.BLACK);
 		colorList.add(Color.WHITE);
@@ -29,8 +37,9 @@ public class TestABuyAssistants {
 		colorList.add(Color.DARK_GRAY);
 		colorList.add(Color.GREEN);
 		colorList.add(Color.BLUE);
-
-		p = new Player(10, 1, 6, 10, colorList, 0, 0,null);
+		track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		
+		p = new Player(10, 1, 6, 10, colorList, 0, 0,track,null);
 	}
 
 	/**
@@ -40,7 +49,7 @@ public class TestABuyAssistants {
 	 */
 	@Test
 	public void testActionBuyAssistant() throws IllegalActionException {
-		p = new Player(10, 1, 6, 10, colorList, 0, 0);
+		p = new Player(10, 1, 6, 10, colorList, 0, 0,track,null);
 		ABuyAssistant action = new ABuyAssistant(this.p);
 		action.execute();
 		assertEquals(7, p.getCoins().getAmount());
@@ -52,7 +61,7 @@ public class TestABuyAssistants {
 	 */
 	@Test(expected = IllegalActionException.class)
 	public void testActionBuyAssistantFailed() throws Exception {
-		p = new Player(10, 1, 6, 10, colorList, 0, 0);
+		p = new Player(10, 1, 6, 10, colorList, 0, 0,track,null);
 		p.getCoins().decreaseAmount(8);
 		assertEquals(2, p.getCoins().getAmount());
 		ABuyAssistant action = new ABuyAssistant(this.p);

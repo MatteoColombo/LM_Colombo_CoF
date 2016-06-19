@@ -7,6 +7,9 @@ import java.awt.Color;
 import org.apache.commons.cli.CommandLine;
 
 import model.board.ColorConstants;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
+import model.exceptions.IllegalActionException;
 import model.player.Player;
 import model.player.PoliticCard;
 
@@ -28,11 +31,13 @@ public class TestActionBuilder {
 	Player player;
 	CliParser parser = new CliParser();
 	Configuration config;
+	
 	@Before
 	public void setUp() throws Exception {
 		config= new Configuration();
 		board = new Board(config, 0);
-		player = new Player(10, 4, 0, 10, ColorConstants.getCardsColors(), 25, 3);
+		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		player = new Player(10, 4, 0, 10, ColorConstants.getCardsColors(), 25, 3,track,null);
 	}
 
 	@Test
@@ -51,17 +56,23 @@ public class TestActionBuilder {
 	}
 	
 	@Test
-	// this sometimes fail if cyan is not available in the pool
+	// this sometimes fail if blue is not available in the pool
 	public void testMakeASlideCouncil() throws Exception {
 		ActionBuilder builder = new ActionBuilder(board,config);
+		
+		try{
 		String input = "slide -council k -color blue";
 		CommandLine parsed = parser.computeRequest(input.split(" "));
 		Action a = builder.makeASlideCouncil(player, parsed);
 		a.execute();
-		// the council is correctly shifted
 		assertEquals(board.getKingCouncil().getCouncilorsColor().get(3), config.getColorsTranslation().get("blue"));
-		// the player got the reward
-		assertEquals(player.getCoins().getAmount(), 14);
+		assertEquals(14,player.getCoins().getAmount());
+		}catch(IllegalActionException e){
+			assertEquals("there are no more councilor available of the choosen color", e.getMessage());
+			assertEquals(10,player.getCoins().getAmount());
+			
+		}	
+		
 	}
 	
 	@Test

@@ -9,9 +9,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Configuration;
 import model.board.Region;
 import model.board.city.*;
 import model.board.council.*;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
+import model.exceptions.ConfigurationErrorException;
+import model.exceptions.TrackXMLFileException;
 import model.player.Player;
 import model.reward.RewardCity;
 
@@ -46,13 +51,14 @@ public class TestRegion {
 	}
 	
 	@Test
-	public void testCompleted() {
-		
+	public void testCompleted() throws TrackXMLFileException, ConfigurationErrorException {
+
+		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
 		region = new Region("sea", cities, council, 3);
-		Player p = new Player(0, 0, 0, 10, null, 0, 0);
+		Player p = new Player(0, 0, 0, 10, null, 0, 0, track, null);
 		assertEquals(region.isCompleted(p), false);
 		
-		Player p2 = new Player(0, 0, 0, 10, null, 0, 0);
+		Player p2 = new Player(0, 0, 0, 10, null, 0, 0, track, null);
 		region.getCities().get(3).addEmporium(p2.getEmporium().remove(0));
 		region.getCities().get(0).addEmporium(p2.getEmporium().remove(0));	
 		assertEquals(region.isCompleted(p2), false);

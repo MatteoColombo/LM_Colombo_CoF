@@ -14,14 +14,14 @@ public class TestAExtraMainAction {
 
 	@Test
 	public void testIsMain() throws IllegalActionException{
-		p = new Player(5, 3, 0, 3, null, 0, 0);
+		p = new Player(5, 3, 0, 3, null, 0, 0,null,null);
 		Action a = new AExtraMainAction(p);
 		assertEquals(false, a.isMain());
 	}
 	
 	@Test
 	public void testOk() throws IllegalActionException{
-		p = new Player(5, 3, 0, 3, null, 0, 0);
+		p = new Player(5, 3, 0, 3, null, 0, 0,null,null);
 		Action a = new AExtraMainAction(p);
 		a.execute();
 		assertEquals(p.getMainActionsLeft(), 2);
@@ -30,7 +30,7 @@ public class TestAExtraMainAction {
 	
 	@Test(expected = IllegalActionException.class)
 	public void testKo() throws IllegalActionException{
-		p = new Player(5, 2, 0, 3, null, 0, 0);
+		p = new Player(5, 2, 0, 3, null, 0, 0,null,null);
 		Action a = new AExtraMainAction(p);
 		a.execute();
 	}

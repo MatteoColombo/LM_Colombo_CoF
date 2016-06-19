@@ -9,10 +9,13 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Configuration;
 import model.action.ABuyPermissionCard;
 import model.board.council.Council;
 import model.board.council.CouncilorPool;
 import model.board.map.MapLoader;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
 import model.exceptions.IllegalActionException;
 import model.player.PermissionCard;
 import model.player.Player;
@@ -37,7 +40,8 @@ public class TestBuyPermitCard {
 		colorList.add(Color.YELLOW);
 		colorList.add(Color.GREEN);
 		colorList.add(Color.ORANGE);
-		this.player = new Player(10, 3, 6, 10, colorList, 0, 0);
+		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		this.player = new Player(10, 3, 6, 10, colorList, 0, 0, track,null);
 		this.pool = new CouncilorPool(4, 4, colorList);
 		this.council = pool.getCouncil();
 		MapLoader ml = new MapLoader("src/main/resources/map.xml", pool);

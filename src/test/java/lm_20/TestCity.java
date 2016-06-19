@@ -4,7 +4,13 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.awt.Color;
+
+import model.Configuration;
 import model.board.city.City;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
+import model.exceptions.ConfigurationErrorException;
+import model.exceptions.TrackXMLFileException;
 import model.player.Player;
 import model.reward.Reward;
 import model.reward.RewardCity;
@@ -35,9 +41,10 @@ public class TestCity {
 	}
 	
 	@Test
-	public void testEmporium() {
+	public void testEmporium() throws TrackXMLFileException, ConfigurationErrorException {
 		City castrum = new City(Color.GRAY, "Castrum", new RewardCity());
-		Player p = new Player(0, 0, 0, 10, null, 0, 0);
+		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		Player p = new Player(0, 0, 0, 10, null, 0, 0,track,null);
 		castrum.addEmporium(p.getEmporium().remove(0));
 		assertEquals(castrum.hasEmporiumOfPlayer(p), true);
 		assertEquals(castrum.getNumberOfEmporium(), 1);

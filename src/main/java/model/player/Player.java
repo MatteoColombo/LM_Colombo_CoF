@@ -1,9 +1,13 @@
 package model.player;
 
 import java.util.List;
+
+import client.view.Cli;
+
 import java.awt.Color;
 
 import model.Configuration;
+import model.board.nobility.NobilityTrack;
 import view.server.ClientInt;
 
 import java.io.Serializable;
@@ -14,7 +18,7 @@ import java.util.ArrayList;
  * @author Davide Cavallini
  *
  */
-public class Player implements Serializable{
+public class Player implements Serializable {
 
 	/**
 	 * 
@@ -35,15 +39,17 @@ public class Player implements Serializable{
 	private transient int DEFAULTMAINACTION;
 	private transient ClientInt client;
 	private boolean isSuspended;
+
 	/**
 	 * constructor for cloning an existing player
+	 * 
 	 * @param p
 	 */
 	public Player(Player p) {
 		this.name = p.getName();
 		this.coins = new Coins(p.getCoins().getAmount());
 		this.assistants = new Assistants(p.getAssistants().getAmount());
-		this.noblePoints = new NoblePoints(p.getNoblePoints().getAmount());
+		this.noblePoints = new NoblePoints(p.getNoblePoints().getAmount(), null, null);
 		this.victoryPoints = new VictoryPoints(p.getVictoryPoints().getAmount());
 
 		this.politicCard = new ArrayList<>();
@@ -52,27 +58,13 @@ public class Player implements Serializable{
 		}
 	}
 
-	/**
-	 * 
-	 * @param money
-	 * @param helper
-	 * @param draw
-	 * @param maxEmp
-	 * @param pickedColours
-	 * @param initalVictory
-	 * @param initialNoble
-	 */
-	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initialVictory,
-			int initialNoble, ClientInt client) {
-		this(money, helper, draw, maxEmp, pickedColours, initialVictory, initialNoble);
-		this.client = client;
-	}
+	
 
-	public Player(Configuration config, int numberOfPlayers, ClientInt client) {
+	public Player(Configuration config, int numberOfPlayers, ClientInt client, NobilityTrack track) {
 		this.coins = new Coins(config.getInitialPlayerMoney() + numberOfPlayers);
 		this.assistants = new Assistants(config.getInitialPlayerHelpers() + numberOfPlayers);
 		this.victoryPoints = new VictoryPoints(config.getInitialVictoryPoints());
-		this.noblePoints = new NoblePoints(config.getInitialNobilityPoints());
+		this.noblePoints = new NoblePoints(config.getInitialNobilityPoints(), this, track);
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
 		this.name = client.getName();
@@ -88,12 +80,25 @@ public class Player implements Serializable{
 		this.client = client;
 	}
 
+	
+
+	/**
+	 * This is @deprecated and used just for tests
+	 * 
+	 * @param money
+	 * @param helper
+	 * @param draw
+	 * @param maxEmp
+	 * @param pickedColours
+	 * @param initalVictory
+	 * @param initialNoble
+	 */
 	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
-			int initialNoble) {
+			int initialNoble, NobilityTrack track, ClientInt client) {
 		this.coins = new Coins(money);
 		this.assistants = new Assistants(helper);
 		this.victoryPoints = new VictoryPoints(initalVictory);
-		this.noblePoints = new NoblePoints(initialNoble);
+		this.noblePoints = new NoblePoints(initialNoble, this, track);
 		this.politicCard = new ArrayList<>();
 		this.permissionCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
@@ -106,6 +111,7 @@ public class Player implements Serializable{
 		this.extraAction = false;
 		this.pickedColours = pickedColours;
 		this.isSuspended = false;
+		this.client=client;
 	}
 
 	public Player getClientCopy() {
@@ -232,6 +238,7 @@ public class Player implements Serializable{
 
 	/**
 	 * Sets if the player is suspended or not
+	 * 
 	 * @param suspendedStatus
 	 */
 	public void setSuspension(boolean suspendedStatus) {
@@ -240,17 +247,19 @@ public class Player implements Serializable{
 
 	/**
 	 * Return if the player is suspended or not
+	 * 
 	 * @return return true if the player is suspended, false otherwise
 	 */
 	public boolean getSuspended() {
 		return this.isSuspended;
 	}
-	
+
 	/**
 	 * Returns the player's name
+	 * 
 	 * @return
 	 */
-	public String getName(){
+	public String getName() {
 		return this.name;
 	}
 

@@ -30,7 +30,6 @@ public class Board {
 	private NobilityTrack track;
 	private King mapKing;
 	private CouncilorPool councilManager;
-	private BoardRewardsManager bRewardsManager;
 	private Configuration config;
 	private BoardRewardsManager boardRewManager;
 
@@ -194,11 +193,11 @@ public class Board {
 	}
 
 	public BoardRewardsManager getBoardRewardsManager() {
-		return this.bRewardsManager;
+		return this.boardRewManager;
 	}
 
 	public void setBoardRewardsManager(BoardRewardsManager bRewardsManager) {
-		this.bRewardsManager = bRewardsManager;
+		this.boardRewManager=bRewardsManager;
 	}
 
 	public CouncilorPool getCouncilorPool() {

@@ -61,9 +61,9 @@ public class Server {
 			configuringGames.add(newGame);
 			gameControllerMap.put(newGame, new Controller(newGame, gamesConfig));
 			client.setController(gameControllerMap.get(newGame));
-			gameControllerMap.get(newGame).addPlayer(client);
 			try {
 				gameControllerMap.get(newGame).configGame();
+				gameControllerMap.get(newGame).addPlayer(client);
 				gameControllerMap.get(newGame).notifyGameLoading(client);
 			} catch (ConfigurationErrorException e) {
 				logger.log(Level.SEVERE, e.getMessage(), e);

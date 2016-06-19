@@ -2,6 +2,9 @@ package model.player;
 
 import java.io.Serializable;
 
+import model.board.nobility.NobilityTrack;
+import model.reward.Reward;
+
 /**
  * A class that represents the NoblePoints owned by a Player.
  * <p>
@@ -17,6 +20,8 @@ public class NoblePoints implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int amount;
+	private transient Player owner;
+	private transient NobilityTrack track;
 
 	/**
 	 * Initializes the initial amount of NoblePoints owned by this
@@ -26,8 +31,10 @@ public class NoblePoints implements Serializable{
 	 *            the initial amount of NoblePoints to be set
 	 * @see NoblePoints
 	 */
-	public NoblePoints(int initialValue) {
+	public NoblePoints(int initialValue, Player owner, NobilityTrack track) {
 		this.amount = initialValue;
+		this.owner=owner;
+		this.track=track;
 	}
 
 	/**
@@ -49,7 +56,17 @@ public class NoblePoints implements Serializable{
 	 * @see NoblePoints
 	 */
 	public void increaseAmount(int value) {
-		this.amount += value;
+		if((amount + value)> track.getMaxPoint() && amount < track.getMaxPoint()){
+			amount=track.getMaxPoint();
+			Reward rew=track.getReward(amount);
+			if(rew != null)
+				rew.assignBonusTo(owner);
+		}else if((amount + value) < track.getMaxPoint()){
+			amount+=value;
+			Reward rew=track.getReward(amount);
+			if(rew != null)
+				rew.assignBonusTo(owner);
+		}		
 	}
 
 }

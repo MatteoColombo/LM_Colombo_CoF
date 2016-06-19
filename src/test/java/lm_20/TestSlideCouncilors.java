@@ -34,7 +34,7 @@ public class TestSlideCouncilors {
 		colorList.add(Color.YELLOW);
 		colorList.add(Color.GREEN);
 		colorList.add(Color.ORANGE);
-		this.player = new Player(10, 3, 6, 10, colorList, 0, 0);
+		this.player = new Player(10, 3, 6, 10, colorList, 0, 0,null,null);
 		this.pool = new CouncilorPool(4, 4, colorList);
 		this.council = pool.getCouncil();
 	}

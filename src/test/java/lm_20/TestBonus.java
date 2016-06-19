@@ -8,6 +8,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Configuration;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
+import model.exceptions.ConfigurationErrorException;
+import model.exceptions.TrackXMLFileException;
 import model.player.Player;
 import model.reward.BAssistants;
 import model.reward.Bonus;
@@ -22,7 +27,7 @@ public class TestBonus {
 	private Player p;
 
 	@Before
-	public void initialization() {
+	public void initialization() throws TrackXMLFileException, ConfigurationErrorException {
 		colorList = new ArrayList<Color>();
 		colorList.add(Color.BLACK);
 		colorList.add(Color.WHITE);
@@ -30,8 +35,8 @@ public class TestBonus {
 		colorList.add(Color.DARK_GRAY);
 		colorList.add(Color.GREEN);
 		colorList.add(Color.BLUE);
-
-		p = new Player(10, 1, 6, 10, colorList, 0, 0);
+		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		p = new Player(10, 1, 6, 10, colorList, 0, 0,track,null);
 	}
 
 	@Test

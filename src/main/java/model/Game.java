@@ -65,7 +65,7 @@ public class Game extends Thread {
 	 * @return
 	 */
 	public synchronized Player addPlayer(ClientInt client) {
-		Player p = new Player(config, getPlayersNumber(), client);
+		Player p = new Player(config, getPlayersNumber(), client, gameBoard.getNobleTrack());
 		players.add(p);
 		return p;
 	}

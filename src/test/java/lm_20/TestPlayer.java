@@ -9,6 +9,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Configuration;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
+import model.exceptions.ConfigurationErrorException;
+import model.exceptions.TrackXMLFileException;
 import model.player.Assistants;
 import model.player.Coins;
 import model.player.Emporium;
@@ -24,18 +29,20 @@ public class TestPlayer {
 
 	/**
 	 * Creates a list with the colors and it initializes the player
+	 * @throws ConfigurationErrorException 
+	 * @throws TrackXMLFileException 
 	 */
 	@Before
-	public void setUp() {
+	public void setUp() throws TrackXMLFileException, ConfigurationErrorException {
 		colorList = new ArrayList<Color>();
 		colorList.add(Color.BLACK);
-		colorList.add(Color.WHITE);
-		colorList.add(Color.YELLOW);
-		colorList.add(Color.DARK_GRAY);
-		colorList.add(Color.GREEN);
 		colorList.add(Color.BLUE);
-
-		p = new Player(10, 1, 6, 10, colorList, 0, 0);
+		colorList.add(Color.RED);
+		colorList.add(Color.YELLOW);
+		colorList.add(Color.GREEN);
+		colorList.add(Color.ORANGE);
+		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		p = new Player(10, 1, 6, 10, colorList, 0, 0,track, null);
 	}
 
 	/**
@@ -87,9 +94,8 @@ public class TestPlayer {
 	@Test
 	public void testNoblePoint() {
 		NoblePoints n = p.getNoblePoints();
-		n.increaseAmount(1);
-		assertEquals(1, n.getAmount());
-		n.increaseAmount(2);
+ 		assertEquals(0, n.getAmount());
+		n.increaseAmount(3);
 		assertEquals(3, n.getAmount());
 	}
 

@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+
+import model.Configuration;
+import model.board.nobility.NobilityLoader;
+import model.board.nobility.NobilityTrack;
+import model.exceptions.ConfigurationErrorException;
+import model.exceptions.TrackXMLFileException;
 import model.market.Market;
 import model.player.*;
 
@@ -16,7 +22,7 @@ public class TestMarket {
 	private Market market;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws TrackXMLFileException, ConfigurationErrorException {
 		colorList = new ArrayList<>();
 		colorList.add(Color.BLACK);
 		colorList.add(Color.BLUE);
@@ -25,10 +31,12 @@ public class TestMarket {
 		colorList.add(Color.GREEN);
 		colorList.add(Color.ORANGE);
 		allPlayers = new ArrayList<>();
-		allPlayers.add(new Player(10, 1, 6, 10, colorList, 0, 0));
-		allPlayers.add(new Player(11, 2, 6, 10, colorList, 0, 0));
-		allPlayers.add(new Player(12, 3, 6, 10, colorList, 0, 0));
-		allPlayers.add(new Player(13, 4, 6, 10, colorList, 0, 0));
+		NobilityTrack track = new NobilityTrack(
+				new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		allPlayers.add(new Player(10, 1, 6, 10, colorList, 0, 0, track, null));
+		allPlayers.add(new Player(11, 2, 6, 10, colorList, 0, 0, track, null));
+		allPlayers.add(new Player(12, 3, 6, 10, colorList, 0, 0, track, null));
+		allPlayers.add(new Player(13, 4, 6, 10, colorList, 0, 0, track, null));
 		this.market = new Market(allPlayers);
 	}
 
@@ -39,7 +47,7 @@ public class TestMarket {
 		market.buyItem(market.getItemsOnSale().get(0), allPlayers.get(1));
 		assertEquals(13, allPlayers.get(0).getCoins().getAmount());
 		assertEquals(8, allPlayers.get(1).getCoins().getAmount());
-		assertEquals(7, allPlayers.get(1).getPoliticCard().size());	
+		assertEquals(7, allPlayers.get(1).getPoliticCard().size());
 	}
 
 	/*

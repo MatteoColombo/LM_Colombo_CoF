@@ -1,5 +1,6 @@
 package model.reward;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,8 +11,9 @@ import model.player.Player;
  * @author gianpaolobranca
  *
  */
-public class Reward {	
+public class Reward implements Serializable {	
 
+	private static final long serialVersionUID = 278887920051830885L;
 	private ArrayList<Bonus> bonusList = new ArrayList<>();
 	/**
 	 * Generic constructor for the reward

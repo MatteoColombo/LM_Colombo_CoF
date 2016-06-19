@@ -16,6 +16,7 @@ import control.Controller;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
+import model.reward.Reward;
 import view.p2pdialogue.notify.NotifyBonusFromCities;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
@@ -32,6 +33,7 @@ import view.p2pdialogue.request.RequestWichMapToUse;
 import view.p2pdialogue.update.NotifyPlayerJoined;
 import view.p2pdialogue.update.NotifyPlayersList;
 import view.p2pdialogue.update.NotifyUpdatePlayer;
+import view.p2pdialogue.update.UpdateSendCityBonus;
 
 public class SocketClient implements ClientInt {
 	private Controller controller;
@@ -236,5 +238,11 @@ public class SocketClient implements ClientInt {
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
+	}
+
+	@Override
+	public void sendNotifyCityBonus(List<Reward> rewards) throws IOException {
+		out.writeObject(new UpdateSendCityBonus(rewards));
+		out.flush();
 	}
 }

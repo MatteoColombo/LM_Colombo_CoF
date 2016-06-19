@@ -11,6 +11,7 @@ import control.Controller;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
+import model.reward.Reward;
 import view.p2pdialogue.notify.NotifyBonusFromCities;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
@@ -27,6 +28,7 @@ import view.p2pdialogue.request.RequestWichMapToUse;
 import view.p2pdialogue.update.NotifyPlayerJoined;
 import view.p2pdialogue.update.NotifyPlayersList;
 import view.p2pdialogue.update.NotifyUpdatePlayer;
+import view.p2pdialogue.update.UpdateSendCityBonus;
 
 public class RMIClient implements ClientInt {
 	private Controller controller;
@@ -164,5 +166,10 @@ public class RMIClient implements ClientInt {
 	public void askSelectFreePermissionCard() throws IOException {
 		String card = client.requestAnswer(new RequestFreePermissionCard());
 		controller.parseBonusFreePermissionCard(card, this);
+	}
+
+	@Override
+	public void sendNotifyCityBonus(List<Reward> rewards) throws IOException {
+		client.sendNotify(new UpdateSendCityBonus(rewards));
 	}
 }

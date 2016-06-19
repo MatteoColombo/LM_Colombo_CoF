@@ -1,12 +1,16 @@
 package model.reward;
 
+import java.io.Serializable;
+
 import model.player.Player;
 /**
  * A Bonus is a certain quantity of given game object
  * @author gianpaolobranca
  *
  */
-public abstract class Bonus {
+public abstract class Bonus implements Serializable{
+
+	private static final long serialVersionUID = 8075384354316907271L;
 
 	private static final Bonus[] allStandardBonus = { 
 			 new BCoins(1),

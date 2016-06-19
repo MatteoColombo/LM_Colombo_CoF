@@ -7,6 +7,7 @@ import control.Controller;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
+import model.reward.Reward;
 
 /**
  * This is the Client Interface and it represents a generic connection of a
@@ -95,6 +96,8 @@ public interface ClientInt {
 	public void askSelectRewardOfPermissionCard() throws IOException;
 	
 	public void askSelectFreePermissionCard() throws IOException;
+	
+	public void sendNotifyCityBonus(List<Reward> rewards) throws IOException;
 	
 	
 	

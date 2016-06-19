@@ -350,4 +350,20 @@ public class Controller {
 		}
 	}
 
+	public void notifySendCityRewards(){
+		List<Reward> rewards= new ArrayList<>();
+		List<City> cities= game.getBoard().getMap().getCitiesList();
+		for(City c: cities)
+			rewards.add(c.getReward());
+		Set<ClientInt> clients=playersMap.keySet();
+		for(ClientInt client: clients){
+			try {
+				client.sendNotifyCityBonus(rewards);
+			} catch (IOException e) {
+				logger.log(Level.WARNING, e.getMessage(), e);
+				playersMap.get(client).setSuspension(true);
+			}
+		}
+	}
+
 }

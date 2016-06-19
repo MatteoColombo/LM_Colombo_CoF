@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,12 +16,16 @@ import control.Controller;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
+import view.p2pdialogue.notify.NotifyBonusFromCities;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
 import view.p2pdialogue.notify.NotifyYourTurn;
+import view.p2pdialogue.request.RequestCity;
+import view.p2pdialogue.request.RequestFreePermissionCard;
 import view.p2pdialogue.request.RequestMaxPlayersNumber;
 import view.p2pdialogue.request.RequestPlayerName;
+import view.p2pdialogue.request.RequestRewardFromPermission;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
 import view.p2pdialogue.request.RequestWichMapToUse;
@@ -181,7 +186,7 @@ public class SocketClient implements ClientInt {
 		out.flush();
 		try {
 			String item = (String) in.readObject();
-
+			controller.parseItemToSell(item, this);
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
@@ -191,5 +196,45 @@ public class SocketClient implements ClientInt {
 	public void updatePlayer(Player player, int index) throws IOException {
 		out.writeObject(new NotifyUpdatePlayer(player, index));
 		out.flush();
+	}
+
+	@Override
+	public void askCityToGetNobilityReward(int citiesNumber) throws IOException {
+		out.writeObject(new NotifyBonusFromCities(citiesNumber));
+		out.flush();
+		List<String> cities= new ArrayList<>();
+		for(int i=0; i< citiesNumber; i++){
+			out.writeObject(new RequestCity());
+			out.flush();
+			try {
+				cities.add((String)in.readObject());
+			} catch (ClassNotFoundException e) {
+				logger.log(Level.SEVERE, e.getMessage(), e);
+			}
+		}		
+	}
+
+	@Override
+	public void askSelectRewardOfPermissionCard() throws IOException {
+		out.writeObject(new RequestRewardFromPermission());
+		out.flush();
+		try {
+			String index= (String)in.readObject();
+			controller.parseRewardOfPermissionCard(index, this);
+		} catch (ClassNotFoundException e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public void askSelectFreePermissionCard() throws IOException {
+		out.writeObject(new RequestFreePermissionCard());
+		out.flush();
+		try {
+			String card= (String)in.readObject();
+			controller.parseBonusFreePermissionCard(card, this);
+		} catch (ClassNotFoundException e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
+		}
 	}
 }

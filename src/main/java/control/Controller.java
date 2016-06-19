@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,16 +11,18 @@ import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
-
 import model.Configuration;
 import model.Game;
 import model.TurnManager;
+import model.board.city.City;
 import model.exceptions.ConfigurationErrorException;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.market.Soldable;
 import model.player.Assistants;
 import model.player.Player;
+import model.reward.Bonus;
+import model.reward.Reward;
 import server.Server;
 import view.server.ClientInt;
 
@@ -220,7 +223,7 @@ public class Controller {
 	 */
 	public void performAction(ClientInt client, String s) throws IOException {
 		this.builder = new ActionBuilder(game.getBoard(), config);
-		int playerIndex= game.getPlayers().indexOf(playersMap.get(client));
+		int playerIndex = game.getPlayers().indexOf(playersMap.get(client));
 		Player player = playersMap.get(client);
 		String[] args = s.split(" ");
 		try {
@@ -269,7 +272,7 @@ public class Controller {
 
 	private void updatePlayers(Player player, int playerIndex) {
 		Set<ClientInt> clients = playersMap.keySet();
-		Player simplifiedClone= new Player(player);
+		Player simplifiedClone = new Player(player);
 		for (ClientInt client : clients) {
 			try {
 				client.updatePlayer(simplifiedClone, playerIndex);
@@ -280,4 +283,71 @@ public class Controller {
 
 		}
 	}
+
+	/**
+	 * This is the method that checks if the city (or the cities) selcted for
+	 * the nobility bonus are eligible for the reward and in case it gives them
+	 * to the player
+	 * 
+	 * @param cities
+	 *            the names of the cities
+	 * @param client
+	 * @throws IOException
+	 */
+	public void parseBonusGetCityBonus(List<String> cities, ClientInt client) throws IOException {
+		Player player = playersMap.get(client);
+		List<City> allCitiesOfMap = game.getBoard().getMap().getCitiesList();
+		List<Reward> reward = new ArrayList<>();
+		try {
+			for (String cityName : cities) {
+				for (City city : allCitiesOfMap)
+					if (city.getName().equals(cityName) && !city.hasEmporiumOfPlayer(player))
+						throw new IllegalActionException("You don't have an emporium in the city");
+					else if (city.getName().equals(cityName) && city.hasEmporiumOfPlayer(player))
+						reward.add(city.getReward());
+			}
+			for (Reward r : reward) {
+				for (Bonus bonus : r.getGeneratedRewards()) {
+					if ("nobility".equals(bonus.getTagName()))
+						throw new IllegalActionException("You can't select a city which has a nobility bonus");
+				}
+			}
+			for (Reward r : reward)
+				r.assignBonusTo(player);
+		} catch (IllegalActionException e) {
+			logger.log(Level.WARNING, e.getMessage(), e);
+			client.notifyIllegalAction(e);
+			client.askCityToGetNobilityReward(cities.size());
+		}
+
+	}
+
+	public void parseRewardOfPermissionCard(String card, ClientInt client) throws IOException{
+		try{
+			int index= Integer.parseInt(card);
+			if(index > playersMap.get(client).getPermissionCard().size() || index < 1)
+				throw new IllegalActionException("Out of bound");
+			playersMap.get(client).getPermissionCard().get(index-1).getCardReward().assignBonusTo(playersMap.get(client));
+		}catch(IllegalActionException | NumberFormatException e){
+			logger.log(Level.WARNING, e.getMessage(), e);
+			client.notifyIllegalAction(new IllegalActionException("wrong selection"));
+			client.askSelectRewardOfPermissionCard();
+		} 
+	}
+
+	public void parseBonusFreePermissionCard(String card, ClientInt client) throws IOException {
+		String[] parameters= card.split(" ");
+		try{
+			int region= Integer.parseInt(parameters[0]);
+			int index= Integer.parseInt(parameters[1]);
+			if(index > config.getNumberDisclosedCards() || index < 1 || region < 1 || region > game.getBoard().getRegions().size())
+				throw new IllegalActionException("Out of bound");
+			playersMap.get(client).getPermissionCard().add(game.getBoard().getRegion(region).givePermissionCard(index));
+		}catch(NumberFormatException | IllegalActionException e){
+			logger.log(Level.WARNING, e.getMessage(), e);
+			client.notifyIllegalAction(new IllegalActionException("wrong selection"));
+			client.askSelectRewardOfPermissionCard();
+		}
+	}
+
 }

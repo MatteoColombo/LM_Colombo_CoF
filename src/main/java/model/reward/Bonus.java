@@ -18,7 +18,7 @@ public abstract class Bonus {
 	
 	private static final Bonus[] nobilityBonus = {
 			new BRewardFromPermissionCard(),
-			new BExtraRewardFromCities(1),
+			new BExtraRewardFromCity(1),
 			new BTakePermissionCard() };
 	
 	private int amount;

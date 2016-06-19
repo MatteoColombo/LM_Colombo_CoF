@@ -1,4 +1,4 @@
-package model.board.nobility;
+ package model.board.nobility;
 
 import java.io.File;
 import java.io.IOException;

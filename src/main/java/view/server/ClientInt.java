@@ -90,6 +90,14 @@ public interface ClientInt {
 	
 	public void updatePlayer(Player player, int index) throws IOException;
 	
+	public void askCityToGetNobilityReward(int citiesNumber) throws IOException;
+	
+	public void askSelectRewardOfPermissionCard() throws IOException;
+	
+	public void askSelectFreePermissionCard() throws IOException;
+	
+	
+	
 	//public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException;
 
 	//public boolean askPlayerConfirmation() throws IOException;

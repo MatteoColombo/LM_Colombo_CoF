@@ -1,6 +1,7 @@
 package view.server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,12 +11,16 @@ import control.Controller;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
+import view.p2pdialogue.notify.NotifyBonusFromCities;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
 import view.p2pdialogue.notify.NotifyYourTurn;
+import view.p2pdialogue.request.RequestCity;
+import view.p2pdialogue.request.RequestFreePermissionCard;
 import view.p2pdialogue.request.RequestMaxPlayersNumber;
 import view.p2pdialogue.request.RequestPlayerName;
+import view.p2pdialogue.request.RequestRewardFromPermission;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
 import view.p2pdialogue.request.RequestWichMapToUse;
@@ -71,7 +76,7 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void close() {
-		
+
 	}
 
 	@Override
@@ -85,12 +90,10 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public boolean isConnected() {
-		/*try{
-			client.testConnection();
-			return true;
-		}catch(IOExcetion e){
-			logger.log(Level.SEVERE, e.getMessage(), e);
-		}*/
+		/*
+		 * try{ client.testConnection(); return true; }catch(IOExcetion e){
+		 * logger.log(Level.SEVERE, e.getMessage(), e); }
+		 */
 		return true;
 	}
 
@@ -128,18 +131,38 @@ public class RMIClient implements ClientInt {
 	@Override
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void askWichItemToSell() throws IOException {
-		String item=client.requestAnswer(new RequestWhichItemToSell());			
+		String item = client.requestAnswer(new RequestWhichItemToSell());
 		controller.parseItemToSell(item, this);
 	}
-
 
 	@Override
 	public void updatePlayer(Player player, int index) throws IOException {
 		client.sendNotify(new NotifyUpdatePlayer(player, index));
+	}
+
+	@Override
+	public void askCityToGetNobilityReward(int citiesNumber) throws IOException {
+		client.sendNotify(new NotifyBonusFromCities(citiesNumber));
+		List<String> cities = new ArrayList<>();
+		for (int i = 0; i < citiesNumber; i++) {
+			cities.add(client.requestAnswer(new RequestCity()));
+		}
+	}
+
+	@Override
+	public void askSelectRewardOfPermissionCard() throws IOException {
+		String index = client.requestAnswer(new RequestRewardFromPermission());
+		controller.parseRewardOfPermissionCard(index, this);
+	}
+
+	@Override
+	public void askSelectFreePermissionCard() throws IOException {
+		String card = client.requestAnswer(new RequestFreePermissionCard());
+		controller.parseBonusFreePermissionCard(card, this);
 	}
 }

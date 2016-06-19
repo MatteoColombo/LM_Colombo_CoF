@@ -2,7 +2,6 @@ package model.player;
 
 import java.util.List;
 
-import client.view.Cli;
 
 import java.awt.Color;
 

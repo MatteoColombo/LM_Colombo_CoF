@@ -17,7 +17,7 @@
 	</step>
 	<step>
 		<bonus>
-			<name>choice</name>
+			<name>city</name>
 			<value>1</value>
 		</bonus>
 	</step>
@@ -73,8 +73,8 @@
 	</step>
 	<step>
 		<bonus>
-			<name>fromTwoCities</name>
-			<value>1</value>
+			<name>city</name>
+			<value>2</value>
 		</bonus>
 	</step>
 	<step>

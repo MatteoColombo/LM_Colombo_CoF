@@ -142,8 +142,8 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void notifyGameLoading() throws IOException {
-		out.writeObject(new NotifyGameLoading());
+	public void notifyGameLoading(int choosenMap) throws IOException {
+		out.writeObject(new NotifyGameLoading(choosenMap));
 		out.flush();
 	}
 

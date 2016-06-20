@@ -73,7 +73,7 @@ public interface ClientInt {
 	 */
 	public boolean isConnected();
 
-	public void notifyGameLoading() throws IOException;
+	public void notifyGameLoading(int choosenMap) throws IOException;
 
 	public void notifyGameStarted() throws IOException;
 

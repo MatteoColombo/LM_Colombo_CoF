@@ -33,7 +33,8 @@ public class Controller {
 	private Map<ClientInt, Player> playersMap = new HashMap<>();
 	private Logger logger = Logger.getGlobal();
 	private Configuration config;
-
+	private int gameMap;
+	
 	public Controller(Game game, Configuration config) {
 		this.game = game;
 		this.config = config;
@@ -169,6 +170,7 @@ public class Controller {
 			client.askConfiguration(config.getMaxNumberOfPlayer());
 			return;
 		}
+		this.gameMap=map;
 		setMaxNumberOfPlayers(players);
 		setChoosenMap(map);
 	}
@@ -207,7 +209,7 @@ public class Controller {
 	public void notifyGameLoading(ClientInt client) {
 		try {
 			client.sendPlayersList(game.getPlayers());
-			client.notifyGameLoading();
+			client.notifyGameLoading(this.gameMap);
 		} catch (IOException e) {
 			logger.log(Level.INFO, e.getMessage(), e);
 		}

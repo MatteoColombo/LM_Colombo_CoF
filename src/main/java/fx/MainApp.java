@@ -61,9 +61,9 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void parseDialogue(Dialogue dialog) {
 		if(dialog instanceof Update)
 			Platform.runLater(() -> ((Update)dialog).execute(localGame));
-		else if(dialog instanceof Notify)
+		if(dialog instanceof Notify)
 			Platform.runLater(() -> ((Notify)dialog).execute(this));
-		else if(dialog instanceof Request)
+		if(dialog instanceof Request)
 			Platform.runLater(() -> ((Request)dialog).execute(this));
 	}
 

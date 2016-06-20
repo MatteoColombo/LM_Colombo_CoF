@@ -100,8 +100,8 @@ public class RMIClient implements ClientInt {
 	}
 
 	@Override
-	public void notifyGameLoading() throws IOException {
-		client.sendNotify(new NotifyGameLoading());
+	public void notifyGameLoading(int choosenMap) throws IOException {
+		client.sendNotify(new NotifyGameLoading(choosenMap));
 	}
 
 	@Override

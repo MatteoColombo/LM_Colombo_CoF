@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,13 +35,6 @@ import model.player.PermissionCard;
 public class GameController {
 	
 	private MainApp mainApp;
-	
-	@FXML private ImageView mapImage;
-	@FXML private AnchorPane mapPane;
-	
-	@FXML private HBox seaCouncilBox;
-	@FXML private HBox plainCouncilBox;
-	@FXML private HBox mountainCouncilBox;
 	
 	@FXML private Label playerNameLabel;
 	
@@ -70,9 +64,6 @@ public class GameController {
 	@FXML private TextArea logger;
 		
 	public void setAll(MainApp mainApp) {
-		mapImage.preserveRatioProperty().set(false);
-		mapImage.fitHeightProperty().bind(mapPane.heightProperty());
-		mapImage.fitWidthProperty().bind(mapPane.widthProperty());
 		this.mainApp = mainApp;
         initLabels();
         initButtons(); 

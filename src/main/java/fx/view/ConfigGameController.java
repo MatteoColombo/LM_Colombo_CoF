@@ -14,6 +14,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import model.exceptions.ConfigurationErrorException;
+import model.exceptions.XMLFileException;
 import javafx.scene.control.Alert.AlertType;
 
 public class ConfigGameController {
@@ -44,7 +46,7 @@ public class ConfigGameController {
 		mapColumn.setCellValueFactory(cell -> cell.getValue());
 	}
 	
-	@FXML private void handlePlay() throws IOException {
+	@FXML private void handlePlay() throws IOException, ConfigurationErrorException, XMLFileException {
 		if(playersNumber.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
@@ -61,6 +63,7 @@ public class ConfigGameController {
 			alert.setContentText("Please insert a number between 2 and 10 (included)");
 			alert.show();
 		} else {
+			mainApp.getLocalModel().initMap(mapTable.getSelectionModel().getSelectedIndex());
 			mainApp.sendMsg(playersNumber.getText());
 			mainApp.sendMsg(String.valueOf(mapTable.getSelectionModel().getSelectedIndex()).toString());
 		}

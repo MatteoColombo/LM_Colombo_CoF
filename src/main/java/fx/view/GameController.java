@@ -35,7 +35,12 @@ public class GameController {
 	
 	private MainApp mainApp;
 	
-	@FXML private GridPane mapGrid;
+	@FXML private ImageView mapImage;
+	@FXML private AnchorPane mapPane;
+	
+	@FXML private HBox seaCouncilBox;
+	@FXML private HBox plainCouncilBox;
+	@FXML private HBox mountainCouncilBox;
 	
 	@FXML private Label playerNameLabel;
 	
@@ -65,11 +70,15 @@ public class GameController {
 	@FXML private TextArea logger;
 		
 	public void setAll(MainApp mainApp) {
+		mapImage.preserveRatioProperty().set(false);
+		mapImage.fitHeightProperty().bind(mapPane.heightProperty());
+		mapImage.fitWidthProperty().bind(mapPane.widthProperty());
 		this.mainApp = mainApp;
         initLabels();
         initButtons(); 
         initOpponentsPanes();
         initPoliticTable();
+        //initCouncils();
 	}
 	
 	//--------------------DUMMY ACTIONS--------------------
@@ -156,7 +165,6 @@ public class GameController {
 	}
 	
 	/*private void initCouncils() {
-		HBox councilBox = (HBox) getNodeFromGridPane(mapGrid, 1, 2);
 		Rectangle c1 = new Rectangle();
 		c1.setHeight(50);
 		c1.setWidth(50);
@@ -165,8 +173,12 @@ public class GameController {
 		c2.setHeight(50);
 		c2.setWidth(50);
 		c2.setFill(Color.BLUEVIOLET);
-		councilBox.getChildren().add(c1);
-		councilBox.getChildren().add(c2);
+		seaCouncilBox.getChildren().add(c1);
+		seaCouncilBox.getChildren().add(c2);
+		plainCouncilBox.getChildren().add(c2);
+		plainCouncilBox.getChildren().add(c2);
+		mountainCouncilBox.getChildren().add(c2);
+		mountainCouncilBox.getChildren().add(c2);
 	}*/
 
 	private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {

@@ -67,9 +67,11 @@ public class SimpleCity {
 	
 	public void setBonuses(Reward reward) {
 		this.bonuses = new ArrayList<>();
-		for(Bonus b: reward.getGeneratedRewards()) {
-			SimpleBonus sb = new SimpleBonus(b.getTagName(), b.getAmount());
-			bonuses.add(sb);
+		if(reward != null) {
+			for(Bonus b: reward.getGeneratedRewards()) {
+				SimpleBonus sb = new SimpleBonus(b.getTagName(), b.getAmount());
+				bonuses.add(sb);
+			}
 		}
 	}
 }

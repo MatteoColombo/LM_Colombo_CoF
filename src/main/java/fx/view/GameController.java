@@ -1,8 +1,12 @@
 package fx.view;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import client.model.PlayerProperty;
+import client.model.SimpleBonus;
+import client.model.SimpleCity;
 import fx.MainApp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -11,6 +15,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,6 +42,8 @@ public class GameController {
 	private MainApp mainApp;
 	
 	@FXML private Label playerNameLabel;
+	
+	@FXML private AnchorPane mapPane;
 	
 	@FXML private Label victoryLabel;
 	@FXML private Label coinsLabel;
@@ -69,7 +76,18 @@ public class GameController {
         initButtons(); 
         initOpponentsPanes();
         initPoliticTable();
-        //initCouncils();
+        
+        
+        for(SimpleCity sc: mainApp.getLocalModel().getMap().getRegions().get(0).getCities()) {
+			AnchorPane bonusPane = (AnchorPane) mapPane.lookup("#" + sc.getName().get().toLowerCase());
+			HBox box = new HBox();
+			box.setAlignment(Pos.CENTER);
+			for(SimpleBonus sb: sc.getBonuses()) {
+				Label bonus = new Label(String.valueOf(sb.getAmount()));
+				box.getChildren().add(bonus);
+			}
+			bonusPane.getChildren().add(box);
+		}
 	}
 	
 	//--------------------DUMMY ACTIONS--------------------

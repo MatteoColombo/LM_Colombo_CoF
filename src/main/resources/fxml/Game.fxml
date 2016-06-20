@@ -132,13 +132,18 @@
    <center>
       <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane>
+          <AnchorPane fx:id="mapPane">
                <children>
                   <ImageView fitHeight="833.0" fitWidth="1073.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@semi-complete-map.png" />
                      </image>
                   </ImageView>
+                  <AnchorPane fx:id="arkon" layoutX="36.0" layoutY="22.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="burgen" layoutX="26.0" layoutY="188.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="castrum" layoutX="200.0" layoutY="72.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="dorful" layoutX="189.0" layoutY="231.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="esti" layoutX="82.0" layoutY="353.0" prefHeight="50.0" prefWidth="50.0" />
                </children>
             </AnchorPane>
         </content>

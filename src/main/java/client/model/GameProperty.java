@@ -16,9 +16,13 @@ public class GameProperty {
 	private SimpleMap map;
 	private int myIndex;
 	
-	public void initMap(int choosen) throws ConfigurationErrorException, XMLFileException  {
-		{ Board b = new Board(new Configuration(), choosen);
-		  this.map = new SimpleMap(b);
+	public void initMap(int choosen) {
+		try {
+			Board b = new Board(new Configuration(), choosen);
+			this.map = new SimpleMap(b);
+		} catch (XMLFileException | ConfigurationErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		// TODO call the garbage collector
 	}

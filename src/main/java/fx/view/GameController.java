@@ -29,6 +29,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.converter.NumberStringConverter;
@@ -235,6 +236,9 @@ public class GameController {
 					Label cityName = (Label) innerPane.lookup("#cityName");
 					cityName.setText(sc.getName());
 
+					Circle king = (Circle) innerPane.lookup("#kingCircle");
+					Bindings.bindBidirectional(king.visibleProperty(), sc.hasKing());
+					
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
 

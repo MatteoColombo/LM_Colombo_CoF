@@ -1,7 +1,9 @@
 package client.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -16,10 +18,19 @@ import util.ColorConverter;
 
 public class SimpleCity {
 	
+	private static Map<String, String> cityImages;
+	static {
+		cityImages = new HashMap<>();
+		cityImages.put("#ee82ee", "/cities/capital.png"); 
+		cityImages.put("#2268df", "/cities/city-blue.png");
+		cityImages.put("#f44343", "/cities/city-bronze.png");
+		cityImages.put("#ffd700", "/cities/city-gold.png");
+		cityImages.put("#008000", "/cities/city-silver.png"); 
+	}
 	
 	private BooleanProperty hasNoEmporium;
 	private BooleanProperty hasKing;
-	private StringProperty name;
+	private String name;
 	private String color;
 	/**
 	 * List containing the player's name who have an emporium here
@@ -29,7 +40,7 @@ public class SimpleCity {
 	private List<String> connections;
 	
 	public SimpleCity(City city) {
-		this.name = new SimpleStringProperty(city.getName());
+		this.name = city.getName();
 		this.hasNoEmporium = new SimpleBooleanProperty(true);
 		if(city.isCapital()) {
 			this.hasKing = new SimpleBooleanProperty(true);
@@ -53,7 +64,7 @@ public class SimpleCity {
 		return this.hasKing;
 	}
 	
-	public StringProperty getName() {
+	public String getName() {
 		return this.name;
 	}
 	
@@ -67,6 +78,10 @@ public class SimpleCity {
 	
 	public List<String> getConnections() {
 		return this.connections;
+	}
+	
+	public String getImagePath() {
+		return cityImages.get(color);
 	}
 	
 	public void setBonuses(Reward reward) {

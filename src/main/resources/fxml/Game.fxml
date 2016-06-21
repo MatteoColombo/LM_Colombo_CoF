@@ -144,6 +144,16 @@
                   <AnchorPane fx:id="castrum" layoutX="200.0" layoutY="72.0" prefHeight="50.0" prefWidth="50.0" />
                   <AnchorPane fx:id="dorful" layoutX="189.0" layoutY="231.0" prefHeight="50.0" prefWidth="50.0" />
                   <AnchorPane fx:id="esti" layoutX="82.0" layoutY="353.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="framek" layoutX="394.0" layoutY="38.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="graden" layoutX="402.0" layoutY="192.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="indur" layoutX="578.0" layoutY="38.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="hellar" layoutX="422.0" layoutY="329.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="juvelar" layoutX="565.0" layoutY="231.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="kultos" layoutX="768.0" layoutY="29.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="naris" layoutX="913.0" layoutY="121.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="lyram" layoutX="737.0" layoutY="204.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="merkatim" layoutX="726.0" layoutY="374.0" prefHeight="50.0" prefWidth="50.0" />
+                  <AnchorPane fx:id="osium" layoutX="920.0" layoutY="300.0" prefHeight="50.0" prefWidth="50.0" />
                </children>
             </AnchorPane>
         </content>

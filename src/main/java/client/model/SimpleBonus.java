@@ -7,7 +7,7 @@ import model.reward.Bonus;
 
 public class SimpleBonus {
 	
-	public static Map<String, String> bonusImages;
+	private static Map<String, String> bonusImages;
 	static {
 		bonusImages = new HashMap<>();
 		bonusImages.put("assistants", "/simboli/Aiutanti.png"); 
@@ -32,5 +32,9 @@ public class SimpleBonus {
 	
 	public int getAmount() {
 		return this.amount;
+	}
+	
+	public String getImagePath() {
+		return bonusImages.get(name);
 	}
 }

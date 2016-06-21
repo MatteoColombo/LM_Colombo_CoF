@@ -12,7 +12,7 @@
 
 <BorderPane prefHeight="900.0" prefWidth="1280.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.view.GameController">
    <bottom>
-      <HBox minHeight="59.0" prefHeight="199.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <HBox minHeight="59.0" prefHeight="196.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
@@ -159,10 +159,10 @@
                   <Label fx:id="silverRewardLabel" layoutX="929.0" layoutY="797.0" rotate="45.0" text="Label" />
                   <Label fx:id="bronzeRewardLabel" layoutX="871.0" layoutY="797.0" rotate="45.0" text="Label" />
                   <Label fx:id="sapphireRewardLabel" layoutX="819.0" layoutY="807.0" rotate="45.0" text="Label" />
-                  <HBox fx:id="council1" layoutX="452.0" layoutY="661.0" prefHeight="31.0" prefWidth="133.0" />
-                  <HBox fx:id="council0" layoutX="107.0" layoutY="661.0" prefHeight="31.0" prefWidth="133.0" />
-                  <HBox fx:id="council2" layoutX="837.0" layoutY="661.0" prefHeight="31.0" prefWidth="133.0" />
-                  <HBox fx:id="kingCouncil" layoutX="671.0" layoutY="711.0" prefHeight="31.0" prefWidth="133.0" />
+                  <HBox fx:id="council1" alignment="CENTER" layoutX="458.0" layoutY="646.0" prefHeight="31.0" prefWidth="116.0" />
+                  <HBox fx:id="council0" alignment="CENTER" layoutX="114.0" layoutY="646.0" prefHeight="31.0" prefWidth="117.0" />
+                  <HBox fx:id="council2" alignment="CENTER" layoutX="842.0" layoutY="646.0" prefHeight="31.0" prefWidth="117.0" />
+                  <HBox fx:id="kingCouncilBox" alignment="CENTER" layoutX="681.0" layoutY="688.0" prefHeight="31.0" prefWidth="115.0" />
                </children>
             </AnchorPane>
         </content>

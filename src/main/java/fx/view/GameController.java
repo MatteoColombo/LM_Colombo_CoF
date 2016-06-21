@@ -1,7 +1,9 @@
 package fx.view;
 
 import java.io.IOException;
+import java.util.List;
 
+import client.model.CouncilProperty;
 import client.model.PlayerProperty;
 import client.model.SimpleBonus;
 import client.model.SimpleCity;
@@ -28,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.util.converter.NumberStringConverter;
 import model.player.PermissionCard;
 
@@ -40,6 +43,9 @@ public class GameController {
 
 	@FXML
 	private AnchorPane mapPane;
+
+	@FXML
+	private HBox kingCouncilBox;
 
 	@FXML
 	private Label victoryLabel;
@@ -91,7 +97,8 @@ public class GameController {
 		initPoliticTable();
 		initMap();
 		initConnections();
-		initBoardRewards();
+		initCouncils();
+		// initBoardRewards();
 	}
 
 	// --------------------DUMMY ACTIONS--------------------
@@ -253,38 +260,69 @@ public class GameController {
 			}
 		}
 	}
-	
+
 	private void initConnections() {
 		for (SimpleRegion r : mainApp.getLocalModel().getMap().getRegions()) {
 			for (SimpleCity sc : r.getCities()) {
 				AnchorPane cityPane = (AnchorPane) mapPane.lookup("#" + sc.getName().toLowerCase());
-				
+
 				double startx = cityPane.getLayoutX() + cityPane.getWidth();
 				double starty = cityPane.getLayoutY() + cityPane.getHeight();
-				
-				for(String connected: sc.getConnections()) {
-					
+
+				for (String connected : sc.getConnections()) {
+
 					AnchorPane connectedPane = (AnchorPane) mapPane.lookup("#" + connected.toLowerCase());
-				
+
 					double endx = connectedPane.getLayoutX() + connectedPane.getWidth();
 					double endy = connectedPane.getLayoutY() + connectedPane.getHeight();
-					
+
 					Line path = new Line();
 					path.setStrokeWidth(12.0);
 					path.setStroke(Color.SADDLEBROWN);
-					
+
 					path.setStartX(startx);
 					path.setStartY(starty);
 					path.setEndX(endx);
 					path.setEndY(endy);
-					// add the line behind all cities, but fronter than the map image in position 0
+					// add the line behind all cities, but fronter than the map
+					// image in position 0
 					mapPane.getChildren().add(1, path);
 				}
 			}
 		}
 	}
-	
-	private void initBoardRewards() {
+
+	private void initCouncils() {
+		CouncilProperty kingCouncil = mainApp.getLocalModel().getMap().getKingCouncil();
+		for (StringProperty color : kingCouncil.colors()) {
+			Rectangle councilor = generateCouncilor(color.get());
+			// TODO check if works
+			color.addListener((observable, oldValue, newValue) -> councilor.setFill(Color.valueOf(newValue)));
+			kingCouncilBox.getChildren().add(councilor);
+		}
 		
+		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
+		int numberOfRegions = regions.size();
+		
+		for(int i = 0; i < numberOfRegions; i++) {
+			
+			HBox councilBox = (HBox) mapPane.lookup("#council" + String.valueOf(i));
+			for(StringProperty color: regions.get(i).getCouncil().colors()) {
+				
+				Rectangle councilor = generateCouncilor(color.get());
+				color.addListener((observable, oldValue, newValue) -> councilor.setFill(Color.valueOf(newValue)));
+				councilBox.getChildren().add(councilor);
+			}
+		}
+	}
+	
+	private Rectangle generateCouncilor(String hexColor) {
+		Rectangle councilor = new Rectangle();
+		councilor.setWidth(25.0);
+		councilor.setHeight(50.0);
+		councilor.setFill(Color.valueOf(hexColor));
+		councilor.setStroke(Color.SILVER);
+		councilor.setStrokeWidth(2.0);
+		return councilor;
 	}
 }

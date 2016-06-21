@@ -121,7 +121,7 @@ public class PermissionCard implements Soldable {
 	 * 
 	 */
 	@Override
-	public boolean equals(Soldable item) {
+	public boolean equals(Object item) {
 		if(!(item instanceof PermissionCard))
 			return false;
 		PermissionCard card=(PermissionCard)item;

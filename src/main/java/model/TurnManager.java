@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,6 +48,8 @@ public class TurnManager {
 					return;
 				}
 			} catch (IOException e) {
+				this.turnPlayer.setSuspension(true);
+				this.turnPlayer.getClient().close();
 				logger.log(Level.WARNING, e.getMessage(), e);
 				return;
 			}

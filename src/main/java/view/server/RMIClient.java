@@ -1,8 +1,17 @@
 package view.server;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,9 +60,23 @@ public class RMIClient implements ClientInt {
 	}
 
 	@Override
-	public void askPlayerWhatActionToDo() throws IOException {
-		String action = client.requestAnswer(new RequestWhatActionToDo());
-		controller.performAction(this, action);
+	public void askPlayerWhatActionToDo() throws IOException{
+		ExecutorService executor= Executors.newSingleThreadExecutor();
+		Future<String> answer= executor.submit(new Callable<String>(){
+			public String call() throws RemoteException{
+				String choosenAction;
+					choosenAction = client.requestAnswer(new RequestWhatActionToDo());
+				return choosenAction;
+			}
+		});
+		try{
+			String action = answer.get(60, TimeUnit.SECONDS);
+			controller.performAction(this, action);
+		}catch(TimeoutException | InterruptedException | ExecutionException e){
+			throw new IOException(e);
+		}finally {
+			executor.shutdown();
+		}
 	}
 
 	@Override

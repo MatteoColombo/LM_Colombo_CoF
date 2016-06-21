@@ -7,8 +7,16 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,14 +83,23 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askPlayerWhatActionToDo() throws IOException {
+		ExecutorService executor= Executors.newSingleThreadExecutor();
 		out.writeObject(new RequestWhatActionToDo());
 		out.flush();
-		String action = "";
-		try {
-			action = (String) in.readObject();
+		Future<String> answer= executor.submit(new Callable<String>(){
+			public String call() throws ClassNotFoundException, IOException{
+				String choosenAction;
+					choosenAction = (String) in.readObject();
+				return choosenAction;
+			}
+		});
+		try{
+			String action = answer.get(60, TimeUnit.SECONDS);
 			controller.performAction(this, action);
-		} catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, e.getMessage(), e);
+		}catch(TimeoutException | InterruptedException | ExecutionException e){
+			throw new IOException(e);
+		}finally {
+			executor.shutdown();
 		}
 	}
 

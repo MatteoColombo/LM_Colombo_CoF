@@ -14,7 +14,7 @@ import model.market.Soldable;
  * @author Davide Cavallini
  * @see Player
  */
-public class Assistants implements Serializable,Soldable {
+public class Assistants implements Serializable, Soldable {
 
 	/**
 	 * 
@@ -23,7 +23,8 @@ public class Assistants implements Serializable,Soldable {
 	private int amount;
 
 	/**
-	 * Initializes the initial amount of Assistants owned by this {@link Player}.
+	 * Initializes the initial amount of Assistants owned by this {@link Player}
+	 * .
 	 * 
 	 * @param initialValue
 	 *            the initial amount of Assistants to be set
@@ -66,12 +67,12 @@ public class Assistants implements Serializable,Soldable {
 		this.amount -= value;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
-	public boolean equals(Soldable item) {
-		
+	public boolean equals(Object item) {
+		if (!(item instanceof Assistants))
+			return false;
+		if (this.amount == ((Assistants) item).getAmount())
+			return true;
 		return false;
 	}
 

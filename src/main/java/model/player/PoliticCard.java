@@ -14,7 +14,7 @@ import model.market.Soldable;
  * @author Davide Cavallini
  *
  */
-public class PoliticCard implements Serializable, Soldable{
+public class PoliticCard implements Serializable, Soldable {
 
 	/**
 	 * 
@@ -22,16 +22,16 @@ public class PoliticCard implements Serializable, Soldable{
 	private static final long serialVersionUID = 3808938190487455501L;
 	private Color color;
 	private boolean isMultipleColor;
-	
+
 	public PoliticCard(Color color) {
-		if(color != null) {
+		if (color != null) {
 			this.color = color;
 			isMultipleColor = false;
 		} else {
 			isMultipleColor = true;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param possibleColors
@@ -63,12 +63,13 @@ public class PoliticCard implements Serializable, Soldable{
 		return this.color;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
-	public boolean equals(Soldable item) {
-		// TODO Auto-generated method stub
+	public boolean equals(Object item) {
+		if (!(item instanceof PoliticCard))
+			return false;
+		if (this.color.equals(((PoliticCard) item).getCardColor())
+				&& this.isMultipleColor == ((PoliticCard) item).isMultipleColor)
+			return true;
 		return false;
 	}
 

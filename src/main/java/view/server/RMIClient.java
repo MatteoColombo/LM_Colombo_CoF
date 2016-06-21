@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import client.view.RMIServerManager;
 import control.Controller;
+import model.board.council.Council;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
@@ -37,6 +38,7 @@ import view.p2pdialogue.request.RequestWichMapToUse;
 import view.p2pdialogue.update.NotifyPlayerJoined;
 import view.p2pdialogue.update.NotifyPlayersList;
 import view.p2pdialogue.update.NotifyUpdatePlayer;
+import view.p2pdialogue.update.UpdateCouncil;
 import view.p2pdialogue.update.UpdateSendCityBonus;
 
 public class RMIClient implements ClientInt {
@@ -194,5 +196,10 @@ public class RMIClient implements ClientInt {
 	@Override
 	public void sendNotifyCityBonus(List<Reward> rewards) throws IOException {
 		client.sendNotify(new UpdateSendCityBonus(rewards));
+	}
+
+	@Override
+	public void sendUpdateCouncil(Council council, int number) throws IOException {
+		client.sendNotify(new UpdateCouncil(council, number));
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import control.Controller;
+import model.board.council.Council;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
@@ -99,7 +100,7 @@ public interface ClientInt {
 	
 	public void sendNotifyCityBonus(List<Reward> rewards) throws IOException;
 	
-	
+	public void sendUpdateCouncil(Council council, int number) throws IOException;
 	
 	//public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException;
 

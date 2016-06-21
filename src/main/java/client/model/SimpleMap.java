@@ -33,6 +33,8 @@ public class SimpleMap {
 			regions.get(i).setCounquerBonus(amount); 
 		}
 		
+		kingCouncil = new CouncilProperty();
+		
 		colorBonuses = new ArrayList<>();
 		for(BoardReward br: board.getBoardRewardsManager().getRemainingBoardColorRewards()) {
 			colorBonuses.add(br.getBRBonus().getAmount());
@@ -69,7 +71,11 @@ public class SimpleMap {
 		}
 	}
 	
-	public void setKingCouncil(Council c) {
-		this.kingCouncil = new CouncilProperty(c);
+	public void setCouncil(Council c, int number) {
+		if(number == -1) {
+			kingCouncil.set(c);
+		} else {
+			regions.get(number).getCouncil().set(c);
+		}
 	}
 }

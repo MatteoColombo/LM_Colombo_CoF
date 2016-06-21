@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import control.Controller;
+import model.board.council.Council;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.player.Player;
@@ -41,6 +42,7 @@ import view.p2pdialogue.request.RequestWichMapToUse;
 import view.p2pdialogue.update.NotifyPlayerJoined;
 import view.p2pdialogue.update.NotifyPlayersList;
 import view.p2pdialogue.update.NotifyUpdatePlayer;
+import view.p2pdialogue.update.UpdateCouncil;
 import view.p2pdialogue.update.UpdateSendCityBonus;
 
 public class SocketClient implements ClientInt {
@@ -260,6 +262,12 @@ public class SocketClient implements ClientInt {
 	@Override
 	public void sendNotifyCityBonus(List<Reward> rewards) throws IOException {
 		out.writeObject(new UpdateSendCityBonus(rewards));
+		out.flush();
+	}
+
+	@Override
+	public void sendUpdateCouncil(Council council, int number) throws IOException {
+		out.writeObject(new UpdateCouncil(council, number));
 		out.flush();
 	}
 }

@@ -15,6 +15,7 @@ import model.Configuration;
 import model.Game;
 import model.TurnManager;
 import model.board.city.City;
+import model.board.council.Council;
 import model.exceptions.ConfigurationErrorException;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
@@ -365,6 +366,30 @@ public class Controller {
 				logger.log(Level.WARNING, e.getMessage(), e);
 				playersMap.get(client).setSuspension(true);
 			}
+		}
+	}
+	
+	public void notifySendCouncil(Council council, int index) {
+		Council copy = new Council(council);
+		Set<ClientInt> clients=playersMap.keySet();
+		for(ClientInt client: clients){
+			try {
+				client.sendUpdateCouncil(copy, index);
+			} catch (IOException e) {
+				logger.log(Level.WARNING, e.getMessage(), e);
+				playersMap.get(client).setSuspension(true);
+			}
+		}
+	}
+	
+	public void notifySetAllCouncil() {
+		
+		Council kingCouncil = game.getBoard().getKingCouncil();
+		notifySendCouncil(kingCouncil, -1);
+		
+		int regions = game.getBoard().getRegionsNumber();
+		for(int i = 0; i < regions; i++) {
+			notifySendCouncil(game.getBoard().getRegionCouncil(i), i);
 		}
 	}
 

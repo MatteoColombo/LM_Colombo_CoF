@@ -17,12 +17,8 @@ import util.ColorConverter;
 public class CouncilProperty {
 	private ObservableList<StringProperty> councilorsColors;
 	
-	public CouncilProperty(Council council) {
+	public CouncilProperty() {
 		councilorsColors = FXCollections.observableArrayList();
-		for(Color c: council.getCouncilorsColor()) {
-			String hexColor = ColorConverter.awtToWeb(c);
-			councilorsColors.add(new SimpleStringProperty(hexColor));
-		}
 	}
 	
 	public ObservableList<StringProperty> colors() {
@@ -32,7 +28,8 @@ public class CouncilProperty {
 	public void set(Council council) {
 		councilorsColors.clear();
 		for(Color c: council.getCouncilorsColor()) {
-			councilorsColors.add(new SimpleStringProperty(ColorConverter.awtToWeb(c)));
+			String hexColor = ColorConverter.awtToWeb(c);
+			councilorsColors.add(new SimpleStringProperty(hexColor));
 		}
 	}
 }

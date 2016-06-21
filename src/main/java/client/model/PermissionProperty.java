@@ -19,7 +19,7 @@ public class PermissionProperty {
 		
 		bonuses = new ArrayList<>();
 		for(Bonus b: permissionCard.getCardReward().getGeneratedRewards()) {
-			SimpleBonus sb = new SimpleBonus(b.getTagName(), b.getAmount());
+			SimpleBonus sb = new SimpleBonus(b);
 			bonuses.add(sb);
 		}
 		

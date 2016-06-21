@@ -136,7 +136,7 @@
                <children>
                   <ImageView fitHeight="833.0" fitWidth="1073.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@semi-complete-map.png" />
+                        <Image url="@empty-map.png" />
                      </image>
                   </ImageView>
                   <AnchorPane fx:id="arkon" layoutX="36.0" layoutY="22.0" prefHeight="50.0" prefWidth="50.0" />

@@ -12,11 +12,15 @@ import javafx.collections.ObservableList;
 import model.board.city.City;
 import model.reward.Bonus;
 import model.reward.Reward;
+import util.ColorConverter;
 
 public class SimpleCity {
+	
+	
 	private BooleanProperty hasNoEmporium;
 	private BooleanProperty hasKing;
 	private StringProperty name;
+	private String color;
 	/**
 	 * List containing the player's name who have an emporium here
 	 */
@@ -26,7 +30,6 @@ public class SimpleCity {
 	
 	public SimpleCity(City city) {
 		this.name = new SimpleStringProperty(city.getName());
-		
 		this.hasNoEmporium = new SimpleBooleanProperty(true);
 		if(city.isCapital()) {
 			this.hasKing = new SimpleBooleanProperty(true);
@@ -39,6 +42,7 @@ public class SimpleCity {
 			this.connections.add(c.getName());
 		}
 		
+		color = ColorConverter.awtToWeb(city.getColor());
 	}
 	
 	public BooleanProperty hasNoEmporium() {
@@ -69,7 +73,7 @@ public class SimpleCity {
 		this.bonuses = new ArrayList<>();
 		if(reward != null) {
 			for(Bonus b: reward.getGeneratedRewards()) {
-				SimpleBonus sb = new SimpleBonus(b.getTagName(), b.getAmount());
+				SimpleBonus sb = new SimpleBonus(b);
 				bonuses.add(sb);
 			}
 		}

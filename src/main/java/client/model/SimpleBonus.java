@@ -3,9 +3,11 @@ package client.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.reward.Bonus;
+
 public class SimpleBonus {
 	
-	private static Map<String, String> bonusImages;
+	public static Map<String, String> bonusImages;
 	static {
 		bonusImages = new HashMap<>();
 		bonusImages.put("assistants", "/simboli/Aiutanti.png"); 
@@ -19,9 +21,9 @@ public class SimpleBonus {
 	private String name;
 	private int amount;
 	
-	public SimpleBonus(String name, int amount) {
-		this.name = name;
-		this.amount = amount;
+	public SimpleBonus(Bonus b) {
+		this.name = b.getTagName();
+		this.amount = b.getAmount();
 	}
 	
 	public String getName() {

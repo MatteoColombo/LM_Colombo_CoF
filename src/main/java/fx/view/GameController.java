@@ -79,14 +79,38 @@ public class GameController {
         
         
         for(SimpleCity sc: mainApp.getLocalModel().getMap().getRegions().get(0).getCities()) {
-			AnchorPane bonusPane = (AnchorPane) mapPane.lookup("#" + sc.getName().get().toLowerCase());
-			HBox box = new HBox();
-			box.setAlignment(Pos.CENTER);
-			for(SimpleBonus sb: sc.getBonuses()) {
-				Label bonus = new Label(String.valueOf(sb.getAmount()));
-				box.getChildren().add(bonus);
+			
+			try {
+				AnchorPane rewardPane = (AnchorPane) mapPane.lookup("#" + sc.getName().get().toLowerCase());
+				
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(MainApp.class.getResource("/fxml/City.fxml"));
+				AnchorPane innerPane = (AnchorPane) loader.load();
+				
+				HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
+
+				for(SimpleBonus sb: sc.getBonuses()) {
+					
+					FXMLLoader innerLoader = new FXMLLoader();
+					innerLoader.setLocation(MainApp.class.getResource("/fxml/Bonus.fxml"));
+					Pane bonusPane = (Pane) innerLoader.load();
+					
+					ImageView bonusImage = (ImageView) bonusPane.lookup("#bonusImage");
+					String bonusPath = SimpleBonus.bonusImages.get(sb.getName());
+					Image bonus = new Image(MainApp.class.getResource(bonusPath).toString());
+					bonusImage.setImage(bonus);
+					
+					Label amountLabel = (Label) bonusPane.lookup("#amountLabel");
+					amountLabel.setText(String.valueOf(sb.getAmount()));
+					
+					bonusBox.getChildren().add(bonusPane);				
+				}
+				rewardPane.getChildren().add(innerPane);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			bonusPane.getChildren().add(box);
+			
 		}
 	}
 	

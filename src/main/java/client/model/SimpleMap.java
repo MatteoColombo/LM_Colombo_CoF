@@ -3,8 +3,11 @@ package client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import model.board.Board;
 import model.board.Region;
+import model.board.council.Council;
 import model.reward.BoardReward;
 import model.reward.Bonus;
 import model.reward.Reward;
@@ -13,7 +16,7 @@ public class SimpleMap {
 	private List<SimpleRegion> regions;
 	private CouncilProperty kingCouncil;
 	private List<Integer> colorBonuses; 
-	private List<Integer> kingBonuses; 
+	private IntegerProperty kingBonus; 
 	
 	public SimpleMap(Board board) {
 		
@@ -35,11 +38,10 @@ public class SimpleMap {
 			colorBonuses.add(br.getBRBonus().getAmount());
 		}
 		
-		kingBonuses = new ArrayList<>();
-		for(Bonus br: board.getBoardRewardsManager().getRemainingBoardKingRewards()) {
-			kingBonuses.add(br.getAmount());
-		}
+		kingBonus = new SimpleIntegerProperty();
+		kingBonus.set(board.getBoardRewardsManager().getRemainingBoardKingRewards().get(0).getAmount());
 	}
+
 	
 	public List<SimpleRegion> getRegions() {
 		return this.regions;
@@ -53,8 +55,8 @@ public class SimpleMap {
 		return this.colorBonuses;
 	}
 	
-	public List<Integer> getKingBonuses() {
-		return this.kingBonuses;
+	public IntegerProperty kingBonus() {
+		return this.kingBonus;
 	}
 	
 	public void setCityRewards(List<Reward> bonusList) {
@@ -65,5 +67,9 @@ public class SimpleMap {
 				i++;
 			}
 		}
+	}
+	
+	public void setKingCouncil(Council c) {
+		this.kingCouncil = new CouncilProperty(c);
 	}
 }

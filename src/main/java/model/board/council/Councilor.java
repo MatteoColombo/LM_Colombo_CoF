@@ -1,13 +1,18 @@
 package model.board.council;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  * A councilor is characterized by a color and is used in councils
  * @author Matteo Colombo
  *
  */
-public class Councilor {
+public class Councilor implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1942234023668222639L;
 	private Color councilorColor;
 
 	/**

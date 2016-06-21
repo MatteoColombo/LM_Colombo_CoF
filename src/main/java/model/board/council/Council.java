@@ -1,6 +1,7 @@
 package model.board.council;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,11 @@ import model.player.PoliticCard;
  *
  */
 
-public class Council {
+public class Council implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8263548205552114196L;
 	private List<Councilor> councMembers;
 
 	/**
@@ -28,6 +33,17 @@ public class Council {
 	 */
 	public Council(List<Councilor> councMembers) {
 		this.councMembers = councMembers;
+	}
+	/**
+	 * create a copy from another council
+	 * @param copy
+	 */
+	public Council(Council copy) {
+		this.councMembers = new ArrayList<>();
+		for(Color color: copy.getCouncilorsColor()) {
+			Councilor counc = new Councilor(color);
+			councMembers.add(counc);
+		}
 	}
 
 	/**

@@ -169,7 +169,7 @@ public class BoardRewardsManager {
 	 *         BVictoryPoints if the list is empty
 	 * @see BoardRewardsManager
 	 */
-	private BVictoryPoints assingBoardKingReward() {
+	public BVictoryPoints assingBoardKingReward() {
 		if (this.bKingRewards.isEmpty())
 			return new BVictoryPoints(0);
 		else

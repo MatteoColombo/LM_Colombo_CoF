@@ -1,8 +1,6 @@
 package fx.view;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import client.model.PlayerProperty;
 import client.model.SimpleBonus;
@@ -11,17 +9,13 @@ import client.model.SimpleRegion;
 import fx.MainApp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,13 +23,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.util.converter.NumberStringConverter;
 import model.player.PermissionCard;
 
@@ -99,6 +91,7 @@ public class GameController {
 		initPoliticTable();
 		initMap();
 		initConnections();
+		initBoardRewards();
 	}
 
 	// --------------------DUMMY ACTIONS--------------------
@@ -272,7 +265,7 @@ public class GameController {
 				for(String connected: sc.getConnections()) {
 					
 					AnchorPane connectedPane = (AnchorPane) mapPane.lookup("#" + connected.toLowerCase());
-					
+				
 					double endx = connectedPane.getLayoutX() + connectedPane.getWidth();
 					double endy = connectedPane.getLayoutY() + connectedPane.getHeight();
 					
@@ -284,9 +277,14 @@ public class GameController {
 					path.setStartY(starty);
 					path.setEndX(endx);
 					path.setEndY(endy);
+					// add the line behind all cities, but fronter than the map image in position 0
 					mapPane.getChildren().add(1, path);
 				}
 			}
 		}
+	}
+	
+	private void initBoardRewards() {
+		
 	}
 }

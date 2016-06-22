@@ -15,7 +15,7 @@ public interface ViewInterface{
 	
 	public void printAskWhatActionToDo();
 	
-	public void printCities(List<Region> regions);
+	public void printCities();
 	
 	public void printAskPlayerName();
 	

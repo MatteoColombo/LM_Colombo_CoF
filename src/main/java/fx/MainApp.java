@@ -253,7 +253,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	}
 
 	@Override
-	public void printCities(List<Region> regions) {
+	public void printCities() {
 		// TODO Auto-generated method stub
 
 	}

@@ -4,6 +4,9 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import client.model.GameProperty;
+import client.model.SimpleBonus;
+import client.model.SimpleCity;
+import client.model.SimpleRegion;
 import model.board.Region;
 import model.board.city.City;
 import model.player.Player;
@@ -78,16 +81,17 @@ public class Cli implements ViewInterface {
 	}
 
 	@Override
-	public void printCities(List<Region> regions) {
-
-		for (Region region : regions) {
+	public void printCities() {
+		List<SimpleRegion> regions= model.getMap().getRegions();
+		
+		for (SimpleRegion region : regions) {
 			writer.println(SEPARATOR);
-			for (City city : region.getCities()) {
+			for (SimpleCity city : region.getCities()) {
 				writer.print("| ");
 				printBonus(city);
 				writer.print(city.getName() + " -->");
-				for (City connected : city.getConnectedCities()) {
-					writer.print(" " + connected.getName());
+				for (String connected : city.getConnections()) {
+					writer.print(" " + connected);
 				}
 				writer.println();
 			}
@@ -108,19 +112,19 @@ public class Cli implements ViewInterface {
 		writer.println(SEPARATOR);
 	}
 
-	private void printBonus(City city) {
+	private void printBonus(SimpleCity city) {
 		writer.print("(");
-		if (city.isCapital()) {
-			writer.print("Capital");
-		} else {
-			if (city.getNumberOfEmporium() > 0) {
-				for (Bonus b : city.getReward().getGeneratedRewards()) {
-					writer.print(b.getTagName().substring(0, 1).toUpperCase() + b.getAmount());
-				}
-			} else {
-				writer.print("???");
+		// TODO add if is capital
+		if(city.hasKing().getValue())
+			writer.print("♕");
+		if (city.hasNoEmporium().getValue()) {
+			for (SimpleBonus b : city.getBonuses()) {
+				writer.print(b.getName().toUpperCase()+" " + b.getAmount());
 			}
+		} else {
+			writer.print("???");
 		}
+
 		writer.print(") ");
 	}
 
@@ -169,6 +173,7 @@ public class Cli implements ViewInterface {
 		writer.println(SEPARATOR);
 		writer.println("The game started");
 		writer.flush();
+		printCities();
 	}
 
 	@Override

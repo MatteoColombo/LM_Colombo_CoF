@@ -178,9 +178,9 @@ public class Controller {
 			client.askConfiguration(config.getMaxNumberOfPlayer());
 			return;
 		}
-		this.gameMap=map;
+		this.gameMap=map-1;
 		setMaxNumberOfPlayers(players);
-		setChoosenMap(map-1);
+		setChoosenMap(gameMap);
 	}
 
 	/**

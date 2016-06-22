@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 
 import model.action.Action;
 import model.player.Player;
+import view.p2pdialogue.notify.NotifyTurnEnded;
+import view.p2pdialogue.notify.NotifyYourTurn;
 
 /**
  * This class is the one which manages a player's turn
@@ -32,7 +34,7 @@ public class TurnManager {
 	 */
 	public void startTurn() {
 		try {
-			this.turnPlayer.getClient().notifyYourTurn();
+			this.turnPlayer.getClient().notify(new NotifyYourTurn());
 		} catch (IOException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			this.turnPlayer.setSuspension(true);
@@ -51,6 +53,13 @@ public class TurnManager {
 				this.turnPlayer.setSuspension(true);
 				this.turnPlayer.getClient().close();
 				logger.log(Level.WARNING, e.getMessage(), e);
+				return;
+			}
+			try {
+				this.turnPlayer.getClient().notify(new NotifyTurnEnded());
+			} catch (IOException e) {
+				logger.log(Level.WARNING, e.getMessage(), e);
+				this.turnPlayer.setSuspension(true);
 				return;
 			}
 		}

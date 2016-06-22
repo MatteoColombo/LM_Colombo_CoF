@@ -25,6 +25,13 @@ import model.player.Player;
 import model.reward.Bonus;
 import model.reward.Reward;
 import server.Server;
+import view.p2pdialogue.notify.NotifyGameLoading;
+import view.p2pdialogue.notify.NotifyGameStarted;
+import view.p2pdialogue.update.NotifyPlayerJoined;
+import view.p2pdialogue.update.NotifyPlayersList;
+import view.p2pdialogue.update.NotifyUpdatePlayer;
+import view.p2pdialogue.update.UpdateCouncil;
+import view.p2pdialogue.update.UpdateSendCityBonus;
 import view.server.ClientInt;
 
 public class Controller {
@@ -52,7 +59,7 @@ public class Controller {
 		for (ClientInt temp : clients) {
 			try {
 				if (client != temp)
-					temp.notifyPlayerJoined(playersMap.get(client));
+					temp.notify(new NotifyPlayerJoined(playersMap.get(client)));
 			} catch (IOException e) {
 				logger.log(Level.INFO, e.getMessage(), e);
 				playersMap.get(temp).setSuspension(true);
@@ -125,7 +132,7 @@ public class Controller {
 		Set<ClientInt> clients = playersMap.keySet();
 		for (ClientInt temp : clients) {
 			try {
-				temp.notifyGameStarted();
+				temp.notify(new NotifyGameStarted());
 			} catch (IOException e) {
 				logger.log(Level.INFO, e.getMessage(), e);
 				playersMap.get(temp).setSuspension(true);
@@ -209,8 +216,8 @@ public class Controller {
 
 	public void notifyGameLoading(ClientInt client) {
 		try {
-			client.sendPlayersList(game.getPlayers());
-			client.notifyGameLoading(this.gameMap);
+			client.notify(new NotifyPlayersList(game.getPlayers()));
+			client.notify(new NotifyGameLoading(this.gameMap));
 		} catch (IOException e) {
 			logger.log(Level.INFO, e.getMessage(), e);
 		}
@@ -236,36 +243,39 @@ public class Controller {
 			switch (args[0]) {
 			case "slide":
 				tm.performAction(builder.makeASlideCouncil(player, cmd));
-				updatePlayers(player, playerIndex);
-				return;
+				updateCouncil(cmd.getOptionValue(CliParser.OPTCOUNCIL));
+				break;
 			case "assistant":
 				tm.performAction(builder.makeABuyAssistant(player));
-				return;
+				break;
 			case "extra":
 				tm.performAction(builder.makeAExtraMainAction(player));
-				return;
+				break;
 			case "secondarySlide":
 				tm.performAction(builder.makeASlideCouncilWithAssistant(player, cmd));
-				return;
+				updateCouncil(cmd.getOptionValue(CliParser.OPTCOUNCIL));
+				break;
 			case "shuffle":
 				tm.performAction(builder.makeAShufflePermissionCards(player, cmd));
-				return;
+				break;
 			case "permission":
 				tm.performAction(builder.makeAShufflePermissionCards(player, cmd));
-				return;
+				break;
 			case "emporium":
 				tm.performAction(builder.makeABuildEmporium(player, cmd));
-				return;
+				break;
 			case "king":
 				tm.performAction(builder.makeABuildEmporiumWithKing(player, cmd));
-				return;
+				break;
 			case "end":
 				tm.performAction(builder.makeAEndTurn(player, tm));
-				return;
+				break;
 			default:
 				throw new IllegalActionException("Unrecognized action");
 			}
-
+			if(!"shuffle".equals(args[0]))
+				updatePlayers(player, playerIndex);
+				
 		} catch (IllegalActionException | ParseException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));
@@ -278,7 +288,7 @@ public class Controller {
 		Player simplifiedClone = new Player(player);
 		for (ClientInt client : clients) {
 			try {
-				client.updatePlayer(simplifiedClone, playerIndex);
+				client.notify(new NotifyUpdatePlayer(simplifiedClone, playerIndex));
 			} catch (IOException e) {
 				player.setSuspension(true);
 				logger.log(Level.WARNING, e.getMessage(), e);
@@ -361,11 +371,19 @@ public class Controller {
 		Set<ClientInt> clients=playersMap.keySet();
 		for(ClientInt client: clients){
 			try {
-				client.sendNotifyCityBonus(rewards);
+				client.notify(new UpdateSendCityBonus(rewards));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
 				playersMap.get(client).setSuspension(true);
 			}
+		}
+	}
+	public void updateCouncil(String index){
+		if("k".equals(index))
+			notifySendCouncil(game.getBoard().getKingCouncil(), -1);
+		else{
+			int i= Integer.parseInt(index);
+			notifySendCouncil(game.getBoard().getRegionCouncil(i-1), i-1);
 		}
 	}
 	
@@ -374,7 +392,7 @@ public class Controller {
 		Set<ClientInt> clients=playersMap.keySet();
 		for(ClientInt client: clients){
 			try {
-				client.sendUpdateCouncil(copy, index);
+				client.notify(new UpdateCouncil(copy, index));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
 				playersMap.get(client).setSuspension(true);

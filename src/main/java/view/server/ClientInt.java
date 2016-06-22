@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import control.Controller;
-import model.board.council.Council;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
-import model.player.Player;
-import model.reward.Reward;
+import view.p2pdialogue.Dialogue;
 
 /**
  * This is the Client Interface and it represents a generic connection of a
@@ -74,23 +72,13 @@ public interface ClientInt {
 	 */
 	public boolean isConnected();
 
-	public void notifyGameLoading(int choosenMap) throws IOException;
-
-	public void notifyGameStarted() throws IOException;
-
-	public void notifyYourTurn() throws IOException;
+	public void notify(Dialogue dialog) throws IOException;
 	
-	public void sendPlayersList(List<Player> players) throws IOException;
-	
-	public void notifyPlayerJoined(Player player) throws IOException;
-
-	public void notifyAnotherPlayerTurn() throws IOException;
 
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException;
 	
 	public void askWichItemToSell() throws IOException;
 	
-	public void updatePlayer(Player player, int index) throws IOException;
 	
 	public void askCityToGetNobilityReward(int citiesNumber) throws IOException;
 	
@@ -98,9 +86,6 @@ public interface ClientInt {
 	
 	public void askSelectFreePermissionCard() throws IOException;
 	
-	public void sendNotifyCityBonus(List<Reward> rewards) throws IOException;
-	
-	public void sendUpdateCouncil(Council council, int number) throws IOException;
 	
 	//public void askPlayerWhichMerchandiseBuy(Player buyingPlayer, List<Player> allPlayers) throws IOException;
 

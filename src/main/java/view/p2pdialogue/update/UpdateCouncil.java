@@ -11,7 +11,7 @@ public class UpdateCouncil implements Update{
 	private static final long serialVersionUID = 3997095304074407776L;
 	
 	private Council council;
-	private int number;
+	private int index;
 	
 	/**
 	 * Notify to update a council in the client.
@@ -19,14 +19,14 @@ public class UpdateCouncil implements Update{
 	 * @param c
 	 * @param i
 	 */
-	public UpdateCouncil(Council c, int i) {
+	public UpdateCouncil(Council c, int index) {
 		this.council = c;
-		this.number = i;
+		this.index = index;
 	}
 	
 	@Override
 	public void execute(GameProperty model) {
-		model.getMap().setCouncil(council, number);
+		model.getMap().setCouncil(council, index);
 	}
 	
 }

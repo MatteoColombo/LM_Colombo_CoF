@@ -38,6 +38,11 @@ import javafx.util.converter.NumberStringConverter;
 import model.player.PermissionCard;
 
 public class GameController {
+	
+	private static final int NOBILITY_START_X = 26;
+	private static final int NOBILITY_START_Y = 760;
+	private static final int NOBILITY_HEIGHT = 60;
+	private static final double NOBILITY_STEP = 37.5;
 
 	private MainApp mainApp;
 
@@ -116,7 +121,8 @@ public class GameController {
 		initMap();
 		initConnections();
 		initCouncils();
-		initBoardRewards();		
+		initBoardRewards();
+		initNobility();
 		
 		//mainApp.getLocalModel().getMap().kingBonus().set(10);
 	}
@@ -139,7 +145,9 @@ public class GameController {
 
 	@FXML
 	private void handleTestAction4() throws IOException {
-		mainApp.getLocalModel().getMap().kingBonus().set(0);
+		IntegerProperty nobility  = mainApp.getLocalModel().getMyPlayerData().nobilityProperty();
+		nobility.set(nobility.get()+1);
+		
 	}
 	// ------------------------------------------------------
 
@@ -373,5 +381,18 @@ public class GameController {
 		
 		bronzeRewardLabel.textProperty().bind(colorRewards.get("#f44343").asString());
 		bronzeRewardLabel.visibleProperty().bind(colorRewards.get("#f44343").greaterThan(0));
+	}
+	
+	private void initNobility() {
+		List<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
+		int totalPlayers = players.size();
+		for(int i = 0; i < totalPlayers; i++) {
+			Circle c = new Circle();
+			c.setFill(players.get(i).getColor());
+			c.setRadius(15.0);
+			c.setCenterY(NOBILITY_START_Y + i*NOBILITY_HEIGHT/totalPlayers);
+			c.centerXProperty().bind(players.get(i).nobilityProperty().multiply(NOBILITY_STEP).add(NOBILITY_START_X));
+			mapPane.getChildren().add(c);
+		}
 	}
 }

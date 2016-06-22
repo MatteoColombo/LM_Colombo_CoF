@@ -38,7 +38,7 @@ public class NobilityLoader {
 	 * Initializes the NobilityLoader saving this XML file and loading it.
 	 * 
 	 * @param xmlPath
-	 *            the XML file name that will be saved and loaded
+	 *            the path of the XML file that will be saved and loaded
 	 * @throws TrackXMLFileException
 	 * @see NobilityLoader
 	 */

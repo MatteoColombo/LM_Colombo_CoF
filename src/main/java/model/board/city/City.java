@@ -4,19 +4,44 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.action.Action;
+import model.board.King;
 import model.board.Region;
 import model.player.*;
 import model.reward.*;
+
 /**
- * The class of the cities.
- * Each city has a color and a name
- * It holds the reward and keep track of the connections with the other cities
- * Emporium of the players are saved in a list
+ * A class that represent all of the Cities in the Map.
+ * <p>
+ * Each City keeps track of the {@link #getConnectedCities() connections with
+ * the other ones}, with the possibility of {@link #isConnectedTo(City) checking
+ * already existing} or {@link #addConnection(City) adding new ones}. Every City
+ * has also:
+ * <ul>
+ * <li>A {@link #getColor() Color};</li>
+ * <li>A {@link #getName() name};</li>
+ * <li>A boolean to know if this City {@link #isCapital() is or not the King's
+ * capital} ;</li>
+ * <li>A {@link #getReward() Reward} that is awarded when a Player has
+ * {@link #addEmporium(Emporium) built his Emporium} here with an Action;</li>
+ * <li>A {@link #getNumberOfEmporium() number of Emporiums}, each of them with
+ * its own {@link #hasEmporiumOfPlayer(Player) Player owner};</li>
+ * <li>A {@link #getRegion() reference to the Region} where it is, that have to
+ * be {@link #setRegion(Region) set with the Region} itself.</li>
+ * </ul>
+ * 
  * @author Matteo Colombo
- *
+ * @see Action
+ * @see CityConnection
+ * @see Color
+ * @see Emporium
+ * @see King
+ * @see Player
+ * @see Region
+ * @see Reward
  */
 public class City {
-	
+
 	private String cityName;
 	private Color cityColor;
 	private Reward cityReward;
@@ -26,11 +51,18 @@ public class City {
 	private Region cityRegion;
 
 	/**
-	 * This is the constructor which is used to initialize a non-capital city It
-	 * initializes the list of the emporiums
-	 * @param cityColor a Color, the color of the city
-	 * @param cityName a string, the name of the city
-	 * @param cityReward a Reward, the prices you win when you place an emporium in the city
+	 * Initializes a not-capital City with its name, {@link Color} and
+	 * {@link Reward}, creating also the list of its {@link Emporium Emporiums}
+	 * and {@link CityConnection CityConnections}.
+	 * 
+	 * @param cityColor
+	 *            the Color of this City
+	 * @param cityName
+	 *            the name of this City
+	 * @param cityReward
+	 *            the Reward a Player will receive when he will place here an
+	 *            Emporium
+	 * @see City
 	 */
 	public City(Color cityColor, String cityName, Reward cityReward) {
 		this.cityName = cityName;
@@ -42,12 +74,16 @@ public class City {
 	}
 
 	/**
-	 * This is the constructor which is used to initialize the capital city It
-	 * initializes the list of the emporiums
-	 * @param cityColor a Color, the color of the city
-	 * @param cityName a string, the name of the city
-	 * @param cityReward a Reward, the prices you win when you place an emporium in the city
-	 * @param capital a boolean, true if this city is the capital 
+	 * Initializes the capital City with its name and {@link Color}, creating
+	 * also the list of its {@link Emporium Emporiums} and {@link CityConnection
+	 * CityConnections}; no {@link Reward Rewards} are associated with the
+	 * capital.
+	 * 
+	 * @param cityColor
+	 *            the Color of this capital City
+	 * @param cityName
+	 *            the name of this capital City
+	 * @see City
 	 */
 	public City(Color cityColor, String cityName) {
 		this.cityName = cityName;
@@ -57,43 +93,58 @@ public class City {
 		this.capital = true;
 		this.connectedCities = new ArrayList<>();
 	}
-	
+
 	/**
-	 * Checks if the city is the capital
-	 * @return true if capital, false otherwise
+	 * Returns if this City is the capital.
+	 * 
+	 * @return <code>true</code> if this City is the capital; <code>false</code>
+	 *         otherwise
+	 * @see City
 	 */
 	public boolean isCapital() {
 		return capital;
 	}
 
 	/**
-	 * Returns the name of the city
-	 * @return a string
+	 * Returns the name of this City.
+	 * 
+	 * @return the name of this City
 	 */
 	public String getName() {
 		return cityName;
 	}
 
 	/**
-	 * Returns the color of the city
-	 * @return a color
+	 * Returns the {@link Color} of this City.
+	 * 
+	 * @return the Color of this City
+	 * @see City
 	 */
 	public Color getColor() {
 		return cityColor;
 	}
 
 	/**
-	 * Adds a specified emporium to the list of the emporiums
-	 * @param e the emporium that has to be added
+	 * Adds a specified {@link Emporium} to the list of its Emporiums.
+	 * 
+	 * @param e
+	 *            the Emporium that will be added
+	 * @see City
 	 */
 	public void addEmporium(Emporium e) {
 		this.emporiums.add(e);
 	}
 
 	/**
-	 * Checks if the city already has an emporium of the specified player
-	 * @param p the player of which we have to check if already has an emporium
-	 * @return true if the player already has an emporium, false otherwise
+	 * Checks if this City already has an {@link Emporium} of this
+	 * {@link Player}.
+	 * 
+	 * @param p
+	 *            the Player that will be checked if it already has an Emporium
+	 *            here
+	 * @return <code>true</code> if this Player already has an Emporium;
+	 *         <code>false</code> otherwise
+	 * @see City
 	 */
 	public boolean hasEmporiumOfPlayer(Player p) {
 		for (Emporium e : emporiums) {
@@ -104,67 +155,80 @@ public class City {
 	}
 
 	/**
-	 * Returns the reward that the city is holding
-	 * @return a reward
+	 * Returns the {@link Reward} that this City is holding.
+	 * 
+	 * @return the City Reward
+	 * @see City
 	 */
 	public Reward getReward() {
 		return cityReward;
 	}
 
 	/**
-	 * Returns the number of the emporium placed in the city
-	 * @return an integer
+	 * Returns the number of the {@link Emporium Emporiums} placed in this City.
+	 * 
+	 * @return the number of the Emporiums this City already has
+	 * @see City
 	 */
 	public int getNumberOfEmporium() {
 		return this.emporiums.size();
 	}
-	
+
 	/**
-	 * Add a city to the list of the connected cities
-	 * @param connection the city that has to be connected
+	 * Adds a City to the list of the {@link CityConnection} of this one.
+	 * 
+	 * @param connection
+	 *            the city that will be connected with this one
+	 * @see City
 	 */
-	public void addConnection(City connection){
+	public void addConnection(City connection) {
 		this.connectedCities.add(connection);
 	}
-	
-	
+
 	/**
-	 * Checks if the city is connnected to the one which receives as parameter
-	 * @param c the city to be checked
-	 * @return true if it's connected, false otherwise
+	 * Checks if a City is connected with this one.
+	 * 
+	 * @param c
+	 *            the City to be checked if it's connected with this one
+	 * @return <code>true</code> if it's connected; <code>false</code> otherwise
+	 * @see City
 	 */
-	public boolean isConnectedTo(City c){
-		for(City temp: connectedCities)
-			if(c.equals(temp))
+	public boolean isConnectedTo(City c) {
+		for (City temp : connectedCities)
+			if (c.equals(temp))
 				return true;
 		return false;
 	}
-	
-	
+
 	/**
-	 * Returns the list of the connected cities with distance 1
-	 * @return a list of cities
+	 * Returns the list of the adjacent Cities.
+	 * 
+	 * @return the list of the adjacent Cities
+	 * @see City
 	 */
-	public List<City> getConnectedCities(){
+	public List<City> getConnectedCities() {
 		return connectedCities;
 	}
-	
+
 	/**
-	 * Sets the reference the the region in which the city is contained
+	 * Sets the reference of the {@link Region} in which this City is contained.
+	 * 
 	 * @param cityRegion
+	 *            the Region that contains this City
+	 * @see City
 	 */
-	public void setRegion(Region cityRegion){
-		this.cityRegion=cityRegion;
+	public void setRegion(Region cityRegion) {
+		this.cityRegion = cityRegion;
 	}
-	
+
 	/**
-	 * Returns the region in which the city is located
-	 * @return a region
+	 * Returns the {@link Region} in which this City is located.
+	 * 
+	 * @return the Region that contains this City
+	 * @see City
 	 */
-	public Region getRegion(){
+	public Region getRegion() {
 		return cityRegion;
 	}
-	
-	
 
 }

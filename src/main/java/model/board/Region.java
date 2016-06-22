@@ -76,9 +76,9 @@ public class Region {
 	}
 
 	/**
-	 * Returns the name of the {@link City} as a string.
+	 * Returns the name of this {@link City} as a string.
 	 * 
-	 * @return the string name of the City
+	 * @return the string name of this City
 	 * @see Region
 	 */
 	@Override
@@ -87,12 +87,12 @@ public class Region {
 	}
 
 	/**
-	 * Checks if a {@link Player} has an {@link Emporium} in each {@link City
+	 * Checks if this {@link Player} has an {@link Emporium} in each {@link City
 	 * Cities} of this Region.
 	 * 
 	 * @param p
 	 *            the Player who has to be checked
-	 * @return <code>true</code> if the Player has completed this Region,
+	 * @return <code>true</code> if this Player has completed this Region,
 	 *         <code>false</code> otherwise
 	 * @see Region
 	 */
@@ -198,7 +198,7 @@ public class Region {
 	 * Returns how many {@link PermissionCard PermissionCards} are uncovered on
 	 * the table.
 	 * 
-	 * @return the number of uncovered PermissionCards of the Region
+	 * @return the number of uncovered PermissionCards of this Region
 	 * @see Region
 	 */
 	public int getPermissionSlotsNumber() {

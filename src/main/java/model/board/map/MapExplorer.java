@@ -89,8 +89,8 @@ public class MapExplorer {
 	}
 
 	/**
-	 * Checks if the {@link City} received as parameter is already in the list
-	 * of the City which has to be visited. This is used to avoid loops.
+	 * Checks if this {@link City} is already in the list of the City which has
+	 * to be visited. This is used to avoid loops.
 	 * 
 	 * @param c
 	 *            the City that is going to be checked to control if is already
@@ -139,7 +139,7 @@ public class MapExplorer {
 	}
 
 	/**
-	 * Checks if the {@link City} is already in the list.
+	 * Checks if this {@link City} is already in the list.
 	 * 
 	 * @param distanceList
 	 *            the list of the Cities that have to be checked to find the
@@ -160,7 +160,7 @@ public class MapExplorer {
 	}
 
 	/**
-	 * Checks if the {@link Player} has built an {@link Emporium} in every
+	 * Checks if this {@link Player} has built an {@link Emporium} in every
 	 * {@link City} of a determined Color.
 	 * 
 	 * @param player
@@ -169,7 +169,7 @@ public class MapExplorer {
 	 *            the Color of the Cities
 	 * @param cities
 	 *            the list of all the Cities
-	 * @return <code>true</code> if the Player has completed the Color;
+	 * @return <code>true</code> if this Player has completed the Color;
 	 *         <code>false</code> otherwise
 	 * @see MapExplorer
 	 */

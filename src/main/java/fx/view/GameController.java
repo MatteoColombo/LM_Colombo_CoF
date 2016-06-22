@@ -122,9 +122,7 @@ public class GameController {
 		initConnections();
 		initCouncils();
 		initBoardRewards();
-		initNobility();
-		
-		//mainApp.getLocalModel().getMap().kingBonus().set(10);
+		initNobility();		
 	}
 
 	// --------------------DUMMY ACTIONS--------------------
@@ -147,7 +145,6 @@ public class GameController {
 	private void handleTestAction4() throws IOException {
 		IntegerProperty nobility  = mainApp.getLocalModel().getMyPlayerData().nobilityProperty();
 		nobility.set(nobility.get()+1);
-		
 	}
 	// ------------------------------------------------------
 

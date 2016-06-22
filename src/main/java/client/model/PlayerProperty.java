@@ -14,7 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+import javafx.scene.paint.Color;
 import model.player.*;
 import util.ColorConverter;
 public class PlayerProperty {
@@ -32,6 +32,8 @@ public class PlayerProperty {
 	}
 	
 	private StringProperty name;
+	private Color color;
+	
 	private IntegerProperty coins;
 	private IntegerProperty assistants;
 	private IntegerProperty nobility;
@@ -56,6 +58,13 @@ public class PlayerProperty {
 		permissions = FXCollections.observableArrayList();	
 	}
 	
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	public Color getColor() {
+		return this.color;
+	}
 	/**
 	 * since permission cards changes not so often as the others,
 	 * this distinction improve performance

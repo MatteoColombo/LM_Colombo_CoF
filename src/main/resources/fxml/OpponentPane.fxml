@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -61,6 +62,7 @@
             <Insets left="10.0" />
          </padding>
       </GridPane>
+      <Rectangle fx:id="colorRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="64.0" layoutX="-14.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="111.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Label fx:id="nameLabel" layoutX="14.0" layoutY="32.0" text="Label" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />
    </children>
 </AnchorPane>

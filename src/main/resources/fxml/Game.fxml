@@ -16,8 +16,9 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
+                  <Rectangle fx:id="myColor" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="35.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Button layoutX="14.0" layoutY="150.0" mnemonicParsing="false" text="Disconnect" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
-                  <Label layoutX="15.0" layoutY="14.0" text="PLAYER" />
+                  <Label fx:id="playerNameLabel" layoutX="15.0" layoutY="14.0" text="PLAYER" />
                </children>
             </AnchorPane>
             <GridPane alignment="CENTER" layoutX="43.0" layoutY="40.0" prefHeight="170.0" prefWidth="146.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

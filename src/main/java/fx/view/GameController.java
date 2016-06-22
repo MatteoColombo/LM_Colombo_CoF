@@ -45,6 +45,9 @@ public class GameController {
 	private Label playerNameLabel;
 
 	@FXML
+	private Rectangle myColor;
+	
+	@FXML
 	private AnchorPane mapPane;
 
 	@FXML
@@ -105,6 +108,7 @@ public class GameController {
 
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
+		initMyData();
 		initLabels();
 		initButtons();
 		initOpponentsPanes();
@@ -144,6 +148,12 @@ public class GameController {
 		mainApp.sendMsg("end");
 	}
 
+	private void initMyData() {
+		PlayerProperty me = mainApp.getLocalModel().getMyPlayerData();
+		playerNameLabel.setText(me.getName());
+		myColor.setFill(me.getColor());
+	}
+	
 	private void initButtons() {
 		Bindings.bindBidirectional(mainActionButton1.disableProperty(),
 				mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
@@ -204,6 +214,8 @@ public class GameController {
 					AnchorPane pane = (AnchorPane) loader.load();
 					opponentsBox.getChildren().add(pane);
 					((Labeled) pane.lookup("#nameLabel")).textProperty().set(players.get(i).getName());
+					((Rectangle) pane.lookup("#colorRectangle")).setFill(players.get(i).getColor());
+					
 					Bindings.bindBidirectional(((Labeled) pane.lookup("#victoryLabel")).textProperty(),
 							players.get(i).victoryProperty(), nsc);
 					Bindings.bindBidirectional(((Labeled) pane.lookup("#coinsLabel")).textProperty(),

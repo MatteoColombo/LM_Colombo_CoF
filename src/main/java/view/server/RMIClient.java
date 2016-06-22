@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -15,18 +14,12 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import client.view.RMIServerManager;
 import control.Controller;
-import model.board.council.Council;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
-import model.player.Player;
-import model.reward.Reward;
+import view.p2pdialogue.Dialogue;
 import view.p2pdialogue.notify.NotifyBonusFromCities;
-import view.p2pdialogue.notify.NotifyGameLoading;
-import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
-import view.p2pdialogue.notify.NotifyYourTurn;
 import view.p2pdialogue.request.RequestCity;
 import view.p2pdialogue.request.RequestFreePermissionCard;
 import view.p2pdialogue.request.RequestMaxPlayersNumber;
@@ -35,11 +28,6 @@ import view.p2pdialogue.request.RequestRewardFromPermission;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
 import view.p2pdialogue.request.RequestWichMapToUse;
-import view.p2pdialogue.update.NotifyPlayerJoined;
-import view.p2pdialogue.update.NotifyPlayersList;
-import view.p2pdialogue.update.NotifyUpdatePlayer;
-import view.p2pdialogue.update.UpdateCouncil;
-import view.p2pdialogue.update.UpdateSendCityBonus;
 
 public class RMIClient implements ClientInt {
 	private Controller controller;
@@ -124,36 +112,6 @@ public class RMIClient implements ClientInt {
 		return true;
 	}
 
-	@Override
-	public void notifyGameLoading(int choosenMap) throws IOException {
-		client.sendNotify(new NotifyGameLoading(choosenMap));
-	}
-
-	@Override
-	public void notifyGameStarted() throws IOException {
-		client.sendNotify(new NotifyGameStarted());
-	}
-
-	@Override
-	public void notifyYourTurn() throws IOException {
-		client.sendNotify(new NotifyYourTurn());
-	}
-
-	@Override
-	public void notifyAnotherPlayerTurn() throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void sendPlayersList(List<Player> players) throws IOException {
-		client.sendNotify(new NotifyPlayersList(players));
-	}
-
-	@Override
-	public void notifyPlayerJoined(Player player) throws IOException {
-		client.sendNotify(new NotifyPlayerJoined(player));
-	}
 
 	@Override
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
@@ -167,11 +125,7 @@ public class RMIClient implements ClientInt {
 		controller.parseItemToSell(item, this);
 	}
 
-	@Override
-	public void updatePlayer(Player player, int index) throws IOException {
-		client.sendNotify(new NotifyUpdatePlayer(player, index));
-	}
-
+	
 	@Override
 	public void askCityToGetNobilityReward(int citiesNumber) throws IOException {
 		client.sendNotify(new NotifyBonusFromCities(citiesNumber));
@@ -194,12 +148,7 @@ public class RMIClient implements ClientInt {
 	}
 
 	@Override
-	public void sendNotifyCityBonus(List<Reward> rewards) throws IOException {
-		client.sendNotify(new UpdateSendCityBonus(rewards));
-	}
-
-	@Override
-	public void sendUpdateCouncil(Council council, int number) throws IOException {
-		client.sendNotify(new UpdateCouncil(council, number));
+	public void notify(Dialogue dialog) throws IOException {
+		client.sendNotify(dialog);
 	}
 }

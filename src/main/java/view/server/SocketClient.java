@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -21,16 +20,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import control.Controller;
-import model.board.council.Council;
 import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
-import model.player.Player;
-import model.reward.Reward;
+import view.p2pdialogue.Dialogue;
 import view.p2pdialogue.notify.NotifyBonusFromCities;
-import view.p2pdialogue.notify.NotifyGameLoading;
-import view.p2pdialogue.notify.NotifyGameStarted;
 import view.p2pdialogue.notify.NotifyIllegalAction;
-import view.p2pdialogue.notify.NotifyYourTurn;
 import view.p2pdialogue.request.RequestCity;
 import view.p2pdialogue.request.RequestFreePermissionCard;
 import view.p2pdialogue.request.RequestMaxPlayersNumber;
@@ -39,11 +33,6 @@ import view.p2pdialogue.request.RequestRewardFromPermission;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
 import view.p2pdialogue.request.RequestWichMapToUse;
-import view.p2pdialogue.update.NotifyPlayerJoined;
-import view.p2pdialogue.update.NotifyPlayersList;
-import view.p2pdialogue.update.NotifyUpdatePlayer;
-import view.p2pdialogue.update.UpdateCouncil;
-import view.p2pdialogue.update.UpdateSendCityBonus;
 
 public class SocketClient implements ClientInt {
 	private Controller controller;
@@ -85,22 +74,22 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askPlayerWhatActionToDo() throws IOException {
-		ExecutorService executor= Executors.newSingleThreadExecutor();
+		ExecutorService executor = Executors.newSingleThreadExecutor();
 		out.writeObject(new RequestWhatActionToDo());
 		out.flush();
-		Future<String> answer= executor.submit(new Callable<String>(){
-			public String call() throws ClassNotFoundException, IOException{
+		Future<String> answer = executor.submit(new Callable<String>() {
+			public String call() throws ClassNotFoundException, IOException {
 				String choosenAction;
-					choosenAction = (String) in.readObject();
+				choosenAction = (String) in.readObject();
 				return choosenAction;
 			}
 		});
-		try{
+		try {
 			String action = answer.get(60, TimeUnit.SECONDS);
 			controller.performAction(this, action);
-		}catch(TimeoutException | InterruptedException | ExecutionException e){
+		} catch (TimeoutException | InterruptedException | ExecutionException e) {
 			throw new IOException(e);
-		}finally {
+		} finally {
 			executor.shutdown();
 		}
 	}
@@ -114,12 +103,12 @@ public class SocketClient implements ClientInt {
 	public void askConfiguration(int maxNumberOfPlayers) throws IOException {
 		try {
 			askMaxNumberOfPlayers(maxNumberOfPlayers);
-			String maxPlayers= (String)in.readObject();
-			
+			String maxPlayers = (String) in.readObject();
+
 			askWichMapToUse();
 			String choosenMap = (String) in.readObject();
 
-			controller.parseGameConfiguration(maxPlayers,choosenMap, this);
+			controller.parseGameConfiguration(maxPlayers, choosenMap, this);
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
@@ -157,43 +146,6 @@ public class SocketClient implements ClientInt {
 	@Override
 	public boolean isConnected() {
 		return clientSocket.isConnected();
-
-	}
-
-	@Override
-	public void notifyGameLoading(int choosenMap) throws IOException {
-		out.writeObject(new NotifyGameLoading(choosenMap));
-		out.flush();
-	}
-
-	@Override
-	public void notifyGameStarted() throws IOException {
-		out.writeObject(new NotifyGameStarted());
-		out.flush();
-	}
-
-	@Override
-	public void notifyYourTurn() throws IOException {
-		out.writeObject(new NotifyYourTurn());
-		out.flush();
-	}
-
-	@Override
-	public void notifyAnotherPlayerTurn() throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void sendPlayersList(List<Player> players) throws IOException {
-		out.writeObject(new NotifyPlayersList(players));
-		out.flush();
-	}
-
-	@Override
-	public void notifyPlayerJoined(Player player) throws IOException {
-		out.writeObject(new NotifyPlayerJoined(player));
-		out.flush();
 	}
 
 	@Override
@@ -214,25 +166,19 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void updatePlayer(Player player, int index) throws IOException {
-		out.writeObject(new NotifyUpdatePlayer(player, index));
-		out.flush();
-	}
-
-	@Override
 	public void askCityToGetNobilityReward(int citiesNumber) throws IOException {
 		out.writeObject(new NotifyBonusFromCities(citiesNumber));
 		out.flush();
-		List<String> cities= new ArrayList<>();
-		for(int i=0; i< citiesNumber; i++){
+		List<String> cities = new ArrayList<>();
+		for (int i = 0; i < citiesNumber; i++) {
 			out.writeObject(new RequestCity());
 			out.flush();
 			try {
-				cities.add((String)in.readObject());
+				cities.add((String) in.readObject());
 			} catch (ClassNotFoundException e) {
 				logger.log(Level.SEVERE, e.getMessage(), e);
 			}
-		}		
+		}
 	}
 
 	@Override
@@ -240,7 +186,7 @@ public class SocketClient implements ClientInt {
 		out.writeObject(new RequestRewardFromPermission());
 		out.flush();
 		try {
-			String index= (String)in.readObject();
+			String index = (String) in.readObject();
 			controller.parseRewardOfPermissionCard(index, this);
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
@@ -252,7 +198,7 @@ public class SocketClient implements ClientInt {
 		out.writeObject(new RequestFreePermissionCard());
 		out.flush();
 		try {
-			String card= (String)in.readObject();
+			String card = (String) in.readObject();
 			controller.parseBonusFreePermissionCard(card, this);
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
@@ -260,14 +206,8 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void sendNotifyCityBonus(List<Reward> rewards) throws IOException {
-		out.writeObject(new UpdateSendCityBonus(rewards));
-		out.flush();
-	}
-
-	@Override
-	public void sendUpdateCouncil(Council council, int number) throws IOException {
-		out.writeObject(new UpdateCouncil(council, number));
+	public void notify(Dialogue dialog) throws IOException {
+		out.writeObject(dialog);
 		out.flush();
 	}
 }

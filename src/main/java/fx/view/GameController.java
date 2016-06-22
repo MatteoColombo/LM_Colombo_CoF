@@ -110,7 +110,7 @@ public class GameController {
 		initMap();
 		initConnections();
 		initCouncils();
-		initBoardRewards();
+		initBoardRewards();		
 	}
 
 	// --------------------DUMMY ACTIONS--------------------
@@ -330,16 +330,13 @@ public class GameController {
 	}
 
 	private void initBoardRewards() {
-		NumberStringConverter nsc = new NumberStringConverter();
-		Bindings.bindBidirectional(kingRewardLabel.textProperty(), mainApp.getLocalModel().getMap().kingBonus(), nsc);
-	
+		// TODO complete this
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
 		int numberOfRegions = regions.size();
 		
 		for(int i = 0; i < numberOfRegions; i++) {
 			Labeled regionBonus = (Labeled) mapPane.lookup("#regionBonusLabel" + i);
 			regionBonus.setText(String.valueOf(regions.get(i).getConquerBonus()));
-			Bindings.bindBidirectional(regionBonus.visibleProperty(), regions.get(i).notTaken());
 		}
 		
 	}

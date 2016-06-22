@@ -41,7 +41,7 @@ public class SimpleMap {
 		}
 
 		kingCouncil = new CouncilProperty();
-
+		kingCouncil.initCouncil(board.getKingCouncil().getCouncilorsColor().size());
 		colorBonuses = new ArrayList<>();
 		for (BoardReward br : board.getBoardRewardsManager().getRemainingBoardColorRewards()) {
 			colorBonuses.add(br.getBRBonus().getAmount());

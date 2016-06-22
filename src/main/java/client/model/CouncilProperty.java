@@ -1,6 +1,8 @@
 package client.model;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -15,21 +17,26 @@ import util.ColorConverter;
  *
  */
 public class CouncilProperty {
-	private ObservableList<StringProperty> councilorsColors;
+	private List<StringProperty> councilorsColors;
 	
 	public CouncilProperty() {
-		councilorsColors = FXCollections.observableArrayList();
+		councilorsColors = new ArrayList<>();
 	}
 	
-	public ObservableList<StringProperty> colors() {
+	public List<StringProperty> colors() {
 		return this.councilorsColors;
+	}
+		
+	public void initCouncil(int size) {
+		for(int i = 0; i < size; i++) {
+			councilorsColors.add(new SimpleStringProperty(""));
+		}
 	}
 	
 	public void set(Council council) {
-		councilorsColors.clear();
-		for(Color c: council.getCouncilorsColor()) {
-			String hexColor = ColorConverter.awtToWeb(c);
-			councilorsColors.add(new SimpleStringProperty(hexColor));
+		for(int i = 0; i < councilorsColors.size(); i++) {
+			String newHexColor = ColorConverter.awtToWeb((council.getCouncilorsColor().get(i)));
+			councilorsColors.get(i).set(newHexColor);
 		}
 	}
 }

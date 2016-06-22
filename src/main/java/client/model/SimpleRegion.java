@@ -25,6 +25,7 @@ public class SimpleRegion {
 		}
 		
 		council = new CouncilProperty();
+		council.initCouncil(region.getCouncil().getCouncilorsColor().size());
 		
 		permissions = new PermissionProperty[region.getPermissionSlotsNumber()];
 		for(int i = 0; i < permissions.length; i++) {

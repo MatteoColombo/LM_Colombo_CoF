@@ -17,7 +17,7 @@ public class BNobilityPoints extends Bonus {
 	}
 	
 	@Override
-	public int getValue() {
+	protected int getValue() {
 		return VALUE;
 	}
 

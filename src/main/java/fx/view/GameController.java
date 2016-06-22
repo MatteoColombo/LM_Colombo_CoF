@@ -2,6 +2,7 @@ package fx.view;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import client.model.CouncilProperty;
 import client.model.PlayerProperty;
@@ -141,7 +142,6 @@ public class GameController {
 	@FXML
 	private void handlePass() throws IOException {
 		mainApp.sendMsg("end");
-		mainApp.getLocalModel().endOfTurn();
 	}
 
 	private void initButtons() {
@@ -338,7 +338,6 @@ public class GameController {
 		kingRewardLabel.textProperty().bind(kingBonus.asString());
 		kingRewardLabel.visibleProperty().bind(kingBonus.greaterThan(0));
 				
-		// TODO complete this
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
 		int numberOfRegions = regions.size();
 		
@@ -349,5 +348,18 @@ public class GameController {
 			regionBonus.visibleProperty().bind(regions.get(i).conquerBonus().greaterThan(0));			
 		}
 		
+		Map<String, IntegerProperty> colorRewards = mainApp.getLocalModel().getMap().getColorBonuses();
+		
+		sapphireRewardLabel.textProperty().bind(colorRewards.get("#2268df").asString());
+		sapphireRewardLabel.visibleProperty().bind(colorRewards.get("#2268df").greaterThan(0));
+		
+		goldRewardLabel.textProperty().bind(colorRewards.get("#ffd700").asString());
+		goldRewardLabel.visibleProperty().bind(colorRewards.get("#ffd700").greaterThan(0));
+		
+		silverRewardLabel.textProperty().bind(colorRewards.get("#008000").asString());
+		silverRewardLabel.visibleProperty().bind(colorRewards.get("#008000").greaterThan(0));
+		
+		bronzeRewardLabel.textProperty().bind(colorRewards.get("#f44343").asString());
+		bronzeRewardLabel.visibleProperty().bind(colorRewards.get("#f44343").greaterThan(0));
 	}
 }

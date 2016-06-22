@@ -1,24 +1,26 @@
 package client.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.board.Board;
 import model.board.Region;
 import model.board.council.Council;
+import model.reward.BoardColorReward;
 import model.reward.BoardRegionReward;
-import model.reward.BoardReward;
 import model.reward.Bonus;
 import model.reward.Reward;
+import util.ColorConverter;
 
 public class SimpleMap {
 	private List<SimpleRegion> regions;
 	private CouncilProperty kingCouncil;
 
-	// TODO this should be a map, and also the one on the server side
-	private List<Integer> colorBonuses;
+	private Map<String, IntegerProperty> colorBonuses;
 
 	private List<Integer> kingBonuses;
 	/**
@@ -42,9 +44,12 @@ public class SimpleMap {
 
 		kingCouncil = new CouncilProperty();
 		kingCouncil.initCouncil(board.getKingCouncil().getCouncilorsColor().size());
-		colorBonuses = new ArrayList<>();
-		for (BoardReward br : board.getBoardRewardsManager().getRemainingBoardColorRewards()) {
-			colorBonuses.add(br.getBRBonus().getAmount());
+		
+		colorBonuses = new HashMap<>();
+		for (BoardColorReward br : board.getBoardRewardsManager().getRemainingBoardColorRewards()) {
+			String hex = ColorConverter.awtToWeb(br.getBRKey());
+			IntegerProperty value = new SimpleIntegerProperty(br.getBRBonus().getAmount());
+			colorBonuses.put(hex, value);
 		}
 
 		kingBonuses = new ArrayList<>();
@@ -64,7 +69,7 @@ public class SimpleMap {
 		return this.kingCouncil;
 	}
 
-	public List<Integer> getColorBonuses() {
+	public Map<String, IntegerProperty> getColorBonuses() {
 		return this.colorBonuses;
 	}
 

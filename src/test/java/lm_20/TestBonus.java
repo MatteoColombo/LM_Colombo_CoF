@@ -50,11 +50,7 @@ public class TestBonus {
 		Bonus ba2 = ba1.newCopy(10);		
 		assertEquals(ba2.getAmount(), ba1.getAmount());
 	}
-	@Test
-	public void testBAssistantsMethod_getValue() {
-		BAssistants ba = new BAssistants(10);	
-		assertEquals(33, ba.getValue());
-	}
+
 	@Test
 	public void testBAssistantsMethod_assignBonusTo() {
 		BAssistants ba = new BAssistants(10);

@@ -159,10 +159,13 @@
                   <Label fx:id="silverRewardLabel" layoutX="929.0" layoutY="797.0" rotate="45.0" text="Label" />
                   <Label fx:id="bronzeRewardLabel" layoutX="871.0" layoutY="797.0" rotate="45.0" text="Label" />
                   <Label fx:id="sapphireRewardLabel" layoutX="819.0" layoutY="807.0" rotate="45.0" text="Label" />
-                  <HBox fx:id="council1" alignment="CENTER" layoutX="458.0" layoutY="646.0" prefHeight="31.0" prefWidth="116.0" />
-                  <HBox fx:id="council0" alignment="CENTER" layoutX="114.0" layoutY="646.0" prefHeight="31.0" prefWidth="117.0" />
-                  <HBox fx:id="council2" alignment="CENTER" layoutX="842.0" layoutY="646.0" prefHeight="31.0" prefWidth="117.0" />
+                  <HBox fx:id="councilBox1" alignment="CENTER" layoutX="458.0" layoutY="646.0" prefHeight="31.0" prefWidth="116.0" />
+                  <HBox fx:id="councilBox0" alignment="CENTER" layoutX="114.0" layoutY="646.0" prefHeight="31.0" prefWidth="117.0" />
+                  <HBox fx:id="councilBox2" alignment="CENTER" layoutX="842.0" layoutY="646.0" prefHeight="31.0" prefWidth="117.0" />
                   <HBox fx:id="kingCouncilBox" alignment="CENTER" layoutX="681.0" layoutY="688.0" prefHeight="31.0" prefWidth="115.0" />
+                  <Label fx:id="regionBonusLabel0" layoutX="281.0" layoutY="480.0" text="Label" />
+                  <Label fx:id="regionBonusLabel1" layoutX="622.0" layoutY="480.0" text="Label" />
+                  <Label fx:id="regionBonusLabel2" layoutX="1003.0" layoutY="480.0" text="Label" />
                </children>
             </AnchorPane>
         </content>

@@ -49,6 +49,17 @@ public class GameController {
 	private HBox kingCouncilBox;
 
 	@FXML
+	private Label kingRewardLabel;
+	@FXML
+	private Label goldRewardLabel;
+	@FXML
+	private Label silverRewardLabel;
+	@FXML
+	private Label bronzeRewardLabel;
+	@FXML
+	private Label sapphireRewardLabel;
+
+	@FXML
 	private Label victoryLabel;
 	@FXML
 	private Label coinsLabel;
@@ -99,7 +110,7 @@ public class GameController {
 		initMap();
 		initConnections();
 		initCouncils();
-		// initBoardRewards();
+		initBoardRewards();
 	}
 
 	// --------------------DUMMY ACTIONS--------------------
@@ -115,7 +126,7 @@ public class GameController {
 
 	@FXML
 	private void handleTestAction3() throws IOException {
-		mainApp.sendMsg("slide -council 1 -color black");
+		mainApp.sendMsg("slide -council k -color black");
 	}
 
 	@FXML
@@ -205,18 +216,6 @@ public class GameController {
 		}
 	}
 
-	/*
-	 * private void initCouncils() { Rectangle c1 = new Rectangle();
-	 * c1.setHeight(50); c1.setWidth(50); c1.setFill(Color.ANTIQUEWHITE);
-	 * Rectangle c2 = new Rectangle(); c2.setHeight(50); c2.setWidth(50);
-	 * c2.setFill(Color.BLUEVIOLET); seaCouncilBox.getChildren().add(c1);
-	 * seaCouncilBox.getChildren().add(c2);
-	 * plainCouncilBox.getChildren().add(c2);
-	 * plainCouncilBox.getChildren().add(c2);
-	 * mountainCouncilBox.getChildren().add(c2);
-	 * mountainCouncilBox.getChildren().add(c2); }
-	 */
-
 	private void initMap() {
 		for (SimpleRegion r : mainApp.getLocalModel().getMap().getRegions()) {
 			for (SimpleCity sc : r.getCities()) {
@@ -238,7 +237,7 @@ public class GameController {
 
 					Circle king = (Circle) innerPane.lookup("#kingCircle");
 					Bindings.bindBidirectional(king.visibleProperty(), sc.hasKing());
-					
+
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
 
@@ -304,22 +303,22 @@ public class GameController {
 			color.addListener((observable, oldValue, newValue) -> councilor.setFill(Color.valueOf(newValue)));
 			kingCouncilBox.getChildren().add(councilor);
 		}
-		
+
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
 		int numberOfRegions = regions.size();
-		
-		for(int i = 0; i < numberOfRegions; i++) {
-			
-			HBox councilBox = (HBox) mapPane.lookup("#council" + String.valueOf(i));
-			for(StringProperty color: regions.get(i).getCouncil().colors()) {
-				
+
+		for (int i = 0; i < numberOfRegions; i++) {
+
+			HBox councilBox = (HBox) mapPane.lookup("#councilBox" + String.valueOf(i));
+			for (StringProperty color : regions.get(i).getCouncil().colors()) {
+
 				Rectangle councilor = generateCouncilor(color.get());
 				color.addListener((observable, oldValue, newValue) -> councilor.setFill(Color.valueOf(newValue)));
 				councilBox.getChildren().add(councilor);
 			}
 		}
 	}
-	
+
 	private Rectangle generateCouncilor(String hexColor) {
 		Rectangle councilor = new Rectangle();
 		councilor.setWidth(25.0);
@@ -328,5 +327,20 @@ public class GameController {
 		councilor.setStroke(Color.SILVER);
 		councilor.setStrokeWidth(2.0);
 		return councilor;
+	}
+
+	private void initBoardRewards() {
+		NumberStringConverter nsc = new NumberStringConverter();
+		Bindings.bindBidirectional(kingRewardLabel.textProperty(), mainApp.getLocalModel().getMap().kingBonus(), nsc);
+	
+		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
+		int numberOfRegions = regions.size();
+		
+		for(int i = 0; i < numberOfRegions; i++) {
+			Labeled regionBonus = (Labeled) mapPane.lookup("#regionBonusLabel" + i);
+			regionBonus.setText(String.valueOf(regions.get(i).getConquerBonus()));
+			Bindings.bindBidirectional(regionBonus.visibleProperty(), regions.get(i).notTaken());
+		}
+		
 	}
 }

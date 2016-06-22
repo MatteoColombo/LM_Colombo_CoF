@@ -48,7 +48,7 @@ public class SimpleMap {
 		colorBonuses = new HashMap<>();
 		for (BoardColorReward br : board.getBoardRewardsManager().getRemainingBoardColorRewards()) {
 			String hex = ColorConverter.awtToWeb(br.getBRKey());
-			IntegerProperty value = new SimpleIntegerProperty(br.getBRBonus().getValue());
+			IntegerProperty value = new SimpleIntegerProperty(br.getBRBonus().getAmount());
 			colorBonuses.put(hex, value);
 		}
 

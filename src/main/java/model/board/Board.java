@@ -8,6 +8,7 @@ import java.util.Set;
 import model.Configuration;
 import model.board.city.City;
 import model.board.council.Council;
+import model.board.council.Councilor;
 import model.board.council.CouncilorPool;
 import model.board.map.MapLoader;
 import model.board.nobility.NobilityLoader;
@@ -15,10 +16,45 @@ import model.board.nobility.NobilityTrack;
 import model.exceptions.MapXMLFileException;
 import model.exceptions.TrackXMLFileException;
 import model.exceptions.XMLFileException;
+import model.player.Player;
 import model.reward.BVictoryPoints;
 import model.reward.BoardColorReward;
 import model.reward.BoardRegionReward;
+import model.reward.BoardReward;
 
+/**
+ * A class that represent the Board of the Game.
+ * <p>
+ * The Board loads the configurations that will be used for the current Game, as
+ * well as contains one of the possible {@link #getMap() Maps}, whose parameters
+ * are loaded from a XML file, and nearly all the things each Player can
+ * interact with, such as:
+ * <ul>
+ * <li>The {@link #getRegions() Regions}, {@link #getRegion(int) each of which}
+ * has {@link #getRegionsNumber() its own identifier}, and their Cities;</li>
+ * <li>The {@link #getKing() King}, that {@link #moveKing(City) can be moved}
+ * form a {@link #getKingLocation() City where it was} to a new one;</li>
+ * <li>The Councils, both the {@link #getKingCouncil() King} and the
+ * {@link #getRegionCouncil(int) Regions} ones, and their
+ * {@link #getCouncilorPool() Councilors};</li>
+ * </ul>
+ * On the Board there are also the {@link #getNobleTrack() NobilityTrack} and
+ * all the {@link #getBoardRewardsManager() BoardRewards}, that are the
+ * {@link #initializeColorReward() Color}, the {@link #initializeRegionReward()
+ * Region} and the {@link #initializeKingReward() King's} ones, that are
+ * {@link #setBoardRewardsManager(BoardRewardsManager) available for this Game}.
+ * 
+ * @see BoardReward
+ * @see BoardRewardsManager
+ * @see City
+ * @see Color
+ * @see Council
+ * @see Councilor
+ * @see King
+ * @see NobilityTrack
+ * @see Player
+ * @see Region
+ */
 public class Board {
 	private final String mapPath;
 	private final String nobilityPath;
@@ -34,20 +70,38 @@ public class Board {
 	private BoardRewardsManager boardRewManager;
 
 	/**
-	 * Constructor of the Board, it receives the configuration parameters and
-	 * calls the initialization function
+	 * Starts the initializations of the Board loading this configurations and
+	 * the chosen Map.
+	 * 
+	 * @param config
+	 *            the chosen configuration for this Game
+	 * @param choosenMap
+	 *            the chosen Map for this Game
+	 * @throws XMLFileException
+	 * @see Board
+	 */
+	public Board(Configuration config, int choosenMap) throws XMLFileException {
+		this(config.getMaps().get(choosenMap), config.getNobility(), config.getCouncilorsPerColor(),
+				config.getCouncilSize(), config.getColorsList());
+		this.config = config;
+		initializeBoard();
+	}
+
+	/**
+	 * Initializes the Board receiving all the configuration parameters.
 	 * 
 	 * @param mapPath
-	 *            a string, the path to the map's xml file
+	 *            the path of the XML file of this Map
 	 * @param nobleTrackSize
-	 *            an integer, the length of the nobility track
+	 *            the length of the NobilityTrack
 	 * @param councPerColor
-	 *            an integer, the number of councilor per color
+	 *            the number of Councilors per Color
 	 * @param concSize
-	 *            an integer, the number of councilor per council
+	 *            the number of Councilors per Council
 	 * @param colors
-	 *            a list of the politic cards and councilor colors
+	 *            the list of the PoliticCards and Councilors Colors
 	 * @throws MapXMLFileException
+	 * @see Board
 	 */
 	private Board(String mapPath, String nobilityPath, int councPerColor, int concSize, List<Color> colors)
 			throws XMLFileException {
@@ -60,21 +114,7 @@ public class Board {
 	}
 
 	/**
-	 * 
-	 * @param config
-	 * @param choosenMap
-	 * @throws XMLFileException
-	 * @see Board
-	 */
-	public Board(Configuration config, int choosenMap) throws XMLFileException {
-		this(config.getMaps().get(choosenMap), config.getNobility(), config.getCouncilorsPerColor(),
-				config.getCouncilSize(), config.getColorsList());
-		this.config = config;
-		initializeBoard();
-	}
-
-	/**
-	 * Initializes the board with all the needed elements
+	 * Initializes the Board with all the needed elements.
 	 * 
 	 * @throws MapXMLFileException
 	 * @see Board
@@ -102,8 +142,9 @@ public class Board {
 	}
 
 	/**
+	 * Initializes the {@link BoardColorReward BoardColorRewards} list.
 	 * 
-	 * @return
+	 * @return the BoardColorRewards list
 	 * @see Board
 	 */
 	public List<BoardColorReward> initializeColorReward() {
@@ -115,8 +156,9 @@ public class Board {
 	}
 
 	/**
+	 * Initializes the {@link BoardRegionReward BoardRegionRewards} list.
 	 * 
-	 * @return
+	 * @return the BoardRegionRewards list
 	 * @see Board
 	 */
 	public List<BoardRegionReward> initializeRegionReward() {
@@ -127,8 +169,9 @@ public class Board {
 	}
 
 	/**
+	 * Initializes the {@link BVictoryPoints BoardKingRewards} list.
 	 * 
-	 * @return
+	 * @return the BoardKingRewards list
 	 * @see Board
 	 */
 	public List<BVictoryPoints> initializeKingReward() {
@@ -140,9 +183,9 @@ public class Board {
 	}
 
 	/**
-	 * Returns the number of the of the regions
+	 * Returns the number of this {@link Region}.
 	 * 
-	 * @return an integer
+	 * @return the number of this Region
 	 * @see Board
 	 */
 	public int getRegionsNumber() {
@@ -150,11 +193,11 @@ public class Board {
 	}
 
 	/**
-	 * Returns the specified region
+	 * Returns the specified {@link Region}.
 	 * 
 	 * @param posArray
-	 *            an integer, the specified region
-	 * @return a region
+	 *            the identifier of this Region
+	 * @return the searched Region
 	 * @see Board
 	 */
 	public Region getRegion(int posArray) {
@@ -162,11 +205,11 @@ public class Board {
 	}
 
 	/**
-	 * Returns the council of the specified region
+	 * Returns the {@link Council} of this specified {@link Region}
 	 * 
 	 * @param posArray
-	 *            an integer, the region
-	 * @return a Council
+	 *            the identifier of this Region
+	 * @return the Council of the searched Region
 	 * @see Board
 	 */
 	public Council getRegionCouncil(int posArray) {
@@ -174,9 +217,9 @@ public class Board {
 	}
 
 	/**
-	 * Returns the noble track
+	 * Returns the {@link NobilityTrack}.
 	 * 
-	 * @return a Nobletrack
+	 * @return the NobilityTrack
 	 * @see Board
 	 */
 	public NobilityTrack getNobleTrack() {
@@ -184,10 +227,10 @@ public class Board {
 	}
 
 	/**
-	 * Moves the king from its current location to another city
+	 * Moves the {@link King} from its current {@link City} to another one.
 	 * 
 	 * @param newKingCity
-	 *            the city in which the king has to be moved
+	 *            the City in which the King will be moved
 	 * @see Board
 	 */
 	public void moveKing(City newKingCity) {
@@ -195,9 +238,9 @@ public class Board {
 	}
 
 	/**
-	 * Returns the city in which the king is
+	 * Returns the {@link City} in which the {@link King} is.
 	 * 
-	 * @return a City
+	 * @return the current location of the King
 	 * @see Board
 	 */
 	public City getKingLocation() {
@@ -205,9 +248,9 @@ public class Board {
 	}
 
 	/**
-	 * Returns the king's council
+	 * Returns the {@link King King's} {@link Council}.
 	 * 
-	 * @return a Council
+	 * @return the King's Council
 	 * @see Board
 	 */
 	public Council getKingCouncil() {
@@ -215,7 +258,7 @@ public class Board {
 	}
 
 	/**
-	 * Returns the king of the board
+	 * Returns the {@link King} of the Board.
 	 * 
 	 * @return the King
 	 * @see Board
@@ -225,8 +268,9 @@ public class Board {
 	}
 
 	/**
+	 * Returns the {@link BoardRewardsManager}.
 	 * 
-	 * @return
+	 * @return the BoardRewardsManager
 	 * @see Board
 	 */
 	public BoardRewardsManager getBoardRewardsManager() {
@@ -234,8 +278,11 @@ public class Board {
 	}
 
 	/**
+	 * Sets the {@link BoardRewardsManager}.
 	 * 
 	 * @param bRewardsManager
+	 *            the BoardRewardsManager that will be used to manage the
+	 *            BoardRewards
 	 * @see Board
 	 */
 	public void setBoardRewardsManager(BoardRewardsManager bRewardsManager) {
@@ -243,8 +290,9 @@ public class Board {
 	}
 
 	/**
+	 * Returns the {@link CouncilorPool}.
 	 * 
-	 * @return
+	 * @return the CouncilorPool
 	 * @see Board
 	 */
 	public CouncilorPool getCouncilorPool() {
@@ -252,8 +300,9 @@ public class Board {
 	}
 
 	/**
+	 * Returns the Map.
 	 * 
-	 * @return
+	 * @return the Map
 	 * @see Board
 	 */
 	public MapLoader getMap() {
@@ -261,8 +310,9 @@ public class Board {
 	}
 
 	/**
+	 * Returns all the Board {@link Region Regions}.
 	 * 
-	 * @return
+	 * @return the Board Regions
 	 * @see Board
 	 */
 	public List<Region> getRegions() {

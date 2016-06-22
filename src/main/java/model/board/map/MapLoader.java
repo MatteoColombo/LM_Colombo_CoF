@@ -44,11 +44,11 @@ public class MapLoader {
 	private List<City> citiesOfMap;
 
 	/**
-	 * Initializes the MapLoader saving the XML and the {@link CouncilorPool},
-	 * loading the whole Map.
+	 * Initializes the MapLoader saving the XML file and the
+	 * {@link CouncilorPool}, loading the whole Map.
 	 * 
 	 * @param xmlPath
-	 *            the XML file name that will be saved and loaded
+	 *            the path of the XML file that will be saved and loaded
 	 * @param pool
 	 *            the CouncilorPool used to create the all the Councils
 	 * @throws MapXMLFileException

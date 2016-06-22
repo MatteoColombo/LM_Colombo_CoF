@@ -5,55 +5,69 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.board.King;
 import model.exceptions.IllegalActionException;
+import model.player.PermissionCard;
+import model.player.Player;
 import model.player.PoliticCard;
 
 /**
- * The class of the council. a council is composed by councilors and it works
- * like a queue with fixed size councils are used to buy permit cards or to
- * build an emporium using the king
+ * A class that represent all the Councils of the Map.
+ * <p>
+ * Each Council is composed by an amount of {@link #getCouncilorsColor()
+ * Councilors} that works like a {@link #getHeadColor() Color queue} (every time
+ * a new {@link #insertCouncilor(Councilor) one is added}, the oldest one is
+ * removed) that it is used to buy PermissionCards or to build an Emporium using
+ * the King {@link #compareCardCouncil(List) using PoliticCards}.
  * 
  * @author Matteo Colombo
- *
+ * @see Color
+ * @see Councilor
+ * @see CouncilorColorAvailability
+ * @see CouncilorPool
+ * @see King
+ * @see PermissionCard
+ * @see PoliticCard
  */
 
 public class Council implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8263548205552114196L;
 	private List<Councilor> councMembers;
 
 	/**
-	 * Initializes the council with a list of the inital councilors
+	 * Initializes the Council with a list of the initial {@link Councilor
+	 * Councilors}.
 	 * 
 	 * @param councMember
-	 *            a list of Councilors
-	 * 
+	 *            the list of initial Councilors
+	 * @see Council
 	 */
 	public Council(List<Councilor> councMembers) {
 		this.councMembers = councMembers;
 	}
+
 	/**
-	 * create a copy from another council
+	 * Creates a copy from another Council.
+	 * 
 	 * @param copy
+	 *            the Council to be copied
+	 * @see Council
 	 */
 	public Council(Council copy) {
 		this.councMembers = new ArrayList<>();
-		for(Color color: copy.getCouncilorsColor()) {
+		for (Color color : copy.getCouncilorsColor()) {
 			Councilor counc = new Councilor(color);
 			councMembers.add(counc);
 		}
 	}
 
 	/**
-	 * 
-	 * Removes the first councilor in the council and adds the received one in
-	 * tail
+	 * Removes the first and oldest {@link Councilor} in this Council and adds
+	 * the received one in tail.
 	 * 
 	 * @param councilor
-	 *            the one Councilor which has to be added in tail
-	 * 
+	 *            the Councilor which is going to be added in tail
+	 * @see Council
 	 */
 	public void insertCouncilor(Councilor councilor) {
 		councMembers.remove(0);
@@ -61,9 +75,11 @@ public class Council implements Serializable {
 	}
 
 	/**
-	 * Returns the list of the colors of the councilors in the council
+	 * Returns the list of the {@link Color Colors} of the {@link Councilor
+	 * Councilors} in this Council.
 	 * 
-	 * @return a list of colors
+	 * @return the list of all the Colors of the Councilors in this Council
+	 * @see Council
 	 */
 	public List<Color> getCouncilorsColor() {
 		List<Color> colorList = new ArrayList<>();
@@ -73,24 +89,27 @@ public class Council implements Serializable {
 	}
 
 	/**
-	 * Returns the color of the councilor in the head of the queue
+	 * Returns the {@link Color} of the {@link Councilor} in the head of the
+	 * queue.
 	 * 
-	 * @return color
+	 * @return the Color of the head Councilor of this Council
+	 * @see Council
 	 */
 	public Color getHeadColor() {
 		return councMembers.get(0).getColor();
 	}
 
 	/**
-	 * Returns the number of councilors not covered by the cards First it checks
-	 * it there are more than 4 cards Then it compares the not-multiplecolored
-	 * cards with the concilors at last it counts the number of multiple colored
-	 * cards
+	 * Returns the number of {@link Councilor Councilors} not covered by the
+	 * {@link PoliticCard PoliticCards} checking first if there are more than 4
+	 * cards, then comparing the not-multicolored PoliticCards with the
+	 * Councilors and last counting the number of multicolored PoliticCards.
 	 * 
 	 * @param cards
-	 *            the list of politic cards
-	 * @return an integer, the number of uncovered councilors
+	 *            a list of PoliticCards
+	 * @return the number of uncovered Councilors
 	 * @throws IllegalActionException
+	 * @see Council
 	 */
 	public int compareCardCouncil(List<PoliticCard> cards) throws IllegalActionException {
 		List<Councilor> comparableCouncilors = new ArrayList<>(this.councMembers);
@@ -118,12 +137,15 @@ public class Council implements Serializable {
 	}
 
 	/**
-	 * This checks if the card number that a player wants to use to satisfy a
-	 * council is greater than the number of councilors per council. In that
-	 * case an exception is thrown
+	 * Checks if the number of {@link PoliticCard PoliticCards} that a
+	 * {@link Player} wants to use to satisfy a Council is greater than the
+	 * number of the {@link Councilor Councilors} in the Council, throwing an
+	 * exception in that case.
 	 * 
 	 * @param cards
+	 *            a list of PoliticCards
 	 * @throws IllegalActionException
+	 * @see Council
 	 */
 	private void checkCardsNumber(List<PoliticCard> cards) throws IllegalActionException {
 		if (cards.size() > this.councMembers.size())

@@ -11,6 +11,7 @@
 	<server>
 		<rmi>1099</rmi>
 		<socket>1994</socket>
+		<ip>127.0.0.1</ip>
 	</server>>
 	<colors>
 		<color>

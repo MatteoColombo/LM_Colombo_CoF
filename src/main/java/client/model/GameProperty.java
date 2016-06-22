@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import model.board.Board;
-import model.exceptions.ConfigurationErrorException;
 import model.exceptions.XMLFileException;
 import model.player.Player;
 import model.Configuration;
@@ -24,12 +23,13 @@ public class GameProperty {
 	private ObservableList<PlayerProperty> players = FXCollections.observableArrayList();
 	private SimpleMap map;
 	private int myIndex;
+	private Configuration config;
 
 	public void initMap(int choosen) {
 		try {
-			Board b = new Board(new Configuration(), choosen);
+			Board b = new Board(config, choosen);
 			this.map = new SimpleMap(b);
-		} catch (XMLFileException | ConfigurationErrorException e) {
+		} catch (XMLFileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -82,6 +82,14 @@ public class GameProperty {
 		PlayerProperty newPlayer = new PlayerProperty().setAllButPermissions(p);
 		newPlayer.setColor(playersColors.remove(0));
 		players.add(newPlayer);
+	}
+	
+	public void setConfiguration(Configuration config){
+		this.config=config;
+	}
+	
+	public Configuration getConfiguration(){
+		return config;
 	}
 
 }

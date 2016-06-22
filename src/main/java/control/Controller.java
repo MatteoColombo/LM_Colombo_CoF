@@ -171,7 +171,7 @@ public class Controller {
 				throw new IllegalActionException("too many players");
 			map = Integer.parseInt(choosenMap);
 			if (map > config.getMaps().size() || map < 0)
-				throw new IllegalActionException("too many players");
+				throw new IllegalActionException("wrong map number");
 		} catch (NumberFormatException | IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));
@@ -180,7 +180,7 @@ public class Controller {
 		}
 		this.gameMap=map;
 		setMaxNumberOfPlayers(players);
-		setChoosenMap(map);
+		setChoosenMap(map-1);
 	}
 
 	/**

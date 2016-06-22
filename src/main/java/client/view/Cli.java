@@ -31,12 +31,12 @@ public class Cli implements ViewInterface {
 	private static final String ANSI_WHITE = "\u001B[37m";
 	private static final String BLOCK = "\u2588\u2588";
 	private static final String SEPARATOR = "---------------------------------------";
-	
+
 	private PrintWriter writer;
 
 	public Cli(GameProperty model) {
-		this.model=model;
-		writer= new PrintWriter(System.out);
+		this.model = model;
+		writer = new PrintWriter(System.out);
 	}
 
 	@Override
@@ -72,10 +72,11 @@ public class Cli implements ViewInterface {
 
 	// this is just a trial for print colored blocks
 	public void printCouncil() {
-		writer.println(ANSI_RED + BLOCK + ANSI_RESET + ANSI_YELLOW + BLOCK + ANSI_RESET + ANSI_BLUE
-				+ BLOCK + ANSI_RESET + ANSI_WHITE + BLOCK + ANSI_RESET);
+		writer.println(ANSI_RED + BLOCK + ANSI_RESET + ANSI_YELLOW + BLOCK + ANSI_RESET + ANSI_BLUE + BLOCK + ANSI_RESET
+				+ ANSI_WHITE + BLOCK + ANSI_RESET);
 		writer.flush();
 	}
+
 	@Override
 	public void printCities(List<Region> regions) {
 
@@ -99,11 +100,10 @@ public class Cli implements ViewInterface {
 	public void printPlayers(List<Player> players) {
 		int index = 1;
 		for (Player player : players) {
-			writer.println(
-					SEPARATOR + "\n| Player " + index + "\n" + "| Victory Points: "
-							+ player.getVictoryPoints().getAmount() + " Coins: " + player.getCoins().getAmount()
-							+ " Assistants: " + player.getAssistants().getAmount() + "\n" + "| Cards in hand: "
-							+ player.getPoliticCard().size() + "Nobility: " + player.getNoblePoints().getAmount());
+			writer.println(SEPARATOR + "\n| Player " + index + "\n" + "| Victory Points: "
+					+ player.getVictoryPoints().getAmount() + " Coins: " + player.getCoins().getAmount()
+					+ " Assistants: " + player.getAssistants().getAmount() + "\n" + "| Cards in hand: "
+					+ player.getPoliticCard().size() + "Nobility: " + player.getNoblePoints().getAmount());
 		}
 		writer.println(SEPARATOR);
 	}
@@ -124,37 +124,37 @@ public class Cli implements ViewInterface {
 		writer.print(") ");
 	}
 
-
 	@Override
 	public void printAskPlayersNumber(int max) {
-		writer.println("Choose the max number of players");
+		writer.println("Choose the maximum number of players. Game limit is " + max);
 		writer.flush();
 	}
 
 	@Override
 	public void printAskWhichMapToUse() {
 		writer.println("Choose the number of the map:");
-		/*for (int i = 0; i < maps.size(); i++) {
-			writer.println((i+1) + ". " + maps.get(i));
-		}*/
+		List<String> maps = model.getConfiguration().getMaps();
+		for (int i = 0; i < maps.size(); i++) {
+			writer.println((i + 1) + ". " + maps.get(i));
+		}
 		writer.flush();
 	}
 
 	@Override
 	public void printAskWhatActionToDo() {
-		writer.println("Type in the action that you want to do");
+		writer.println("Type in the action that you want to do: (Read the README for instructions)");
 		writer.flush();
 	}
 
 	@Override
 	public void printAskPlayerName() {
-		writer.println("What's your name?");
+		writer.println("Type in your name:");
 		writer.flush();
 	}
 
 	@Override
 	public void printIllegalAction(Exception e) {
-		writer.println("Error: "+e.getMessage());
+		writer.println("Error: " + e.getMessage());
 		writer.flush();
 	}
 
@@ -179,23 +179,22 @@ public class Cli implements ViewInterface {
 
 	@Override
 	public void playerJoined(Player p) {
-		writer.println(p.getName()+ " joined the game");
+		writer.println(p.getName() + " joined the game");
 	}
 
 	@Override
 	public void setAllPlayers(List<Player> players) {
 		writer.println("Players list:");
-		for(int i=0; i<players.size();i++){
-			writer.println((i+1)+". "+players.get(i).getName());
+		for (int i = 0; i < players.size(); i++) {
+			writer.println((i + 1) + ". " + players.get(i).getName());
 		}
 		writer.flush();
 	}
 
-
 	@Override
 	public void updatePlayer(Player p, int index) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -207,6 +206,6 @@ public class Cli implements ViewInterface {
 	@Override
 	public void setCityRewards(List<Reward> bonusList) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

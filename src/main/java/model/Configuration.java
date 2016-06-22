@@ -46,7 +46,8 @@ public class Configuration {
 
 	private int rmiPort;
 	private int socketPort;
-
+	private String serverIp;
+	
 	private Map<Color, Integer> colorRewards;
 
 	private List<Integer> boardRewards;
@@ -154,6 +155,8 @@ public class Configuration {
 		this.rmiPort = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(SERVERPATH + "socket").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.socketPort = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
+		list= (NodeList) xpath.compile(SERVERPATH + "ip").evaluate(xmlDoc, XPathConstants.NODESET);
+		this.serverIp= list.item(0).getFirstChild().getNodeValue();
 	}
 
 	public void loadColorRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException {
@@ -248,4 +251,7 @@ public class Configuration {
 		return boardRewards;
 	}
 
+	public String getServerAddress(){
+		return serverIp;
+	}
 }

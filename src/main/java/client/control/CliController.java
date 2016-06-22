@@ -15,7 +15,9 @@ import client.view.RMIServerManager;
 import client.view.ServerManager;
 import client.view.SocketServerManager;
 import client.view.ViewInterface;
+import model.Configuration;
 import model.Game;
+import model.exceptions.ConfigurationErrorException;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
 import view.p2pdialogue.notify.Notify;
@@ -34,10 +36,16 @@ public class CliController implements Runnable, Controller {
 	private transient GameProperty model;
 
 	public CliController() {
-		this.model = new GameProperty();
-		view = new Cli(this.model);
-		keyboard = new Scanner(System.in);
-		this.canWrite = false;	}
+		try {
+			this.model = new GameProperty();
+			this.model.setConfiguration(new Configuration());
+			view = new Cli(this.model);
+			keyboard = new Scanner(System.in);
+			this.canWrite = false;
+		} catch (ConfigurationErrorException e) {
+			logger.log(Level.SEVERE, "There is an error with the configuration file!", e);
+		}	
+	}
 
 	@Override
 	public synchronized void parseDialogue(Dialogue dialog) {
@@ -49,12 +57,12 @@ public class CliController implements Runnable, Controller {
 			this.canWrite = false;
 			((Notify) dialog).execute(view);
 		}
-		if (dialog instanceof Update){
+		if (dialog instanceof Update) {
 			((Update) dialog).execute(model);
-			if(dialog instanceof Request)
-				this.canWrite=true;
-			else 
-				this.canWrite=false;
+			if (dialog instanceof Request)
+				this.canWrite = true;
+			else
+				this.canWrite = false;
 		}
 	}
 
@@ -87,13 +95,16 @@ public class CliController implements Runnable, Controller {
 			keyboardListener.start();
 			switch (connectionType) {
 			case 1:
-				Socket server = new Socket("localhost", 1994);
+				Socket server = new Socket(model.getConfiguration().getServerAddress(),
+						model.getConfiguration().getSocketPort());
 				SocketServerManager sockettemp = new SocketServerManager(server, this);
 				sockettemp.start();
 				this.serverManager = sockettemp;
 				break;
 			case 2:
-				ServerInt serv = (ServerInt) LocateRegistry.getRegistry(1099).lookup("ServerInt");
+				ServerInt serv = (ServerInt) LocateRegistry
+						.getRegistry(model.getConfiguration().getServerAddress(), model.getConfiguration().getRmiPort())
+						.lookup("ServerInt");
 				RMIServerManager rmitemp = new RMIServerManager(this);
 				this.serverManager = rmitemp;
 				serv.login(rmitemp);

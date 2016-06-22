@@ -47,7 +47,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void run() {
-		launch();
+			launch();
 	}
 
 	@Override
@@ -59,12 +59,12 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void parseDialogue(Dialogue dialog) {
-		if(dialog instanceof Update)
-			Platform.runLater(() -> ((Update)dialog).execute(localGame));
-		if(dialog instanceof Notify)
-			Platform.runLater(() -> ((Notify)dialog).execute(this));
-		if(dialog instanceof Request)
-			Platform.runLater(() -> ((Request)dialog).execute(this));
+		if (dialog instanceof Update)
+			Platform.runLater(() -> ((Update) dialog).execute(localGame));
+		if (dialog instanceof Notify)
+			Platform.runLater(() -> ((Notify) dialog).execute(this));
+		if (dialog instanceof Request)
+			Platform.runLater(() -> ((Request) dialog).execute(this));
 	}
 
 	public void showWaitingRoom() {
@@ -100,12 +100,12 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	}
 
 	public void showConfigGame() {
-		
+
 		try {
-			//TODO this is just a workaround that need to be fixed
-			Configuration clientConfig= new Configuration();
-			List<String> maps= clientConfig.getMaps();
-			//TODO end workaround 
+			// TODO this is just a workaround that need to be fixed
+			Configuration clientConfig = new Configuration();
+			List<String> maps = clientConfig.getMaps();
+			// TODO end workaround
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/ConfigGame.fxml"));
 			AnchorPane configGame = (AnchorPane) loader.load();
@@ -173,10 +173,17 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	public void initSocketManager() {
 		try {
-			SocketServerManager manager = new SocketServerManager(new Socket("localhost", 1994), this);
+			localGame.setConfiguration(new Configuration());
+			SocketServerManager manager = new SocketServerManager(
+					new Socket(localGame.getConfiguration().getServerAddress(),
+							localGame.getConfiguration().getSocketPort()),
+					this);
 			this.manager = manager;
 			manager.start();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ConfigurationErrorException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -184,11 +191,16 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	public void initRMIManager() {
 		try {
-			ServerInt server = (ServerInt) LocateRegistry.getRegistry(1099).lookup("ServerInt");
+			localGame.setConfiguration(new Configuration());
+			ServerInt server = (ServerInt) LocateRegistry.getRegistry(localGame.getConfiguration().getServerAddress(),
+					localGame.getConfiguration().getRmiPort()).lookup("ServerInt");
 			RMIServerManager manager = new RMIServerManager(this);
 			this.manager = manager;
 			new RMIUtilityClass(manager, server).start();
 		} catch (RemoteException | NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ConfigurationErrorException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -231,7 +243,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	@Override
 	public void printAskWhichMapToUse() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -245,7 +257,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		// TODO Auto-generated method stub
 
 	}
-
 
 	@Override
 	public void printAskPlayerName() {
@@ -287,12 +298,12 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	@Override
 	public void setCityRewards(List<Reward> bonusList) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void printIllegalAction(Exception e) {
 		// TODO Auto-generated method stub
-		
-	}	
+
+	}
 }

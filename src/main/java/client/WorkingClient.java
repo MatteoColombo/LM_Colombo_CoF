@@ -1,6 +1,5 @@
 package client;
 
-
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -8,10 +7,13 @@ import java.util.logging.Logger;
 
 import client.control.CliController;
 import fx.MainApp;
+import model.exceptions.ConfigurationErrorException;
 
 public class WorkingClient {
-	
-	private WorkingClient(){}
+
+	private WorkingClient() {
+	}
+
 	public static void main(String[] args) {
 		PrintWriter pw = new PrintWriter(System.out);
 		Scanner sc = new Scanner(System.in);
@@ -35,7 +37,8 @@ public class WorkingClient {
 			t = new Thread(view);
 			break;
 		case 2:
-			CliController cliControl = new CliController();
+			CliController cliControl;
+			cliControl = new CliController();
 			t = new Thread(cliControl);
 			break;
 		default:

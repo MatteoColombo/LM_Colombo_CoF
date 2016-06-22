@@ -56,9 +56,16 @@ public class Board {
 		this.concSize = concSize;
 		this.colors = colors;
 		this.councPerColor = councPerColor;
-		
+
 	}
 
+	/**
+	 * 
+	 * @param config
+	 * @param choosenMap
+	 * @throws XMLFileException
+	 * @see Board
+	 */
 	public Board(Configuration config, int choosenMap) throws XMLFileException {
 		this(config.getMaps().get(choosenMap), config.getNobility(), config.getCouncilorsPerColor(),
 				config.getCouncilSize(), config.getColorsList());
@@ -70,6 +77,7 @@ public class Board {
 	 * Initializes the board with all the needed elements
 	 * 
 	 * @throws MapXMLFileException
+	 * @see Board
 	 */
 	private void initializeBoard() throws XMLFileException {
 		this.councilManager = new CouncilorPool(councPerColor, concSize, colors);
@@ -87,31 +95,46 @@ public class Board {
 		this.track = new NobilityTrack(nl.getNobilityTrack());
 		this.mapKing = new King(mapManager.getKingCity(), councilManager.getCouncil());
 		this.regions = mapManager.getRegions();
-		List<BoardColorReward> bColorRew= initializeColorReward();
+		List<BoardColorReward> bColorRew = initializeColorReward();
 		List<BoardRegionReward> bRegionRew = initializeRegionReward();
 		List<BVictoryPoints> bKingRew = initializeKingReward();
-		this.boardRewManager= new BoardRewardsManager(bColorRew, bRegionRew, bKingRew);
+		this.boardRewManager = new BoardRewardsManager(bColorRew, bRegionRew, bKingRew);
 	}
-	
-	public List<BoardColorReward> initializeColorReward(){
+
+	/**
+	 * 
+	 * @return
+	 * @see Board
+	 */
+	public List<BoardColorReward> initializeColorReward() {
 		List<BoardColorReward> bColorRew = new ArrayList<>();
-		Set<Color> cityColors= config.getColorRewards().keySet();
-		for(Color c: cityColors)
+		Set<Color> cityColors = config.getColorRewards().keySet();
+		for (Color c : cityColors)
 			bColorRew.add(new BoardColorReward(c, config.getColorRewards().get(c)));
 		return bColorRew;
 	}
-	
-	public List<BoardRegionReward> initializeRegionReward(){
-		List<BoardRegionReward> bRegionRew= new ArrayList<>();
-		for(int i=0; i< regions.size();i++)
-			bRegionRew.add(new  BoardRegionReward(regions.get(i), config.getRewardPerRegion()));
+
+	/**
+	 * 
+	 * @return
+	 * @see Board
+	 */
+	public List<BoardRegionReward> initializeRegionReward() {
+		List<BoardRegionReward> bRegionRew = new ArrayList<>();
+		for (int i = 0; i < regions.size(); i++)
+			bRegionRew.add(new BoardRegionReward(regions.get(i), config.getRewardPerRegion()));
 		return bRegionRew;
 	}
-	
-	public List<BVictoryPoints> initializeKingReward(){
-		List<BVictoryPoints> bKingRew= new ArrayList<>();
-		List<Integer> kingRewValues= config.getBoardRewards();
-		for(int value: kingRewValues)
+
+	/**
+	 * 
+	 * @return
+	 * @see Board
+	 */
+	public List<BVictoryPoints> initializeKingReward() {
+		List<BVictoryPoints> bKingRew = new ArrayList<>();
+		List<Integer> kingRewValues = config.getBoardRewards();
+		for (int value : kingRewValues)
 			bKingRew.add(new BVictoryPoints(value));
 		return bKingRew;
 	}
@@ -120,6 +143,7 @@ public class Board {
 	 * Returns the number of the of the regions
 	 * 
 	 * @return an integer
+	 * @see Board
 	 */
 	public int getRegionsNumber() {
 		return this.regions.size();
@@ -131,6 +155,7 @@ public class Board {
 	 * @param posArray
 	 *            an integer, the specified region
 	 * @return a region
+	 * @see Board
 	 */
 	public Region getRegion(int posArray) {
 		return regions.get(posArray);
@@ -142,6 +167,7 @@ public class Board {
 	 * @param posArray
 	 *            an integer, the region
 	 * @return a Council
+	 * @see Board
 	 */
 	public Council getRegionCouncil(int posArray) {
 		return regions.get(posArray).getCouncil();
@@ -151,6 +177,7 @@ public class Board {
 	 * Returns the noble track
 	 * 
 	 * @return a Nobletrack
+	 * @see Board
 	 */
 	public NobilityTrack getNobleTrack() {
 		return this.track;
@@ -161,6 +188,7 @@ public class Board {
 	 * 
 	 * @param newKingCity
 	 *            the city in which the king has to be moved
+	 * @see Board
 	 */
 	public void moveKing(City newKingCity) {
 		this.mapKing.moveKing(newKingCity);
@@ -170,6 +198,7 @@ public class Board {
 	 * Returns the city in which the king is
 	 * 
 	 * @return a City
+	 * @see Board
 	 */
 	public City getKingLocation() {
 		return this.mapKing.getKingLocation();
@@ -179,6 +208,7 @@ public class Board {
 	 * Returns the king's council
 	 * 
 	 * @return a Council
+	 * @see Board
 	 */
 	public Council getKingCouncil() {
 		return this.mapKing.getKingCouncil();
@@ -186,28 +216,55 @@ public class Board {
 
 	/**
 	 * Returns the king of the board
+	 * 
 	 * @return the King
+	 * @see Board
 	 */
 	public King getKing() {
 		return this.mapKing;
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @see Board
+	 */
 	public BoardRewardsManager getBoardRewardsManager() {
 		return this.boardRewManager;
 	}
 
+	/**
+	 * 
+	 * @param bRewardsManager
+	 * @see Board
+	 */
 	public void setBoardRewardsManager(BoardRewardsManager bRewardsManager) {
-		this.boardRewManager=bRewardsManager;
+		this.boardRewManager = bRewardsManager;
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @see Board
+	 */
 	public CouncilorPool getCouncilorPool() {
 		return this.councilManager;
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @see Board
+	 */
 	public MapLoader getMap() {
 		return this.mapManager;
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @see Board
+	 */
 	public List<Region> getRegions() {
 		return this.regions;
 	}

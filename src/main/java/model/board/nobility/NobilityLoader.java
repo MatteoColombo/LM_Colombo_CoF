@@ -1,4 +1,4 @@
- package model.board.nobility;
+package model.board.nobility;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,17 +18,30 @@ import model.reward.Bonus;
 import model.reward.Reward;
 
 /**
- * This class is the one which loads the information from the xml file and
- * generates a list of rewards each element in the list can be either null or a
- * reward. Null is used when a step of the nobility track doesn't contain any
- * bonus
+ * A class that loads the information from the XML file and generates a list of
+ * rewards of the NobilityTrack.
+ * <p>
+ * Each element in the list can be either a Reward or <code>null</code> if a
+ * step of the {@link #getNobilityTrack() NobilityTrack} doesn't contain any
+ * Bonus.
  * 
  * @author Matteo Colombo
+ * @see Bonus
+ * @see NobilityTrack
+ * @see Reward
  */
 public class NobilityLoader {
 	private final String xmlPath;
 	private List<Reward> trackRewards;
 
+	/**
+	 * Initializes the NobilityLoader saving this XML file and loading it.
+	 * 
+	 * @param xmlPath
+	 *            the XML file name that will be saved and loaded
+	 * @throws TrackXMLFileException
+	 * @see NobilityLoader
+	 */
 	public NobilityLoader(String xmlPath) throws TrackXMLFileException {
 		this.xmlPath = xmlPath;
 		this.trackRewards = new ArrayList<>();
@@ -36,10 +49,11 @@ public class NobilityLoader {
 	}
 
 	/**
-	 * Reads the XML file and for each step of the nobility track it calls the
-	 * methods that return the corresponding reward
+	 * Reads the XML file and for each step of the {@link NobilityTrack} it
+	 * calls the methods that return the corresponding {@link Reward}.
 	 * 
 	 * @throws TrackXMLFileException
+	 * @see NobilityLoader
 	 */
 	private void loadXML() throws TrackXMLFileException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -66,10 +80,13 @@ public class NobilityLoader {
 	}
 
 	/**
-	 * Returns a Reward which will be the list of bonuses for a step of the
-	 * nobility track
+	 * Add a {@link Reward} for a step of the {@link NobilityTrack} which will
+	 * be a list of {@link Bonus Bonuses} or <code>null</code>.
 	 * 
 	 * @param bonusList
+	 *            the Reward that will be added to the NobilityTrack; can both
+	 *            be a list of Bonus or <code>null</code>
+	 * @see NobilityLoader
 	 */
 	private void getReward(NodeList bonusList) {
 		List<Bonus> rew = new ArrayList<>();
@@ -88,12 +105,13 @@ public class NobilityLoader {
 	}
 
 	/**
-	 * Returns a single bonus of a single step, one or more bonuses composed
-	 * create a reward
+	 * Returns a single {@link Bonus} of a single step, one or more Bonuses
+	 * composed create a {@link Reward}.
 	 * 
 	 * @param bonusAttr
-	 *            receives the attributes of a bonus
+	 *            receives the attributes of a Bonus
 	 * @return a Bonus
+	 * @see NobilityLoader
 	 */
 	private Bonus getBonus(NodeList bonusAttr) {
 		String bonusType = "";
@@ -118,29 +136,31 @@ public class NobilityLoader {
 	}
 
 	/**
-	 * It creates the object using from a string which is the bonus type and an
-	 * integer which is the amount
+	 * It creates the object using a string which is the {@link Bonus} type and
+	 * an integer which is the amount.
 	 * 
 	 * @param bonusType
-	 *            a string, it's the name that identifies the type of bonus
+	 *            a string that is the name that identifies the type of Bonus
 	 * @param value
-	 *            an integer, it's the amount of the bonus (e.g. how many
-	 *            victory points)
-	 * @return the bonus object
+	 *            an integer that is the amount of the Bonus
+	 * @return the Bonus object
+	 * @see NobilityLoader
 	 */
 	private Bonus instantiateBonus(String bonusType, int value) {
-		Bonus[] allTypeBonus= Bonus.getAllBonus();
-		for(int i=0; i<allTypeBonus.length;i++)
-			if(bonusType.equals(allTypeBonus[i].getTagName()))
+		Bonus[] allTypeBonus = Bonus.getAllBonus();
+		for (int i = 0; i < allTypeBonus.length; i++)
+			if (bonusType.equals(allTypeBonus[i].getTagName()))
 				return allTypeBonus[i].newCopy(value);
 		return null;
 	}
 
 	/**
-	 * Returns a list of reward. Each element of the list represent a step of
-	 * the nobility track. if an element is null, the step doesn't have a reward
+	 * Returns the list of {@link Reward Rewards}. Each element of the list
+	 * represent a step of the NobilityTrack; if an element is <code>null</code>
+	 * , the step doesn't have a Reward.
 	 * 
-	 * @return
+	 * @return the NobilityTrack as a list of Rewards
+	 * @see NobilityLoader
 	 */
 	public List<Reward> getNobilityTrack() {
 		return trackRewards;

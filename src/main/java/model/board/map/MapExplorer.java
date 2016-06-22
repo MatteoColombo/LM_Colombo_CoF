@@ -5,28 +5,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.board.city.City;
+import model.board.city.CityConnection;
 import model.exceptions.IllegalActionException;
+import model.player.Emporium;
 import model.player.Player;
 import model.reward.Reward;
 
+/**
+ * A class that represent the Map dislocation of the Cities and the connections
+ * between each others.
+ * <p>
+ * The MapExplorer extracts from the Cities which of them is linked to an other
+ * one, so it's possible to get the {@link #getDistance(City, City) distance
+ * between 2 of them}, retrieve all the {@link #getAdiacentRewards(City, Player)
+ * Rewards for adjacent Cities} with an Emporium of the same Player or know if a
+ * Player have build an Emporium in {@link #isColorComplete(Player, Color, List)
+ * all the Cities of the same Color}.
+ *
+ * @see City
+ * @see CityConnection
+ * @see Color
+ * @see Distance
+ * @see Emporium
+ * @see Player
+ * @see Reward
+ */
 public class MapExplorer {
 	private List<City> adiacentCities;
 	private List<City> connectedCities;
 
+	/**
+	 * Initializes the MapExplorer clearing its own lists.
+	 * 
+	 * @see MapExplorer
+	 */
 	public void resetAdiacents() {
 		this.adiacentCities = new ArrayList<>();
 		this.connectedCities = new ArrayList<>();
 	}
 
 	/**
-	 * Iteratively searches for the cities that have an emporium of the player
-	 * and that are part of a continous path
+	 * Iteratively searches for the {@link City Cities} that have an
+	 * {@link Emporium} of the {@link Player} and that are part of a continuous
+	 * path.
 	 * 
 	 * @param startingCity
 	 *            the root of the path
 	 * @param p
-	 *            the player who owns the emporiums
-	 * @return a list of the rewards
+	 *            the Player who owns the Emporiums
+	 * @return a list of the Rewards
+	 * @see MapExplorer
 	 */
 	public List<Reward> getAdiacentRewards(City startingCity, Player p) {
 		resetAdiacents();
@@ -44,11 +72,12 @@ public class MapExplorer {
 	}
 
 	/**
-	 * Adds to the list of the cities that have to be visited those adiacent to
-	 * the one received
+	 * Adds to the list of the {@link City Cities} that have to be visited those
+	 * adjacent to the one received.
 	 * 
 	 * @param root
 	 *            the root of the sub path
+	 * @see MapExplorer
 	 */
 	private void addConnectedCities(City root) {
 		List<City> adiacentsToRoot = root.getConnectedCities();
@@ -60,11 +89,15 @@ public class MapExplorer {
 	}
 
 	/**
-	 * Checks if the city received as parameter is already in the list of the
-	 * city which has to be visited. This is used to avoid loops
+	 * Checks if the {@link City} received as parameter is already in the list
+	 * of the City which has to be visited. This is used to avoid loops.
 	 * 
 	 * @param c
-	 * @return true if it is already in the list, false otherwise
+	 *            the City that is going to be checked to control if is already
+	 *            in the list
+	 * @return <code>true</code> if it is already in the list;
+	 *         <code>false</code> otherwise
+	 * @see MapExplorer
 	 */
 	private boolean checkIfInList(City c) {
 		for (City temp : connectedCities)
@@ -74,15 +107,18 @@ public class MapExplorer {
 	}
 
 	/**
-	 * Searches for the minimum distance among two cities. It starts from a root
-	 * and checks if the adiacent cities are the desidered one, if true it
-	 * returns the distance, otherwise it adds them to the list. Before adding
-	 * them to the list, it checks if they are already in it. If no city is
-	 * found it throws an exception.
+	 * Searches for the minimum distance among two {@link City Cities}. It
+	 * starts from a root and checks if the adjacent Cities are the desired one,
+	 * if true it returns the distance, otherwise it adds them to the list.
+	 * Before adding them to the list, it checks if they are already in it. If
+	 * no City is found, it throws an exception.
 	 * 
-	 * @param firstCity the current location of the king
-	 * @param secondCity the desidered location of the king
-	 * @return an integer, the distance
+	 * @param firstCity
+	 *            the initial location
+	 * @param secondCity
+	 *            the desired location
+	 * @return the distance
+	 * @see MapExplorer
 	 */
 	public int getDistance(City firstCity, City secondCity) throws IllegalActionException {
 		if (firstCity.equals(secondCity))
@@ -94,38 +130,52 @@ public class MapExplorer {
 			for (int j = 0; j < connCities.size(); j++) {
 				if (connCities.get(j).equals(secondCity))
 					return distances.get(i).getDistance() + 1;
-				else if(!inList(distances, connCities.get(j)))
+				else if (!inList(distances, connCities.get(j)))
 					distances.add(new Distance(connCities.get(j), distances.get(i).getDistance() + 1));
 			}
 
 		}
 		throw new IllegalActionException("No path found");
 	}
-	
+
 	/**
-	 * Checks if city is already in the list
-	 * @param distanceList the list of the cities that have to be checked to find the minimal distance
-	 * @param c the city that we have to control if is already in the list
-	 * @return true if it's already in the list, false otherwise
+	 * Checks if the {@link City} is already in the list.
+	 * 
+	 * @param distanceList
+	 *            the list of the Cities that have to be checked to find the
+	 *            minimal distance
+	 * @param c
+	 *            the City that is going to be checked to control if is already
+	 *            in the list
+	 * @return <code>true</code> if it is already in the list;
+	 *         <code>false</code> otherwise
+	 * @see MapExplorer
 	 */
-	private boolean inList(List<Distance> distanceList, City c){
-		for(Distance dist: distanceList)
-			if(dist.getCity().equals(c))
+	private boolean inList(List<Distance> distanceList, City c) {
+		for (Distance dist : distanceList)
+			if (dist.getCity().equals(c))
 				return true;
 		return false;
-		
+
 	}
-	
+
 	/**
-	 * Checks if the player has built an emporium in every city of a determined color
-	 * @param player the player who built the emporium
-	 * @param cityColor the color of the cities
-	 * @param cities the list of all the cities
-	 * @return true if the player completed the color, false otherwise
+	 * Checks if the {@link Player} has built an {@link Emporium} in every
+	 * {@link City} of a determined Color.
+	 * 
+	 * @param player
+	 *            the Player who has built the Emporium
+	 * @param cityColor
+	 *            the Color of the Cities
+	 * @param cities
+	 *            the list of all the Cities
+	 * @return <code>true</code> if the Player has completed the Color;
+	 *         <code>false</code> otherwise
+	 * @see MapExplorer
 	 */
-	public boolean isColorComplete(Player p, Color cityColor, List<City> cities){
-		for(City c: cities)
-			if(!c.hasEmporiumOfPlayer(p) && c.getColor().equals(cityColor))
+	public boolean isColorComplete(Player p, Color cityColor, List<City> cities) {
+		for (City c : cities)
+			if (!c.hasEmporiumOfPlayer(p) && c.getColor().equals(cityColor))
 				return false;
 		return true;
 	}

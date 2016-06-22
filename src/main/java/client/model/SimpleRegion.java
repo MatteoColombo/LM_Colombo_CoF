@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import model.board.Region;
 import model.board.city.City;
 import model.player.PermissionCard;
@@ -13,8 +15,7 @@ public class SimpleRegion {
 	private List<SimpleCity> cities;
 	private CouncilProperty council;
 	private PermissionProperty[] permissions;
-	private int conquerBonus = 0;
-	private BooleanProperty notTaken;
+	private IntegerProperty conquerBonus;
 	
 	public SimpleRegion(Region region) {
 		
@@ -32,7 +33,7 @@ public class SimpleRegion {
 			permissions[i] = new PermissionProperty(region.getPermissionCard(i));
 		}
 		
-		notTaken = new SimpleBooleanProperty(true);
+		conquerBonus = new SimpleIntegerProperty();		
 	}
 	
 	public List<SimpleCity> getCities() {
@@ -47,16 +48,12 @@ public class SimpleRegion {
 		return this.permissions;
 	}
 	
-	public BooleanProperty notTaken() {
-		return this.notTaken;
-	}
-	
-	public int getConquerBonus() {
+	public IntegerProperty conquerBonus() {
 		return this.conquerBonus;
 	}
 	
 	public void setCounquerBonus(int value) {
-		this.conquerBonus = value;
+		this.conquerBonus.set(value);
 	}
 	
 	public void setPermissions(PermissionCard[] permissions) {

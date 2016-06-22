@@ -10,6 +10,7 @@ import client.model.SimpleCity;
 import client.model.SimpleRegion;
 import fx.MainApp;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -111,6 +112,8 @@ public class GameController {
 		initConnections();
 		initCouncils();
 		initBoardRewards();		
+		
+		//mainApp.getLocalModel().getMap().kingBonus().set(10);
 	}
 
 	// --------------------DUMMY ACTIONS--------------------
@@ -131,7 +134,7 @@ public class GameController {
 
 	@FXML
 	private void handleTestAction4() throws IOException {
-		mainApp.sendMsg("slide -council 1 -color white");
+		mainApp.getLocalModel().getMap().kingBonus().set(0);
 	}
 	// ------------------------------------------------------
 
@@ -330,13 +333,20 @@ public class GameController {
 	}
 
 	private void initBoardRewards() {
+		
+		IntegerProperty kingBonus = mainApp.getLocalModel().getMap().kingBonus();
+		kingRewardLabel.textProperty().bind(kingBonus.asString());
+		kingRewardLabel.visibleProperty().bind(kingBonus.greaterThan(0));
+				
 		// TODO complete this
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
 		int numberOfRegions = regions.size();
 		
 		for(int i = 0; i < numberOfRegions; i++) {
 			Labeled regionBonus = (Labeled) mapPane.lookup("#regionBonusLabel" + i);
-			regionBonus.setText(String.valueOf(regions.get(i).getConquerBonus()));
+			
+			regionBonus.textProperty().bind(regions.get(i).conquerBonus().asString());
+			regionBonus.visibleProperty().bind(regions.get(i).conquerBonus().greaterThan(0));			
 		}
 		
 	}

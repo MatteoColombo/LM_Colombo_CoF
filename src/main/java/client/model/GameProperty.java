@@ -91,5 +91,4 @@ public class GameProperty {
 	public Configuration getConfiguration(){
 		return config;
 	}
-
 }

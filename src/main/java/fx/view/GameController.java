@@ -227,7 +227,7 @@ public class GameController {
 					cityName.setText(sc.getName());
 
 					Node king = innerPane.lookup("#king");
-					Bindings.bindBidirectional(king.visibleProperty(), sc.hasKing());
+					king.visibleProperty().bind(sc.hasKing());
 
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {

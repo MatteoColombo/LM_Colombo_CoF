@@ -167,6 +167,12 @@
                   <Label fx:id="regionBonusLabel0" layoutX="281.0" layoutY="480.0" text="Label" />
                   <Label fx:id="regionBonusLabel1" layoutX="622.0" layoutY="480.0" text="Label" />
                   <Label fx:id="regionBonusLabel2" layoutX="1003.0" layoutY="480.0" text="Label" />
+                  <Pane fx:id="permit2_0" layoutX="839.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
+                  <Pane fx:id="permit2_1" layoutX="925.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
+                  <Pane fx:id="permit1_1" layoutX="544.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
+                  <Pane fx:id="permit1_0" layoutX="458.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
+                  <Pane fx:id="permit0_0" layoutX="116.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
+                  <Pane fx:id="permit0_1" layoutX="201.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
                </children>
             </AnchorPane>
         </content>

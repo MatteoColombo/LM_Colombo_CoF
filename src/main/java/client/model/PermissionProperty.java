@@ -5,27 +5,36 @@ import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.board.city.City;
 import model.player.PermissionCard;
 import model.reward.Bonus;
 
 public class PermissionProperty {
 	private BooleanProperty used;
-	private List<SimpleBonus> bonuses;
-	private List<String> cityNames;
+	private ObservableList<SimpleBonus> bonuses;
+	private StringProperty cityNames;
 	
 	public PermissionProperty(PermissionCard permissionCard) {
-		used = new SimpleBooleanProperty(false);
-		
-		bonuses = new ArrayList<>();
-		for(Bonus b: permissionCard.getCardReward().getGeneratedRewards()) {
-			SimpleBonus sb = new SimpleBonus(b);
-			bonuses.add(sb);
+		used = new SimpleBooleanProperty(false);		
+		cityNames = new SimpleStringProperty("");
+		bonuses = FXCollections.observableArrayList();
+		this.set(permissionCard);
+	}
+	
+	public void set(PermissionCard perm) {
+		String buffer = "";
+		for(City c: perm.getCardCity()) {
+			buffer.concat("/" + c.getName().substring(0, 1).toUpperCase());
 		}
-		
-		cityNames = new ArrayList<>();
-		for(City c: permissionCard.getCardCity()) {
-			cityNames.add(c.getName());
+		buffer.replaceFirst("/", "");
+		cityNames.set(buffer);
+		bonuses.clear();
+		for(Bonus b: perm.getCardReward().getGeneratedRewards()) {
+			bonuses.add(new SimpleBonus(b));
 		}
 	}
 	
@@ -33,7 +42,7 @@ public class PermissionProperty {
 		return this.bonuses;
 	}
 	
-	public List<String> getCities() {
+	public StringProperty getCities() {
 		return this.cityNames;
 	}
 	

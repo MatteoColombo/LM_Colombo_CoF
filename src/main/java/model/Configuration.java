@@ -33,6 +33,7 @@ public class Configuration {
 
 	private List<Color> colorsList;
 	private Map<String, Color> colorTranslation;
+	private Map<Color, String> colorTranslationReverse;
 
 	private int councilorsPerColor;
 	private int councilSize;
@@ -47,7 +48,7 @@ public class Configuration {
 	private int rmiPort;
 	private int socketPort;
 	private String serverIp;
-	
+
 	private Map<Color, Integer> colorRewards;
 
 	private List<Integer> boardRewards;
@@ -114,13 +115,17 @@ public class Configuration {
 	public void loadColors(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		colorsList = new ArrayList<>();
 		colorTranslation = new HashMap<>();
+		colorTranslationReverse = new HashMap<>();
 		NodeList colors = (NodeList) xpath.compile(COLORPATH + "color/value").evaluate(xmlDoc, XPathConstants.NODESET);
 		for (int i = 0; i < colors.getLength(); i++)
 			colorsList.add(Color.decode((colors.item(i).getFirstChild().getNodeValue())));
 		NodeList names = (NodeList) xpath.compile(COLORPATH + "color/name").evaluate(xmlDoc, XPathConstants.NODESET);
-		for (int i = 0; i < colors.getLength(); i++)
+		for (int i = 0; i < colors.getLength(); i++) {
 			colorTranslation.put(names.item(i).getFirstChild().getNodeValue(),
 					Color.decode(colors.item(i).getFirstChild().getNodeValue()));
+			colorTranslationReverse.put(Color.decode(colors.item(i).getFirstChild().getNodeValue()),
+					names.item(i).getFirstChild().getNodeValue());
+		}
 	}
 
 	public void loadCouncil(XPath xpath, Document xmlDoc) throws XPathExpressionException {
@@ -155,8 +160,8 @@ public class Configuration {
 		this.rmiPort = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(SERVERPATH + "socket").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.socketPort = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
-		list= (NodeList) xpath.compile(SERVERPATH + "ip").evaluate(xmlDoc, XPathConstants.NODESET);
-		this.serverIp= list.item(0).getFirstChild().getNodeValue();
+		list = (NodeList) xpath.compile(SERVERPATH + "ip").evaluate(xmlDoc, XPathConstants.NODESET);
+		this.serverIp = list.item(0).getFirstChild().getNodeValue();
 	}
 
 	public void loadColorRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException {
@@ -251,7 +256,11 @@ public class Configuration {
 		return boardRewards;
 	}
 
-	public String getServerAddress(){
+	public String getServerAddress() {
 		return serverIp;
+	}
+
+	public Map<Color, String> getColorsTranslationReverse() {
+		return this.colorTranslationReverse;
 	}
 }

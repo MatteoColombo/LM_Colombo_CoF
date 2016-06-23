@@ -8,11 +8,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import model.board.Board;
+import model.board.council.Council;
 import model.exceptions.XMLFileException;
 import model.player.Player;
+import model.reward.Reward;
 import model.Configuration;
 
-public class GameProperty {
+public class GameProperty implements ModelInterface {
 	/**
 	 * This is the list of the available colors for each game. 
 	 * Each player have a color assigned to himself to distinguish from the others.
@@ -25,6 +27,7 @@ public class GameProperty {
 	private int myIndex;
 	private Configuration config;
 
+	@Override
 	public void initMap(int choosen) {
 		try {
 			Board b = new Board(config, choosen);
@@ -44,6 +47,7 @@ public class GameProperty {
 		return this.players;
 	}
 
+	@Override
 	public void setMap(Board board) {
 		this.map = new SimpleMap(board);
 	}
@@ -52,20 +56,24 @@ public class GameProperty {
 		return this.map;
 	}
 
+	@Override
 	public int getMyIndex() {
 		return myIndex;
 	}
 
+	@Override
 	public void isYourTurn() {
 		players.get(myIndex).canNotDoMainAction().set(false);
 		players.get(myIndex).canNotDoSideAction().set(false);
 	}
 
-	public void endOfTurn() {
+	@Override
+	public void yourTurnEnded() {
 		players.get(myIndex).canNotDoMainAction().set(true);
 		players.get(myIndex).canNotDoSideAction().set(true);
 	}
 
+	@Override
 	public void setAllPlayers(List<Player> players) {
 		this.players.clear();
 		myIndex = players.size() - 1;
@@ -74,22 +82,38 @@ public class GameProperty {
 		}
 	}
 
+	@Override
 	public void updatePlayer(Player p, int index) {
 		players.get(index).setAllButPermissions(p);
 	}
 
+	@Override
 	public void playerJoined(Player p) {
 		PlayerProperty newPlayer = new PlayerProperty().setAllButPermissions(p);
 		newPlayer.setColor(playersColors.remove(0));
 		players.add(newPlayer);
 	}
 	
+	@Override
 	public void setConfiguration(Configuration config){
 		this.config=config;
 	}
 	
+	@Override
 	public Configuration getConfiguration(){
 		return config;
 	}
+
+	@Override
+	public void setCouncil(Council council, int index) {
+		this.getMap().setCouncil(council, index);
+	}
+
+	@Override
+	public void setBonus(List<Reward> bonus) {
+		this.getMap().setCityRewards(bonus);
+	}
+
+	
 
 }

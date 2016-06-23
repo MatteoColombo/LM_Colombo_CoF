@@ -3,6 +3,7 @@ package view.p2pdialogue.update;
 import java.util.List;
 
 import client.model.GameProperty;
+import client.model.ModelInterface;
 import model.reward.Reward;
 
 public class UpdateSendCityBonus implements Update {
@@ -14,8 +15,8 @@ public class UpdateSendCityBonus implements Update {
 		this.rewards=rewards;
 	}
 	@Override
-	public void execute(GameProperty model) {
-		model.getMap().setCityRewards(rewards);
+	public void execute(ModelInterface model) {
+		model.setBonus(rewards);
 	}
 
 }

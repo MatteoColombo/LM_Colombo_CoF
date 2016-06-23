@@ -35,9 +35,9 @@ public class CouncilorPool {
 	 * Color and the size of the {@link Council Councils}.
 	 * 
 	 * @param councPerColor
-	 *            number of Councilors per Color
+	 *            the number of Councilors per Color
 	 * @param councilSize
-	 *            number of Councilors per Council
+	 *            the number of Councilors per Council
 	 * @param colors
 	 *            the list of the Colors of the Councilors
 	 * @see CouncilorPool

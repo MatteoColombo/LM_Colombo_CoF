@@ -96,13 +96,10 @@ public class TestBuyPermitCard {
 	 */
 	@Test
 	public void testBuyPermitCardWithMoney() throws Exception {
-		this.player.getCoins().increaseAmount(2);
+		this.player.getPoliticCard().clear();
 		List<PoliticCard> cards = new ArrayList<>();
-		PoliticCard p;
-		do {
-			p = new PoliticCard(colorList);
-		} while (!p.isMultipleColor());
-		cards.add(p);
+		cards.add(new PoliticCard(this.council.getHeadColor()));
+		this.player.getPoliticCard().addAll(cards);
 		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
 		action.execute();
 		assertEquals(1, player.getPermissionCard().size());

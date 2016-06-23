@@ -29,6 +29,7 @@ import model.exceptions.MapXMLFileException;
 import model.exceptions.TrackXMLFileException;
 import model.player.PermissionCard;
 import model.player.Player;
+import model.player.PoliticCard;
 import model.reward.BVictoryPoints;
 import model.reward.BoardColorReward;
 import model.reward.BoardRegionReward;
@@ -59,8 +60,8 @@ public class TestABuildEmporium {
 		colorList.add(Color.YELLOW);
 		colorList.add(Color.GREEN);
 		colorList.add(Color.ORANGE);
-		track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		this.player = new Player(10, 3, 6, 10, colorList, 0, 0,track, null);
+		track = new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		this.player = new Player(10, 3, 6, 10, colorList, 0, 0, track, null);
 		this.pool = new CouncilorPool(4, 4, colorList);
 		bColorRewards = new ArrayList<>();
 		bKingRewards = new ArrayList<>();
@@ -125,7 +126,7 @@ public class TestABuildEmporium {
 		PermissionCard card;
 		ABuildEmporium action;
 		card = new PermissionCard(this.mLoader.getRegions().get(0).getCities());
-		Player p2 = new Player(10, 0, 6, 10, colorList, 0, 0, track,null);
+		Player p2 = new Player(10, 0, 6, 10, colorList, 0, 0, track, null);
 		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 		action.execute();
 		action = new ABuildEmporium(p2, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
@@ -136,38 +137,46 @@ public class TestABuildEmporium {
 	 * Builds an emporium using the king in a different city and then tries to
 	 * build another in the same
 	 */
-	@Ignore
 	@Test(expected = IllegalActionException.class)
 	public void testBuildWithKing() throws Exception {
 		King king;
 		ABuildEmporiumWithKing action;
 		king = new King(this.mLoader.getKingCity(), pool.getCouncil());
+		List<Color> councilColorList = king.getKingCouncil().getCouncilorsColor();
+		List<PoliticCard> pickedPCards = new ArrayList<>();
+		for (Color councilorColor : councilColorList)
+			pickedPCards.add(new PoliticCard(councilorColor));
 		action = new ABuildEmporiumWithKing(player, king, this.mLoader.getRegions().get(0).getCities().get(0),
-				this.allMapCities, null, this.bRewardManager);
+				this.allMapCities, pickedPCards, this.bRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
 		assertEquals(1, this.mLoader.getRegions().get(0).getCities().get(0).getNumberOfEmporium());
+		for (Color councilorColor : councilColorList)
+			pickedPCards.add(new PoliticCard(councilorColor));
 		action = new ABuildEmporiumWithKing(player, king, this.mLoader.getRegions().get(0).getCities().get(0),
-				this.allMapCities, null, this.bRewardManager);
+				this.allMapCities, pickedPCards, this.bRewardManager);
 
 	}
 
 	/**
-	 * Builds an emporium using the king in a differente city but can't afford
-	 * it
+	 * Builds an emporium using the king in a different city but can't afford it
 	 */
-	@Ignore
 	@Test(expected = IllegalActionException.class)
 	public void testBuildWithKingNoMoney() throws Exception {
 		King king;
 		ABuildEmporiumWithKing action;
-		this.player.getCoins().decreaseAmount(3);
+		this.player.getCoins().decreaseAmount(10);
 		king = new King(this.mLoader.getKingCity(), pool.getCouncil());
+		List<Color> councilColorList = king.getKingCouncil().getCouncilorsColor();
+		List<PoliticCard> pickedPCards = new ArrayList<>();
+		for (Color councilorColor : councilColorList)
+			pickedPCards.add(new PoliticCard(councilorColor));
 		action = new ABuildEmporiumWithKing(player, king, this.mLoader.getRegions().get(0).getCities().get(0),
-				this.allMapCities, null, this.bRewardManager);
+				this.allMapCities, pickedPCards, this.bRewardManager);
 		assertEquals(true, action.isMain());
+		assertEquals(0, player.getCoins().getAmount());
 		action.execute();
-		assertEquals(10, player.getCoins().getAmount());
+
 	}
 
 	/**
@@ -175,6 +184,7 @@ public class TestABuildEmporium {
 	 * PermissionCard
 	 * 
 	 */
+	@Ignore
 	@Test
 	public void testBoardRewards() throws Exception {
 		PermissionCard card;
@@ -188,7 +198,7 @@ public class TestABuildEmporium {
 			for (Bonus b : r.getGeneratedRewards())
 				if (b.getTagName().equals("victory"))
 					this.rewardAmount += b.getAmount();
-		assertEquals(this.player.getVictoryPoints().getAmount(), this.rewardAmount);
+		assertEquals(this.rewardAmount, this.player.getVictoryPoints().getAmount());
 	}
 
 	/**
@@ -212,7 +222,18 @@ public class TestABuildEmporium {
 		for (int i = 0; i <= rndNum; i++)
 			cityNumbers.add(i);
 		Collections.shuffle(cityNumbers);
-		System.out.println("Cities that are going to by assigned to this player: " + (rndNum += 1));
+		rndNum++;
+		System.out.println("Cities that are going to by assigned to this player: " + (rndNum));
+		if (rndNum < 10)
+			for (int count = 1; count < rndNum; count++)
+				this.player.increaseMainAction();
+		else
+			for (int count = 1; count < 10; count++)
+				this.player.increaseMainAction();
+		if (rndNum < 10)
+			assertEquals(rndNum, this.player.getMainActionsLeft());
+		else
+			assertEquals(10, this.player.getMainActionsLeft());
 		do {
 			int n = cityNumbers.remove(0);
 			int region, city;
@@ -260,9 +281,9 @@ public class TestABuildEmporium {
 			}
 		} while ((!cityNumbers.isEmpty()) && (!this.player.getEmporium().isEmpty()));
 		System.out.println();
+		System.out.println("Total VPoints that should be awarded to the player: " + this.rewardAmount);
 		System.out
-				.println("Total VPoints effectly awarded by the player: " + this.player.getVictoryPoints().getAmount());
-		System.out.print("Total VPoints that should be awarded to the player: " + this.rewardAmount);
-		assertEquals(this.player.getVictoryPoints().getAmount(), this.rewardAmount);
+				.print("Total VPoints effectly awarded by the player: " + this.player.getVictoryPoints().getAmount());
+		assertEquals(this.rewardAmount, this.player.getVictoryPoints().getAmount());
 	}
 }

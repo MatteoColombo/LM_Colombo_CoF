@@ -65,7 +65,7 @@ public class ConfigGameController {
 		} else {
 			mainApp.getLocalModel().initMap(mapTable.getSelectionModel().getSelectedIndex());
 			mainApp.sendMsg(playersNumber.getText());
-			mainApp.sendMsg(String.valueOf(mapTable.getSelectionModel().getSelectedIndex()).toString());
+			mainApp.sendMsg(String.valueOf(mapTable.getSelectionModel().getSelectedIndex()+1).toString());
 		}
 	}
 	

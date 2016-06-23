@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import client.model.CouncilProperty;
-import client.model.PlayerProperty;
-import client.model.SimpleBonus;
-import client.model.SimpleCity;
-import client.model.SimpleRegion;
+import client.model.*;
 import fx.MainApp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -17,13 +13,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -38,16 +29,16 @@ import javafx.util.converter.NumberStringConverter;
 import model.player.PermissionCard;
 
 public class GameController {
-	
+
 	private static final int NOBILITY_START_X = 26;
 	private static final int NOBILITY_START_Y = 760;
 	private static final int NOBILITY_HEIGHT = 60;
 	private static final double NOBILITY_STEP = 37.5;
-
+	
 	private MainApp mainApp;
 
 	@FXML
-	private Label playerNameLabel;
+	private Label nameLabel;
 
 	@FXML
 	private Rectangle myColor;
@@ -114,8 +105,6 @@ public class GameController {
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
 		initMyData();
-		initLabels();
-		initButtons();
 		initOpponentsPanes();
 		initPoliticTable();
 		initMap();
@@ -154,37 +143,23 @@ public class GameController {
 	}
 
 	private void initMyData() {
-		PlayerProperty me = mainApp.getLocalModel().getMyPlayerData();
-		playerNameLabel.setText(me.getName());
-		myColor.setFill(me.getColor());
-	}
-	
-	private void initButtons() {
-		Bindings.bindBidirectional(mainActionButton1.disableProperty(),
-				mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
-		Bindings.bindBidirectional(mainActionButton2.disableProperty(),
-				mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
-		Bindings.bindBidirectional(mainActionButton3.disableProperty(),
-				mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
-		Bindings.bindBidirectional(mainActionButton4.disableProperty(),
-				mainApp.getLocalModel().getMyPlayerData().canNotDoMainAction());
-		Bindings.bindBidirectional(sideActionButton1.disableProperty(),
-				mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
-		Bindings.bindBidirectional(sideActionButton2.disableProperty(),
-				mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
-		Bindings.bindBidirectional(sideActionButton3.disableProperty(),
-				mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
-		Bindings.bindBidirectional(sideActionButton4.disableProperty(),
-				mainApp.getLocalModel().getMyPlayerData().canNotDoSideAction());
-	}
-
-	private void initLabels() {
 		PlayerProperty myData = mainApp.getLocalModel().getMyPlayerData();
-		NumberStringConverter nsc = new NumberStringConverter();
-		Bindings.bindBidirectional(assistantsLabel.textProperty(), myData.assistantsProperty(), nsc);
-		Bindings.bindBidirectional(coinsLabel.textProperty(), myData.coinsProperty(), nsc);
-		Bindings.bindBidirectional(nobilityLabel.textProperty(), myData.nobilityProperty(), nsc);
-		Bindings.bindBidirectional(victoryLabel.textProperty(), myData.victoryProperty(), nsc);
+		
+		nameLabel.setText(myData.getName());
+		myColor.setFill(myData.getColor());
+		assistantsLabel.textProperty().bind(myData.assistantsProperty().asString());
+		coinsLabel.textProperty().bind(myData.coinsProperty().asString());
+		nobilityLabel.textProperty().bind(myData.nobilityProperty().asString());
+		victoryLabel.textProperty().bind(myData.victoryProperty().asString());
+		
+		mainActionButton1.disableProperty().bind(myData.canNotDoMainAction());
+		mainActionButton2.disableProperty().bind(myData.canNotDoMainAction());
+		mainActionButton3.disableProperty().bind(myData.canNotDoMainAction());
+		mainActionButton4.disableProperty().bind(myData.canNotDoMainAction());
+		sideActionButton1.disableProperty().bind(myData.canNotDoSideAction());
+		sideActionButton2.disableProperty().bind(myData.canNotDoSideAction());
+		sideActionButton3.disableProperty().bind(myData.canNotDoSideAction());
+		sideActionButton4.disableProperty().bind(myData.canNotDoSideAction());
 	}
 
 	private void initPoliticTable() {
@@ -209,7 +184,6 @@ public class GameController {
 
 	private void initOpponentsPanes() {
 		ObservableList<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
-		NumberStringConverter nsc = new NumberStringConverter();
 		int myIndex = mainApp.getLocalModel().getMyIndex();
 		for (int i = players.size() - 1; i >= 0; i--) {
 			if (i != myIndex) {
@@ -221,14 +195,11 @@ public class GameController {
 					((Labeled) pane.lookup("#nameLabel")).textProperty().set(players.get(i).getName());
 					((Rectangle) pane.lookup("#colorRectangle")).setFill(players.get(i).getColor());
 					
-					Bindings.bindBidirectional(((Labeled) pane.lookup("#victoryLabel")).textProperty(),
-							players.get(i).victoryProperty(), nsc);
-					Bindings.bindBidirectional(((Labeled) pane.lookup("#coinsLabel")).textProperty(),
-							players.get(i).coinsProperty(), nsc);
-					Bindings.bindBidirectional(((Labeled) pane.lookup("#assistantsLabel")).textProperty(),
-							players.get(i).assistantsProperty(), nsc);
-					Bindings.bindBidirectional(((Labeled) pane.lookup("#nobilityLabel")).textProperty(),
-							players.get(i).nobilityProperty(), nsc);
+					((Labeled) pane.lookup("#victoryLabel")).textProperty().bind(players.get(i).victoryProperty().asString());
+					((Labeled) pane.lookup("#coinsLabel")).textProperty().bind(players.get(i).coinsProperty().asString());
+					((Labeled) pane.lookup("#assistantsLabel")).textProperty().bind(players.get(i).assistantsProperty().asString());
+					((Labeled) pane.lookup("#nobilityLabel")).textProperty().bind(players.get(i).nobilityProperty().asString());
+					
 				} catch (IOException e) {
 					logger.appendText(e.getMessage());
 				}
@@ -255,24 +226,13 @@ public class GameController {
 					Label cityName = (Label) innerPane.lookup("#cityName");
 					cityName.setText(sc.getName());
 
-					Circle king = (Circle) innerPane.lookup("#kingCircle");
+					Node king = innerPane.lookup("#king");
 					Bindings.bindBidirectional(king.visibleProperty(), sc.hasKing());
 
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
-
-						FXMLLoader innerLoader = new FXMLLoader();
-						innerLoader.setLocation(MainApp.class.getResource("/fxml/Bonus.fxml"));
-						Pane bonusPane = (Pane) innerLoader.load();
-
-						ImageView bonusImage = (ImageView) bonusPane.lookup("#bonusImage");
-						String bonusPath = sb.getImagePath();
-						Image bonus = new Image(MainApp.class.getResource(bonusPath).toString());
-						bonusImage.setImage(bonus);
-
-						Label amountLabel = (Label) bonusPane.lookup("#amountLabel");
-						amountLabel.setText(String.valueOf(sb.getAmount()));
-
+						
+						Pane bonusPane = generateBonus(sb);
 						bonusBox.getChildren().add(bonusPane);
 					}
 					rewardPane.getChildren().add(innerPane);
@@ -348,6 +308,21 @@ public class GameController {
 		councilor.setStrokeWidth(2.0);
 		return councilor;
 	}
+	
+	private Pane generateBonus(SimpleBonus sb) throws IOException {
+		FXMLLoader innerLoader = new FXMLLoader();
+		innerLoader.setLocation(MainApp.class.getResource("/fxml/Bonus.fxml"));
+		Pane bonusPane = (Pane) innerLoader.load();
+
+		ImageView bonusImage = (ImageView) bonusPane.lookup("#bonusImage");
+		String bonusPath = sb.getImagePath();
+		Image bonus = new Image(MainApp.class.getResource(bonusPath).toString());
+		bonusImage.setImage(bonus);
+
+		Label amountLabel = (Label) bonusPane.lookup("#amountLabel");
+		amountLabel.setText(String.valueOf(sb.getAmount()));
+		return bonusPane;
+	}
 
 	private void initBoardRewards() {
 		
@@ -381,6 +356,26 @@ public class GameController {
 	}
 	
 	private void initNobility() {
+		
+		List<SimpleNobilityCell> track = mainApp.getLocalModel().getMap().getNobilityTrack();
+		for(int i = 0; i < track.size(); i++ ) {
+			if(track.get(i) == null) {
+				continue;
+			}
+			List<SimpleBonus> bonuses = track.get(i).getBonuses();
+			for(int j = 0; j < bonuses.size(); j++) {
+				try {
+					Pane bonusPane = generateBonus(bonuses.get(j));
+					bonusPane.setLayoutX(NOBILITY_START_X - 15 + i*NOBILITY_STEP);
+					bonusPane.setLayoutY(NOBILITY_START_Y + j*NOBILITY_HEIGHT/bonuses.size());						
+					mapPane.getChildren().add(bonusPane);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		List<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
 		int totalPlayers = players.size();
 		for(int i = 0; i < totalPlayers; i++) {

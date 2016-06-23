@@ -10,12 +10,16 @@ public class SimpleBonus {
 	private static Map<String, String> bonusImages;
 	static {
 		bonusImages = new HashMap<>();
-		bonusImages.put("assistants", "/simboli/Aiutanti.png"); 
-		bonusImages.put("coins", "/simboli/RicchezzaGialla.png");
-		bonusImages.put("extra", "/simboli/AzionePrincipale.png");
-		bonusImages.put("nobility", "/simboli/Nobilta.png");
-		bonusImages.put("victory", "/simboli/Vittoria.png"); 
-		bonusImages.put("politic", "/simboli/PescaPolitica.png"); 
+		bonusImages.put("assistants", "/simboli/assistants.png"); 
+		bonusImages.put("coins", "/simboli/yellowCoin.png");
+		bonusImages.put("extra", "/simboli/mainAction.png");
+		bonusImages.put("nobility", "/simboli/nobility.png");
+		bonusImages.put("victory", "/simboli/victory.png"); 
+		bonusImages.put("politic", "/simboli/politic.png"); 
+		bonusImages.put("city", "/simboli/extraCityBonus.png"); 
+		bonusImages.put("fromPermit", "/simboli/extraPermissionBonus.png"); 
+		bonusImages.put("takePermit", "/simboli/extraPermission.png"); 
+	
 	}
 	
 	private String name;

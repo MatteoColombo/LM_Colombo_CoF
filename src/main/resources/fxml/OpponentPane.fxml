@@ -22,22 +22,22 @@
          <children>
             <ImageView fitHeight="111.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../simboli/Nobilta.png" />
+                  <Image url="@../simboli/nobility.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="55.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <image>
-                  <Image url="@../simboli/RicchezzaRossa.png" />
+                  <Image url="@../simboli/redCoin.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="103.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <image>
-                  <Image url="@../simboli/Aiutanti.png" />
+                  <Image url="@../simboli/assistants.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="101.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <image>
-                  <Image url="@../simboli/Vittoria.png" />
+                  <Image url="@../simboli/victory.png" />
                </image>
             </ImageView>
             <Label fx:id="victoryLabel" text="Label" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />

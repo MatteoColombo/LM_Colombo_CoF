@@ -27,7 +27,9 @@ public class SimpleMap {
 	 * represent the current bonus visualized on the map
 	 */
 	private IntegerProperty kingBonus;
-
+	
+	private List<SimpleNobilityCell> nobilityTrack;
+	
 	public SimpleMap(Board board) {
 
 		regions = new ArrayList<>();
@@ -59,22 +61,35 @@ public class SimpleMap {
 		
 		kingBonus = new SimpleIntegerProperty();
 		kingBonus.set(kingBonuses.remove(0));
+		
+		nobilityTrack = new ArrayList<>(board.getNobleTrack().getMaxPoint());
+		for(Reward r: board.getNobleTrack().getTrack()) {
+			if(r != null) {
+				nobilityTrack.add(new SimpleNobilityCell(r));
+			} else {
+				nobilityTrack.add(null);
+			}
+		}
 	}
 
 	public List<SimpleRegion> getRegions() {
-		return this.regions;
+		return regions;
+	}
+	
+	public List<SimpleNobilityCell> getNobilityTrack() {
+		return nobilityTrack;
 	}
 
 	public CouncilProperty getKingCouncil() {
-		return this.kingCouncil;
+		return kingCouncil;
 	}
 
 	public Map<String, IntegerProperty> getColorBonuses() {
-		return this.colorBonuses;
+		return colorBonuses;
 	}
 
 	public IntegerProperty kingBonus() {
-		return this.kingBonus;
+		return kingBonus;
 	}
 
 	public void setCityRewards(List<Reward> bonusList) {

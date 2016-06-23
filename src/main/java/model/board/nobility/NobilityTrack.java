@@ -35,6 +35,10 @@ public class NobilityTrack {
 		this.track = track;
 	}
 
+	public List<Reward> getTrack() {
+		return this.track;
+	}
+	
 	/**
 	 * Returns the requested {@link Reward}.
 	 * 
@@ -54,6 +58,6 @@ public class NobilityTrack {
 	 * @see NobilityTrack
 	 */
 	public int getMaxPoint() {
-		return track.size() + 1;
+		return track.size()+1;
 	}
 }

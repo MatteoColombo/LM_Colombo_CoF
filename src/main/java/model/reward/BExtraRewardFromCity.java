@@ -8,7 +8,7 @@ public class BExtraRewardFromCity extends Bonus{
 	
 	// not really useful here, it may be removed in the future
 	public static final int VALUE = 60;
-	public static final String NAME = "ccity" ;
+	public static final String NAME = "city" ;
 	public BExtraRewardFromCity(int amount) {
 		super(amount);
 	}

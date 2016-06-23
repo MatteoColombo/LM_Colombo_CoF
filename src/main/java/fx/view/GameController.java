@@ -111,7 +111,8 @@ public class GameController {
 		initConnections();
 		initCouncils();
 		initBoardRewards();
-		initNobility();		
+		initNobility();
+		initPermissions();
 	}
 
 	// --------------------DUMMY ACTIONS--------------------
@@ -190,7 +191,7 @@ public class GameController {
 				try {
 					FXMLLoader loader = new FXMLLoader();
 					loader.setLocation(MainApp.class.getResource("/fxml/OpponentPane.fxml"));
-					AnchorPane pane = (AnchorPane) loader.load();
+					AnchorPane pane = loader.load();
 					opponentsBox.getChildren().add(pane);
 					((Labeled) pane.lookup("#nameLabel")).textProperty().set(players.get(i).getName());
 					((Rectangle) pane.lookup("#colorRectangle")).setFill(players.get(i).getColor());
@@ -386,5 +387,33 @@ public class GameController {
 			c.centerXProperty().bind(players.get(i).nobilityProperty().multiply(NOBILITY_STEP).add(NOBILITY_START_X));
 			mapPane.getChildren().add(c);
 		}
+	}
+	
+	private void initPermissions() {
+		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
+		for(int i = 0; i < regions.size(); i++) {
+			PermissionProperty[] permissions = regions.get(i).getPermissions();
+			for(int j = 0; j < permissions.length; j++) {	
+				AnchorPane permissionPane = (AnchorPane) mapPane.lookup("#permit" + String.valueOf(i) + "_" + String.valueOf(j));
+				AnchorPane innerPane = generatePermission(permissions[j]);
+				permissionPane.getChildren().add(innerPane);
+			}
+		}
+	}
+	
+	private AnchorPane generatePermission(PermissionProperty  pp) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/fxml/PermissionCard.fxml"));
+			AnchorPane permissionPane = loader.load();
+			((Labeled) permissionPane.lookup("#citiesLabel")).textProperty().bind(pp.getCities());
+			// TODO addlistener to the list here
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

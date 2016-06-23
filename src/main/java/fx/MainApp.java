@@ -142,7 +142,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void showGame() {
-		endOfTurn(); // set binded disabled action button parameters to true
+		yourTurnEnded(); // set binded disabled action button parameters to true
 						// (disable when is not your turn)
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -272,7 +272,8 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		return localGame;
 	}
 
-	public void endOfTurn() {
+	@Override
+	public void yourTurnEnded() {
 		localGame.getMyPlayerData().canNotDoMainAction().set(true);
 		localGame.getMyPlayerData().canNotDoSideAction().set(true);
 	}

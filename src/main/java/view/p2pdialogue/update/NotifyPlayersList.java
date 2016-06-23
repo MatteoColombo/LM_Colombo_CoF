@@ -3,6 +3,7 @@ package view.p2pdialogue.update;
 import java.util.List;
 
 import client.model.GameProperty;
+import client.model.ModelInterface;
 import client.model.PlayerProperty;
 import client.view.ViewInterface;
 import model.player.Player;
@@ -24,7 +25,7 @@ public class NotifyPlayersList implements Update, Notify{
 	}
 	
 	@Override
-	public void execute(GameProperty model) {
+	public void execute(ModelInterface model) {
 		model.setAllPlayers(players);
 	}
 

@@ -1,15 +1,19 @@
 package client.view;
 
+import java.awt.Color;
 import java.io.PrintWriter;
 import java.util.List;
 
 import client.model.GameProperty;
+import client.model.PlayerProperty;
 import client.model.SimpleBonus;
 import client.model.SimpleCity;
 import client.model.SimpleRegion;
+import javafx.beans.property.StringProperty;
 import model.board.Region;
 import model.board.city.City;
 import model.player.Player;
+import model.player.PoliticCard;
 import model.reward.Bonus;
 import model.reward.Reward;
 
@@ -82,8 +86,8 @@ public class Cli implements ViewInterface {
 
 	@Override
 	public void printCities() {
-		List<SimpleRegion> regions= model.getMap().getRegions();
-		
+		List<SimpleRegion> regions = model.getMap().getRegions();
+
 		for (SimpleRegion region : regions) {
 			writer.println(SEPARATOR);
 			for (SimpleCity city : region.getCities()) {
@@ -101,25 +105,35 @@ public class Cli implements ViewInterface {
 	}
 
 	// if case of errors: add .toString() for each integer
-	public void printPlayers(List<Player> players) {
-		int index = 1;
-		for (Player player : players) {
-			writer.println(SEPARATOR + "\n| Player " + index + "\n" + "| Victory Points: "
-					+ player.getVictoryPoints().getAmount() + " Coins: " + player.getCoins().getAmount()
-					+ " Assistants: " + player.getAssistants().getAmount() + "\n" + "| Cards in hand: "
-					+ player.getPoliticCard().size() + "Nobility: " + player.getNoblePoints().getAmount());
+	public void printPlayers() {
+		List<PlayerProperty> players = model.getPlayers();
+		writer.println("Players");
+		for (int i = 0; i < players.size(); i++) {
+			writer.println(SEPARATOR);
+			writer.println(players.get(i).getName());
+			writer.println("Victory points: " + players.get(i).getVictory() + ", Coins: " + players.get(i).getCoins()
+					+ ", Assitants: " + players.get(i).getAssistants() + ", Politics:"
+					+ players.get(i).getPoliticCards().size() + ", Nobility: " + players.get(i).getNobility());
+			if (i == model.getMyIndex()) {
+				List<StringProperty> cards = players.get(i).getPoliticCards();
+				for (StringProperty card : cards)
+					writer.print(("multi".equals(card.getValue())? card.getValue()
+							: model.getConfiguration().getColorsTranslationReverse().get(Color.decode(card.getValue())))+ " ");
+				writer.println();
+			}
 		}
 		writer.println(SEPARATOR);
+		writer.flush();
 	}
 
 	private void printBonus(SimpleCity city) {
 		writer.print("(");
 		// TODO add if is capital
-		if(city.hasKing().getValue())
+		if (city.hasKing().getValue())
 			writer.print("♕");
 		if (city.hasNoEmporium().getValue()) {
 			for (SimpleBonus b : city.getBonuses()) {
-				writer.print(b.getName().toUpperCase()+" " + b.getAmount());
+				writer.print(b.getName().toUpperCase() + " " + b.getAmount());
 			}
 		} else {
 			writer.print("???");
@@ -174,6 +188,7 @@ public class Cli implements ViewInterface {
 		writer.println("The game started");
 		writer.flush();
 		printCities();
+		printPlayers();
 	}
 
 	@Override
@@ -212,5 +227,12 @@ public class Cli implements ViewInterface {
 	public void setCityRewards(List<Reward> bonusList) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void yourTurnEnded() {
+		writer.println("Your turn ended");
+		writer.println(SEPARATOR);
+		writer.flush();
 	}
 }

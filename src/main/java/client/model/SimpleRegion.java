@@ -58,7 +58,7 @@ public class SimpleRegion {
 	
 	public void setPermissions(PermissionCard[] permissions) {
 		for(int i = 0; i < this.permissions.length; i++) {
-			this.permissions[i] = new PermissionProperty(permissions[i]);
+			this.permissions[i].set(permissions[i]);
 		}
 	}
 }

@@ -38,7 +38,7 @@ public class PermissionProperty {
 		}
 	}
 	
-	public List<SimpleBonus> getBonuses() {
+	public ObservableList<SimpleBonus> getBonuses() {
 		return this.bonuses;
 	}
 	

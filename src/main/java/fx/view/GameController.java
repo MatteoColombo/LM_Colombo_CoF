@@ -112,7 +112,7 @@ public class GameController {
 		initCouncils();
 		initBoardRewards();
 		initNobility();
-		initPermissions();
+		//initPermissions();
 	}
 
 	// --------------------DUMMY ACTIONS--------------------

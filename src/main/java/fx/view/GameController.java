@@ -18,6 +18,9 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -294,51 +297,20 @@ public class GameController {
 			}
 		}
 	}
-
+	
+	/**
+	 * 
+	 */
 	private void initCouncils() {
 		CouncilProperty kingCouncil = mainApp.getLocalModel().getMap().getKingCouncil();
-		for (StringProperty color : kingCouncil.colors()) {
-			Rectangle councilor = generateCouncilor(color.get());
-
-			color.addListener((observable, oldValue, newValue) -> {
-				
-				councilor.setFill(Color.valueOf(newValue));
-				
-				IntegerProperty oldColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(oldValue);
-				oldColor.set(oldColor.get() + 1);
-				
-				IntegerProperty newColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(newValue);
-				newColor.set(newColor.get() - 1);
-				}
-			);
-			
-			kingCouncilBox.getChildren().add(councilor);
-		}
+		initCouncil(kingCouncilBox, kingCouncil);
 
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
-		int numberOfRegions = regions.size();
 
-		for (int i = 0; i < numberOfRegions; i++) {
+		for (int i = 0; i < regions.size(); i++) {
 
 			HBox councilBox = (HBox) mapPane.lookup("#councilBox" + String.valueOf(i));
-			for (StringProperty color : regions.get(i).getCouncil().colors()) {
-
-				Rectangle councilor = generateCouncilor(color.get());
-				
-				color.addListener((observable, oldValue, newValue) -> {
-					
-					councilor.setFill(Color.valueOf(newValue));
-					
-					IntegerProperty oldColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(oldValue);
-					oldColor.set(oldColor.get() + 1);
-					
-					IntegerProperty newColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(newValue);
-					newColor.set(newColor.get() - 1);
-					}
-				);				
-				
-				councilBox.getChildren().add(councilor);
-			}
+			initCouncil(councilBox, regions.get(i).getCouncil());
 		}
 	}
 
@@ -349,6 +321,7 @@ public class GameController {
 		councilor.setFill(Color.valueOf(hexColor));
 		councilor.setStroke(Color.SILVER);
 		councilor.setStrokeWidth(2.0);
+		councilor.setId(CouncilProperty.getColorName(hexColor));
 		return councilor;
 	}
 	
@@ -498,6 +471,8 @@ public class GameController {
 			Rectangle councilor = generateCouncilor(hexColor);
 			councilor.setHeight(councilor.getWidth());
 
+			setDragAndDropForCouncilor(councilor);
+			
 			Label amount = new Label();
 			amount.textProperty().bind(pool.get(hexColor).asString());
 			
@@ -509,5 +484,61 @@ public class GameController {
 
 			councilorPool.getChildren().add(councilorPane);
 		}
+	}
+	
+	private void initCouncil(HBox location, CouncilProperty council) {
+		for (StringProperty color : council.colors()) {
+			Rectangle councilor = generateCouncilor(color.get());
+
+			color.addListener((observable, oldValue, newValue) -> {
+				
+				councilor.setFill(Color.valueOf(newValue));
+				
+				IntegerProperty oldColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(oldValue);
+				oldColor.set(oldColor.get() + 1);
+				
+				IntegerProperty newColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(newValue);
+				newColor.set(newColor.get() - 1);
+				}
+			);	
+			location.getChildren().add(councilor);
+		}
+		
+		location.setOnDragOver(event -> {
+			if (event.getGestureSource() != location &&
+                    event.getDragboard().hasString()) {
+                event.acceptTransferModes(TransferMode.MOVE);
+            }
+            event.consume();
+		});
+		
+		location.setOnDragDropped(event -> {
+			Dragboard db = event.getDragboard();
+			if(db.hasString()) {
+				if(location.getId().equals("kingCouncilBox")) {
+					mainApp.sendMsg("slide -council k -color " + db.getString());
+				} else {
+					String id = location.getId();
+					int index = Integer.valueOf(id.substring(id.length()-1));
+					index++;
+					mainApp.sendMsg("slide -council " + index + " -color " + db.getString());
+				}
+			}
+		});
+	}
+	
+	
+	
+	private void setDragAndDropForCouncilor(Rectangle r) {
+		r.setOnDragDetected(event -> {
+			
+			Dragboard db = r.startDragAndDrop(TransferMode.ANY);
+					
+			ClipboardContent content = new ClipboardContent();
+			content.putString(r.getId());
+			
+			db.setContent(content);
+            event.consume();
+		});
 	}
 }

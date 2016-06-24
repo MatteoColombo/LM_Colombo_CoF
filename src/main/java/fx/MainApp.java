@@ -165,8 +165,13 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		this.myName = name;
 	}
 
-	public void sendMsg(String msg) throws IOException {
-		manager.publishMessage(msg);
+	public void sendMsg(String msg) {
+		try {
+			manager.publishMessage(msg);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void initSocketManager() {

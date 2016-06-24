@@ -28,7 +28,6 @@ public class SimpleCity {
 		cityImages.put("#008000", "/cities/city-silver.png"); 
 	}
 	
-	private BooleanProperty hasNoEmporium;
 	private BooleanProperty hasKing;
 	private String name;
 	private String color;
@@ -41,7 +40,6 @@ public class SimpleCity {
 	
 	public SimpleCity(City city) {
 		this.name = city.getName();
-		this.hasNoEmporium = new SimpleBooleanProperty(true);
 		if(city.isCapital()) {
 			this.hasKing = new SimpleBooleanProperty(true);
 		} else {
@@ -54,10 +52,6 @@ public class SimpleCity {
 		}
 		
 		color = ColorConverter.awtToWeb(city.getColor());
-	}
-	
-	public BooleanProperty hasNoEmporium() {
-		return this.hasNoEmporium;
 	}
 	
 	public BooleanProperty hasKing() {

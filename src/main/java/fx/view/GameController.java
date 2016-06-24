@@ -31,7 +31,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.util.converter.NumberStringConverter;
 import model.player.PermissionCard;
 
 public class GameController {
@@ -362,21 +361,6 @@ public class GameController {
 		});
 	}
 
-
-	private void setDragAndDropForCouncilor(Rectangle r) {
-		r.setOnDragDetected(event -> {
-			
-			Dragboard db = r.startDragAndDrop(TransferMode.ANY);
-					
-			ClipboardContent content = new ClipboardContent();
-			content.putString(r.getId());
-			
-			db.setContent(content);
-	        event.consume();
-		});
-	}
-
-
 	private void initCouncilorPool() {
 		mainApp.getLocalModel().getMap().initCouncilorPool();
 		
@@ -386,7 +370,16 @@ public class GameController {
 			Rectangle councilor = generateCouncilor(hexColor);
 			councilor.setHeight(councilor.getWidth());
 	
-			setDragAndDropForCouncilor(councilor);
+			councilor.setOnDragDetected(event -> {
+				if(pool.get(hexColor).get() > 0) {
+					Dragboard db = councilor.startDragAndDrop(TransferMode.ANY);
+					
+					ClipboardContent content = new ClipboardContent();
+					content.putString(councilor.getId());
+					db.setContent(content);
+			        event.consume();
+				}
+			});
 			
 			Label amount = new Label();
 			amount.textProperty().bind(pool.get(hexColor).asString());

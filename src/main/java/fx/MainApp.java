@@ -47,7 +47,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void run() {
-			launch();
+		launch();
 	}
 
 	@Override
@@ -142,8 +142,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void showGame() {
-		yourTurnEnded(); // set binded disabled action button parameters to true
-						// (disable when is not your turn)
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/Game.fxml"));
@@ -225,35 +223,15 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
-	@Override
-	public void printAskPlayersNumber(int max) {
-		showConfigGame();
-	}
-
-	@Override
-	public void showInitMenu() {
-		// TODO remove this
-	}
-
-	@Override
-	public void showGetConnectionType() {
-		// TODO remove this
-	}
-
+	/**
+	 * This method isn't used because with javaFx we don't need to implement it!
+	 */
 	@Override
 	public void printAskWhichMapToUse() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
-	public void printAskWhatActionToDo() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void printCities() {
+	public void printIllegalAction(Exception e) {
 		// TODO Auto-generated method stub
 
 	}
@@ -267,44 +245,26 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
-	@Override
 	public GameProperty getLocalModel() {
 		return localGame;
 	}
 
 	@Override
-	public void yourTurnEnded() {
-		localGame.getMyPlayerData().canNotDoMainAction().set(true);
-		localGame.getMyPlayerData().canNotDoSideAction().set(true);
-	}
-
-	@Override
-	public void playerJoined(Player p) {
-	}
-
-	@Override
-	public void setAllPlayers(List<Player> players) {
-	}
-
-	@Override
-	public void updatePlayer(Player p, int index) {
-	}
-
-	@Override
-	public void isYourTurn() {
-		localGame.getMyPlayerData().canNotDoMainAction().set(false);
-		localGame.getMyPlayerData().canNotDoSideAction().set(false);
-	}
-
-	@Override
-	public void setCityRewards(List<Reward> bonusList) {
+	public void printMessage(String message) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void printIllegalAction(Exception e) {
-		// TODO Auto-generated method stub
-
+	public void printAskPlayersNumber(int max) {
+		showConfigGame();
 	}
+
+	/**
+	 * This method isn't used because with javaFx we don't need to implement it!
+	 */
+	@Override
+	public void printAskWhatActionToDo() {
+	}
+
 }

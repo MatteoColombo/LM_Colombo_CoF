@@ -47,8 +47,8 @@ public class PlayerProperty {
 	private ObservableList<PermissionProperty> permissions;
 	
 	public PlayerProperty() {
-		canNotDoMainAction = new SimpleBooleanProperty(true);
-		canNotDoSideAction = new SimpleBooleanProperty(true);
+		canNotDoMainAction = new SimpleBooleanProperty(false);
+		canNotDoSideAction = new SimpleBooleanProperty(false);
 		name = new SimpleStringProperty("");
 		coins = new SimpleIntegerProperty(0);
 		assistants = new SimpleIntegerProperty(0);

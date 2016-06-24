@@ -12,8 +12,6 @@ import model.reward.Reward;
 public interface ModelInterface {
 	public void initMap(int choosen);
 
-	public void setMap(Board board);
-
 	public int getMyIndex();
 
 	public void isYourTurn();

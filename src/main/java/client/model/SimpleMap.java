@@ -1,5 +1,6 @@
 package client.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
 import model.board.Board;
 import model.board.Region;
 import model.board.council.Council;
@@ -29,6 +31,8 @@ public class SimpleMap {
 	private IntegerProperty kingBonus;
 	
 	private List<SimpleNobilityCell> nobilityTrack;
+	
+	private Map<String, IntegerProperty> councilorPool;
 	
 	public SimpleMap(Board board) {
 
@@ -70,6 +74,12 @@ public class SimpleMap {
 				nobilityTrack.add(null);
 			}
 		}
+		
+		councilorPool = new HashMap<>();
+		int maxCouncilors = board.getCouncilorPool().getCouncPerColor();
+		for(Color c: board.getCouncilorPool().getListColor()) {
+			councilorPool.put(ColorConverter.awtToWeb(c), new SimpleIntegerProperty(maxCouncilors));
+		}
 	}
 
 	public List<SimpleRegion> getRegions() {
@@ -86,6 +96,10 @@ public class SimpleMap {
 
 	public Map<String, IntegerProperty> getColorBonuses() {
 		return colorBonuses;
+	}
+	
+	public Map<String, IntegerProperty> getCouncilorPool() {
+		return councilorPool;
 	}
 
 	public IntegerProperty kingBonus() {
@@ -114,5 +128,20 @@ public class SimpleMap {
 		if(kingBonuses.size() > 0) {
 			kingBonus.set(kingBonuses.remove(0));
 		}	
+	}
+	
+	public void initCouncilorPool() {
+		for(StringProperty color: kingCouncil.colors()) {
+			IntegerProperty value = councilorPool.get(color.get());
+			int newValue = value.get() - 1;
+			value.set(newValue);
+		}
+		
+		for(SimpleRegion region: regions) {
+			for(StringProperty color: region.getCouncil().colors()) {
+				IntegerProperty value = councilorPool.get(color.get());
+				value.set(value.get() - 1);
+			}
+		}
 	}
 }

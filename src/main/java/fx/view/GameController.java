@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -32,7 +33,7 @@ import model.player.PermissionCard;
 public class GameController {
 
 	private static final int NOBILITY_START_X = 26;
-	private static final int NOBILITY_START_Y = 760;
+	private static final int NOBILITY_START_Y = 775;
 	private static final int NOBILITY_HEIGHT = 60;
 	private static final double NOBILITY_STEP = 37.5;
 	
@@ -50,6 +51,9 @@ public class GameController {
 	@FXML
 	private HBox kingCouncilBox;
 
+	@FXML
+	private FlowPane councilorPool;
+	
 	@FXML
 	private Label kingRewardLabel;
 	@FXML
@@ -114,26 +118,43 @@ public class GameController {
 		initBoardRewards();
 		initNobility();
 		initPermissions();
+		initCouncilorPool();
 	}
 
 
 	@FXML
-	private void handleTestAction() throws IOException {
+	private void handleSlideCouncil() throws IOException {	
+	}
+
+	@FXML
+	private void handleBuyPermission() throws IOException {
+	}
+
+	@FXML
+	private void handleBuildEmporium() throws IOException {
+	}
+
+	@FXML
+	private void handleBuildWithKing() throws IOException {
+	}
+	
+	@FXML
+	private void handleBuyAssistant() throws IOException {
+		mainApp.sendMsg("assistant");
+	}
+	
+	@FXML
+	private void handleShuffle() throws IOException {
+	}
+	
+	@FXML
+	private void handleExtraAction() throws IOException {
+		mainApp.sendMsg("extra");
+	}
+	
+	@FXML
+	private void handleSlideSide() throws IOException {
 		
-		
-	}
-
-	@FXML
-	private void handleTestAction2() throws IOException {
-	}
-
-	@FXML
-	private void handleTestAction3() throws IOException {
-	}
-
-	@FXML
-	private void handleTestAction4() throws IOException {
-
 	}
 
 	@FXML
@@ -443,5 +464,27 @@ public class GameController {
 		}
 		// just cause without won't compile
 		return null;
+	}
+	
+	private void initCouncilorPool() {
+		mainApp.getLocalModel().getMap().initCouncilorPool();
+		
+		Map<String, IntegerProperty> pool = mainApp.getLocalModel().getMap().getCouncilorPool();
+		for(String hexColor: pool.keySet()) {
+			
+			Rectangle councilor = generateCouncilor(hexColor);
+			councilor.setHeight(councilor.getWidth());
+
+			Label amount = new Label();
+			amount.textProperty().bind(pool.get(hexColor).asString());
+			
+			amount.setStyle("-fx-background-color: black;");
+			
+			Pane councilorPane = new Pane();
+			councilorPane.getChildren().add(councilor);
+			councilorPane.getChildren().add(amount);
+
+			councilorPool.getChildren().add(councilorPane);
+		}
 	}
 }

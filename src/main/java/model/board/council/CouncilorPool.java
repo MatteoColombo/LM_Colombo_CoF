@@ -189,5 +189,9 @@ public class CouncilorPool {
 	public List<Color> getListColor() {
 		return this.colors;
 	}
+	
+	public int getCouncPerColor() {
+		return this.CONCPERCOLOR;
+	}
 
 }

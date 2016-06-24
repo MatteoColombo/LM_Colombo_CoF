@@ -12,7 +12,7 @@
 
 <BorderPane prefHeight="900.0" prefWidth="1280.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.view.GameController">
    <bottom>
-      <HBox minHeight="59.0" prefHeight="196.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <HBox minHeight="59.0" prefHeight="186.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
@@ -91,14 +91,14 @@
                 <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="mainActionButton1" mnemonicParsing="false" onAction="#handleTestAction" prefWidth="120.0" text="Slide Council" />
+                  <Button fx:id="mainActionButton1" mnemonicParsing="false" onAction="#handleSlideCouncil" prefWidth="120.0" text="Slide Council" />
                   <Button fx:id="sideActionButton1" mnemonicParsing="false" prefWidth="120.0" text="Slide Council" GridPane.columnIndex="1" />
-                  <Button fx:id="mainActionButton2" mnemonicParsing="false" onAction="#handleTestAction2" prefWidth="120.0" text="Buy Permission" GridPane.rowIndex="1" />
+                  <Button fx:id="mainActionButton2" mnemonicParsing="false" onAction="#handleBuyPermission" prefWidth="120.0" text="Buy Permission" GridPane.rowIndex="1" />
                   <Button fx:id="sideActionButton2" mnemonicParsing="false" prefWidth="120.0" text="But Assistant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button fx:id="sideActionButton3" mnemonicParsing="false" prefWidth="120.0" text="Shuffle Perm." GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button fx:id="mainActionButton3" mnemonicParsing="false" onAction="#handleTestAction3" prefWidth="120.0" text="Build Emporium" GridPane.rowIndex="2" />
+                  <Button fx:id="mainActionButton3" mnemonicParsing="false" onAction="#handleBuildEmporium" prefWidth="120.0" text="Build Emporium" GridPane.rowIndex="2" />
                   <Button fx:id="sideActionButton4" mnemonicParsing="false" prefWidth="120.0" text="Extra Action" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Button fx:id="mainActionButton4" mnemonicParsing="false" onAction="#handleTestAction4" prefWidth="120.0" text="Build with king" GridPane.rowIndex="3" />
+                  <Button fx:id="mainActionButton4" mnemonicParsing="false" onAction="#handleBuildWithKing" prefWidth="120.0" text="Build with king" GridPane.rowIndex="3" />
                </children>
                <HBox.margin>
                   <Insets left="10.0" />
@@ -156,10 +156,10 @@
                   <AnchorPane fx:id="merkatim" layoutX="726.0" layoutY="374.0" prefHeight="50.0" prefWidth="50.0" />
                   <AnchorPane fx:id="osium" layoutX="920.0" layoutY="300.0" prefHeight="50.0" prefWidth="50.0" />
                   <Label fx:id="kingRewardLabel" layoutX="976.0" layoutY="715.0" rotate="45.0" text="Label" />
-                  <Label fx:id="goldRewardLabel" layoutX="983.0" layoutY="791.0" rotate="45.0" text="Label" />
-                  <Label fx:id="silverRewardLabel" layoutX="929.0" layoutY="797.0" rotate="45.0" text="Label" />
-                  <Label fx:id="bronzeRewardLabel" layoutX="871.0" layoutY="797.0" rotate="45.0" text="Label" />
-                  <Label fx:id="sapphireRewardLabel" layoutX="819.0" layoutY="807.0" rotate="45.0" text="Label" />
+                  <Label fx:id="goldRewardLabel" layoutX="985.0" layoutY="793.0" rotate="45.0" text="Label" />
+                  <Label fx:id="silverRewardLabel" layoutX="931.0" layoutY="799.0" rotate="45.0" text="Label" />
+                  <Label fx:id="bronzeRewardLabel" layoutX="873.0" layoutY="805.0" rotate="45.0" text="Label" />
+                  <Label fx:id="sapphireRewardLabel" layoutX="820.0" layoutY="811.0" rotate="45.0" text="Label" />
                   <HBox fx:id="councilBox1" alignment="CENTER" layoutX="458.0" layoutY="646.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="116.0" />
                   <HBox fx:id="councilBox0" alignment="CENTER" layoutX="114.0" layoutY="646.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="117.0" />
                   <HBox fx:id="councilBox2" alignment="CENTER" layoutX="842.0" layoutY="646.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="117.0" />
@@ -173,6 +173,7 @@
                   <Pane fx:id="permit1_0" layoutX="458.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
                   <Pane fx:id="permit0_0" layoutX="116.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
                   <Pane fx:id="permit0_1" layoutX="201.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
+                  <FlowPane fx:id="councilorPool" layoutX="836.0" layoutY="711.0" prefHeight="67.0" prefWidth="123.0" />
                </children>
             </AnchorPane>
         </content>

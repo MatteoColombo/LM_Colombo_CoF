@@ -6,6 +6,6 @@ package model.reward;
  */
 public class RewardPermission extends Reward{
 	public RewardPermission() {
-		super(Bonus.getAllStandardBonus(), 3, 150);
+		super(Bonus.getAllStandardBonus(), 3, 120);
 	}
 }

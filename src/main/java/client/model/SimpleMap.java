@@ -127,7 +127,7 @@ public class SimpleMap {
 	public void setNextKingBonus() {
 		if(kingBonuses.size() > 0) {
 			kingBonus.set(kingBonuses.remove(0));
-		}	
+		}
 	}
 	
 	public void initCouncilorPool() {

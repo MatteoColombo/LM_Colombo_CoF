@@ -300,7 +300,18 @@ public class GameController {
 		for (StringProperty color : kingCouncil.colors()) {
 			Rectangle councilor = generateCouncilor(color.get());
 			// TODO check if works
-			color.addListener((observable, oldValue, newValue) -> councilor.setFill(Color.valueOf(newValue)));
+			color.addListener((observable, oldValue, newValue) -> {
+				
+				councilor.setFill(Color.valueOf(newValue));
+				
+				IntegerProperty oldColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(oldValue);
+				oldColor.set(oldColor.get() + 1);
+				
+				IntegerProperty newColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(newValue);
+				newColor.set(newColor.get() - 1);
+				}
+			);
+			
 			kingCouncilBox.getChildren().add(councilor);
 		}
 

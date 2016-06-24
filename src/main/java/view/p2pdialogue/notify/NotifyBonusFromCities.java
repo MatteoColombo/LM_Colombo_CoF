@@ -22,5 +22,5 @@ public class NotifyBonusFromCities implements Notify {
 		// TODO Auto-generated method stub
 
 	}
-
+  
 }

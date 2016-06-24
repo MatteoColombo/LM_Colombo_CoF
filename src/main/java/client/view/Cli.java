@@ -26,7 +26,6 @@ public class Cli implements ViewInterface {
 	// NOTE: the following constants does not work in the eclipse console
 	// but they will work in other terminals (i tested it in iTerm2 and OSX
 	// Terminal)
-	private GameProperty model;
 	private static final String ANSI_RESET = "\u001B[0m";
 	private static final String ANSI_BLACK = "\u001B[30m";
 	private static final String ANSI_RED = "\u001B[31m";
@@ -41,12 +40,10 @@ public class Cli implements ViewInterface {
 
 	private PrintWriter writer;
 
-	public Cli(GameProperty model) {
-		this.model = model;
+	public Cli() {
 		writer = new PrintWriter(System.out);
 	}
 
-	@Override
 	public void showGetConnectionType() {
 		writer.print("                             W E L C O M E !\n" + "\n" + "\n"
 				+ "                    Select how do you want to connect:\n"
@@ -54,8 +51,6 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
-	// thanks to www.chris.com for awsome ascii art
-	@Override
 	public void showInitMenu() {
 		writer.println("" + "                                  /   \\       \n"
 				+ " _                        )      ((   ))     (\n"
@@ -84,9 +79,9 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
-	@Override
+	
 	public void printCities() {
-		List<SimpleRegion> regions = model.getMap().getRegions();
+		/*List<SimpleRegion> regions = model.getMap().getRegions();
 
 		for (SimpleRegion region : regions) {
 			writer.println(SEPARATOR);
@@ -99,14 +94,14 @@ public class Cli implements ViewInterface {
 				}
 				writer.println();
 			}
-		}
+		}*/
 		writer.println(SEPARATOR);
 		writer.flush();
 	}
 
 	// if case of errors: add .toString() for each integer
 	public void printPlayers() {
-		List<PlayerProperty> players = model.getPlayers();
+	/*	List<PlayerProperty> players = model.getPlayers();
 		writer.println("Players");
 		for (int i = 0; i < players.size(); i++) {
 			writer.println(SEPARATOR);
@@ -122,12 +117,12 @@ public class Cli implements ViewInterface {
 				writer.println();
 			}
 		}
-		writer.println(SEPARATOR);
+		*/writer.println(SEPARATOR);
 		writer.flush();
 	}
 
 	private void printBonus(SimpleCity city) {
-		writer.print("(");
+	/*	writer.print("(");
 		// TODO add if is capital
 		if (city.hasKing().getValue())
 			writer.print("♕");
@@ -139,7 +134,7 @@ public class Cli implements ViewInterface {
 			writer.print("???");
 		}
 
-		writer.print(") ");
+		writer.print(") ");*/
 	}
 
 	@Override
@@ -150,12 +145,12 @@ public class Cli implements ViewInterface {
 
 	@Override
 	public void printAskWhichMapToUse() {
-		writer.println("Choose the number of the map:");
+		/*writer.println("Choose the number of the map:");
 		List<String> maps = model.getConfiguration().getMaps();
 		for (int i = 0; i < maps.size(); i++) {
 			writer.println((i + 1) + ". " + maps.get(i));
 		}
-		writer.flush();
+		writer.flush();*/
 	}
 
 	@Override
@@ -177,12 +172,6 @@ public class Cli implements ViewInterface {
 	}
 
 	@Override
-	public GameProperty getLocalModel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void showGame() {
 		writer.println(SEPARATOR);
 		writer.println("The game started");
@@ -197,42 +186,11 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
+	
 	@Override
-	public void playerJoined(Player p) {
-		writer.println(p.getName() + " joined the game");
-	}
-
-	@Override
-	public void setAllPlayers(List<Player> players) {
-		writer.println("Players list:");
-		for (int i = 0; i < players.size(); i++) {
-			writer.println((i + 1) + ". " + players.get(i).getName());
-		}
+	public void printMessage(String message) {
+		writer.println(message);
 		writer.flush();
 	}
 
-	@Override
-	public void updatePlayer(Player p, int index) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void isYourTurn() {
-		writer.println("\nIt is your turn");
-		writer.flush();
-	}
-
-	@Override
-	public void setCityRewards(List<Reward> bonusList) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void yourTurnEnded() {
-		writer.println("Your turn ended");
-		writer.println(SEPARATOR);
-		writer.flush();
-	}
 }

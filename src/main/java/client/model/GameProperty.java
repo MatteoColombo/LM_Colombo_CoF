@@ -48,11 +48,6 @@ public class GameProperty implements ModelInterface {
 		return this.players;
 	}
 
-	@Override
-	public void setMap(Board board) {
-		this.map = new SimpleMap(board);
-	}
-
 	public SimpleMap getMap() {
 		return this.map;
 	}

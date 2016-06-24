@@ -2,7 +2,6 @@ package view.p2pdialogue.update;
 
 import java.util.List;
 
-import client.model.GameProperty;
 import client.model.ModelInterface;
 import model.reward.Reward;
 

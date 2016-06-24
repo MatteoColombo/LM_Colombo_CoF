@@ -7,8 +7,8 @@ import java.util.logging.Logger;
 
 import model.action.Action;
 import model.player.Player;
-import view.p2pdialogue.notify.NotifyTurnEnded;
-import view.p2pdialogue.notify.NotifyYourTurn;
+import view.p2pdialogue.update.NotifyTurnEnded;
+import view.p2pdialogue.update.NotifyYourTurn;
 
 /**
  * This class is the one which manages a player's turn

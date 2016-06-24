@@ -8,15 +8,13 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import client.model.GameProperty;
 import client.view.Cli;
 import client.view.KeyboardListener;
 import client.view.RMIServerManager;
 import client.view.ServerManager;
 import client.view.SocketServerManager;
-import client.view.ViewInterface;
 import model.Configuration;
-import model.Game;
+import client.model.cli.Game;
 import model.exceptions.ConfigurationErrorException;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
@@ -28,18 +26,18 @@ public class CliController implements Runnable, Controller {
 
 	private static final long serialVersionUID = -1895721638081527089L;
 	private transient Scanner keyboard;
-	private transient ViewInterface view;
+	private transient Cli view;
 	private transient ServerManager serverManager;
 	private transient KeyboardListener keyboardListener;
 	private transient boolean canWrite;
 	private transient Logger logger = Logger.getGlobal();
-	private transient GameProperty model;
+	private transient Game model;
 
 	public CliController() {
 		try {
-			this.model = new GameProperty();
+			view = new Cli();
+			this.model = new Game(view);
 			this.model.setConfiguration(new Configuration());
-			view = new Cli(this.model);
 			keyboard = new Scanner(System.in);
 			this.canWrite = false;
 		} catch (ConfigurationErrorException e) {

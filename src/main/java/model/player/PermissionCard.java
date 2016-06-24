@@ -3,6 +3,7 @@ package model.player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.io.Serializable;
 
 import model.board.city.City;
 import model.market.Soldable;
@@ -24,7 +25,11 @@ import model.reward.*;
  * @see Player
  * @see Reward
  */
-public class PermissionCard implements Soldable {
+public class PermissionCard implements Soldable, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8717409237659947557L;
 	private List<City> cities;
 	private Reward reward;
 	private boolean used;

@@ -1,8 +1,5 @@
 package client.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,20 +15,18 @@ public class PermissionProperty {
 	private ObservableList<SimpleBonus> bonuses;
 	private StringProperty cityNames;
 	
-	public PermissionProperty(PermissionCard permissionCard) {
+	public PermissionProperty() {
 		used = new SimpleBooleanProperty(false);		
-		cityNames = new SimpleStringProperty("");
+		cityNames = new SimpleStringProperty();
 		bonuses = FXCollections.observableArrayList();
-		this.set(permissionCard);
 	}
 	
 	public void set(PermissionCard perm) {
 		String buffer = "";
 		for(City c: perm.getCardCity()) {
-			buffer.concat("/" + c.getName().substring(0, 1).toUpperCase());
+			buffer += "/" + c.getName().substring(0, 1).toUpperCase();
 		}
-		buffer.replaceFirst("/", "");
-		cityNames.set(buffer);
+		cityNames.set(buffer.substring(1));
 		bonuses.clear();
 		for(Bonus b: perm.getCardReward().getGeneratedRewards()) {
 			bonuses.add(new SimpleBonus(b));

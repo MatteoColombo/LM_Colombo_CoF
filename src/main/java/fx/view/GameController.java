@@ -10,6 +10,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -112,31 +113,28 @@ public class GameController {
 		initCouncils();
 		initBoardRewards();
 		initNobility();
-		//initPermissions();
+		initPermissions();
 	}
 
-	// --------------------DUMMY ACTIONS--------------------
+
 	@FXML
 	private void handleTestAction() throws IOException {
-		mainApp.sendMsg("slide -council 1 -color pink");
+		
+		
 	}
 
 	@FXML
 	private void handleTestAction2() throws IOException {
-		mainApp.sendMsg("slide -council 1 -color blue");
 	}
 
 	@FXML
 	private void handleTestAction3() throws IOException {
-		mainApp.sendMsg("slide -council k -color black");
 	}
 
 	@FXML
 	private void handleTestAction4() throws IOException {
-		IntegerProperty nobility  = mainApp.getLocalModel().getMyPlayerData().nobilityProperty();
-		nobility.set(nobility.get()+1);
+
 	}
-	// ------------------------------------------------------
 
 	@FXML
 	private void handlePass() throws IOException {
@@ -391,12 +389,37 @@ public class GameController {
 	
 	private void initPermissions() {
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
+		
 		for(int i = 0; i < regions.size(); i++) {
 			PermissionProperty[] permissions = regions.get(i).getPermissions();
-			for(int j = 0; j < permissions.length; j++) {	
-				AnchorPane permissionPane = (AnchorPane) mapPane.lookup("#permit" + String.valueOf(i) + "_" + String.valueOf(j));
+			
+			for(int j = 0; j < permissions.length; j++) {
+				
+				Pane outerPane = (Pane) mapPane.lookup("#permit" + String.valueOf(i) + "_" + String.valueOf(j));
+				
+				// generation
 				AnchorPane innerPane = generatePermission(permissions[j]);
-				permissionPane.getChildren().add(innerPane);
+				// binding city Label 
+				((Labeled) innerPane.lookup("#citiesLabel")).textProperty().bind(permissions[j].getCities());
+				// binding bonuses
+				permissions[j].getBonuses().addListener((ListChangeListener.Change<? extends SimpleBonus>  c) -> {
+					System.out.println("entered in listener at GameController:406");
+					for(SimpleBonus sb: c.getList()) {
+						try {
+							// reset all the bonus in the list, 
+							// since the amount of bonus in the box may change
+							// from card to card
+							HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
+							bonusBox.getChildren().clear();
+							bonusBox.getChildren().add(generateBonus(sb));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}		
+				});
+				
+				outerPane.getChildren().add(innerPane);
 			}
 		}
 	}
@@ -406,14 +429,19 @@ public class GameController {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/PermissionCard.fxml"));
 			AnchorPane permissionPane = loader.load();
-			((Labeled) permissionPane.lookup("#citiesLabel")).textProperty().bind(pp.getCities());
-			// TODO addlistener to the list here
 			
+			HBox bonusBox = (HBox) permissionPane.lookup("#bonusBox");
+			for(SimpleBonus sb: pp.getBonuses()) {
+				bonusBox.getChildren().add(generateBonus(sb));
+			}
+			// this is the real return
+			return permissionPane;
+						
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		// just cause without won't compile
 		return null;
 	}
 }

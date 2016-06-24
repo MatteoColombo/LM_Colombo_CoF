@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import model.board.Board;
 import model.board.council.Council;
 import model.exceptions.XMLFileException;
+import model.player.PermissionCard;
 import model.player.Player;
 import model.reward.Reward;
 import model.Configuration;
@@ -113,6 +114,11 @@ public class GameProperty implements ModelInterface {
 	@Override
 	public void setBonus(List<Reward> bonus) {
 		this.getMap().setCityRewards(bonus);
+	}
+
+	@Override
+	public void setPermission(PermissionCard pc, int region, int slot) {
+		this.getMap().getRegions().get(region).getPermissions()[slot].set(pc);
 	}
 
 }

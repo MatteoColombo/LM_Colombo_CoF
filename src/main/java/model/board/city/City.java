@@ -1,6 +1,7 @@
 package model.board.city;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,15 +41,19 @@ import model.reward.*;
  * @see Region
  * @see Reward
  */
-public class City {
+public class City implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1519838226056409747L;
 	private String cityName;
 	private Color cityColor;
 	private Reward cityReward;
-	private List<Emporium> emporiums;
+	private transient List<Emporium> emporiums;
 	private final boolean capital;
-	private List<City> connectedCities;
-	private Region cityRegion;
+	private transient List<City> connectedCities;
+	private transient Region cityRegion;
 
 	/**
 	 * Initializes a not-capital City with its name, {@link Color} and

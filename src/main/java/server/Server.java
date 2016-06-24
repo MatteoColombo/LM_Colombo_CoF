@@ -114,8 +114,11 @@ public class Server {
 	 */
 	public static synchronized void startGame() {
 		Game g=startingGames.remove(0); 
+		// set all the random parameters
 		gameControllerMap.get(g).notifySendCityRewards();
 		gameControllerMap.get(g).notifySetAllCouncil();
+		gameControllerMap.get(g).notifySetAllPermissions();
+		// start the game
 		gameControllerMap.get(g).notifyGameStarted();
 		g.start();
 	}

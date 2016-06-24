@@ -92,12 +92,6 @@ public class PlayerProperty {
 		}	
 		return this;
 	}
-	
-	public PlayerProperty setAll(Player player) {
-		setAllButPermissions(player);
-		setPermissions(player.getPermissionCard());
-		return this;
-	}
 
 	public StringProperty nameProperty() {
 		return name;
@@ -179,10 +173,5 @@ public class PlayerProperty {
 		return this.permissions;
 	}
 	
-	public void setPermissions(List<PermissionCard> cards) {
-		permissions.clear();
-		for(PermissionCard card: cards) {
-			permissions.add(new PermissionProperty(card));
-		}
-	}
+	// TODO add permission property method
 }

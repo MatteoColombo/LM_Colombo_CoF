@@ -9,16 +9,12 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="76.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="89.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../simboli/permissionCard.png" />
          </image>
       </ImageView>
-      <Label fx:id="citiesLabel" layoutX="17.0" layoutY="10.0" text="Label" AnchorPane.leftAnchor="10.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <HBox layoutX="5.0" layoutY="31.0" prefHeight="31.0" prefWidth="45.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <HBox fx:id="bonusBox" alignment="CENTER" layoutX="5.0" layoutY="31.0" prefHeight="31.0" prefWidth="45.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Label fx:id="citiesLabel" layoutX="17.0" layoutY="10.0" text="Label" AnchorPane.leftAnchor="10.0" />
    </children>
 </AnchorPane>

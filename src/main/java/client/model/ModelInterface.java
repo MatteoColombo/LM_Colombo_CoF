@@ -5,6 +5,7 @@ import java.util.List;
 import model.Configuration;
 import model.board.Board;
 import model.board.council.Council;
+import model.player.PermissionCard;
 import model.player.Player;
 import model.reward.Reward;
 
@@ -32,4 +33,6 @@ public interface ModelInterface {
 	public void setConfiguration(Configuration config);
 	
 	public Configuration getConfiguration();
+	
+	public void setPermission(PermissionCard pc, int region, int slot);
 }

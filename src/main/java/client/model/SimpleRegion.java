@@ -30,7 +30,7 @@ public class SimpleRegion {
 		
 		permissions = new PermissionProperty[region.getPermissionSlotsNumber()];
 		for(int i = 0; i < permissions.length; i++) {
-			permissions[i] = new PermissionProperty(region.getPermissionCard(i));
+			permissions[i] = new PermissionProperty();
 		}
 		
 		conquerBonus = new SimpleIntegerProperty();		
@@ -56,9 +56,7 @@ public class SimpleRegion {
 		this.conquerBonus.set(value);
 	}
 	
-	public void setPermissions(PermissionCard[] permissions) {
-		for(int i = 0; i < this.permissions.length; i++) {
-			this.permissions[i].set(permissions[i]);
-		}
+	public void setPermission(PermissionCard permissions, int i) {
+		this.permissions[i].set(permissions);
 	}
 }

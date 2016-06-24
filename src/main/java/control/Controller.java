@@ -14,6 +14,7 @@ import org.apache.commons.cli.ParseException;
 import model.Configuration;
 import model.Game;
 import model.TurnManager;
+import model.board.Region;
 import model.board.city.City;
 import model.board.council.Council;
 import model.exceptions.ConfigurationErrorException;
@@ -21,6 +22,7 @@ import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.market.Soldable;
 import model.player.Assistants;
+import model.player.PermissionCard;
 import model.player.Player;
 import model.reward.Bonus;
 import model.reward.Reward;
@@ -31,6 +33,7 @@ import view.p2pdialogue.update.NotifyPlayerJoined;
 import view.p2pdialogue.update.NotifyPlayersList;
 import view.p2pdialogue.update.NotifyUpdatePlayer;
 import view.p2pdialogue.update.UpdateCouncil;
+import view.p2pdialogue.update.UpdateRegionPermission;
 import view.p2pdialogue.update.UpdateSendCityBonus;
 import view.server.ClientInt;
 
@@ -405,9 +408,32 @@ public class Controller {
 		Council kingCouncil = game.getBoard().getKingCouncil();
 		notifySendCouncil(kingCouncil, -1);
 		
-		int regions = game.getBoard().getRegionsNumber();
-		for(int i = 0; i < regions; i++) {
-			notifySendCouncil(game.getBoard().getRegionCouncil(i), i);
+		List<Region> regions = game.getBoard().getRegions();
+		for(int i = 0; i < regions.size(); i++) {
+			notifySendCouncil(regions.get(i).getCouncil(), i);
+		}
+	}
+	
+	public void notifySetAllPermissions() {
+		List<Region> regions = game.getBoard().getRegions();
+		for(int i = 0; i < regions.size(); i++) {
+			
+			Region r = regions.get(i);
+			for(int j = 0; j < r.getPermissionSlotsNumber(); j++) {
+				
+				notifySendPermission(r.getPermissionCard(j), i, j);
+			}
+		}
+	}
+	
+	public void notifySendPermission(PermissionCard card, int region, int slot) {
+		for(ClientInt client: playersMap.keySet()){
+			try {
+				client.notify(new UpdateRegionPermission(card, region, slot));
+			} catch (IOException e) {
+				logger.log(Level.WARNING, e.getMessage(), e);
+				playersMap.get(client).setSuspension(true);
+			}
 		}
 	}
 

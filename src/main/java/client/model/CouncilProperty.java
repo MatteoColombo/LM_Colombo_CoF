@@ -2,7 +2,9 @@ package client.model;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -17,6 +19,18 @@ import util.ColorConverter;
  *
  */
 public class CouncilProperty {
+	
+	private static Map<String, String> colorName;
+	static {
+		colorName = new HashMap<>();
+		colorName.put("#ffffff", "white");
+		colorName.put("#000000", "black"); 
+		colorName.put("#ff9900", "orange"); 
+		colorName.put("#0066ff", "blue"); 
+		colorName.put("#ff99cc", "pink"); 
+		colorName.put("#cc33ff", "violet"); 
+	}
+	
 	private List<StringProperty> councilorsColors;
 	
 	public CouncilProperty() {
@@ -38,5 +52,9 @@ public class CouncilProperty {
 			String newHexColor = ColorConverter.awtToWeb((council.getCouncilorsColor().get(i)));
 			councilorsColors.get(i).set(newHexColor);
 		}
+	}
+	
+	public static String getColorName(String color) {
+		return colorName.get(color);
 	}
 }

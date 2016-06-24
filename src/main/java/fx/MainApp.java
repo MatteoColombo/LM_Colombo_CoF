@@ -243,11 +243,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void printAskPlayerName() {
-		try {
-			sendMsg(myName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		sendMsg(myName);
 	}
 
 	public GameProperty getLocalModel() {

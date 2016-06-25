@@ -2,10 +2,12 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 
-import model.board.ColorConstants;
 import model.board.nobility.NobilityLoader;
 import model.board.nobility.NobilityTrack;
 import model.exceptions.IllegalActionException;
@@ -36,7 +38,12 @@ public class TestActionBuilder {
 		config= new Configuration();
 		board = new Board(config, 0);
 		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		player = new Player(10, 4, 0, 10, ColorConstants.getCardsColors(), 25, 3,track,null);
+		List<Color> colors = new ArrayList<>();
+		colors.add(Color.BLACK);
+		colors.add(Color.WHITE);
+		colors.add(Color.PINK);
+		colors.add(Color.ORANGE);
+		player = new Player(10, 4, 0, 10, colors, 25, 3,track,null);
 	}
 
 	@Test

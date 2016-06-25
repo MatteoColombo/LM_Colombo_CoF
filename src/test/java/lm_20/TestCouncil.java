@@ -9,7 +9,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.board.ColorConstants;
 import model.board.council.Council;
 import model.board.council.Councilor;
 import model.exceptions.IllegalActionException;
@@ -64,7 +63,11 @@ public class TestCouncil {
 	@Test(expected = IllegalActionException.class)
 	public void testTooManyCards() throws IllegalActionException {
 		Council council = new Council(members);
-		List<Color> colors = ColorConstants.getCardsColors();
+		List<Color> colors = new ArrayList<>();
+		colors.add(Color.BLACK);
+		colors.add(Color.WHITE);
+		colors.add(Color.PINK);
+		colors.add(Color.ORANGE);
 		List<PoliticCard> cards = new ArrayList<>();
 		cards.add(new PoliticCard(colors));
 		cards.add(new PoliticCard(colors));

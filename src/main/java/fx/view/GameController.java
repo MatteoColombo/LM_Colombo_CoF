@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -109,6 +110,8 @@ public class GameController {
 
 	@FXML
 	private TextArea logger;
+	
+	private String actionSelected = "";
 
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
@@ -126,19 +129,23 @@ public class GameController {
 
 
 	@FXML
-	private void handleSlideCouncil() throws IOException {	
+	private void handleSlideCouncil() throws IOException {
+		actionSelected = "slide";
 	}
 
 	@FXML
 	private void handleBuyPermission() throws IOException {
+		actionSelected = "permission";
 	}
 
 	@FXML
 	private void handleBuildEmporium() throws IOException {
+		actionSelected = "emporium";
 	}
 
 	@FXML
 	private void handleBuildWithKing() throws IOException {
+		actionSelected = "king";
 	}
 	
 	@FXML
@@ -157,14 +164,14 @@ public class GameController {
 	
 	@FXML
 	private void handleSlideSide() throws IOException {
-		
+		actionSelected = "secondarySlide";
 	}
 
 	@FXML
 	private void handlePass() throws IOException {
 		mainApp.sendMsg("end");
 	}
-
+	
 	private void initMyData() {
 		PlayerProperty myData = mainApp.getLocalModel().getMyPlayerData();
 		
@@ -187,6 +194,9 @@ public class GameController {
 
 	private void initPoliticTable() {
 		politicCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPoliticCards());
+		
+		politicCardsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
 		politicCardsColumn.setCellValueFactory(cell -> cell.getValue());
 		politicCardsColumn.setCellFactory(column -> {
 			return new TableCell<StringProperty, String>() {
@@ -251,7 +261,37 @@ public class GameController {
 
 					Node king = innerPane.lookup("#king");
 					king.visibleProperty().bind(sc.hasKing());
-
+					/*
+					king.setOnDragDetected(event -> {
+						Dragboard db = king.startDragAndDrop(TransferMode.ANY);
+						ClipboardContent content = new ClipboardContent();
+						content.putString(innerPane.getId());
+						db.setContent(content);
+				        event.consume();
+					});
+					
+					innerPane.setOnDragOver(event -> {
+						if (event.getGestureSource() != innerPane &&
+				                event.getDragboard().hasString()) {
+							innerPane.setEffect(new Bloom());
+				            event.acceptTransferModes(TransferMode.MOVE);
+				        }
+				        event.consume();
+					});
+					
+					innerPane.setOnDragExited(event -> {
+						innerPane.setEffect(null);
+					});
+					
+					innerPane.setOnDragDropped(event -> {
+						Dragboard db = event.getDragboard();
+						
+						if(db.hasString()) {
+							innerPane.lookup("#king").visibleProperty().set(true);
+							mapPane.lookup(db.getString()).lookup("#king").visibleProperty().set(false);
+						}
+					});
+					*/
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
 						
@@ -464,7 +504,7 @@ public class GameController {
 				try {
 					Pane bonusPane = generateBonus(bonuses.get(j));
 					bonusPane.setLayoutX(NOBILITY_START_X - 15 + i*NOBILITY_STEP);
-					bonusPane.setLayoutY(NOBILITY_START_Y + j*NOBILITY_HEIGHT/bonuses.size());						
+					bonusPane.setLayoutY(NOBILITY_START_Y - 15 + j*NOBILITY_HEIGHT/bonuses.size());						
 					mapPane.getChildren().add(bonusPane);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

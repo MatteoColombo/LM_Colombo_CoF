@@ -61,7 +61,12 @@
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
+	-fx-background-color: -fx-focus-color;
+    -fx-effect: innershadow(three-pass-box, yellow, 10, 0, 0, 0);
+}
+
+.table-row-cell:selected {
+ 	-fx-effect: innershadow(three-pass-box, yellow, 10, 0, 0, 0);
 }
 
 .split-pane:horizontal > .split-pane-divider {

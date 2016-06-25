@@ -177,6 +177,7 @@ public class PlayerProperty {
 	}
 	
 	public void setAllPermissions(Player player) {
+		permissions.clear();
 		for(PermissionCard pc: player.getPermissionCard()) {
 			addPermission(pc);
 		}

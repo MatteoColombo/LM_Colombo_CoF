@@ -18,6 +18,7 @@ import model.player.Assistants;
 import model.player.Coins;
 import model.player.Emporium;
 import model.player.NoblePoints;
+import model.player.PermissionCard;
 import model.player.Player;
 import model.player.PoliticCard;
 import model.player.VictoryPoints;
@@ -125,6 +126,22 @@ public class TestPlayer {
 		assertEquals(7, p.getPoliticCard().size());
 		
 		System.out.println(p.getPoliticCard().get(0).isMultipleColor());
+	}
+	
+	/**
+	 * Test the equals methods
+	 */
+	@Test
+	public void testEquals(){
+		Assistants ass2= new Assistants(p.getAssistants().getAmount());
+		assertEquals(p.getAssistants(), ass2);
+		ass2.increaseAmount(2);
+		assertNotEquals(p.getAssistants(), ass2);
+		PoliticCard pol2= new PoliticCard(p.getPoliticCard().get(0).getCardColor());
+		assertEquals(p.getPoliticCard().get(0), pol2);
+		pol2= new PoliticCard(Color.decode("#eeeeee"));
+		assertNotEquals(p.getPoliticCard().get(0), pol2);
+		
 	}
 
 }

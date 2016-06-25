@@ -75,5 +75,10 @@ public class Assistants implements Serializable, Soldable {
 			return true;
 		return false;
 	}
+	
+	@Override
+	public int hashCode(){
+		return this.amount;
+	}
 
 }

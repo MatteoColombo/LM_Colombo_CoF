@@ -76,5 +76,12 @@ public class PoliticCard implements Serializable, Soldable {
 			return true;
 		return false;
 	}
+	
+	@Override
+	public int hashCode(){
+		if(isMultipleColor)
+			return -1;
+		return color.getRGB();
+	}
 
 }

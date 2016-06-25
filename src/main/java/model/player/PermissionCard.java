@@ -134,5 +134,12 @@ public class PermissionCard implements Soldable, Serializable {
 			return true;
 		return false;
 	}
+	
+	@Override
+	public int hashCode(){
+		int sum= 100*cities.size();
+		sum+= 5*reward.getGeneratedRewards().size();
+		return sum;
+	}
 
 }

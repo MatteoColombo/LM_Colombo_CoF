@@ -40,5 +40,6 @@ public class TestMapLoader {
 	@Test(expected=MapXMLFileException.class)
 	public void testExceptionMaokXML() throws Exception{
 		MapLoader ml = new MapLoader("src/file.xml", new CouncilorPool(4, 4, colors));
+		ml.getCitiesList();
 	}
 }

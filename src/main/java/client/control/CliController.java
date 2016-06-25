@@ -32,7 +32,7 @@ public class CliController implements Runnable, Controller {
 	private transient boolean canWrite;
 	private transient Logger logger = Logger.getGlobal();
 	private transient Game model;
-	private Configuration config;
+	private transient Configuration config;
 	public CliController() {
 		try {
 			config= new Configuration();
@@ -95,16 +95,13 @@ public class CliController implements Runnable, Controller {
 			keyboardListener.start();
 			switch (connectionType) {
 			case 1:
-				Socket server = new Socket(model.getConfiguration().getServerAddress(),
-						model.getConfiguration().getSocketPort());
+				Socket server = new Socket(model.getConfiguration().getServerAddress(), model.getConfiguration().getSocketPort());
 				SocketServerManager sockettemp = new SocketServerManager(server, this);
 				sockettemp.start();
 				this.serverManager = sockettemp;
 				break;
 			case 2:
-				ServerInt serv = (ServerInt) LocateRegistry
-						.getRegistry(model.getConfiguration().getServerAddress(), model.getConfiguration().getRmiPort())
-						.lookup("ServerInt");
+				ServerInt serv = (ServerInt) LocateRegistry.getRegistry(model.getConfiguration().getServerAddress(), model.getConfiguration().getRmiPort()).lookup("ServerInt");
 				RMIServerManager rmitemp = new RMIServerManager(this);
 				this.serverManager = rmitemp;
 				serv.login(rmitemp);

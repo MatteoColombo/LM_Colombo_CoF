@@ -118,7 +118,7 @@ public class Configuration {
 		colorTranslationReverse = new HashMap<>();
 		NodeList colors = (NodeList) xpath.compile(COLORPATH + "color/value").evaluate(xmlDoc, XPathConstants.NODESET);
 		for (int i = 0; i < colors.getLength(); i++)
-			colorsList.add(Color.decode((colors.item(i).getFirstChild().getNodeValue())));
+			colorsList.add(Color.decode(colors.item(i).getFirstChild().getNodeValue()));
 		NodeList names = (NodeList) xpath.compile(COLORPATH + "color/name").evaluate(xmlDoc, XPathConstants.NODESET);
 		for (int i = 0; i < colors.getLength(); i++) {
 			colorTranslation.put(names.item(i).getFirstChild().getNodeValue(),

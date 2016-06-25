@@ -170,11 +170,11 @@ public class Controller {
 		int players = config.getMaxNumberOfPlayer();
 		try {
 			players = Integer.parseInt(maxPlayers);
-			if (players > config.getMaxNumberOfPlayer() || players < 0)
-				throw new IllegalActionException("too many players");
+			if (players > config.getMaxNumberOfPlayer() || players < 2)
+				throw new IllegalActionException("invalid number of players!");
 			map = Integer.parseInt(choosenMap);
-			if (map > config.getMaps().size() || map < 0)
-				throw new IllegalActionException("wrong map number");
+			if (map > config.getMaps().size() || map < 1)
+				throw new IllegalActionException("invalid map number!");
 		} catch (NumberFormatException | IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));

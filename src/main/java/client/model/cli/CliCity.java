@@ -31,4 +31,8 @@ public class CliCity {
 		this.rewards=rewards;
 	}
 	
+	public List<CliBonus> getBonus(){
+		return this.rewards;
+	}
+	
 }

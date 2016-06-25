@@ -32,12 +32,14 @@ public class CliController implements Runnable, Controller {
 	private transient boolean canWrite;
 	private transient Logger logger = Logger.getGlobal();
 	private transient Game model;
-
+	private Configuration config;
 	public CliController() {
 		try {
-			view = new Cli();
+			config= new Configuration();
+			view = new Cli(config);
 			this.model = new Game(view);
-			this.model.setConfiguration(new Configuration());
+			this.view.setModel(model);
+			this.model.setConfiguration(config);
 			keyboard = new Scanner(System.in);
 			this.canWrite = false;
 		} catch (ConfigurationErrorException e) {
@@ -85,7 +87,7 @@ public class CliController implements Runnable, Controller {
 				view.showGetConnectionType();
 				connectionType = Integer.parseInt(keyboard.nextLine());
 			} catch (NumberFormatException e) {
-				logger.log(Level.SEVERE, "Error, you didn't insert a number", e);
+				logger.log(Level.SEVERE, "Error, you didn't insert a number");
 			}
 		} while (connectionType != 1 && connectionType != 2);
 		try {

@@ -66,7 +66,7 @@
                </image>
             </ImageView>
             <Label fx:id="politicLabel" text="Label" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Label fx:id="permissionLabel" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
       <Rectangle fx:id="colorRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="64.0" layoutX="-14.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="111.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />

@@ -8,6 +8,7 @@ import java.util.Map;
 import client.model.*;
 import fx.MainApp;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -281,6 +282,12 @@ public class GameController {
 					((Labeled) pane.lookup("#nobilityLabel")).textProperty()
 							.bind(players.get(i).nobilityProperty().asString());
 
+					IntegerBinding permSizeProperty = Bindings.size(players.get(i).getPermissions());
+					IntegerBinding politicSizeProperty = Bindings.size(players.get(i).getPoliticCards());
+					
+					((Labeled) pane.lookup("#permissionLabel")).textProperty().bind(permSizeProperty.asString());
+					((Labeled) pane.lookup("#politicLabel")).textProperty().bind(politicSizeProperty.asString());
+					
 				} catch (IOException e) {
 					logger.appendText(e.getMessage());
 				}

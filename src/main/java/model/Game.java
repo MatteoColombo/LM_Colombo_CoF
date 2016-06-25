@@ -28,9 +28,11 @@ public class Game extends Thread {
 	private int choosenMap;
 	private ClientInt initialClient;
 	private Market market;
+	private int suspendedPlayers;
 
 	public Game(Configuration gameConfig, ClientInt initialClient) throws ConfigurationErrorException {
 		this.config = gameConfig;
+		this.suspendedPlayers=0;
 		this.players = new ArrayList<>();
 		this.maxNumberOfPlayers = config.getMaxNumberOfPlayer();
 		this.initialClient = initialClient;
@@ -105,11 +107,13 @@ public class Game extends Thread {
 	public void run() {
 		boolean someoneWon = false;
 		// This loops is for the regular game
-		for (int i = 0; !someoneWon; i = (i + 1) % players.size()) {
+		for (int i = 0;suspendedPlayers< (players.size()-1) && !someoneWon; i = (i + 1) % players.size()) {
 			if (players.get(i).getSuspended())
 				continue;
 			turnManager = new TurnManager(players.get(i));
 			turnManager.startTurn();
+			if(players.get(i).getSuspended())
+				this.suspendedPlayers++;
 			if (players.get(i).getEmporium().isEmpty()) {
 				winningPlayer = i;
 				someoneWon = true;
@@ -175,4 +179,11 @@ public class Game extends Thread {
 	public Market getMarket(){
 		return this.market;
 	}
+	
+	private int countSuspendedPlayers(){
+		//players.filter
+		//for(Player p: players)
+		return 0;
+	}
+	
 }

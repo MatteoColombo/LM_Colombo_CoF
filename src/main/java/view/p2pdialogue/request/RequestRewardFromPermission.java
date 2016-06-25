@@ -8,8 +8,7 @@ public class RequestRewardFromPermission implements Request{
 
 	@Override
 	public void execute(ViewInterface view) {
-		// TODO Auto-generated method stub
-		
+		view.printMessage("You can choose the reward from one of you permission cards: (Read the README for instructions)");
 	}
 
 }

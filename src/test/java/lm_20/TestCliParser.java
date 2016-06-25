@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
-import org.junit.Before;
 import org.junit.Test;
 
 import control.CliParser;

@@ -7,9 +7,7 @@ import java.util.Map;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.board.city.City;
 import model.reward.Bonus;

@@ -1,7 +1,6 @@
 package fx.view;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import fx.MainApp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -18,13 +16,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -35,7 +31,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import model.player.PermissionCard;
 
 public class GameController {
 

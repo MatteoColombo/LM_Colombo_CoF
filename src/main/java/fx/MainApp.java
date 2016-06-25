@@ -16,7 +16,6 @@ import fx.view.GameController;
 import fx.view.LoginController;
 import client.control.Controller;
 import client.model.GameProperty;
-import client.model.PlayerProperty;
 import fx.view.RoomController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -27,11 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.Configuration;
-import model.board.Region;
 import model.exceptions.ConfigurationErrorException;
-import model.exceptions.IllegalActionException;
-import model.player.Player;
-import model.reward.Reward;
 import server.ServerInt;
 import view.p2pdialogue.Dialogue;
 import view.p2pdialogue.notify.Notify;
@@ -40,6 +35,7 @@ import view.p2pdialogue.update.Update;
 
 public class MainApp extends Application implements ViewInterface, Runnable, Controller {
 
+	private static final long serialVersionUID = 8173423470055513329L;
 	private String myName;
 	private GameProperty localGame = new GameProperty();
 	private Stage primaryStage;

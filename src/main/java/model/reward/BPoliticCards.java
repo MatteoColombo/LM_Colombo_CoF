@@ -4,6 +4,7 @@ import model.player.Player;
 
 public class BPoliticCards extends Bonus {
 
+	private static final long serialVersionUID = -1477598084678660218L;
 	private static final int VALUE = 30;
 	private static final String NAME = "politic";
 	public BPoliticCards(int amount) {

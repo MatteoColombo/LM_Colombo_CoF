@@ -1,8 +1,6 @@
 package model.action;
 
 import model.exceptions.IllegalActionException;
-import model.player.Assistants;
-import model.player.Coins;
 import model.player.Player;
 
 /**

@@ -5,6 +5,9 @@ package model.reward;
  * @author Gianpaolo
  */
 public class RewardCity extends Reward{
+	
+	private static final long serialVersionUID = 8328602223482028431L;
+
 	public RewardCity() {	
 		super(Bonus.getCityBonus(), 2, 50);
 	}

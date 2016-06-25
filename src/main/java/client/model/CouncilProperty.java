@@ -1,6 +1,5 @@
 package client.model;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +7,6 @@ import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import model.board.council.Council;
 import util.ColorConverter;
 /**

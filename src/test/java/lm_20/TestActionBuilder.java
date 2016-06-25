@@ -2,7 +2,6 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
 
 import org.apache.commons.cli.CommandLine;
 
@@ -95,6 +94,7 @@ public class TestActionBuilder {
 		String input = "shuffle -region 2";
 		CommandLine parsed = parser.computeRequest(input.split(" "));
 		Action a = builder.makeAShufflePermissionCards(player, parsed);
+		a.execute();
 		// the execution is already working and tested
 	}
 

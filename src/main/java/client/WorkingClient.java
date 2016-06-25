@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import client.control.CliController;
 import fx.MainApp;
-import model.exceptions.ConfigurationErrorException;
 
 public class WorkingClient {
 
@@ -47,5 +46,13 @@ public class WorkingClient {
 			break;
 		}
 		t.start();
+		try {
+			t.join();
+		} catch (InterruptedException e) {
+			t.interrupt();
+			logger.log(Level.SEVERE,e.getMessage(),e);
+		}
+		sc.close();
+		
 	}
 }

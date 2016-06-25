@@ -19,8 +19,7 @@ public class NotifyBonusFromCities implements Notify {
 	}
 	@Override
 	public void execute(ViewInterface view) {
-		// TODO Auto-generated method stub
-
+		view.printMessage("You can choose "+cities+ " bonus from the cities that you own!");
 	}
   
 }

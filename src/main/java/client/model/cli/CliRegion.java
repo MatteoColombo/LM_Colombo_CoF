@@ -6,11 +6,13 @@ public class CliRegion {
 	private int regionIndex;
 	private List<CliCity> cities;
 	private List<String> council;
+	private CliPermission[] permission;
 	private int bonus;
 	
-	public CliRegion(int index, List<CliCity> cities){
+	public CliRegion(int index, List<CliCity> cities, int disclosed){
 		this.regionIndex=index;
 		this.cities=cities;
+		this.permission= new CliPermission[disclosed];
 	}
 
 	public int getRegionIndex() {
@@ -35,5 +37,9 @@ public class CliRegion {
 	
 	public int getBonus(){
 		return this.bonus;
+	}
+	
+	public CliPermission[] getPermission(){
+		return permission;
 	}
 }

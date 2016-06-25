@@ -1,51 +1,19 @@
 package client.view;
 
-import java.awt.Color;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import client.model.GameProperty;
-import client.model.ModelInterface;
-import client.model.PlayerProperty;
-import client.model.SimpleBonus;
-import client.model.SimpleCity;
-import client.model.SimpleRegion;
 import client.model.cli.CliBonus;
 import client.model.cli.CliCity;
+import client.model.cli.CliPermission;
 import client.model.cli.CliPlayer;
 import client.model.cli.CliRegion;
 import client.model.cli.Game;
-import javafx.beans.property.StringProperty;
 import model.Configuration;
-import model.board.Region;
-import model.board.city.City;
-import model.player.Player;
-import model.player.PoliticCard;
-import model.reward.Bonus;
-import model.reward.Reward;
 
-/**
- * 
- * @author gianpaolobranca
- *
- */
 public class Cli implements ViewInterface {
-	// NOTE: the following constants does not work in the eclipse console
-	// but they will work in other terminals (i tested it in iTerm2 and OSX
-	// Terminal)
-	private static final String ANSI_RESET = "\u001B[0m";
-	private static final String ANSI_BLACK = "\u001B[30m";
-	private static final String ANSI_RED = "\u001B[31m";
-	private static final String ANSI_GREEN = "\u001B[32m";
-	private static final String ANSI_YELLOW = "\u001B[33m";
-	private static final String ANSI_BLUE = "\u001B[34m";
-	private static final String ANSI_PURPLE = "\u001B[35m";
-	private static final String ANSI_CYAN = "\u001B[36m";
-	private static final String ANSI_WHITE = "\u001B[37m";
-	private static final String BLOCK = "\u2588\u2588";
+	
 	private static final String SEPARATOR = "---------------------------------------";
 
 	private PrintWriter writer;
@@ -57,10 +25,17 @@ public class Cli implements ViewInterface {
 		writer = new PrintWriter(System.out);
 	}
 
+	/**
+	 * This sets the model so that the view can query when it's neede
+	 * @param model the model
+	 */
 	public void setModel(Game model) {
 		this.model = model;
 	}
 
+	/**
+	 * This method is used to ask which type of connection the players wants to use
+	 */
 	public void showGetConnectionType() {
 		writer.print("                             W E L C O M E !\n" + "\n" + "\n"
 				+ "                    Select how do you want to connect:\n"
@@ -68,6 +43,9 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
+	/**
+	 * this method is used to print the initial menu
+	 */
 	public void showInitMenu() {
 		writer.println("" + "                                  /   \\       \n"
 				+ " _                        )      ((   ))     (\n"
@@ -89,22 +67,22 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
-	// this is just a trial for print colored blocks
-	public void printCouncil() {
-		writer.println(ANSI_RED + BLOCK + ANSI_RESET + ANSI_YELLOW + BLOCK + ANSI_RESET + ANSI_BLUE + BLOCK + ANSI_RESET
-				+ ANSI_WHITE + BLOCK + ANSI_RESET);
-		writer.flush();
-	}
-
+	
+	/**
+	 * This method prints the map, divided by regions 
+	 * It also prints the council and the permit cards
+	 * @param regions the regions of the map
+	 */
 	public void printCities(List<CliRegion> regions) {
 		for (CliRegion region : regions) {
 			writer.println(SEPARATOR);
-			writer.println("Region #" + (regions.indexOf(region)+1));
+			writer.println("Region #" + (regions.indexOf(region) + 1));
 			writer.print("Council: ");
-			List<String> council= region.getCouncil();
-			for(int i=council.size()-1; i>=0;i--)
-				writer.print(council.get(i)+" ");
-			writer.println();
+			List<String> council = region.getCouncil();
+			for (int i = council.size() - 1; i >= 0; i--)
+				writer.print(council.get(i) + " ");
+			writer.println("Permission cards:");
+			printPermission(new ArrayList<CliPermission>(Arrays.asList(region.getPermission())));
 			for (CliCity city : region.getCities()) {
 				writer.print("| ");
 				printBonus(city);
@@ -122,7 +100,11 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
-	// if case of errors: add .toString() for each integer
+	/**
+	 * Prints the players of the game and their statistics,
+	 * For the local player, also the permit and the politic cards are printed
+	 * @param players
+	 */
 	public void printPlayers(List<CliPlayer> players) {
 		writer.println("Players");
 		for (int i = 0; i < players.size(); i++) {
@@ -136,12 +118,19 @@ public class Cli implements ViewInterface {
 				List<String> cards = players.get(i).getPolitic();
 				cards.stream().forEach(card -> writer.print(card + " "));
 				writer.println();
+				printPermission(players.get(i).getPermission());
 			}
 		}
+
 		writer.println(SEPARATOR);
 		writer.flush();
 	}
 
+	/**
+	 * Prints the bonus of a city
+	 * Prints the king if the city "contains" it
+	 * @param city
+	 */
 	private void printBonus(CliCity city) {
 		writer.print("(");
 		if (city.isHasKing())
@@ -152,6 +141,22 @@ public class Cli implements ViewInterface {
 		writer.print(") ");
 		for (int i = city.getBonus().size(); i < 3; i++)
 			writer.print("\t");
+	}
+
+	/**
+	 * Prints the permission cards, it is used for the map and for the players
+	 * @param permissions
+	 */
+	private void printPermission(List<CliPermission> permissions) {
+		for (CliPermission perm : permissions) {
+			writer.print((permissions.indexOf(perm)+1) + ". ");
+			perm.getCities().stream().map(city -> city.substring(0, 1).toUpperCase())
+					.forEach(letter -> writer.print(letter.toUpperCase() + "\\"));
+			perm.getReward().stream().forEach(reward -> writer
+					.print(" " + reward.getName().substring(0, 3).toUpperCase() + " " + reward.getValue() + " "));
+			writer.println(perm.isUsed() ? "| USED" : "| AVAILABLE");
+		}
+		writer.flush();
 	}
 
 	@Override

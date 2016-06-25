@@ -5,6 +5,9 @@ package model.reward;
  * @author Gianpaolo
  */
 public class RewardPermission extends Reward{
+	
+	private static final long serialVersionUID = -5265241063177120154L;
+
 	public RewardPermission() {
 		super(Bonus.getAllStandardBonus(), 3, 120);
 	}

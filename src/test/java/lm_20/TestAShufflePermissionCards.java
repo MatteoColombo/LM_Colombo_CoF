@@ -13,7 +13,6 @@ import java.awt.Color;
 import model.Configuration;
 import model.action.AShufflePermissionCards;
 import model.action.Action;
-import model.board.ColorConstants;
 import model.board.Region;
 import model.board.city.City;
 import model.board.nobility.NobilityLoader;

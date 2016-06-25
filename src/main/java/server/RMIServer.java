@@ -3,10 +3,6 @@ package server;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
-import client.view.ViewInterface;
-import view.p2pdialogue.Dialogue;
-import view.p2pdialogue.request.RequestPlayerName;
 import view.server.ClientInt;
 import view.server.RMIClient;
 import view.server.RMIServerManagerInterface;

@@ -6,7 +6,6 @@ public class CliCity {
 	private String name;
 	private List<String> connections;
 	private boolean hasKing;
-	private boolean hasEmporium;
 	private List<CliBonus> rewards;
 
 	public CliCity(String name, List<String> connections, boolean hasKing) {

@@ -3,8 +3,6 @@ package model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import client.model.cli.CliRegion;
 import model.board.Board;
 import model.exceptions.ConfigurationErrorException;
 import model.exceptions.XMLFileException;
@@ -29,11 +27,9 @@ public class Game extends Thread {
 	private int choosenMap;
 	private ClientInt initialClient;
 	private Market market;
-	private int suspendedPlayers;
 
 	public Game(Configuration gameConfig, ClientInt initialClient) throws ConfigurationErrorException {
 		this.config = gameConfig;
-		this.suspendedPlayers = 0;
 		this.players = new ArrayList<>();
 		this.maxNumberOfPlayers = config.getMaxNumberOfPlayer();
 		this.initialClient = initialClient;

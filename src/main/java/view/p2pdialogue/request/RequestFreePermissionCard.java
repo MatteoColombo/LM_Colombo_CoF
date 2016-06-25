@@ -8,8 +8,7 @@ public class RequestFreePermissionCard implements Request{
 
 	@Override
 	public void execute(ViewInterface view) {
-		// TODO Auto-generated method stub
-		
+		view.printMessage("You can choose a free permission card: (Read the README for the instructions)");
 	}
 
 }

@@ -1,10 +1,7 @@
 package view.p2pdialogue.update;
 
-import client.model.GameProperty;
 import client.model.ModelInterface;
-import client.view.ViewInterface;
 import model.player.Player;
-import view.p2pdialogue.notify.Notify;
 
 public class NotifyPlayerJoined implements Update{
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import client.model.ModelInterface;
 import client.view.Cli;
@@ -52,7 +53,7 @@ public class Game implements ModelInterface {
 						connections.add(conn.getName());
 					cities.add(new CliCity(c.getName(), connections, c.isCapital()));
 				}
-				regions.add(new CliRegion(regions.size(), cities));
+				regions.add(new CliRegion(regions.size(), cities,config.getNumberDisclosedCards()));
 			}
 		} catch (XMLFileException e) {
 			// TODO Auto-generated catch block
@@ -95,7 +96,7 @@ public class Game implements ModelInterface {
 		for (CliRegion r : regions) {
 			for (CliCity c : r.getCities()) {
 				List<CliBonus> rewards = new ArrayList<>();
-				if(!c.isHasKing())
+				if (!c.isHasKing())
 					for (Bonus b : bonus.get(i).getGeneratedRewards())
 						rewards.add(new CliBonus(b.getAmount(), b.getTagName()));
 				c.setBonus(rewards);
@@ -150,13 +151,25 @@ public class Game implements ModelInterface {
 
 	@Override
 	public void setPermission(PermissionCard pc, int region, int slot) {
-		// TODO Auto-generated method stub
-
+		List<String> cities = pc.getCardCity().stream().map(city -> city.getName()).collect(Collectors.toList());
+		List<CliBonus> reward = pc.getCardReward().getGeneratedRewards().stream()
+				.map(bonus -> new CliBonus(bonus.getAmount(), bonus.getTagName())).collect(Collectors.toList());
+		regions.get(region).getPermission()[slot] = new CliPermission(cities, reward, pc.getIfCardUsed());
 	}
 
-	public List<CliRegion> getRegions(){
+	/**
+	 * returns the regions of the map
+	 * @return
+	 */
+	public List<CliRegion> getRegions() {
 		return this.regions;
 	}
 
-
+	/**
+	 * Returns the king's council
+	 * @return
+	 */
+	public List<String> getKingCouncil(){
+		return this.kingCouncil;
+	}
 }

@@ -8,7 +8,7 @@ public class RequestCity implements Request {
 
 	@Override
 	public void execute(ViewInterface view) {
-		
+		view.printMessage("Type in the name of the city");
 	}
 
 }

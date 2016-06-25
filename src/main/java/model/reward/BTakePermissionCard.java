@@ -3,7 +3,8 @@ package model.reward;
 import model.player.Player;
 
 public class BTakePermissionCard extends Bonus{
-	
+
+	private static final long serialVersionUID = 4995838499600810957L;
 	// not really useful here, it may be removed in the future
 	private static final int VALUE = 200;
 	private static final String NAME = "takePermit";

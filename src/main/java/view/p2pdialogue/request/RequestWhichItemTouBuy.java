@@ -16,8 +16,9 @@ public class RequestWhichItemTouBuy implements Request {
 
 	@Override
 	public void execute(ViewInterface view) {
-		// TODO Auto-generated method stub
-
+		view.printMessage("Select which item you want to buy:");
+		for(OnSaleItem item: items)
+			view.printMessage((items.indexOf(item)+1)+". "+item.getClass().getSimpleName()+ " "+item.getPrice());
 	}
 
 }

@@ -1,10 +1,8 @@
 package model;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import model.action.Action;
 import model.player.Player;
 import view.p2pdialogue.update.NotifyTurnEnded;

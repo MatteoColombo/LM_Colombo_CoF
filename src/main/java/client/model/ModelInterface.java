@@ -3,7 +3,6 @@ package client.model;
 import java.util.List;
 
 import model.Configuration;
-import model.board.Board;
 import model.board.council.Council;
 import model.player.PermissionCard;
 import model.player.Player;

@@ -7,7 +7,6 @@ import model.board.council.CouncilorColorAvailability;
 import model.board.council.CouncilorPool;
 import model.exceptions.IllegalActionException;
 import model.player.Assistants;
-import model.player.Coins;
 import model.player.Player;
 
 /**

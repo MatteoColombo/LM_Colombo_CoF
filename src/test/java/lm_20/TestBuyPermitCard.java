@@ -40,8 +40,9 @@ public class TestBuyPermitCard {
 		colorList.add(Color.YELLOW);
 		colorList.add(Color.GREEN);
 		colorList.add(Color.ORANGE);
-		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		this.player = new Player(10, 3, 6, 10, colorList, 0, 0, track,null);
+		NobilityTrack track = new NobilityTrack(
+				new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+		this.player = new Player(10, 3, 6, 10, colorList, 0, 0, track, null);
 		this.pool = new CouncilorPool(4, 4, colorList);
 		this.council = pool.getCouncil();
 		MapLoader ml = new MapLoader("src/main/resources/map.xml", pool);
@@ -52,7 +53,7 @@ public class TestBuyPermitCard {
 	 * Buys a permit card with a 100% satisfied council
 	 */
 	@Test
-	public void testBuyPermitCardWorking() throws Exception{
+	public void testBuyPermitCardWorking() throws Exception {
 		List<Color> colorOfCouncil = council.getCouncilorsColor();
 		List<PoliticCard> cards = new ArrayList<>();
 		for (Color c : colorOfCouncil) {
@@ -75,7 +76,6 @@ public class TestBuyPermitCard {
 	 */
 	@Test(expected = IllegalActionException.class)
 	public void testBuyPermitCardNotenoughMoney() throws Exception {
-		List<Color> colorOfCouncil = council.getCouncilorsColor();
 		List<PoliticCard> cards = new ArrayList<>();
 		PoliticCard p;
 		do {

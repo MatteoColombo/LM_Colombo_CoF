@@ -6,6 +6,7 @@ import model.player.Player;
 
 public class BExtraRewardFromCity extends Bonus{
 	
+	private static final long serialVersionUID = 6171860243613906131L;
 	// not really useful here, it may be removed in the future
 	public static final int VALUE = 60;
 	public static final String NAME = "city" ;

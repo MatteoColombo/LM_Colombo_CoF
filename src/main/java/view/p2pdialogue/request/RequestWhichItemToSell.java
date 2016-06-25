@@ -8,8 +8,7 @@ public class RequestWhichItemToSell implements Request {
 
 	@Override
 	public void execute(ViewInterface view) {
-		// TODO Auto-generated method stub
-
+		view.printMessage("Write the item that you want to put on sale: (Read the README for the instructions)");
 	}
 
 }

@@ -2,10 +2,7 @@ package client.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.board.Region;
 import model.board.city.City;

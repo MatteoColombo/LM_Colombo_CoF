@@ -5,11 +5,18 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import client.model.GameProperty;
+import client.model.ModelInterface;
 import client.model.PlayerProperty;
 import client.model.SimpleBonus;
 import client.model.SimpleCity;
 import client.model.SimpleRegion;
+import client.model.cli.CliBonus;
+import client.model.cli.CliCity;
+import client.model.cli.CliPlayer;
+import client.model.cli.CliRegion;
+import client.model.cli.Game;
 import javafx.beans.property.StringProperty;
+import model.Configuration;
 import model.board.Region;
 import model.board.city.City;
 import model.player.Player;
@@ -39,9 +46,16 @@ public class Cli implements ViewInterface {
 	private static final String SEPARATOR = "---------------------------------------";
 
 	private PrintWriter writer;
+	private Configuration config;
+	private Game model;
 
-	public Cli() {
+	public Cli(Configuration config) {
+		this.config = config;
 		writer = new PrintWriter(System.out);
+	}
+
+	public void setModel(Game model) {
+		this.model = model;
 	}
 
 	public void showGetConnectionType() {
@@ -79,62 +93,60 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
-	
-	public void printCities() {
-		/*List<SimpleRegion> regions = model.getMap().getRegions();
-
-		for (SimpleRegion region : regions) {
+	public void printCities(List<CliRegion> regions) {
+		for (CliRegion region : regions) {
 			writer.println(SEPARATOR);
-			for (SimpleCity city : region.getCities()) {
+			writer.println("Region #" + (regions.indexOf(region)+1));
+			writer.print("Council: ");
+			region.getCouncil().stream().forEach(card -> writer.print(card + " "));
+			writer.println();
+			for (CliCity city : region.getCities()) {
 				writer.print("| ");
 				printBonus(city);
-				writer.print(city.getName() + " -->");
+				if (city.getName().length() < 8)
+					writer.print(city.getName() + "\t-->");
+				else
+					writer.print(city.getName() + "-->");
 				for (String connected : city.getConnections()) {
-					writer.print(" " + connected);
+					writer.print("\t" + connected);
 				}
 				writer.println();
 			}
-		}*/
+		}
 		writer.println(SEPARATOR);
 		writer.flush();
 	}
 
 	// if case of errors: add .toString() for each integer
-	public void printPlayers() {
-	/*	List<PlayerProperty> players = model.getPlayers();
+	public void printPlayers(List<CliPlayer> players) {
 		writer.println("Players");
 		for (int i = 0; i < players.size(); i++) {
 			writer.println(SEPARATOR);
 			writer.println(players.get(i).getName());
 			writer.println("Victory points: " + players.get(i).getVictory() + ", Coins: " + players.get(i).getCoins()
 					+ ", Assitants: " + players.get(i).getAssistants() + ", Politics:"
-					+ players.get(i).getPoliticCards().size() + ", Nobility: " + players.get(i).getNobility());
+					+ players.get(i).getPolitic().size() + ", Nobility: " + players.get(i).getNobility());
 			if (i == model.getMyIndex()) {
-				List<StringProperty> cards = players.get(i).getPoliticCards();
-				for (StringProperty card : cards)
-					writer.print(("multi".equals(card.getValue())? card.getValue()
-							: model.getConfiguration().getColorsTranslationReverse().get(Color.decode(card.getValue())))+ " ");
+				writer.print("Politic Cards: ");
+				List<String> cards = players.get(i).getPolitic();
+				cards.stream().forEach(card -> writer.print(card + " "));
 				writer.println();
 			}
 		}
-		*/writer.println(SEPARATOR);
+		writer.println(SEPARATOR);
 		writer.flush();
 	}
 
-	private void printBonus(SimpleCity city) {
-	/*	writer.print("(");
-		// TODO add if is capital
-		if (city.hasKing().getValue())
-			writer.print("♕");
-		if (city.hasNoEmporium().getValue()) {
-			for (SimpleBonus b : city.getBonuses()) {
-				writer.print(b.getName().toUpperCase() + " " + b.getAmount());
-			}
-		} else {
-			writer.print("???");
-		}
-
-		writer.print(") ");*/
+	private void printBonus(CliCity city) {
+		writer.print("(");
+		if (city.isHasKing())
+			writer.print("♕ ");
+		if (city.getBonus() != null)
+			for (CliBonus b : city.getBonus())
+				writer.print(b.getName().substring(0, 3).toUpperCase() + " " + b.getValue() + " ");
+		writer.print(") ");
+		for (int i = city.getBonus().size(); i < 3; i++)
+			writer.print("\t");
 	}
 
 	@Override
@@ -145,12 +157,12 @@ public class Cli implements ViewInterface {
 
 	@Override
 	public void printAskWhichMapToUse() {
-		/*writer.println("Choose the number of the map:");
-		List<String> maps = model.getConfiguration().getMaps();
-		for (int i = 0; i < maps.size(); i++) {
-			writer.println((i + 1) + ". " + maps.get(i));
+		writer.println("Choose the number of the map:");
+		List<String> maps = config.getMaps();
+		for (int i = 1; i <= maps.size(); i++) {
+			writer.println(i + ". Map " + i);
 		}
-		writer.flush();*/
+		writer.flush();
 	}
 
 	@Override
@@ -176,8 +188,7 @@ public class Cli implements ViewInterface {
 		writer.println(SEPARATOR);
 		writer.println("The game started");
 		writer.flush();
-		printCities();
-		printPlayers();
+		printCities(model.getRegions());
 	}
 
 	@Override
@@ -186,7 +197,6 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
-	
 	@Override
 	public void printMessage(String message) {
 		writer.println(message);

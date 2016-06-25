@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.model.cli.CliRegion;
 import model.board.Board;
 import model.exceptions.ConfigurationErrorException;
 import model.exceptions.XMLFileException;
@@ -181,7 +182,6 @@ public class Game extends Thread {
 	}
 
 	private int countSuspendedPlayers() {
-		System.out.println(players.stream().filter(Player::getSuspended).count());
 		return (int) players.stream().filter(Player::getSuspended).count();
 	}
 

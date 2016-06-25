@@ -68,6 +68,8 @@ public class Game implements ModelInterface {
 	@Override
 	public void isYourTurn() {
 		view.printMessage("It's your turn!");
+		view.printCities(regions);
+		view.printPlayers(players);
 	}
 
 	@Override
@@ -93,10 +95,10 @@ public class Game implements ModelInterface {
 		for (CliRegion r : regions) {
 			for (CliCity c : r.getCities()) {
 				List<CliBonus> rewards = new ArrayList<>();
-				Reward rew = bonus.get(i);
 				if(!c.isHasKing())
 					for (Bonus b : bonus.get(i).getGeneratedRewards())
 						rewards.add(new CliBonus(b.getAmount(), b.getTagName()));
+				c.setBonus(rewards);
 				i++;
 			}
 		}
@@ -151,5 +153,10 @@ public class Game implements ModelInterface {
 		// TODO Auto-generated method stub
 
 	}
+
+	public List<CliRegion> getRegions(){
+		return this.regions;
+	}
+
 
 }

@@ -84,12 +84,15 @@ public class GameController {
 	private TableView<StringProperty> politicCardsTable;
 	@FXML
 	private TableColumn<StringProperty, String> politicCardsColumn;
-
+	
 	@FXML
-	private TableView<ObjectProperty<PermissionCard>> permissionCardsTable;
+	private ListView<PermissionProperty> permissionList;
+/*
 	@FXML
-	private TableColumn<ObjectProperty<PermissionCard>, String> permissionCardsColumn;
-
+	private TableView<PermissionProperty> permissionCardsTable;
+	@FXML
+	private TableColumn<PermissionProperty, String> permissionCardsColumn;
+*/
 	@FXML
 	private Button mainActionButton1;
 	@FXML
@@ -115,11 +118,16 @@ public class GameController {
 	
 	private String actionSelected = "";
 
+	public void logMsg(String msg) {
+		logger.appendText(msg);
+	}
+	
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
 		initMyData();
 		initOpponentsPanes();
 		initPoliticTable();
+		initPermissionList();
 		initMap();
 		initConnections();
 		initCouncils();
@@ -233,6 +241,23 @@ public class GameController {
 		});
 	}
 
+	private void initPermissionList() {
+		permissionList.setItems(mainApp.getLocalModel().getMyPlayerData().getPermissions());
+		
+		permissionList.setCellFactory(listView -> new ListCell<PermissionProperty>() {
+			@Override
+			public void updateItem(PermissionProperty item, boolean empty) {
+		        super.updateItem(item, empty);
+		        if (empty) {
+		            setGraphic(null);
+		        } else {
+		            AnchorPane permissionPane = generatePermission(item);
+		            setGraphic(permissionPane);
+		        }
+		    }
+		});
+	}
+	
 	private void initOpponentsPanes() {
 		ObservableList<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
 		int myIndex = mainApp.getLocalModel().getMyIndex();

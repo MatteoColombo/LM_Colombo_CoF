@@ -171,5 +171,15 @@ public class PlayerProperty {
 		return this.permissions;
 	}
 	
-	// TODO add permission property method
+	public void setAllPermissions(Player player) {
+		for(PermissionCard pc: player.getPermissionCard()) {
+			addPermission(pc);
+		}
+	}
+	
+	public void addPermission(PermissionCard p) {
+		PermissionProperty card = new PermissionProperty();
+		card.set(p);
+		permissions.add(card);
+	}
 }

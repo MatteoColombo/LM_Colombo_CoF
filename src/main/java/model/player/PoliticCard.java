@@ -67,8 +67,12 @@ public class PoliticCard implements Serializable, Soldable {
 	public boolean equals(Object item) {
 		if (!(item instanceof PoliticCard))
 			return false;
-		if (this.color.equals(((PoliticCard) item).getCardColor())
-				&& this.isMultipleColor == ((PoliticCard) item).isMultipleColor)
+		if(this.isMultipleColor)
+			if(((PoliticCard)item).isMultipleColor)
+				return true;
+			else 
+				return false;
+		if (this.color.equals(((PoliticCard) item).getCardColor()))
 			return true;
 		return false;
 	}

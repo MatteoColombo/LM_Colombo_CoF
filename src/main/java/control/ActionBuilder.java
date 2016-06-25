@@ -150,7 +150,7 @@ public class ActionBuilder {
 	public Action makeABuyPermissionCard(Player p, CommandLine cmd) throws IllegalActionException {
 
 		// because there is a 1 to 1 association with region and council
-		String strRegion = cmd.getOptionValue(CliParser.OPTCOUNCIL);
+		String strRegion = cmd.getOptionValue(CliParser.OPTREGION);
 		Region region = parseRegion(strRegion);
 
 		Council council = parseCouncil(strRegion, false);

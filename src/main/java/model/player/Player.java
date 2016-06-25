@@ -30,7 +30,7 @@ public class Player implements Serializable {
 	private List<PoliticCard> politicCard;
 	private String name;
 	// FIXME permissions should be serializable
-	private transient List<PermissionCard> permissionCard;
+	private List<PermissionCard> permissionCard;
 	private transient List<Emporium> emporium;
 	private transient List<Color> pickedColours;
 	private int mainActions;
@@ -50,7 +50,9 @@ public class Player implements Serializable {
 		this.assistants = new Assistants(p.getAssistants().getAmount());
 		this.noblePoints = new NoblePoints(p.getNoblePoints().getAmount(), null, null);
 		this.victoryPoints = new VictoryPoints(p.getVictoryPoints().getAmount());
-
+		this.permissionCard= new ArrayList<>();
+		for(PermissionCard card: p.getPermissionCard())
+			this.permissionCard.add(new PermissionCard(card.getCardCity(), card.getCardReward()));
 		this.politicCard = new ArrayList<>();
 		for (PoliticCard card : p.getPoliticCard()) {
 			this.politicCard.add(new PoliticCard(card.getCardColor()));
@@ -67,6 +69,7 @@ public class Player implements Serializable {
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
 		this.name = client.getName();
+		this.permissionCard = new ArrayList<>();
 		this.pickedColours = config.getColorsList();
 		for (int i = 0; i < config.getInitialPoliticCards(); i++)
 			politicCard.add(new PoliticCard(pickedColours));

@@ -87,7 +87,7 @@ public class CliController implements Runnable, Controller {
 				view.showGetConnectionType();
 				connectionType = Integer.parseInt(keyboard.nextLine());
 			} catch (NumberFormatException e) {
-				logger.log(Level.SEVERE, "Error, you didn't insert a number");
+				logger.log(Level.SEVERE, "Error, you didn't insert a number",e);
 			}
 		} while (connectionType != 1 && connectionType != 2);
 		try {

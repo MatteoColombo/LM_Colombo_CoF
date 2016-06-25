@@ -91,6 +91,11 @@ public class PlayerProperty {
 		return this;
 	}
 
+	public void setAll(Player player) {
+		this.setAllButPermissions(player);
+		this.setAllPermissions(player);
+	}
+	
 	public StringProperty nameProperty() {
 		return name;
 	}

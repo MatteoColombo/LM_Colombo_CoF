@@ -80,7 +80,7 @@ public class GameProperty implements ModelInterface {
 
 	@Override
 	public void updatePlayer(Player p, int index) {
-		players.get(index).setAllButPermissions(p);
+		players.get(index).setAll(p);
 	}
 
 	@Override

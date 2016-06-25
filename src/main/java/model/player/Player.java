@@ -29,7 +29,6 @@ public class Player implements Serializable {
 	private NoblePoints noblePoints;
 	private List<PoliticCard> politicCard;
 	private String name;
-	// FIXME permissions should be serializable
 	private List<PermissionCard> permissionCard;
 	private transient List<Emporium> emporium;
 	private transient List<Color> pickedColours;

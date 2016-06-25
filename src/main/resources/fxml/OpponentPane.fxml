@@ -46,21 +46,28 @@
             <Label fx:id="nobilityLabel" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
-      <GridPane layoutX="-51.0" layoutY="46.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="75.0">
+      <GridPane alignment="CENTER" layoutX="-51.0" layoutY="46.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="75.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="55.17522430419922" minWidth="10.0" prefWidth="52.43806457519531" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="62.56193542480469" minWidth="10.0" prefWidth="62.56193542480469" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="politicLabel" text="Label" />
-            <Label text="Label" GridPane.columnIndex="1" />
+            <ImageView fitHeight="56.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../simboli/permissionCard.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="72.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../simboli/politic.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="politicLabel" text="Label" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
       </GridPane>
       <Rectangle fx:id="colorRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="64.0" layoutX="-14.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="111.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Label fx:id="nameLabel" layoutX="14.0" layoutY="32.0" text="Label" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />

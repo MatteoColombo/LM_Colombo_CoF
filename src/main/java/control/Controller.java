@@ -266,6 +266,7 @@ public class Controller {
 				int region= Integer.parseInt(cmd.getOptionValue(CliParser.OPTREGION))-1;
 				int slot= Integer.parseInt(cmd.getOptionValue(CliParser.OPTPERMISSION))-1;
 				notifySendPermission(game.getBoard().getRegion(region).getPermissionCard(slot),region, slot );
+				
 				break;
 			case "emporium":
 				tm.performAction(builder.makeABuildEmporium(player, cmd));

@@ -165,6 +165,7 @@ public class GameController {
 	
 	@FXML
 	private void handleShuffle() throws IOException {
+		
 	}
 	
 	@FXML
@@ -249,8 +250,11 @@ public class GameController {
 			public void updateItem(PermissionProperty item, boolean empty) {
 		        super.updateItem(item, empty);
 		        if (empty) {
+		        	logger.appendText("252\n");
+		        	setText(null);
 		            setGraphic(null);
 		        } else {
+		        	logger.appendText("257\n");
 		            AnchorPane permissionPane = generatePermission(item);
 		            setGraphic(permissionPane);
 		        }
@@ -605,6 +609,7 @@ public class GameController {
 						String region = info.substring(0, 1);
 						int cardIndex = Integer.valueOf(card)+1;
 						int regionIndex = Integer.valueOf(region)+1;
+						System.out.println(id + info + card + region + cardIndex + regionIndex);
 						mainApp.sendMsg(actionSelected 
 								+ " -region " + regionIndex 
 								+ " -permission " + cardIndex 
@@ -615,7 +620,6 @@ public class GameController {
 				// generation
 				AnchorPane innerPane = generatePermission(permissions[j]);
 				// binding city Label 
-				((Labeled) innerPane.lookup("#citiesLabel")).textProperty().bind(permissions[j].getCities());
 				// binding bonuses
 				permissions[j].getBonuses().addListener((ListChangeListener.Change<? extends SimpleBonus>  c) -> {
 					for(SimpleBonus sb: c.getList()) {
@@ -643,6 +647,8 @@ public class GameController {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/PermissionCard.fxml"));
 			AnchorPane permissionPane = loader.load();
+			
+			((Labeled) permissionPane.lookup("#citiesLabel")).textProperty().bind(pp.getCities());
 			
 			HBox bonusBox = (HBox) permissionPane.lookup("#bonusBox");
 			for(SimpleBonus sb: pp.getBonuses()) {

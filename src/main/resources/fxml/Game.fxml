@@ -71,7 +71,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <ListView fx:id="permissionList" prefHeight="186.0" prefWidth="137.0" />
+            <ListView fx:id="permissionList" prefHeight="186.0" prefWidth="125.0" HBox.hgrow="NEVER" />
             <GridPane layoutY="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="142.0" />

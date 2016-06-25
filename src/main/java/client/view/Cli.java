@@ -2,7 +2,10 @@ package client.view;
 
 import java.awt.Color;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import client.model.GameProperty;
 import client.model.ModelInterface;
@@ -98,7 +101,9 @@ public class Cli implements ViewInterface {
 			writer.println(SEPARATOR);
 			writer.println("Region #" + (regions.indexOf(region)+1));
 			writer.print("Council: ");
-			region.getCouncil().stream().forEach(card -> writer.print(card + " "));
+			List<String> council= region.getCouncil();
+			for(int i=council.size()-1; i>=0;i--)
+				writer.print(council.get(i)+" ");
 			writer.println();
 			for (CliCity city : region.getCities()) {
 				writer.print("| ");

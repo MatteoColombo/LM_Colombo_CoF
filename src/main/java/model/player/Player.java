@@ -50,6 +50,8 @@ public class Player implements Serializable {
 		this.noblePoints = new NoblePoints(p.getNoblePoints().getAmount(), null, null);
 		this.victoryPoints = new VictoryPoints(p.getVictoryPoints().getAmount());
 		this.permissionCard= new ArrayList<>();
+		this.mainActions= p.getMainActionsLeft();
+		this.extraAction= p.getIfExtraActionDone();
 		for(PermissionCard card: p.getPermissionCard())
 			this.permissionCard.add(new PermissionCard(card.getCardCity(), card.getCardReward()));
 		this.politicCard = new ArrayList<>();

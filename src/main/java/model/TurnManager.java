@@ -55,13 +55,13 @@ public class TurnManager {
 				logger.log(Level.WARNING, e.getMessage(), e);
 				return;
 			}
-			try {
-				this.turnPlayer.getClient().notify(new NotifyTurnEnded());
-			} catch (IOException e) {
-				logger.log(Level.WARNING, e.getMessage(), e);
-				this.turnPlayer.setSuspension(true);
-				return;
-			}
+		}
+		try {
+			this.turnPlayer.getClient().notify(new NotifyTurnEnded());
+		} catch (IOException e) {
+			logger.log(Level.WARNING, e.getMessage(), e);
+			this.turnPlayer.setSuspension(true);
+			return;
 		}
 	}
 

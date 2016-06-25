@@ -28,9 +28,11 @@ public class Game extends Thread {
 	private int choosenMap;
 	private ClientInt initialClient;
 	private Market market;
+	private int suspendedPlayers;
 
 	public Game(Configuration gameConfig, ClientInt initialClient) throws ConfigurationErrorException {
 		this.config = gameConfig;
+		this.suspendedPlayers = 0;
 		this.players = new ArrayList<>();
 		this.maxNumberOfPlayers = config.getMaxNumberOfPlayer();
 		this.initialClient = initialClient;
@@ -105,7 +107,7 @@ public class Game extends Thread {
 	public void run() {
 		boolean someoneWon = false;
 		// This loops is for the regular game
-		for (int i = 0; !someoneWon; i = (i + 1) % players.size()) {
+		for (int i = 0; countSuspendedPlayers() < (players.size() - 1) && !someoneWon; i = (i + 1) % players.size()) {
 			if (players.get(i).getSuspended())
 				continue;
 			turnManager = new TurnManager(players.get(i));
@@ -114,14 +116,14 @@ public class Game extends Thread {
 				winningPlayer = i;
 				someoneWon = true;
 			}
-		/*	if(!someoneWon){
-				this.market=new Market(players);
-				this.market.runMarket();
-			}*/
+			/*
+			 * if(!someoneWon){ this.market=new Market(players);
+			 * this.market.runMarket(); }
+			 */
 		}
 		// This loop is for the last round after that a player placed his 10th
 		// emporium
-		for (int j = (winningPlayer + 1) % players.size(); j != winningPlayer; j = (j + 1) % players.size()) {
+		for (int j = (winningPlayer + 1) % players.size();countSuspendedPlayers() < (players.size() - 1) && j != winningPlayer; j = (j + 1) % players.size()) {
 			if (players.get(j).getSuspended())
 				continue;
 			turnManager = new TurnManager(players.get(j));
@@ -131,7 +133,8 @@ public class Game extends Thread {
 	}
 
 	public void publishWinner() {
-		// TODO
+		players.stream().filter(Player::getSuspended).map(Player::getClient)
+				.forEach(client -> System.out.println("game finished"));
 	}
 
 	/**
@@ -163,16 +166,23 @@ public class Game extends Thread {
 	public void setChoosenMap(int map) {
 		this.choosenMap = map;
 	}
-	
+
 	/**
 	 * Return the list of the players
+	 * 
 	 * @return
 	 */
-	public List<Player> getPlayers(){
+	public List<Player> getPlayers() {
 		return players;
 	}
-	
-	public Market getMarket(){
+
+	public Market getMarket() {
 		return this.market;
 	}
+
+	private int countSuspendedPlayers() {
+		System.out.println(players.stream().filter(Player::getSuspended).count());
+		return (int) players.stream().filter(Player::getSuspended).count();
+	}
+
 }

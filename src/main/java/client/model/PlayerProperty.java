@@ -47,8 +47,8 @@ public class PlayerProperty {
 	private ObservableList<PermissionProperty> permissions;
 	
 	public PlayerProperty() {
-		canNotDoMainAction = new SimpleBooleanProperty(false);
-		canNotDoSideAction = new SimpleBooleanProperty(false);
+		canNotDoMainAction = new SimpleBooleanProperty(true);
+		canNotDoSideAction = new SimpleBooleanProperty(true );
 		name = new SimpleStringProperty("");
 		coins = new SimpleIntegerProperty(0);
 		assistants = new SimpleIntegerProperty(0);
@@ -72,9 +72,7 @@ public class PlayerProperty {
 	 * @return
 	 */
 	public PlayerProperty setAllButPermissions(Player player) {
-		if(player.getMainActionsLeft()>0) {
-			canNotDoMainAction.set(false);
-		}
+		canNotDoMainAction.set(player.getMainActionsLeft()>0? false:true);
 		canNotDoSideAction.set(player.getIfExtraActionDone());
 		name.set(player.getName());
 		assistants.set(player.getAssistants().getAmount());

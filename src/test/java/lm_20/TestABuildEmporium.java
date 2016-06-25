@@ -4,19 +4,16 @@ import static org.junit.Assert.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 import model.Configuration;
 import model.action.ABuildEmporium;
 import model.action.ABuildEmporiumWithKing;
 import model.board.BoardRewardsManager;
 import model.board.King;
+import model.board.Region;
 import model.board.city.City;
 import model.board.council.CouncilorPool;
 import model.board.map.MapExplorer;
@@ -27,14 +24,14 @@ import model.exceptions.ConfigurationErrorException;
 import model.exceptions.IllegalActionException;
 import model.exceptions.MapXMLFileException;
 import model.exceptions.TrackXMLFileException;
-import model.player.PermissionCard;
+import model.player.*;
 import model.player.Player;
 import model.player.PoliticCard;
+import model.reward.BAssistants;
 import model.reward.BVictoryPoints;
 import model.reward.BoardColorReward;
 import model.reward.BoardRegionReward;
-import model.reward.Bonus;
-import model.reward.Reward;
+import model.reward.*;
 
 public class TestABuildEmporium {
 	private List<Color> colorList;
@@ -45,11 +42,9 @@ public class TestABuildEmporium {
 	private List<BVictoryPoints> bKingRewards;
 	private BoardRewardsManager bRewardManager;
 	private List<City> allMapCities;
-	private int rewardAmount;
 	MapExplorer mExplorer;
 	MapLoader mLoader;
 	private NobilityTrack track;
-	private final int ALLCITIES = 14;
 
 	@Before
 	public void setUp() throws MapXMLFileException, TrackXMLFileException, ConfigurationErrorException {
@@ -81,7 +76,6 @@ public class TestABuildEmporium {
 		bKingRewards.add(new BVictoryPoints(10));
 		this.bRewardManager = new BoardRewardsManager(bColorRewards, bRegionRewards, bKingRewards);
 		this.allMapCities = this.mLoader.getCitiesList();
-		this.rewardAmount = 0;
 		this.mExplorer = new MapExplorer();
 
 	}
@@ -180,110 +174,47 @@ public class TestABuildEmporium {
 	}
 
 	/**
-	 * Tests if the player gains the right amount of VictoryPoints using a
-	 * PermissionCard
+	 * Tests an example of {@link ABuildEmporium} with all the
+	 * {@link BoardReward BoardRewards}
 	 * 
+	 * @throws Exception
 	 */
-	@Ignore
 	@Test
 	public void testBoardRewards() throws Exception {
+		// Initialization
 		PermissionCard card;
 		ABuildEmporium action;
-		card = new PermissionCard(this.mLoader.getRegions().get(0).getCities());
-		action = new ABuildEmporium(this.player, card, card.getCardCity().get(0), this.allMapCities,
-				this.bRewardManager);
+		List<City> allCities = new ArrayList<>();
+		List<City> region1Cities = new ArrayList<>();
+		List<City> region2Cities = new ArrayList<>();
+		region1Cities.add(new City(Color.decode("#008000"), "City1", new Reward(new BAssistants(10))));
+		region2Cities.add(new City(Color.decode("#2268df"), "City2", new Reward(new BAssistants(1))));
+		Region region1 = new Region("Region1", region1Cities, null, 2);
+		Region region2 = new Region("Region2", region2Cities, null, 2);
+		region1Cities.get(0).setRegion(region1);
+		region1Cities.get(0).addConnection(region2Cities.get(0));
+		region2Cities.get(0).setRegion(region2);
+		region2Cities.get(0).addConnection(region1Cities.get(0));
+		allCities.addAll(region1Cities);
+		allCities.addAll(region2Cities);
+		List<BoardColorReward> newBColorRewards = new ArrayList<>();
+		List<BoardRegionReward> newBRegionRewards = new ArrayList<>();
+		List<BVictoryPoints> newBKingRewards = new ArrayList<>();
+		newBColorRewards.add(new BoardColorReward(Color.decode("#008000"), 30));
+		newBColorRewards.add(new BoardColorReward(Color.decode("#2268df"), 1));
+		newBRegionRewards.add(new BoardRegionReward(region1, 20));
+		newBRegionRewards.add(new BoardRegionReward(region2, 1));
+		newBKingRewards.add(new BVictoryPoints(35));
+		newBKingRewards.add(new BVictoryPoints(15));
+		newBKingRewards.add(new BVictoryPoints(1));
+		BoardRewardsManager newBRewardManager = new BoardRewardsManager(newBColorRewards, newBRegionRewards,
+				newBKingRewards);
+		// Test
+		card = new PermissionCard(allCities, null);
+		action = new ABuildEmporium(this.player, card, region1Cities.get(0), allCities, newBRewardManager);
 		assertEquals(true, action.isMain());
 		action.execute();
-		for (Reward r : this.mExplorer.getAdiacentRewards(card.getCardCity().get(0), this.player))
-			for (Bonus b : r.getGeneratedRewards())
-				if (b.getTagName().equals("victory"))
-					this.rewardAmount += b.getAmount();
-		assertEquals(this.rewardAmount, this.player.getVictoryPoints().getAmount());
-	}
-
-	/**
-	 * Tests if the player gains the right amount of VictoryPoints after
-	 * multiple Emporiums
-	 * 
-	 */
-	@Ignore
-	@Test
-	public void testAdvancedBoardRewards() throws Exception {
-		PermissionCard card;
-		ABuildEmporium action;
-		List<BoardColorReward> bColorRewardsCopy = new ArrayList<BoardColorReward>(this.bColorRewards);
-		List<BoardRegionReward> bRegionRewardsCopy = new ArrayList<BoardRegionReward>(this.bRegionRewards);
-		List<BVictoryPoints> bKingRewardsCopy = new ArrayList<BVictoryPoints>(this.bKingRewards);
-		BoardRewardsManager bRewardManageCopy = new BoardRewardsManager(bColorRewardsCopy, bRegionRewardsCopy,
-				bKingRewardsCopy);
-		Random rnd = new Random();
-		int rndNum = rnd.nextInt(ALLCITIES);
-		List<Integer> cityNumbers = new ArrayList<Integer>();
-		for (int i = 0; i <= rndNum; i++)
-			cityNumbers.add(i);
-		Collections.shuffle(cityNumbers);
-		rndNum++;
-		System.out.println("Cities that are going to by assigned to this player: " + (rndNum));
-		if (rndNum < 10)
-			for (int count = 1; count < rndNum; count++)
-				this.player.increaseMainAction();
-		else
-			for (int count = 1; count < 10; count++)
-				this.player.increaseMainAction();
-		if (rndNum < 10)
-			assertEquals(rndNum, this.player.getMainActionsLeft());
-		else
-			assertEquals(10, this.player.getMainActionsLeft());
-		do {
-			int n = cityNumbers.remove(0);
-			int region, city;
-			if (n <= 4) {
-				region = 0;
-				city = n;
-			} else if (n > 4 && n <= 9) {
-				region = 1;
-				city = n - 5;
-			} else {
-				region = 2;
-				city = n - 10;
-			}
-			card = new PermissionCard(this.mLoader.getRegions().get(region).getCities(), null);
-			action = new ABuildEmporium(this.player, card, this.mLoader.getRegions().get(region).getCities().get(city),
-					this.allMapCities, this.bRewardManager);
-			assertEquals(true, action.isMain());
-			action.execute();
-			System.out.print("VPoints form cities: ");
-			for (Reward r : this.mExplorer
-					.getAdiacentRewards(this.mLoader.getRegions().get(region).getCities().get(city), this.player))
-				for (Bonus b : r.getGeneratedRewards())
-					if (b.getTagName().equals("victory")) {
-						this.rewardAmount += b.getAmount();
-						System.out.printf("%d + ", b.getAmount());
-					}
-			System.out.println("0");
-			if (this.mExplorer.isColorComplete(this.player,
-					this.mLoader.getRegions().get(region).getCities().get(city).getColor(), this.allMapCities)) {
-				if (!this.mLoader.getRegions().get(region).getCities().get(city).isCapital()) {
-					BVictoryPoints playerBReward = bRewardManageCopy.assingBoardColorReward(
-							this.mLoader.getRegions().get(region).getCities().get(city).getColor());
-					this.rewardAmount += playerBReward.getAmount();
-					System.out.printf("Color %s achieved: ",
-							this.mLoader.getRegions().get(region).getCities().get(city).getColor());
-					System.out.println(playerBReward.getAmount());
-				}
-			}
-			if (this.mLoader.getRegions().get(region).isCompleted(this.player)) {
-				BVictoryPoints playerBReward = bRewardManageCopy
-						.assingBoardRegionReward(this.mLoader.getRegions().get(region));
-				this.rewardAmount += playerBReward.getAmount();
-				System.out.printf("Region %d achieved: ", region);
-				System.out.println(playerBReward.getAmount());
-			}
-		} while ((!cityNumbers.isEmpty()) && (!this.player.getEmporium().isEmpty()));
-		System.out.println();
-		System.out.println("Total VPoints that should be awarded to the player: " + this.rewardAmount);
-		System.out
-				.print("Total VPoints effectly awarded by the player: " + this.player.getVictoryPoints().getAmount());
-		assertEquals(this.rewardAmount, this.player.getVictoryPoints().getAmount());
+		assertEquals(100, this.player.getVictoryPoints().getAmount());
+		assertEquals(13, this.player.getAssistants().getAmount());
 	}
 }

@@ -1,5 +1,7 @@
 package model.market;
 
+import java.io.Serializable;
+
 import model.player.Player;
 /**
  * The class which contains the items sold in the market
@@ -7,7 +9,9 @@ import model.player.Player;
  * @author Matteo Colombo
  *
  */
-public class OnSaleItem {
+public class OnSaleItem implements Serializable{
+
+	private static final long serialVersionUID = 5078039274488399580L;
 	private Soldable item;
 	private Player owner;
 	private int price;

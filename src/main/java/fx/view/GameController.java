@@ -42,7 +42,7 @@ public class GameController {
 	private static final int NOBILITY_START_Y = 775;
 	private static final int NOBILITY_HEIGHT = 60;
 	private static final double NOBILITY_STEP = 37.5;
-	
+
 	private MainApp mainApp;
 
 	@FXML
@@ -50,7 +50,7 @@ public class GameController {
 
 	@FXML
 	private Rectangle myColor;
-	
+
 	@FXML
 	private AnchorPane mapPane;
 
@@ -59,7 +59,7 @@ public class GameController {
 
 	@FXML
 	private FlowPane councilorPool;
-	
+
 	@FXML
 	private Label kingRewardLabel;
 	@FXML
@@ -84,15 +84,15 @@ public class GameController {
 	private TableView<StringProperty> politicCardsTable;
 	@FXML
 	private TableColumn<StringProperty, String> politicCardsColumn;
-	
+
 	@FXML
 	private ListView<PermissionProperty> permissionList;
-/*
-	@FXML
-	private TableView<PermissionProperty> permissionCardsTable;
-	@FXML
-	private TableColumn<PermissionProperty, String> permissionCardsColumn;
-*/
+	/*
+	 * @FXML private TableView<PermissionProperty> permissionCardsTable;
+	 * 
+	 * @FXML private TableColumn<PermissionProperty, String>
+	 * permissionCardsColumn;
+	 */
 	@FXML
 	private Button mainActionButton1;
 	@FXML
@@ -115,13 +115,13 @@ public class GameController {
 
 	@FXML
 	private TextArea logger;
-	
+
 	private String actionSelected = "";
 
 	public void logMsg(String msg) {
 		logger.appendText(msg);
 	}
-	
+
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
 		initMyData();
@@ -136,7 +136,6 @@ public class GameController {
 		initPermissions();
 		initCouncilorPool();
 	}
-
 
 	@FXML
 	private void handleSlideCouncil() throws IOException {
@@ -157,22 +156,22 @@ public class GameController {
 	private void handleBuildWithKing() throws IOException {
 		actionSelected = "king";
 	}
-	
+
 	@FXML
 	private void handleBuyAssistant() throws IOException {
 		mainApp.sendMsg("assistant");
 	}
-	
+
 	@FXML
 	private void handleShuffle() throws IOException {
-		
+
 	}
-	
+
 	@FXML
 	private void handleExtraAction() throws IOException {
 		mainApp.sendMsg("extra");
 	}
-	
+
 	@FXML
 	private void handleSlideSide() throws IOException {
 		actionSelected = "secondarySlide";
@@ -182,17 +181,17 @@ public class GameController {
 	private void handlePass() throws IOException {
 		mainApp.sendMsg("end");
 	}
-	
+
 	private void initMyData() {
 		PlayerProperty myData = mainApp.getLocalModel().getMyPlayerData();
-		
+
 		nameLabel.setText(myData.getName());
 		myColor.setFill(myData.getColor());
 		assistantsLabel.textProperty().bind(myData.assistantsProperty().asString());
 		coinsLabel.textProperty().bind(myData.coinsProperty().asString());
 		nobilityLabel.textProperty().bind(myData.nobilityProperty().asString());
 		victoryLabel.textProperty().bind(myData.victoryProperty().asString());
-		
+
 		mainActionButton1.disableProperty().bind(myData.canNotDoMainAction());
 		mainActionButton2.disableProperty().bind(myData.canNotDoMainAction());
 		mainActionButton3.disableProperty().bind(myData.canNotDoMainAction());
@@ -205,25 +204,25 @@ public class GameController {
 
 	private void initPoliticTable() {
 		politicCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPoliticCards());
-		
+
 		politicCardsTable.setOnDragDetected(event -> {
-			if(actionSelected.equals("king") || actionSelected.equals("permission")) {
+			if (actionSelected.equals("king") || actionSelected.equals("permission")) {
 				Dragboard db = politicCardsTable.startDragAndDrop(TransferMode.ANY);
-				
+
 				ClipboardContent content = new ClipboardContent();
 				String buffer = "";
-				for(int i: politicCardsTable.getSelectionModel().getSelectedIndices()) {
-					buffer += " " + (i+1);
+				for (int i : politicCardsTable.getSelectionModel().getSelectedIndices()) {
+					buffer += " " + (i + 1);
 				}
 				content.putString(buffer.substring(1));
 				db.setContent(content);
 				db.setDragView(new Image(this.getClass().getResource("/simboli/politic.png").toString()));
-		        event.consume();
+				event.consume();
 			}
 		});
-		
+
 		politicCardsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		
+
 		politicCardsColumn.setCellValueFactory(cell -> cell.getValue());
 		politicCardsColumn.setCellFactory(column -> {
 			return new TableCell<StringProperty, String>() {
@@ -244,24 +243,22 @@ public class GameController {
 
 	private void initPermissionList() {
 		permissionList.setItems(mainApp.getLocalModel().getMyPlayerData().getPermissions());
-		
+
 		permissionList.setCellFactory(listView -> new ListCell<PermissionProperty>() {
 			@Override
 			public void updateItem(PermissionProperty item, boolean empty) {
-		        super.updateItem(item, empty);
-		        if (empty) {
-		        	logger.appendText("252\n");
-		        	setText(null);
-		            setGraphic(null);
-		        } else {
-		        	logger.appendText("257\n");
-		            AnchorPane permissionPane = generatePermission(item);
-		            setGraphic(permissionPane);
-		        }
-		    }
+				super.updateItem(item, empty);
+				if (empty) {
+					setText(null);
+					setGraphic(null);
+				} else {
+					AnchorPane permissionPane = generatePermission(item);
+					setGraphic(permissionPane);
+				}
+			}
 		});
 	}
-	
+
 	private void initOpponentsPanes() {
 		ObservableList<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
 		int myIndex = mainApp.getLocalModel().getMyIndex();
@@ -274,12 +271,16 @@ public class GameController {
 					opponentsBox.getChildren().add(pane);
 					((Labeled) pane.lookup("#nameLabel")).textProperty().set(players.get(i).getName());
 					((Rectangle) pane.lookup("#colorRectangle")).setFill(players.get(i).getColor());
-					
-					((Labeled) pane.lookup("#victoryLabel")).textProperty().bind(players.get(i).victoryProperty().asString());
-					((Labeled) pane.lookup("#coinsLabel")).textProperty().bind(players.get(i).coinsProperty().asString());
-					((Labeled) pane.lookup("#assistantsLabel")).textProperty().bind(players.get(i).assistantsProperty().asString());
-					((Labeled) pane.lookup("#nobilityLabel")).textProperty().bind(players.get(i).nobilityProperty().asString());
-					
+
+					((Labeled) pane.lookup("#victoryLabel")).textProperty()
+							.bind(players.get(i).victoryProperty().asString());
+					((Labeled) pane.lookup("#coinsLabel")).textProperty()
+							.bind(players.get(i).coinsProperty().asString());
+					((Labeled) pane.lookup("#assistantsLabel")).textProperty()
+							.bind(players.get(i).assistantsProperty().asString());
+					((Labeled) pane.lookup("#nobilityLabel")).textProperty()
+							.bind(players.get(i).nobilityProperty().asString());
+
 				} catch (IOException e) {
 					logger.appendText(e.getMessage());
 				}
@@ -309,39 +310,33 @@ public class GameController {
 					Node king = innerPane.lookup("#king");
 					king.visibleProperty().bind(sc.hasKing());
 					/*
-					king.setOnDragDetected(event -> {
-						Dragboard db = king.startDragAndDrop(TransferMode.ANY);
-						ClipboardContent content = new ClipboardContent();
-						content.putString(innerPane.getId());
-						db.setContent(content);
-				        event.consume();
-					});
-					
-					innerPane.setOnDragOver(event -> {
-						if (event.getGestureSource() != innerPane &&
-				                event.getDragboard().hasString()) {
-							innerPane.setEffect(new Bloom());
-				            event.acceptTransferModes(TransferMode.MOVE);
-				        }
-				        event.consume();
-					});
-					
-					innerPane.setOnDragExited(event -> {
-						innerPane.setEffect(null);
-					});
-					
-					innerPane.setOnDragDropped(event -> {
-						Dragboard db = event.getDragboard();
-						
-						if(db.hasString()) {
-							innerPane.lookup("#king").visibleProperty().set(true);
-							mapPane.lookup(db.getString()).lookup("#king").visibleProperty().set(false);
-						}
-					});
-					*/
+					 * king.setOnDragDetected(event -> { Dragboard db =
+					 * king.startDragAndDrop(TransferMode.ANY); ClipboardContent
+					 * content = new ClipboardContent();
+					 * content.putString(innerPane.getId());
+					 * db.setContent(content); event.consume(); });
+					 * 
+					 * innerPane.setOnDragOver(event -> { if
+					 * (event.getGestureSource() != innerPane &&
+					 * event.getDragboard().hasString()) {
+					 * innerPane.setEffect(new Bloom());
+					 * event.acceptTransferModes(TransferMode.MOVE); }
+					 * event.consume(); });
+					 * 
+					 * innerPane.setOnDragExited(event -> {
+					 * innerPane.setEffect(null); });
+					 * 
+					 * innerPane.setOnDragDropped(event -> { Dragboard db =
+					 * event.getDragboard();
+					 * 
+					 * if(db.hasString()) {
+					 * innerPane.lookup("#king").visibleProperty().set(true);
+					 * mapPane.lookup(db.getString()).lookup("#king").
+					 * visibleProperty().set(false); } });
+					 */
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
-						
+
 						Pane bonusPane = generateBonus(sb);
 						bonusBox.getChildren().add(bonusPane);
 					}
@@ -384,7 +379,7 @@ public class GameController {
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -404,43 +399,42 @@ public class GameController {
 	private void initCouncil(HBox location, CouncilProperty council) {
 		for (StringProperty color : council.colors()) {
 			Rectangle councilor = generateCouncilor(color.get());
-	
+
 			color.addListener((observable, oldValue, newValue) -> {
-				
+
 				councilor.setFill(Color.valueOf(newValue));
-				
+
 				IntegerProperty oldColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(oldValue);
 				oldColor.set(oldColor.get() + 1);
-				
+
 				IntegerProperty newColor = mainApp.getLocalModel().getMap().getCouncilorPool().get(newValue);
 				newColor.set(newColor.get() - 1);
-				}
-			);	
+			});
 			location.getChildren().add(councilor);
 		}
-		
+
 		location.setOnDragOver(event -> {
-			if (event.getGestureSource() != location &&
-	               ("slide".equals(actionSelected) || "secondarySlide".equals(actionSelected))) {
+			if (event.getGestureSource() != location
+					&& ("slide".equals(actionSelected) || "secondarySlide".equals(actionSelected))) {
 				location.setEffect(new Glow());
-	            event.acceptTransferModes(TransferMode.MOVE);
-	        }
-	        event.consume();
+				event.acceptTransferModes(TransferMode.MOVE);
+			}
+			event.consume();
 		});
-		
+
 		location.setOnDragExited(event -> {
 			location.setEffect(null);
 		});
-		
+
 		location.setOnDragDropped(event -> {
 			Dragboard db = event.getDragboard();
-			
-			if(db.hasString()) {
-				if(location.getId().equals("kingCouncilBox")) {
-					mainApp.sendMsg(actionSelected + " -council k -color "  + db.getString());
+
+			if (db.hasString()) {
+				if (location.getId().equals("kingCouncilBox")) {
+					mainApp.sendMsg(actionSelected + " -council k -color " + db.getString());
 				} else {
 					String id = location.getId();
-					int index = Integer.valueOf(id.substring(id.length()-1));
+					int index = Integer.valueOf(id.substring(id.length() - 1));
 					index++;
 					mainApp.sendMsg(actionSelected + " -council " + index + " -color " + db.getString());
 				}
@@ -450,42 +444,43 @@ public class GameController {
 
 	private void initCouncilorPool() {
 		mainApp.getLocalModel().getMap().initCouncilorPool();
-		
+
 		Map<String, IntegerProperty> pool = mainApp.getLocalModel().getMap().getCouncilorPool();
-		for(String hexColor: pool.keySet()) {
-			
+		for (String hexColor : pool.keySet()) {
+
 			Rectangle councilor = generateCouncilor(hexColor);
 			councilor.setHeight(councilor.getWidth());
-	
+
 			councilor.setOnDragDetected(event -> {
-				/* activate the drag only at two condition
-				 * 1) "slide" or "secondartSlide" is the current action wanted
-				 * 2) there is at least one councilor of the selected color to drag from the poll
+				/*
+				 * activate the drag only at two condition 1) "slide" or
+				 * "secondartSlide" is the current action wanted 2) there is at
+				 * least one councilor of the selected color to drag from the
+				 * poll
 				 */
-				if(((actionSelected.equals("slide") || (actionSelected.equals("secondarySlide")))) 
-					&& (pool.get(hexColor).get() > 0)) {
+				if (((actionSelected.equals("slide") || (actionSelected.equals("secondarySlide"))))
+						&& (pool.get(hexColor).get() > 0)) {
 					Dragboard db = councilor.startDragAndDrop(TransferMode.ANY);
-					
+
 					ClipboardContent content = new ClipboardContent();
 					content.putString(councilor.getId());
 					db.setContent(content);
-			        event.consume();
+					event.consume();
 				}
 			});
-			
+
 			Label amount = new Label();
 			amount.textProperty().bind(pool.get(hexColor).asString());
-			
+
 			amount.setStyle("-fx-background-color: black;");
-			
+
 			Pane councilorPane = new Pane();
 			councilorPane.getChildren().add(councilor);
 			councilorPane.getChildren().add(amount);
-	
+
 			councilorPool.getChildren().add(councilorPane);
 		}
 	}
-
 
 	private Rectangle generateCouncilor(String hexColor) {
 		Rectangle councilor = new Rectangle();
@@ -497,7 +492,7 @@ public class GameController {
 		councilor.setId(CouncilProperty.getColorName(hexColor));
 		return councilor;
 	}
-	
+
 	private Pane generateBonus(SimpleBonus sb) throws IOException {
 		FXMLLoader innerLoader = new FXMLLoader();
 		innerLoader.setLocation(MainApp.class.getResource("/fxml/Bonus.fxml"));
@@ -514,49 +509,49 @@ public class GameController {
 	}
 
 	private void initBoardRewards() {
-		
+
 		IntegerProperty kingBonus = mainApp.getLocalModel().getMap().kingBonus();
 		kingRewardLabel.textProperty().bind(kingBonus.asString());
 		kingRewardLabel.visibleProperty().bind(kingBonus.greaterThan(0));
-				
+
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
 		int numberOfRegions = regions.size();
-		
-		for(int i = 0; i < numberOfRegions; i++) {
+
+		for (int i = 0; i < numberOfRegions; i++) {
 			Labeled regionBonus = (Labeled) mapPane.lookup("#regionBonusLabel" + i);
-			
+
 			regionBonus.textProperty().bind(regions.get(i).conquerBonus().asString());
-			regionBonus.visibleProperty().bind(regions.get(i).conquerBonus().greaterThan(0));			
+			regionBonus.visibleProperty().bind(regions.get(i).conquerBonus().greaterThan(0));
 		}
-		
+
 		Map<String, IntegerProperty> colorRewards = mainApp.getLocalModel().getMap().getColorBonuses();
-		
+
 		sapphireRewardLabel.textProperty().bind(colorRewards.get("#2268df").asString());
 		sapphireRewardLabel.visibleProperty().bind(colorRewards.get("#2268df").greaterThan(0));
-		
+
 		goldRewardLabel.textProperty().bind(colorRewards.get("#ffd700").asString());
 		goldRewardLabel.visibleProperty().bind(colorRewards.get("#ffd700").greaterThan(0));
-		
+
 		silverRewardLabel.textProperty().bind(colorRewards.get("#008000").asString());
 		silverRewardLabel.visibleProperty().bind(colorRewards.get("#008000").greaterThan(0));
-		
+
 		bronzeRewardLabel.textProperty().bind(colorRewards.get("#f44343").asString());
 		bronzeRewardLabel.visibleProperty().bind(colorRewards.get("#f44343").greaterThan(0));
 	}
-	
+
 	private void initNobility() {
-		
+
 		List<SimpleNobilityCell> track = mainApp.getLocalModel().getMap().getNobilityTrack();
-		for(int i = 0; i < track.size(); i++ ) {
-			if(track.get(i) == null) {
+		for (int i = 0; i < track.size(); i++) {
+			if (track.get(i) == null) {
 				continue;
 			}
 			List<SimpleBonus> bonuses = track.get(i).getBonuses();
-			for(int j = 0; j < bonuses.size(); j++) {
+			for (int j = 0; j < bonuses.size(); j++) {
 				try {
 					Pane bonusPane = generateBonus(bonuses.get(j));
-					bonusPane.setLayoutX(NOBILITY_START_X - 15 + i*NOBILITY_STEP);
-					bonusPane.setLayoutY(NOBILITY_START_Y - 15 + j*NOBILITY_HEIGHT/bonuses.size());						
+					bonusPane.setLayoutX(NOBILITY_START_X - 15 + i * NOBILITY_STEP);
+					bonusPane.setLayoutY(NOBILITY_START_Y - 15 + j * NOBILITY_HEIGHT / bonuses.size());
 					mapPane.getChildren().add(bonusPane);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -564,67 +559,64 @@ public class GameController {
 				}
 			}
 		}
-		
+
 		List<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
 		int totalPlayers = players.size();
-		for(int i = 0; i < totalPlayers; i++) {
+		for (int i = 0; i < totalPlayers; i++) {
 			Circle c = new Circle();
 			c.setFill(players.get(i).getColor());
 			c.setRadius(15.0);
-			c.setCenterY(NOBILITY_START_Y + i*NOBILITY_HEIGHT/totalPlayers);
+			c.setCenterY(NOBILITY_START_Y + i * NOBILITY_HEIGHT / totalPlayers);
 			c.centerXProperty().bind(players.get(i).nobilityProperty().multiply(NOBILITY_STEP).add(NOBILITY_START_X));
 			mapPane.getChildren().add(c);
 		}
 	}
-	
+
 	private void initPermissions() {
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
-		
-		for(int i = 0; i < regions.size(); i++) {
+
+		for (int i = 0; i < regions.size(); i++) {
 			PermissionProperty[] permissions = regions.get(i).getPermissions();
-			
-			for(int j = 0; j < permissions.length; j++) {
-				
+
+			for (int j = 0; j < permissions.length; j++) {
+
 				Pane outerPane = (Pane) mapPane.lookup("#permit" + String.valueOf(i) + "_" + String.valueOf(j));
-				
+
 				outerPane.setOnDragOver(event -> {
-					if (event.getGestureSource() != outerPane &&
-				               "permission".equals(actionSelected)) {
-							outerPane.setEffect(new Glow());
-				            event.acceptTransferModes(TransferMode.MOVE);
-				        }
-				        event.consume();
+					if (event.getGestureSource() != outerPane && "permission".equals(actionSelected)) {
+						outerPane.setEffect(new Glow());
+						event.acceptTransferModes(TransferMode.MOVE);
+					}
+					event.consume();
 				});
-				
+
 				outerPane.setOnDragExited(event -> {
 					outerPane.setEffect(null);
 				});
-				
+
 				outerPane.setOnDragDropped(event -> {
 					Dragboard db = event.getDragboard();
-					if(db.hasString()) {
+					if (db.hasString()) {
 						String id = outerPane.getId();
-						String info = id.substring(id.length()-3);
+						String info = id.substring(id.length() - 3);
 						String card = info.substring(2);
 						String region = info.substring(0, 1);
-						int cardIndex = Integer.valueOf(card)+1;
-						int regionIndex = Integer.valueOf(region)+1;
+						int cardIndex = Integer.valueOf(card) + 1;
+						int regionIndex = Integer.valueOf(region) + 1;
 						System.out.println(id + info + card + region + cardIndex + regionIndex);
-						mainApp.sendMsg(actionSelected 
-								+ " -region " + regionIndex 
-								+ " -permission " + cardIndex 
+						mainApp.sendMsg(actionSelected + " -region " + regionIndex + " -permission " + cardIndex
 								+ " -cards " + db.getString());
 					}
 				});
-				
+
 				// generation
 				AnchorPane innerPane = generatePermission(permissions[j]);
-				// binding city Label 
+				// binding city Label
 				// binding bonuses
-				permissions[j].getBonuses().addListener((ListChangeListener.Change<? extends SimpleBonus>  c) -> {
-					for(SimpleBonus sb: c.getList()) {
+				permissions[j].getBonuses().addListener((ListChangeListener.Change<? extends SimpleBonus> c) -> {
+					for (SimpleBonus sb : c.getList()) {
 						try {
-							// reset all the bonus in the list, 
+							// reset all the bonus in the list,
 							// since the amount of bonus in the box may change
 							// from card to card
 							HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
@@ -634,29 +626,29 @@ public class GameController {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					}		
+					}
 				});
-				
+
 				outerPane.getChildren().add(innerPane);
 			}
 		}
 	}
-	
-	private AnchorPane generatePermission(PermissionProperty  pp) {
+
+	private AnchorPane generatePermission(PermissionProperty pp) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/PermissionCard.fxml"));
 			AnchorPane permissionPane = loader.load();
-			
+
 			((Labeled) permissionPane.lookup("#citiesLabel")).textProperty().bind(pp.getCities());
-			
+
 			HBox bonusBox = (HBox) permissionPane.lookup("#bonusBox");
-			for(SimpleBonus sb: pp.getBonuses()) {
+			for (SimpleBonus sb : pp.getBonuses()) {
 				bonusBox.getChildren().add(generateBonus(sb));
 			}
 			// this is the real return
 			return permissionPane;
-						
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -68,7 +68,7 @@ public class ABuyPermissionCard extends Action {
 		player.getCoins().decreaseAmount(price);
 		player.getPermissionCard().add(permCard);
 		permCard.getCardReward().assignBonusTo(player);
-
+		player.doMainAction();
 		// when the action perform, the card given by the used are destroyed
 		List<PoliticCard> playerHand = player.getPoliticCard();
 		for (PoliticCard used : politicCards) {

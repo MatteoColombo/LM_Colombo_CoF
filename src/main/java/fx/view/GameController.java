@@ -1,6 +1,7 @@
 package fx.view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Bloom;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -194,6 +196,22 @@ public class GameController {
 
 	private void initPoliticTable() {
 		politicCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPoliticCards());
+		
+		politicCardsTable.setOnDragDetected(event -> {
+			if(actionSelected.equals("king") || actionSelected.equals("permission")) {
+				Dragboard db = politicCardsTable.startDragAndDrop(TransferMode.ANY);
+				
+				ClipboardContent content = new ClipboardContent();
+				String buffer = "";
+				for(int i: politicCardsTable.getSelectionModel().getSelectedIndices()) {
+					buffer += " " + (i+1);
+				}
+				content.putString(buffer.substring(1));
+				db.setContent(content);
+				db.setDragView(new Image(this.getClass().getResource("/simboli/politic.png").toString()));
+		        event.consume();
+			}
+		});
 		
 		politicCardsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
@@ -374,8 +392,8 @@ public class GameController {
 		
 		location.setOnDragOver(event -> {
 			if (event.getGestureSource() != location &&
-	                event.getDragboard().hasString()) {
-				location.setEffect(new Bloom());
+	               ("slide".equals(actionSelected) || "secondarySlide".equals(actionSelected))) {
+				location.setEffect(new Glow());
 	            event.acceptTransferModes(TransferMode.MOVE);
 	        }
 	        event.consume();
@@ -390,12 +408,12 @@ public class GameController {
 			
 			if(db.hasString()) {
 				if(location.getId().equals("kingCouncilBox")) {
-					mainApp.sendMsg("slide -council k -color " + db.getString());
+					mainApp.sendMsg(actionSelected + " -council k -color "  + db.getString());
 				} else {
 					String id = location.getId();
 					int index = Integer.valueOf(id.substring(id.length()-1));
 					index++;
-					mainApp.sendMsg("slide -council " + index + " -color " + db.getString());
+					mainApp.sendMsg(actionSelected + " -council " + index + " -color " + db.getString());
 				}
 			}
 		});
@@ -411,7 +429,12 @@ public class GameController {
 			councilor.setHeight(councilor.getWidth());
 	
 			councilor.setOnDragDetected(event -> {
-				if(pool.get(hexColor).get() > 0) {
+				/* activate the drag only at two condition
+				 * 1) "slide" or "secondartSlide" is the current action wanted
+				 * 2) there is at least one councilor of the selected color to drag from the poll
+				 */
+				if(((actionSelected.equals("slide") || (actionSelected.equals("secondarySlide")))) 
+					&& (pool.get(hexColor).get() > 0)) {
 					Dragboard db = councilor.startDragAndDrop(TransferMode.ANY);
 					
 					ClipboardContent content = new ClipboardContent();
@@ -535,13 +558,41 @@ public class GameController {
 				
 				Pane outerPane = (Pane) mapPane.lookup("#permit" + String.valueOf(i) + "_" + String.valueOf(j));
 				
+				outerPane.setOnDragOver(event -> {
+					if (event.getGestureSource() != outerPane &&
+				               "permission".equals(actionSelected)) {
+							outerPane.setEffect(new Glow());
+				            event.acceptTransferModes(TransferMode.MOVE);
+				        }
+				        event.consume();
+				});
+				
+				outerPane.setOnDragExited(event -> {
+					outerPane.setEffect(null);
+				});
+				
+				outerPane.setOnDragDropped(event -> {
+					Dragboard db = event.getDragboard();
+					if(db.hasString()) {
+						String id = outerPane.getId();
+						String info = id.substring(id.length()-3);
+						String card = info.substring(2);
+						String region = info.substring(0, 1);
+						int cardIndex = Integer.valueOf(card)+1;
+						int regionIndex = Integer.valueOf(region)+1;
+						mainApp.sendMsg(actionSelected 
+								+ " -region " + regionIndex 
+								+ " -permission " + cardIndex 
+								+ " -cards " + db.getString());
+					}
+				});
+				
 				// generation
 				AnchorPane innerPane = generatePermission(permissions[j]);
 				// binding city Label 
 				((Labeled) innerPane.lookup("#citiesLabel")).textProperty().bind(permissions[j].getCities());
 				// binding bonuses
 				permissions[j].getBonuses().addListener((ListChangeListener.Change<? extends SimpleBonus>  c) -> {
-					System.out.println("entered in listener at GameController:406");
 					for(SimpleBonus sb: c.getList()) {
 						try {
 							// reset all the bonus in the list, 

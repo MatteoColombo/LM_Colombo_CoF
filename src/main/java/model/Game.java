@@ -129,8 +129,8 @@ public class Game extends Thread {
 				}
 			}
 			/*
-			 * if (!someoneWon) { this.market = new Market(players);
-			 * this.market.runMarket(); }
+			 if (!someoneWon) { this.market = new Market(players);
+			  this.market.runMarket(); }
 			 */
 		}
 		// This loop is for the last round after that a player placed his 10th

@@ -25,12 +25,12 @@ public class Market {
 	private Logger logger= Logger.getGlobal();
 	public Market(List<Player> players) {
 		this.players = players;
-		itemsOnSale = new ArrayList<>();
-		
+		itemsOnSale = new ArrayList<>();	
 	}
 
 	public void runMarket(){
 		startSellingTurns();
+		System.out.println("finished selling");
 		if (!itemsOnSale.isEmpty())
 			startBuyingTurns();
 		for (OnSaleItem item : itemsOnSale)
@@ -43,6 +43,11 @@ public class Market {
 	private void startSellingTurns() {
 		for (Player p : players) {
 			playerWantsToStop = false;
+			if(p.getSuspended()){
+				System.out.println("è sospeso");
+				continue;
+			}
+			
 			while (!playerWantsToStop) {
 				try {
 					p.getClient().askWichItemToSell();
@@ -63,6 +68,8 @@ public class Market {
 		int starting = new Random().nextInt(players.size());
 		for (int i = 0; i < players.size(); i++) {
 			playerWantsToStop = false;
+			if(players.get((i + starting) % players.size()).getSuspended())
+				continue;
 			while (!playerWantsToStop) {
 				if (itemsOnSale.isEmpty())
 					return;
@@ -91,7 +98,7 @@ public class Market {
 	 * Sets to true the attribute used to check if the player wants to stop
 	 * selling
 	 */
-	public void playerWantsToStopSelling() {
+	public void playerWantsToStop() {
 		this.playerWantsToStop = true;
 	}
 
@@ -108,6 +115,7 @@ public class Market {
 		itemsOnSale.remove(item);
 		item.getOwner().getCoins().increaseAmount(item.getPrice());
 		p.getCoins().decreaseAmount(item.getPrice());
+		System.out.println(p.getName());
 		giveToplayer(item, p);
 	}
 

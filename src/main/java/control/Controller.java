@@ -75,6 +75,10 @@ public class Controller {
 	}
 
 	public void parseItemToSell(String item, ClientInt client) {
+		if ("".equals(item)) {
+			game.getMarket().playerWantsToStop();
+			return;
+		}
 		String[] parameters = item.split(" ");
 		Soldable itemOnSale;
 		try {
@@ -122,13 +126,20 @@ public class Controller {
 	 * @param client
 	 */
 	public void parseItemToBuy(List<OnSaleItem> items, String itemIndex, ClientInt client) {
+		if ("".equals(itemIndex)) {
+			game.getMarket().playerWantsToStop();
+			return;
+		}
 		try {
 			int index = Integer.parseInt(itemIndex);
 			if (index > items.size())
 				throw new IllegalActionException("Illegal index");
-			if (playersMap.get(client).getCoins().getAmount() < items.get(index).getPrice())
+			if (playersMap.get(client).getCoins().getAmount() < items.get(index - 1).getPrice())
 				throw new IllegalActionException("Not enough money");
-			game.getMarket().buyItem(items.get(index), playersMap.get(client));
+			OnSaleItem solditem=items.get(index - 1);
+			game.getMarket().buyItem(solditem, playersMap.get(client));
+			updatePlayers(playersMap.get(client), game.getPlayers().indexOf(playersMap.get(client)));
+			updatePlayers(solditem.getOwner(), game.getPlayers().indexOf(solditem.getOwner()));
 		} catch (NumberFormatException | IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));
@@ -264,8 +275,8 @@ public class Controller {
 				break;
 			case "shuffle":
 				tm.performAction(builder.makeAShufflePermissionCards(player, cmd));
-				int intRegion= Integer.parseInt(cmd.getOptionValue(CliParser.OPTREGION))-1;
-				for(int i=0; i<game.getBoard().getRegion(intRegion).getPermissionSlotsNumber(); i++)
+				int intRegion = Integer.parseInt(cmd.getOptionValue(CliParser.OPTREGION)) - 1;
+				for (int i = 0; i < game.getBoard().getRegion(intRegion).getPermissionSlotsNumber(); i++)
 					notifySendPermission(game.getBoard().getRegion(intRegion).getPermissionCard(i), intRegion, i);
 				break;
 			case "permission":

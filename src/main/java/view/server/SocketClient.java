@@ -32,6 +32,7 @@ import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestRewardFromPermission;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
+import view.p2pdialogue.request.RequestWhichItemTouBuy;
 import view.p2pdialogue.request.RequestWichMapToUse;
 
 public class SocketClient implements ClientInt {
@@ -150,7 +151,14 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
-
+		out.writeObject(new RequestWhichItemTouBuy(itemsOnSale));
+		out.flush();
+		try{
+			String item= (String)in.readObject();
+			controller.parseItemToBuy(itemsOnSale, item, this);
+		}catch(ClassNotFoundException e){
+			logger.log(Level.SEVERE, e.getMessage(),e);
+		}
 	}
 
 	@Override

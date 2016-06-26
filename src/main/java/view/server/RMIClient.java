@@ -27,6 +27,7 @@ import view.p2pdialogue.request.RequestPlayerName;
 import view.p2pdialogue.request.RequestRewardFromPermission;
 import view.p2pdialogue.request.RequestWhatActionToDo;
 import view.p2pdialogue.request.RequestWhichItemToSell;
+import view.p2pdialogue.request.RequestWhichItemTouBuy;
 import view.p2pdialogue.request.RequestWichMapToUse;
 
 public class RMIClient implements ClientInt {
@@ -50,21 +51,21 @@ public class RMIClient implements ClientInt {
 	}
 
 	@Override
-	public void askPlayerWhatActionToDo() throws IOException{
-		ExecutorService executor= Executors.newSingleThreadExecutor();
-		Future<String> answer= executor.submit(new Callable<String>(){
-			public String call() throws RemoteException{
+	public void askPlayerWhatActionToDo() throws IOException {
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Future<String> answer = executor.submit(new Callable<String>() {
+			public String call() throws RemoteException {
 				String choosenAction;
-					choosenAction = client.requestAnswer(new RequestWhatActionToDo());
+				choosenAction = client.requestAnswer(new RequestWhatActionToDo());
 				return choosenAction;
 			}
 		});
-		try{
+		try {
 			String action = answer.get(600, TimeUnit.SECONDS);
 			controller.performAction(this, action);
-		}catch(TimeoutException | InterruptedException | ExecutionException e){
+		} catch (TimeoutException | InterruptedException | ExecutionException e) {
 			throw new IOException(e);
-		}finally {
+		} finally {
 			executor.shutdown();
 		}
 	}
@@ -112,11 +113,10 @@ public class RMIClient implements ClientInt {
 		return true;
 	}
 
-
 	@Override
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
-		// TODO Auto-generated method stub
-
+		String item = client.requestAnswer(new RequestWhichItemTouBuy(itemsOnSale));
+		controller.parseItemToBuy(itemsOnSale, item, this);
 	}
 
 	@Override
@@ -125,7 +125,6 @@ public class RMIClient implements ClientInt {
 		controller.parseItemToSell(item, this);
 	}
 
-	
 	@Override
 	public void askCityToGetNobilityReward(int citiesNumber) throws IOException {
 		client.sendNotify(new NotifyBonusFromCities(citiesNumber));

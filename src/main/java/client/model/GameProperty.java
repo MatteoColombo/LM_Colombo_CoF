@@ -136,5 +136,4 @@ public class GameProperty implements ModelInterface {
 			}
 		}
 	}
-
 }

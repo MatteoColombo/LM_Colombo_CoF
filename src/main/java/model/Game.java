@@ -3,11 +3,21 @@ package model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import model.board.Board;
+import model.board.Region;
+import model.board.city.City;
 import model.exceptions.ConfigurationErrorException;
 import model.exceptions.XMLFileException;
 import model.market.Market;
+import model.player.Emporium;
+import model.player.PermissionCard;
 import model.player.Player;
+import view.p2pdialogue.notify.NotifyGameStarted;
+import view.p2pdialogue.update.NotifyPlayerJoined;
+import view.p2pdialogue.update.UpdateEmporiumBuilt;
 import view.server.ClientInt;
 
 /**
@@ -27,6 +37,7 @@ public class Game extends Thread {
 	private int choosenMap;
 	private ClientInt initialClient;
 	private Market market;
+	private Logger logger = Logger.getGlobal();
 
 	public Game(Configuration gameConfig, ClientInt initialClient) throws ConfigurationErrorException {
 		this.config = gameConfig;
@@ -103,22 +114,24 @@ public class Game extends Thread {
 	@Override
 	public void run() {
 		boolean someoneWon = false;
+		if (players.size() == 2)
+			configGameForTwo();
+		turnManager = new TurnManager(players, config.getColorsList());
 		// This loops is for the regular game
 		while (!someoneWon) {
 			for (int i = 0; countSuspendedPlayers() < (players.size() - 1) && i < players.size(); i++) {
 				if (players.get(i).getSuspended())
 					continue;
-				turnManager = new TurnManager(players.get(i));
-				turnManager.startTurn();
+				turnManager.startTurn(i);
 				if (players.get(i).getEmporium().isEmpty()) {
 					winningPlayer = i;
 					someoneWon = true;
 				}
 			}
-			/*if (!someoneWon) {
-				this.market = new Market(players);
-				this.market.runMarket();
-			}*/
+			/*
+			 * if (!someoneWon) { this.market = new Market(players);
+			 * this.market.runMarket(); }
+			 */
 		}
 		// This loop is for the last round after that a player placed his 10th
 		// emporium
@@ -126,14 +139,28 @@ public class Game extends Thread {
 				&& j != winningPlayer; j = (j + 1) % players.size()) {
 			if (players.get(j).getSuspended())
 				continue;
-			turnManager = new TurnManager(players.get(j));
-			turnManager.startTurn();
+			turnManager.startTurn(j);
 		}
 		publishWinner();
 	}
 
+	private void configGameForTwo() {
+		Player server = new Player(config);
+		server.setName("_Server_");
+		sendServer(server);
+		players.add(server);
+		for (Region r : gameBoard.getRegions()) {
+			PermissionCard card = new PermissionCard(r.getCities());
+			for (City c : card.getCardCity()) {
+				c.addEmporium(server.getEmporium().get(0));
+				sendEmporium("_Server_", c.getName());
+			}
+		}
+
+	}
+
 	public void publishWinner() {
-		//TODO
+		// TODO
 	}
 
 	/**
@@ -183,4 +210,26 @@ public class Game extends Thread {
 		return (int) players.stream().filter(Player::getSuspended).count();
 	}
 
+	private void sendEmporium(String name, String city) {
+		for (Player p : players)
+			if (!p.getSuspended()) {
+				try {
+					p.getClient().notify(new UpdateEmporiumBuilt(name, city));
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, e.getMessage(), e);
+				}
+			}
+	}
+
+	private void sendServer(Player server) {
+		for (Player p : players)
+			if (!p.getSuspended()) {
+				try {
+					p.getClient().notify(new NotifyPlayerJoined(server.getClientCopy()));
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, e.getMessage(), e);
+				}
+
+			}
+	}
 }

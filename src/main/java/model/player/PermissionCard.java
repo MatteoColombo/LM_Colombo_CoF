@@ -70,9 +70,10 @@ public class PermissionCard implements Soldable, Serializable {
 		Random r = new Random();
 		do {
 			for (City x : citiesOfRegions) {
-				boolean i = r.nextBoolean();
-				if (i)
+				if (r.nextBoolean())
 					this.cities.add(x);
+				if(cities.size()== 3)
+					break;
 			}
 			empty = this.cities.isEmpty();
 		} while (empty);

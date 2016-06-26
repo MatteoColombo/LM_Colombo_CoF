@@ -51,5 +51,6 @@ public class AShufflePermissionCards extends Action {
 	public void execute() {
 		player.getAssistants().decreaseAmount(ACTIONCOST);
 		region.shufflePermissionCards();
+		player.doExtraAction();
 	}
 }

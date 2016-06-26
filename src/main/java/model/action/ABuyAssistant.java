@@ -45,5 +45,6 @@ public class ABuyAssistant extends Action {
 	public void execute() {
 		player.getCoins().decreaseAmount(ASSISTANTPRICE);
 		player.getAssistants().increaseAmount(1);
+		player.doExtraAction();
 	}
 }

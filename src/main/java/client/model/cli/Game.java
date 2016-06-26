@@ -126,9 +126,11 @@ public class Game implements ModelInterface {
 
 	@Override
 	public void playerJoined(Player p) {
+		if(!("_Server_".equals(p.getName()) && p.getAssistants().getAmount()==0 && p.getCoins().getAmount()==0)){
 		CliPlayer player = new CliPlayer(p, config);
 		players.add(player);
 		view.printMessage(player.getName() + " joined.");
+		}
 	}
 
 	@Override

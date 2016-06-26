@@ -283,7 +283,6 @@ public class Controller {
 			default:
 				throw new IllegalActionException("Unrecognized action");
 			}
-			if(!"shuffle".equals(args[0]))
 				updatePlayers(player, playerIndex);
 				
 		} catch (IllegalActionException | ParseException e) {

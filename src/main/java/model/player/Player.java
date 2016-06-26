@@ -83,6 +83,19 @@ public class Player implements Serializable {
 		this.client = client;
 	}
 
+	public Player(Configuration config) {
+		this.coins = new Coins(0);
+		this.assistants = new Assistants(0);
+		this.victoryPoints = new VictoryPoints(0);
+		this.noblePoints = new NoblePoints(0, this, null);
+		this.politicCard = new ArrayList<>();
+		this.emporium = new ArrayList<>();
+		this.permissionCard = new ArrayList<>();
+		for (int i = 0; i < config.getInitialEmporiums(); i++)
+			emporium.add(new Emporium(this));
+		this.DEFAULTMAINACTION = 1;
+		this.isSuspended = true;
+	}
 	
 
 	/**
@@ -266,4 +279,7 @@ public class Player implements Serializable {
 		return this.name;
 	}
 
+	public void setName(String name){
+		this.name=name;
+	}
 }

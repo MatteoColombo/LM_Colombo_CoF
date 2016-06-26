@@ -44,5 +44,6 @@ public class AExtraMainAction extends Action {
 	public void execute() {
 		player.getAssistants().decreaseAmount(ACTIONCOST);
 		player.increaseMainAction();
+		player.doExtraAction();
 	}
 }

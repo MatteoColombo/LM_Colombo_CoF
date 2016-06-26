@@ -345,7 +345,7 @@ public class GameController {
 					
 					FlowPane emporiumBox = (FlowPane) innerPane.lookup("#emporiumBox");
 					sc.getEmporiums().addListener((ListChangeListener.Change<? extends Color> c) -> {
-						
+						emporiumBox.getChildren().clear();
 						for(Color emporiumColor: sc.getEmporiums()) {
 							Circle emporium = new Circle();
 							emporium.setRadius(10.0);

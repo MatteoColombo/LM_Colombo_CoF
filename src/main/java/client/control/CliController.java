@@ -33,14 +33,14 @@ public class CliController implements Runnable, Controller {
 	private transient Logger logger = Logger.getGlobal();
 	private transient Game model;
 	private transient Configuration config;
-	public CliController() {
+	public CliController(Scanner sc) {
 		try {
 			config= new Configuration();
 			view = new Cli(config);
 			this.model = new Game(view);
 			this.view.setModel(model);
 			this.model.setConfiguration(config);
-			keyboard = new Scanner(System.in);
+			keyboard = sc;
 			this.canWrite = false;
 		} catch (ConfigurationErrorException e) {
 			logger.log(Level.SEVERE, "There is an error with the configuration file!", e);
@@ -91,7 +91,7 @@ public class CliController implements Runnable, Controller {
 			}
 		} while (connectionType != 1 && connectionType != 2);
 		try {
-			keyboardListener = new KeyboardListener(this);
+			keyboardListener = new KeyboardListener(this, keyboard);
 			keyboardListener.start();
 			switch (connectionType) {
 			case 1:

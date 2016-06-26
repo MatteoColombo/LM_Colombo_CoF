@@ -20,8 +20,8 @@ public class WorkingClient {
 		int choiche = 0;
 		do {
 			pw.println("Choose the preferred interface:");
-			pw.println("1. GUI");
-			pw.println("2. CLI");
+			pw.println("1. CLI");
+			pw.println("2. GUI");
 			pw.flush();
 			try {
 				choiche = Integer.parseInt(sc.nextLine());
@@ -32,17 +32,15 @@ public class WorkingClient {
 		Thread t;
 		switch (choiche) {
 		case 1:
-			MainApp view = new MainApp();
-			t = new Thread(view);
-			break;
-		case 2:
 			CliController cliControl;
-			cliControl = new CliController();
+			cliControl = new CliController(sc);
 			t = new Thread(cliControl);
-			break;
+		break;
+		case 2:
 		default:
 			MainApp def = new MainApp();
 			t = new Thread(def);
+			sc.close();
 			break;
 		}
 		t.start();

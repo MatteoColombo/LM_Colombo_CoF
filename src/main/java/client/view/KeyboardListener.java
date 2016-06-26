@@ -9,8 +9,8 @@ public class KeyboardListener extends Thread {
 	private Scanner keyboard;
 	private CliController controller;
 
-	public KeyboardListener(CliController controller) {
-		this.keyboard = new Scanner(System.in);
+	public KeyboardListener(CliController controller, Scanner keyboard) {
+		this.keyboard = keyboard;
 		this.controller = controller;
 	}
 
@@ -21,5 +21,6 @@ public class KeyboardListener extends Thread {
 			message = keyboard.nextLine();
 			controller.parseKeyboardMessage(message);
 		}
+		keyboard.close();
 	}
 }

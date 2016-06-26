@@ -267,6 +267,8 @@ public class GameController {
 					setGraphic(null);
 				} else {
 					AnchorPane permissionPane = generatePermission(item);
+					// TODO
+					System.out.println(item.used().get() + " 270");
 					if(item.used().get()) {
 						permissionPane.setEffect(new SepiaTone());
 					}

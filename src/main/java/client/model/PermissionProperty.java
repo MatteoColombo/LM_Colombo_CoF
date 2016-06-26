@@ -28,11 +28,14 @@ public class PermissionProperty {
 		}
 
 		cityNames.set(buffer.substring(1));
+		
 		bonuses.clear();
 		for(Bonus b: perm.getCardReward().getGeneratedRewards()) {
 
 			bonuses.add(new SimpleBonus(b));
 		}
+		
+		used.set(perm.getIfCardUsed());
 	}
 	
 	public ObservableList<SimpleBonus> getBonuses() {

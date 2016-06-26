@@ -81,6 +81,7 @@ public class GameProperty implements ModelInterface {
 	@Override
 	public void updatePlayer(Player p, int index) {
 		players.get(index).setAll(p);
+		
 	}
 
 	@Override
@@ -114,6 +115,26 @@ public class GameProperty implements ModelInterface {
 	@Override
 	public void setPermission(PermissionCard pc, int region, int slot) {
 		this.getMap().getRegions().get(region).getPermissions()[slot].set(pc);
+	}
+
+	@Override
+	public void buildEmporium(String city, String name) {
+		System.out.println(city + name);
+		Color playerColor = null;
+		for(PlayerProperty p: players) {
+			if(p.getName().equals(name)) {
+				playerColor = p.getColor();
+				break;
+			}
+		}
+		
+		for(SimpleRegion sr: map.getRegions()) {
+			for(SimpleCity sc: sr.getCities()) {
+				if(sc.getName().equalsIgnoreCase(city)) {
+					sc.getEmporiums().add(playerColor);
+				}
+			}
+		}
 	}
 
 }

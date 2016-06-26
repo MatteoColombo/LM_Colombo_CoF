@@ -13,10 +13,11 @@
       <ImageView fx:id="cityImage" fitHeight="120.0" fitWidth="145.0" layoutX="-12.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <HBox fx:id="bonusBox" alignment="CENTER" layoutX="-86.0" layoutY="-40.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Label fx:id="cityName" layoutX="49.0" layoutY="13.0" rotate="41.2" text="Label" />
-      <ImageView fx:id="king" fitHeight="50.0" fitWidth="60.0" layoutX="36.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="king" fitHeight="38.0" fitWidth="39.0" layoutX="101.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../simboli/king.png" />
          </image>
       </ImageView>
+      <FlowPane fx:id="emporiumBox" layoutX="31.0" layoutY="63.0" prefHeight="30.0" prefWidth="145.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

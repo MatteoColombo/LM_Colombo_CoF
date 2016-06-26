@@ -3,12 +3,7 @@ package client.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
@@ -42,7 +37,7 @@ public class PlayerProperty {
 	 */
 	private ObservableList<StringProperty> politicCards;
 	private ObservableList<PermissionProperty> permissions;
-	
+		
 	public PlayerProperty() {
 		canNotDoMainAction = new SimpleBooleanProperty(true);
 		canNotDoSideAction = new SimpleBooleanProperty(true );
@@ -91,6 +86,7 @@ public class PlayerProperty {
 	public void setAll(Player player) {
 		this.setAllButPermissions(player);
 		this.setAllPermissions(player);
+		
 	}
 	
 	public StringProperty nameProperty() {

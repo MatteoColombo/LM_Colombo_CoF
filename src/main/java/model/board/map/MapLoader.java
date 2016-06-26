@@ -263,13 +263,13 @@ public class MapLoader {
 	 * Returns a specific {@link City}.
 	 * 
 	 * @param name
-	 *            the searched City name
+	 *            the searched City name (case unsensitive)
 	 * @return the first City with that name; <code>null</code> if nothing found
 	 * @see MapLoader
 	 */
 	public City getCity(String name) {
 		for (City c : citiesOfMap) {
-			if (c.getName().equals(name)) {
+			if (c.getName().equalsIgnoreCase(name)) {
 				return c;
 			}
 		}

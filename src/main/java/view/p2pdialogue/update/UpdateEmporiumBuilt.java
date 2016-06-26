@@ -14,7 +14,7 @@ public class UpdateEmporiumBuilt implements Update {
 	}
 	@Override
 	public void execute(ModelInterface model) {
-		
+		model.buildEmporium(city, name);
 	}
 
 }

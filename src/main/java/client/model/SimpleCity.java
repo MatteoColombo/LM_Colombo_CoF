@@ -8,7 +8,9 @@ import java.util.Map;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
 import model.board.city.City;
 import model.reward.Bonus;
 import model.reward.Reward;
@@ -32,7 +34,7 @@ public class SimpleCity {
 	/**
 	 * List containing the player's name who have an emporium here
 	 */
-	private ObservableList<StringProperty> emporiums;
+	private ObservableList<Color> emporiums;
 	private List<SimpleBonus> bonuses;
 	private List<String> connections;
 	
@@ -50,6 +52,7 @@ public class SimpleCity {
 		}
 		
 		color = ColorConverter.awtToWeb(city.getColor());
+		emporiums = FXCollections.observableArrayList();
 	}
 	
 	public BooleanProperty hasKing() {
@@ -60,7 +63,7 @@ public class SimpleCity {
 		return this.name;
 	}
 	
-	public List<StringProperty> getEmporiums() {
+	public ObservableList<Color> getEmporiums() {
 		return this.emporiums;
 	}
 	

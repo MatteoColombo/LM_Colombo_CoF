@@ -32,4 +32,6 @@ public interface ModelInterface {
 	public Configuration getConfiguration();
 	
 	public void setPermission(PermissionCard pc, int region, int slot);
+
+	public void buildEmporium(String city, String name);
 }

@@ -1,6 +1,7 @@
 package fx.view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import fx.MainApp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -16,11 +18,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Glow;
+import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -31,6 +36,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import model.player.PermissionCard;
 
 public class GameController {
 
@@ -249,8 +255,22 @@ public class GameController {
 					setGraphic(null);
 				} else {
 					AnchorPane permissionPane = generatePermission(item);
+					if(item.used().get()) {
+						permissionPane.setEffect(new SepiaTone());
+					}
 					setGraphic(permissionPane);
 				}
+
+				this.setOnDragDetected(event -> {
+					// TODO complete
+					if ("emporium".equals(actionSelected)) {
+						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+						ClipboardContent content = new ClipboardContent();
+						content.putString("" + permissionList.getSelectionModel().getSelectedIndex()+1);
+						db.setContent(content);
+						event.consume();
+					}
+				});
 			}
 		});
 	}
@@ -279,10 +299,10 @@ public class GameController {
 
 					IntegerBinding permSizeProperty = Bindings.size(players.get(i).getPermissions());
 					IntegerBinding politicSizeProperty = Bindings.size(players.get(i).getPoliticCards());
-					
+
 					((Labeled) pane.lookup("#permissionLabel")).textProperty().bind(permSizeProperty.asString());
 					((Labeled) pane.lookup("#politicLabel")).textProperty().bind(politicSizeProperty.asString());
-					
+
 				} catch (IOException e) {
 					logger.appendText(e.getMessage());
 				}
@@ -295,7 +315,7 @@ public class GameController {
 			for (SimpleCity sc : r.getCities()) {
 
 				try {
-					AnchorPane rewardPane = (AnchorPane) mapPane.lookup("#" + sc.getName().toLowerCase());
+					AnchorPane cityPane = (AnchorPane) mapPane.lookup("#" + sc.getName().toLowerCase());
 
 					FXMLLoader loader = new FXMLLoader();
 					loader.setLocation(MainApp.class.getResource("/fxml/City.fxml"));
@@ -311,38 +331,77 @@ public class GameController {
 
 					Node king = innerPane.lookup("#king");
 					king.visibleProperty().bind(sc.hasKing());
-					/*
-					 * king.setOnDragDetected(event -> { Dragboard db =
-					 * king.startDragAndDrop(TransferMode.ANY); ClipboardContent
-					 * content = new ClipboardContent();
-					 * content.putString(innerPane.getId());
-					 * db.setContent(content); event.consume(); });
-					 * 
-					 * innerPane.setOnDragOver(event -> { if
-					 * (event.getGestureSource() != innerPane &&
-					 * event.getDragboard().hasString()) {
-					 * innerPane.setEffect(new Bloom());
-					 * event.acceptTransferModes(TransferMode.MOVE); }
-					 * event.consume(); });
-					 * 
-					 * innerPane.setOnDragExited(event -> {
-					 * innerPane.setEffect(null); });
-					 * 
-					 * innerPane.setOnDragDropped(event -> { Dragboard db =
-					 * event.getDragboard();
-					 * 
-					 * if(db.hasString()) {
-					 * innerPane.lookup("#king").visibleProperty().set(true);
-					 * mapPane.lookup(db.getString()).lookup("#king").
-					 * visibleProperty().set(false); } });
-					 */
+					
+					FlowPane emporiumBox = (FlowPane) innerPane.lookup("#emporiumBox");
+					sc.getEmporiums().addListener((ListChangeListener.Change<? extends Color> c) -> {
+						
+						for(Color emporiumColor: sc.getEmporiums()) {
+							emporiumBox.getChildren().clear();
+							Circle emporium = new Circle();
+							emporium.setRadius(10.0);
+							emporium.setFill(emporiumColor);
+							emporiumBox.getChildren().add(emporium);
+						}
+					});
+					
+					cityPane.setOnDragOver(event -> {
+						if ("emporium".equals(actionSelected)) {
+							
+							cityPane.setEffect(new Glow());
+							event.acceptTransferModes(TransferMode.MOVE);
+						}
+						event.consume();
+					});
+
+					cityPane.setOnDragExited(event -> {
+						cityPane.setEffect(null);
+					});
+
+					cityPane.setOnDragDropped(event -> {
+						// TODO not yet tested
+						Dragboard db = event.getDragboard();
+						
+						if (db.hasString()) {
+							mainApp.sendMsg(actionSelected + " -city " + cityPane.getId() + " -permission " + db.getString());
+						}
+					});
+
+					king.setOnDragDetected(event -> {
+						Dragboard db = king.startDragAndDrop(TransferMode.ANY);
+						ClipboardContent content = new ClipboardContent();
+						content.putString("king");
+						db.setContent(content);
+						
+						event.consume();
+					});
+					
+					/*innerPane.setOnDragOver(event -> {
+						if (event.getGestureSource() != innerPane) {
+							innerPane.setEffect(new Glow());
+							event.acceptTransferModes(TransferMode.MOVE);
+						}
+						event.consume();
+					});
+
+					innerPane.setOnDragExited(event -> {
+						innerPane.setEffect(null);
+					});
+
+					innerPane.setOnDragDropped(event -> {
+						Dragboard db = event.getDragboard();
+
+						if (db.hasString()) {
+							innerPane.lookup("#king").visibleProperty().set(true);
+						}
+					});*/
+
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
 
 						Pane bonusPane = generateBonus(sb);
 						bonusBox.getChildren().add(bonusPane);
 					}
-					rewardPane.getChildren().add(innerPane);
+					cityPane.getChildren().add(innerPane);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -585,7 +644,7 @@ public class GameController {
 				Pane outerPane = (Pane) mapPane.lookup("#permit" + String.valueOf(i) + "_" + String.valueOf(j));
 
 				outerPane.setOnDragOver(event -> {
-					if (event.getGestureSource() != outerPane && "permission".equals(actionSelected)) {
+					if ("permission".equals(actionSelected)) {
 						outerPane.setEffect(new Glow());
 						event.acceptTransferModes(TransferMode.MOVE);
 					}
@@ -605,7 +664,6 @@ public class GameController {
 						String region = info.substring(0, 1);
 						int cardIndex = Integer.valueOf(card) + 1;
 						int regionIndex = Integer.valueOf(region) + 1;
-						System.out.println(id + info + card + region + cardIndex + regionIndex);
 						mainApp.sendMsg(actionSelected + " -region " + regionIndex + " -permission " + cardIndex
 								+ " -cards " + db.getString());
 					}

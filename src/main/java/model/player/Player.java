@@ -52,8 +52,12 @@ public class Player implements Serializable {
 		this.permissionCard= new ArrayList<>();
 		this.mainActions= p.getMainActionsLeft();
 		this.extraAction= p.getIfExtraActionDone();
-		for(PermissionCard card: p.getPermissionCard())
-			this.permissionCard.add(new PermissionCard(card.getCardCity(), card.getCardReward()));
+		for(PermissionCard card: p.getPermissionCard()){
+			PermissionCard copyCard=new PermissionCard(card.getCardCity(), card.getCardReward());
+			if(card.getIfCardUsed())
+				copyCard.setCardUsed();
+			this.permissionCard.add(copyCard);
+			}
 		this.politicCard = new ArrayList<>();
 		for (PoliticCard card : p.getPoliticCard()) {
 			this.politicCard.add(new PoliticCard(card.getCardColor()));

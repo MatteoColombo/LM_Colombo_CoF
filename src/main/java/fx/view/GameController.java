@@ -678,13 +678,13 @@ public class GameController {
 				// binding city Label
 				// binding bonuses
 				permissions[j].getBonuses().addListener((ListChangeListener.Change<? extends SimpleBonus> c) -> {
+					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
+					// reset all the bonus in the list,
+					// since the amount of bonus in the box may change
+					// from card to card
+					bonusBox.getChildren().clear();
 					for (SimpleBonus sb : c.getList()) {
-						try {
-							// reset all the bonus in the list,
-							// since the amount of bonus in the box may change
-							// from card to card
-							HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
-							bonusBox.getChildren().clear();
+						try {			
 							bonusBox.getChildren().add(generateBonus(sb));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block

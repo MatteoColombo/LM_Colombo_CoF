@@ -26,9 +26,11 @@ public class PermissionProperty {
 		for(City c: perm.getCardCity()) {
 			buffer += "/" + c.getName().substring(0, 1).toUpperCase();
 		}
+
 		cityNames.set(buffer.substring(1));
 		bonuses.clear();
 		for(Bonus b: perm.getCardReward().getGeneratedRewards()) {
+
 			bonuses.add(new SimpleBonus(b));
 		}
 	}

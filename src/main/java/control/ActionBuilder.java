@@ -156,8 +156,8 @@ public class ActionBuilder {
 		Council council = parseCouncil(strRegion, false);
 		PermissionCard permCard = parsePermissionCard(region, cmd.getOptionValue(CliParser.OPTPERMISSION));
 		List<PoliticCard> politicCards = parsePoliticCards(p, cmd.getOptionValues(CliParser.OPTCARDS));
-
-		return new ABuyPermissionCard(p, permCard, council, politicCards);
+		int intSlot= Integer.parseInt(cmd.getOptionValue(CliParser.OPTPERMISSION))-1;
+		return new ABuyPermissionCard(p, permCard, council, politicCards, region, intSlot);
 	}
 
 	/**

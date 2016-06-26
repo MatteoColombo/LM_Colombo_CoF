@@ -27,7 +27,7 @@ public class TestBuyPermitCard {
 	private CouncilorPool pool;
 	private Council council;
 	private PermissionCard pcard;
-
+	private MapLoader ml;
 	/**
 	 * Creates a list with the colors and it initializes the player
 	 */
@@ -45,8 +45,8 @@ public class TestBuyPermitCard {
 		this.player = new Player(10, 3, 6, 10, colorList, 0, 0, track, null);
 		this.pool = new CouncilorPool(4, 4, colorList);
 		this.council = pool.getCouncil();
-		MapLoader ml = new MapLoader("src/main/resources/map.xml", pool);
-		this.pcard = new PermissionCard(ml.getRegions().get(0).getCities());
+		ml = new MapLoader("src/main/resources/map.xml", pool);
+		this.pcard = ml.getRegions().get(0).getPermissionCard(0);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class TestBuyPermitCard {
 			cards.add(p);
 		}
 
-		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
+		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards,ml.getRegions().get(0),0);
 		action.execute();
 
 		assertEquals(1, player.getPermissionCard().size());
@@ -83,7 +83,7 @@ public class TestBuyPermitCard {
 		} while (!p.isMultipleColor());
 		cards.add(p);
 
-		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
+		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards,ml.getRegions().get(0),0 );
 		action.execute();
 
 		assertEquals(10, player.getCoins().getAmount());
@@ -100,7 +100,7 @@ public class TestBuyPermitCard {
 		List<PoliticCard> cards = new ArrayList<>();
 		cards.add(new PoliticCard(this.council.getHeadColor()));
 		this.player.getPoliticCard().addAll(cards);
-		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards);
+		ABuyPermissionCard action = new ABuyPermissionCard(player, pcard, council, cards,ml.getRegions().get(0),0);
 		action.execute();
 		assertEquals(1, player.getPermissionCard().size());
 

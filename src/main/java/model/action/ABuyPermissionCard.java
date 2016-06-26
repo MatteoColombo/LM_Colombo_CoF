@@ -2,6 +2,7 @@ package model.action;
 
 import java.util.List;
 
+import model.board.Region;
 import model.board.council.Council;
 import model.exceptions.IllegalActionException;
 import model.player.*;
@@ -25,6 +26,8 @@ public class ABuyPermissionCard extends Action {
 	private Player player;
 	private PermissionCard permCard;
 	private List<PoliticCard> politicCards;
+	private Region region;
+	private int slot;
 	private int price;
 
 	/**
@@ -44,10 +47,12 @@ public class ABuyPermissionCard extends Action {
 	 * @throws IllegalActionException
 	 * @see ABuyPermissionCard
 	 */
-	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politic)
+	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politic, Region region, int slot)
 			throws IllegalActionException {
 		super(true, p);
 		this.politicCards = politic;
+		this.region=region;
+		this.slot=slot;
 		this.player = p;
 		this.permCard = permc;
 		int difference = counc.compareCardCouncil(politicCards);
@@ -65,6 +70,7 @@ public class ABuyPermissionCard extends Action {
 	 */
 	@Override
 	public void execute() {
+		region.givePermissionCard(slot);
 		player.getCoins().decreaseAmount(price);
 		player.getPermissionCard().add(permCard);
 		permCard.getCardReward().assignBonusTo(player);

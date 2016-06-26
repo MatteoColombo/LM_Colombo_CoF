@@ -46,13 +46,5 @@ public class WorkingClient {
 			break;
 		}
 		t.start();
-		try {
-			t.join();
-		} catch (InterruptedException e) {
-			t.interrupt();
-			logger.log(Level.SEVERE,e.getMessage(),e);
-		}
-		sc.close();
-		
 	}
 }

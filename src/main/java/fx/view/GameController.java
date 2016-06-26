@@ -265,7 +265,7 @@ public class GameController {
 					if ("emporium".equals(actionSelected)) {
 						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
 						ClipboardContent content = new ClipboardContent();
-						content.putString("" + this.getIndex()+1);
+						content.putString("" + (this.getIndex()+1));
 						db.setContent(content);
 						event.consume();
 					}

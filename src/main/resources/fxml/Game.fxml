@@ -126,7 +126,7 @@
    <center>
       <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane fx:id="mapPane">
+          <AnchorPane fx:id="mapPane" prefHeight="833.0" prefWidth="921.0">
                <children>
                   <ImageView fitHeight="833.0" fitWidth="1073.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -167,6 +167,21 @@
                   <Pane fx:id="permit0_0" layoutX="116.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
                   <Pane fx:id="permit0_1" layoutX="201.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
                   <FlowPane fx:id="councilorPool" layoutX="836.0" layoutY="711.0" prefHeight="67.0" prefWidth="123.0" />
+                  <ImageView fx:id="region2" fitHeight="49.0" fitWidth="80.0" layoutX="767.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                     <image>
+                        <Image url="@../simboli/Montagne.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="region1" fitHeight="49.0" fitWidth="80.0" layoutX="387.0" layoutY="566.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                     <image>
+                        <Image url="@../simboli/Colline.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="region0" fitHeight="49.0" fitWidth="80.0" layoutX="43.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                     <image>
+                        <Image url="@../simboli/Mare.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
         </content>

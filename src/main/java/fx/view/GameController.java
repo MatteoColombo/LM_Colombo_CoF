@@ -12,10 +12,12 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
@@ -128,6 +130,7 @@ public class GameController {
 		initPoliticTable();
 		initPermissionList();
 		initMap();
+		initRegionSymbols();
 		initConnections();
 		initCouncils();
 		initBoardRewards();
@@ -168,6 +171,7 @@ public class GameController {
 	@FXML
 	private void handleShuffle() throws IOException {
 		resetKing();
+		actionSelected = "shuffle";
 	}
 
 	@FXML
@@ -312,7 +316,7 @@ public class GameController {
 
 					IntegerBinding permSizeProperty = Bindings.size(players.get(i).getPermissions());
 					IntegerBinding politicSizeProperty = Bindings.size(players.get(i).getPoliticCards());
-
+					
 					((Labeled) pane.lookup("#permissionLabel")).textProperty().bind(permSizeProperty.asString());
 					((Labeled) pane.lookup("#politicLabel")).textProperty().bind(politicSizeProperty.asString());
 
@@ -325,6 +329,7 @@ public class GameController {
 
 	private void initMap() {
 		for (SimpleRegion r : mainApp.getLocalModel().getMap().getRegions()) {
+			
 			for (SimpleCity sc : r.getCities()) {
 
 				try {
@@ -753,5 +758,28 @@ public class GameController {
 		}
 		// just cause without won't compile
 		return null;
+	}
+	
+	private void initRegionSymbols() {
+		int regionNumbers = mainApp.getLocalModel().getMap().getRegions().size();
+		for(int i = 0; i < regionNumbers; i ++) {
+			Node regionSymbol = mapPane.lookup("#region" + i);
+			regionSymbol.setOnMouseEntered(event -> {
+				if("shuffle".equals(actionSelected)) {
+					regionSymbol.setEffect(new Bloom());
+				}
+			});
+			
+			regionSymbol.setOnMouseExited(event -> {
+				regionSymbol.setEffect(null);
+			});
+			
+			regionSymbol.setOnMouseClicked(event -> {
+				if("shuffle".equals(actionSelected)) {
+					 int number = Integer.valueOf(regionSymbol.getId().substring(regionSymbol.getId().length()-1));
+					mainApp.sendMsg(actionSelected + " -region " + (number+1));
+				}
+			});
+		}
 	}
 }

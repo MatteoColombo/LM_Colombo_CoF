@@ -214,7 +214,6 @@ public class Player implements Serializable {
 	 */
 	public void doMainAction() {
 		this.mainActions--;
-		System.out.println("Main actions left "+this.mainActions);
 	}
 
 	/**

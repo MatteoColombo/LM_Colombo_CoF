@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.player.Assistants;
 import model.player.PermissionCard;
@@ -20,7 +22,7 @@ public class Market {
 	private List<OnSaleItem> itemsOnSale;
 	private List<Player> players;
 	private boolean playerWantsToStop;
-
+	private Logger logger= Logger.getGlobal();
 	public Market(List<Player> players) {
 		this.players = players;
 		itemsOnSale = new ArrayList<>();
@@ -46,7 +48,7 @@ public class Market {
 					p.getClient().askWichItemToSell();
 				} catch (IOException e) {
 					p.setSuspension(true);
-					// TODO logger
+					logger.log(Level.SEVERE, e.getMessage(), e);
 					playerWantsToStop = true;
 				}
 			}
@@ -68,7 +70,7 @@ public class Market {
 					players.get((i + starting) % players.size()).getClient().askPlayerItemToBuy(itemsOnSale);
 				} catch (IOException e) {
 					players.get((i + starting) % players.size()).setSuspension(true);
-					// TODO logger
+					logger.log(Level.SEVERE, e.getMessage(), e);
 					playerWantsToStop = true;
 				}
 			}
@@ -127,6 +129,7 @@ public class Market {
 	/**
 	 * Just for tests
 	 * @return the list of the items on sale
+	 * @deprecated it's just for tests
 	 */
 	@Deprecated
 	public List<OnSaleItem> getItemsOnSale(){

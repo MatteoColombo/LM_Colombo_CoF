@@ -172,4 +172,13 @@ public class Game implements ModelInterface {
 	public List<String> getKingCouncil(){
 		return this.kingCouncil;
 	}
+	
+	public void buildEmporium(String city, String name){
+		for(CliRegion region: regions)
+			for(CliCity c: region.getCities())
+				if(c.getName().equals(city)){
+					
+					return;
+				}
+	}
 }

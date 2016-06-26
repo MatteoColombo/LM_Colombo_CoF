@@ -445,6 +445,11 @@ public class Controller {
 	}
 	
 	public void sendEmporium(String player, String city){
+		city.toUpperCase();
+		if(city.length()>1){
+			city= city.substring(0,1)+city.substring(1).toLowerCase();
+		}
+		
 		for(ClientInt client: playersMap.keySet()){
 			try{
 				client.notify(new UpdateEmporiumBuilt(player, city));

@@ -115,10 +115,10 @@ public class Game extends Thread {
 					someoneWon = true;
 				}
 			}
-			if (!someoneWon) {
+			/*if (!someoneWon) {
 				this.market = new Market(players);
 				this.market.runMarket();
-			}
+			}*/
 		}
 		// This loop is for the last round after that a player placed his 10th
 		// emporium
@@ -133,8 +133,7 @@ public class Game extends Thread {
 	}
 
 	public void publishWinner() {
-		players.stream().filter(Player::getSuspended).map(Player::getClient)
-				.forEach(client -> System.out.println("game finished"));
+		//TODO
 	}
 
 	/**

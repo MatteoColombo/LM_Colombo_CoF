@@ -328,14 +328,13 @@ public class GameController {
 					Label cityName = (Label) innerPane.lookup("#cityName");
 					cityName.setText(sc.getName());
 
-					Node king = innerPane.lookup("#king");
-					king.visibleProperty().bind(sc.hasKing());
+					ImageView king = (ImageView) innerPane.lookup("#king");
+					king.visibleProperty().bindBidirectional(sc.hasKing());
 					
 					FlowPane emporiumBox = (FlowPane) innerPane.lookup("#emporiumBox");
 					sc.getEmporiums().addListener((ListChangeListener.Change<? extends Color> c) -> {
 						
 						for(Color emporiumColor: sc.getEmporiums()) {
-							emporiumBox.getChildren().clear();
 							Circle emporium = new Circle();
 							emporium.setRadius(10.0);
 							emporium.setFill(emporiumColor);
@@ -344,11 +343,10 @@ public class GameController {
 					});
 					
 					cityPane.setOnDragOver(event -> {
-						if ("emporium".equals(actionSelected)) {
-							
+						if ("emporium".equals(actionSelected) ||  "dragKing".equals(actionSelected)) {
 							cityPane.setEffect(new Glow());
 							event.acceptTransferModes(TransferMode.MOVE);
-						}
+						}	
 						event.consume();
 					});
 
@@ -359,8 +357,10 @@ public class GameController {
 					cityPane.setOnDragDropped(event -> {
 						// TODO not yet tested
 						Dragboard db = event.getDragboard();
-						
-						if (db.hasString()) {
+						if("dragKing".equals(actionSelected)) {
+							king.setVisible(true);
+						}
+						else if (db.hasString()) {
 							mainApp.sendMsg(actionSelected + " -city " + cityPane.getId() + " -permission " + db.getString());
 						}
 					});
@@ -368,12 +368,15 @@ public class GameController {
 					king.setOnDragDetected(event -> {
 						Dragboard db = king.startDragAndDrop(TransferMode.ANY);
 						ClipboardContent content = new ClipboardContent();
+						actionSelected = "dragKing";
 						content.putString("king");
 						db.setContent(content);
-						
 						event.consume();
 					});
 					
+					king.setOnDragDone(event -> {
+						king.setVisible(false);
+					});
 					/*innerPane.setOnDragOver(event -> {
 						if (event.getGestureSource() != innerPane) {
 							innerPane.setEffect(new Glow());

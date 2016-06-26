@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.nio.file.attribute.AclEntry.Builder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import model.exceptions.IllegalActionException;
 import model.market.OnSaleItem;
 import model.market.Soldable;
 import model.player.Assistants;
+import model.player.Emporium;
 import model.player.PermissionCard;
 import model.player.Player;
 import model.reward.Bonus;
@@ -33,6 +35,7 @@ import view.p2pdialogue.update.NotifyPlayerJoined;
 import view.p2pdialogue.update.NotifyPlayersList;
 import view.p2pdialogue.update.NotifyUpdatePlayer;
 import view.p2pdialogue.update.UpdateCouncil;
+import view.p2pdialogue.update.UpdateEmporiumBuilt;
 import view.p2pdialogue.update.UpdateRegionPermission;
 import view.p2pdialogue.update.UpdateSendCityBonus;
 import view.server.ClientInt;
@@ -266,10 +269,10 @@ public class Controller {
 				int region= Integer.parseInt(cmd.getOptionValue(CliParser.OPTREGION))-1;
 				int slot= Integer.parseInt(cmd.getOptionValue(CliParser.OPTPERMISSION))-1;
 				notifySendPermission(game.getBoard().getRegion(region).getPermissionCard(slot),region, slot );
-				
 				break;
 			case "emporium":
 				tm.performAction(builder.makeABuildEmporium(player, cmd));
+				sendEmporium(player.getName(),cmd.getOptionValue(CliParser.OPTCITY));
 				break;
 			case "king":
 				tm.performAction(builder.makeABuildEmporiumWithKing(player, cmd));
@@ -434,6 +437,17 @@ public class Controller {
 		for(ClientInt client: playersMap.keySet()){
 			try {
 				client.notify(new UpdateRegionPermission(card, region, slot));
+			} catch (IOException e) {
+				logger.log(Level.WARNING, e.getMessage(), e);
+				playersMap.get(client).setSuspension(true);
+			}
+		}
+	}
+	
+	public void sendEmporium(String player, String city){
+		for(ClientInt client: playersMap.keySet()){
+			try{
+				client.notify(new UpdateEmporiumBuilt(player, city));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
 				playersMap.get(client).setSuspension(true);

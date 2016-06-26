@@ -30,13 +30,13 @@ public class ActionBuilder {
 
 	public ActionBuilder(Board board, Configuration config) {
 		this.board = board;
-		this.config= config;
+		this.config = config;
 	}
 
-	public Action makeAEndTurn(Player player, TurnManager turnManager) throws IllegalActionException{
+	public Action makeAEndTurn(Player player, TurnManager turnManager) throws IllegalActionException {
 		return new AEndTurn(player, turnManager);
 	}
-	
+
 	/**
 	 * factory for the ABuildEmporium Action
 	 * 
@@ -264,7 +264,8 @@ public class ActionBuilder {
 	 * @param strRegion
 	 * @return the region found
 	 * @throws IllegalActionException
-f	 */
+	 *             f
+	 */
 	private Region parseRegion(String strRegion) throws IllegalActionException {
 		if (strRegion == null) {
 			throw new IllegalActionException("no region given");
@@ -347,7 +348,7 @@ f	 */
 	 * @returnt the found city
 	 * @throws IllegalActionException
 	 */
-	private City parseCity(String strCity) throws IllegalActionException {
+	public City parseCity(String strCity) throws IllegalActionException {
 		if (strCity == null) {
 			throw new IllegalActionException("no city given");
 		}

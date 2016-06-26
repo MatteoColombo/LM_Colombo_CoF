@@ -158,6 +158,14 @@ public class City implements Serializable {
 		}
 		return false;
 	}
+	
+	/**
+	 * Returns the list of the emporiums
+	 * @return
+	 */
+	public List<Emporium> getEmporiums(){
+		return emporiums;
+	}
 
 	/**
 	 * Returns the {@link Reward} that this City is holding.

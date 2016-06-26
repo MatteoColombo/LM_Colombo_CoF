@@ -377,26 +377,28 @@ public class GameController {
 					king.setOnDragDone(event -> {
 						king.setVisible(false);
 					});
-					/*innerPane.setOnDragOver(event -> {
-						if (event.getGestureSource() != innerPane) {
-							innerPane.setEffect(new Glow());
+					
+					king.setOnDragOver(event -> {
+						if("king".equals(actionSelected)) {
+							king.setEffect(new Glow());
 							event.acceptTransferModes(TransferMode.MOVE);
-						}
+						}	
 						event.consume();
 					});
-
-					innerPane.setOnDragExited(event -> {
-						innerPane.setEffect(null);
+					
+					king.setOnDragExited(event -> {
+						king.setEffect(null);
 					});
-
-					innerPane.setOnDragDropped(event -> {
+					
+					king.setOnDragDropped(event -> {
 						Dragboard db = event.getDragboard();
-
-						if (db.hasString()) {
-							innerPane.lookup("#king").visibleProperty().set(true);
+						if(db.hasString()) {
+							mainApp.sendMsg(actionSelected + 
+									" -city " + innerPane.getId()
+									+ " -cards" + db.getString());
 						}
-					});*/
-
+					});
+					
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
 

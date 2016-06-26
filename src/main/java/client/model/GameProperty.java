@@ -119,7 +119,6 @@ public class GameProperty implements ModelInterface {
 
 	@Override
 	public void buildEmporium(String city, String name) {
-		System.out.println(city + name);
 		Color playerColor = null;
 		for(PlayerProperty p: players) {
 			if(p.getName().equals(name)) {
@@ -135,5 +134,15 @@ public class GameProperty implements ModelInterface {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void setKingLocation(String location) {
+		for(SimpleRegion region:map.getRegions())
+			for(SimpleCity city: region.getCities()){
+				city.setHasKing(false);
+				if(city.getName().equalsIgnoreCase(location))
+					city.setHasKing(true);
+			}
 	}
 }

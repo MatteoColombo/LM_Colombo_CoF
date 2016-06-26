@@ -34,4 +34,6 @@ public interface ModelInterface {
 	public void setPermission(PermissionCard pc, int region, int slot);
 
 	public void buildEmporium(String city, String name);
+	
+	public void setKingLocation(String location);
 }

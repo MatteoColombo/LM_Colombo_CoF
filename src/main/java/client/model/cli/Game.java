@@ -53,7 +53,7 @@ public class Game implements ModelInterface {
 						connections.add(conn.getName());
 					cities.add(new CliCity(c.getName(), connections, c.isCapital()));
 				}
-				regions.add(new CliRegion(regions.size(), cities,config.getNumberDisclosedCards()));
+				regions.add(new CliRegion(regions.size(), cities, config.getNumberDisclosedCards()));
 			}
 		} catch (XMLFileException e) {
 			// TODO Auto-generated catch block
@@ -126,10 +126,10 @@ public class Game implements ModelInterface {
 
 	@Override
 	public void playerJoined(Player p) {
-		if(!("_Server_".equals(p.getName()) && p.getAssistants().getAmount()==0 && p.getCoins().getAmount()==0)){
-		CliPlayer player = new CliPlayer(p, config);
-		players.add(player);
-		view.printMessage(player.getName() + " joined.");
+		if (!("_Server_".equals(p.getName()) && p.getAssistants().getAmount() == 0 && p.getCoins().getAmount() == 0)) {
+			CliPlayer player = new CliPlayer(p, config);
+			players.add(player);
+			view.printMessage(player.getName() + " joined.");
 		}
 	}
 
@@ -161,6 +161,7 @@ public class Game implements ModelInterface {
 
 	/**
 	 * returns the regions of the map
+	 * 
 	 * @return
 	 */
 	public List<CliRegion> getRegions() {
@@ -169,18 +170,31 @@ public class Game implements ModelInterface {
 
 	/**
 	 * Returns the king's council
+	 * 
 	 * @return
 	 */
-	public List<String> getKingCouncil(){
+	public List<String> getKingCouncil() {
 		return this.kingCouncil;
 	}
-	
-	public void buildEmporium(String city, String name){
-		for(CliRegion region: regions)
-			for(CliCity c: region.getCities())
-				if(c.getName().equals(city)){
-					
+
+	public void buildEmporium(String city, String name) {
+		for (CliRegion region : regions)
+			for (CliCity c : region.getCities())
+				if (c.getName().equalsIgnoreCase(city)) {
+
 					return;
 				}
+	}
+
+	@Override
+	public void setKingLocation(String location) {
+		for (CliRegion region : regions) {
+			for (CliCity city : region.getCities()) {
+				city.setHasKing(false);
+				if (city.getName().equalsIgnoreCase(location))
+					city.setHasKing(true);
+			}
+		}
+
 	}
 }

@@ -88,4 +88,8 @@ public class SimpleCity {
 			}
 		}
 	}
+	
+	public void setHasKing(boolean hasKing){
+		this.hasKing.set(hasKing);
+	}
 }

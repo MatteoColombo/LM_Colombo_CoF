@@ -31,6 +31,7 @@ import model.reward.Reward;
 import server.Server;
 import view.p2pdialogue.notify.NotifyGameLoading;
 import view.p2pdialogue.notify.NotifyGameStarted;
+import view.p2pdialogue.update.NotifyKingLocation;
 import view.p2pdialogue.update.NotifyPlayerJoined;
 import view.p2pdialogue.update.NotifyPlayersList;
 import view.p2pdialogue.update.NotifyUpdatePlayer;
@@ -48,7 +49,7 @@ public class Controller {
 	private Logger logger = Logger.getGlobal();
 	private Configuration config;
 	private int gameMap;
-	
+
 	public Controller(Game game, Configuration config) {
 		this.game = game;
 		this.config = config;
@@ -184,7 +185,7 @@ public class Controller {
 			client.askConfiguration(config.getMaxNumberOfPlayer());
 			return;
 		}
-		this.gameMap=map-1;
+		this.gameMap = map - 1;
 		setMaxNumberOfPlayers(players);
 		setChoosenMap(gameMap);
 	}
@@ -263,19 +264,24 @@ public class Controller {
 				break;
 			case "shuffle":
 				tm.performAction(builder.makeAShufflePermissionCards(player, cmd));
+				int intRegion= Integer.parseInt(cmd.getOptionValue(CliParser.OPTREGION))-1;
+				for(int i=0; i<game.getBoard().getRegion(intRegion).getPermissionSlotsNumber(); i++)
+					notifySendPermission(game.getBoard().getRegion(intRegion).getPermissionCard(i), intRegion, i);
 				break;
 			case "permission":
 				tm.performAction(builder.makeABuyPermissionCard(player, cmd));
-				int region= Integer.parseInt(cmd.getOptionValue(CliParser.OPTREGION))-1;
-				int slot= Integer.parseInt(cmd.getOptionValue(CliParser.OPTPERMISSION))-1;
-				notifySendPermission(game.getBoard().getRegion(region).getPermissionCard(slot),region, slot );
+				int region = Integer.parseInt(cmd.getOptionValue(CliParser.OPTREGION)) - 1;
+				int slot = Integer.parseInt(cmd.getOptionValue(CliParser.OPTPERMISSION)) - 1;
+				notifySendPermission(game.getBoard().getRegion(region).getPermissionCard(slot), region, slot);
 				break;
 			case "emporium":
 				tm.performAction(builder.makeABuildEmporium(player, cmd));
-				sendEmporium(player.getName(),cmd.getOptionValue(CliParser.OPTCITY));
+				sendEmporium(player.getName(), cmd.getOptionValue(CliParser.OPTCITY));
 				break;
 			case "king":
 				tm.performAction(builder.makeABuildEmporiumWithKing(player, cmd));
+				sendEmporium(player.getName(), cmd.getOptionValue(CliParser.OPTCITY));
+				sendKingLocation(cmd.getOptionValue(CliParser.OPTCITY));
 				break;
 			case "end":
 				tm.performAction(builder.makeAEndTurn(player, tm));
@@ -283,8 +289,8 @@ public class Controller {
 			default:
 				throw new IllegalActionException("Unrecognized action");
 			}
-				updatePlayers(player, playerIndex);
-				
+			updatePlayers(player, playerIndex);
+
 		} catch (IllegalActionException | ParseException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));
@@ -344,41 +350,43 @@ public class Controller {
 
 	}
 
-	public void parseRewardOfPermissionCard(String card, ClientInt client) throws IOException{
-		try{
-			int index= Integer.parseInt(card);
-			if(index > playersMap.get(client).getPermissionCard().size() || index < 1)
+	public void parseRewardOfPermissionCard(String card, ClientInt client) throws IOException {
+		try {
+			int index = Integer.parseInt(card);
+			if (index > playersMap.get(client).getPermissionCard().size() || index < 1)
 				throw new IllegalActionException("Out of bound");
-			playersMap.get(client).getPermissionCard().get(index-1).getCardReward().assignBonusTo(playersMap.get(client));
-		}catch(IllegalActionException | NumberFormatException e){
-			logger.log(Level.WARNING, e.getMessage(), e);
-			client.notifyIllegalAction(new IllegalActionException("wrong selection"));
-			client.askSelectRewardOfPermissionCard();
-		} 
-	}
-
-	public void parseBonusFreePermissionCard(String card, ClientInt client) throws IOException {
-		String[] parameters= card.split(" ");
-		try{
-			int region= Integer.parseInt(parameters[0]);
-			int index= Integer.parseInt(parameters[1]);
-			if(index > config.getNumberDisclosedCards() || index < 1 || region < 1 || region > game.getBoard().getRegions().size())
-				throw new IllegalActionException("Out of bound");
-			playersMap.get(client).getPermissionCard().add(game.getBoard().getRegion(region).givePermissionCard(index));
-		}catch(NumberFormatException | IllegalActionException e){
+			playersMap.get(client).getPermissionCard().get(index - 1).getCardReward()
+					.assignBonusTo(playersMap.get(client));
+		} catch (IllegalActionException | NumberFormatException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction(new IllegalActionException("wrong selection"));
 			client.askSelectRewardOfPermissionCard();
 		}
 	}
 
-	public void notifySendCityRewards(){
-		List<Reward> rewards= new ArrayList<>();
-		List<City> cities= game.getBoard().getMap().getCitiesList();
-		for(City c: cities)
+	public void parseBonusFreePermissionCard(String card, ClientInt client) throws IOException {
+		String[] parameters = card.split(" ");
+		try {
+			int region = Integer.parseInt(parameters[0]);
+			int index = Integer.parseInt(parameters[1]);
+			if (index > config.getNumberDisclosedCards() || index < 1 || region < 1
+					|| region > game.getBoard().getRegions().size())
+				throw new IllegalActionException("Out of bound");
+			playersMap.get(client).getPermissionCard().add(game.getBoard().getRegion(region).givePermissionCard(index));
+		} catch (NumberFormatException | IllegalActionException e) {
+			logger.log(Level.WARNING, e.getMessage(), e);
+			client.notifyIllegalAction(new IllegalActionException("wrong selection"));
+			client.askSelectRewardOfPermissionCard();
+		}
+	}
+
+	public void notifySendCityRewards() {
+		List<Reward> rewards = new ArrayList<>();
+		List<City> cities = game.getBoard().getMap().getCitiesList();
+		for (City c : cities)
 			rewards.add(c.getReward());
-		Set<ClientInt> clients=playersMap.keySet();
-		for(ClientInt client: clients){
+		Set<ClientInt> clients = playersMap.keySet();
+		for (ClientInt client : clients) {
 			try {
 				client.notify(new UpdateSendCityBonus(rewards));
 			} catch (IOException e) {
@@ -387,19 +395,20 @@ public class Controller {
 			}
 		}
 	}
-	public void updateCouncil(String index){
-		if("k".equals(index))
+
+	public void updateCouncil(String index) {
+		if ("k".equals(index))
 			notifySendCouncil(game.getBoard().getKingCouncil(), -1);
-		else{
-			int i= Integer.parseInt(index);
-			notifySendCouncil(game.getBoard().getRegionCouncil(i-1), i-1);
+		else {
+			int i = Integer.parseInt(index);
+			notifySendCouncil(game.getBoard().getRegionCouncil(i - 1), i - 1);
 		}
 	}
-	
+
 	public void notifySendCouncil(Council council, int index) {
 		Council copy = new Council(council);
-		Set<ClientInt> clients=playersMap.keySet();
-		for(ClientInt client: clients){
+		Set<ClientInt> clients = playersMap.keySet();
+		for (ClientInt client : clients) {
 			try {
 				client.notify(new UpdateCouncil(copy, index));
 			} catch (IOException e) {
@@ -408,32 +417,32 @@ public class Controller {
 			}
 		}
 	}
-	
+
 	public void notifySetAllCouncil() {
-		
+
 		Council kingCouncil = game.getBoard().getKingCouncil();
 		notifySendCouncil(kingCouncil, -1);
-		
+
 		List<Region> regions = game.getBoard().getRegions();
-		for(int i = 0; i < regions.size(); i++) {
+		for (int i = 0; i < regions.size(); i++) {
 			notifySendCouncil(regions.get(i).getCouncil(), i);
 		}
 	}
-	
+
 	public void notifySetAllPermissions() {
 		List<Region> regions = game.getBoard().getRegions();
-		for(int i = 0; i < regions.size(); i++) {
-			
+		for (int i = 0; i < regions.size(); i++) {
+
 			Region r = regions.get(i);
-			for(int j = 0; j < r.getPermissionSlotsNumber(); j++) {
-				
+			for (int j = 0; j < r.getPermissionSlotsNumber(); j++) {
+
 				notifySendPermission(r.getPermissionCard(j), i, j);
 			}
 		}
 	}
-	
+
 	public void notifySendPermission(PermissionCard card, int region, int slot) {
-		for(ClientInt client: playersMap.keySet()){
+		for (ClientInt client : playersMap.keySet()) {
 			try {
 				client.notify(new UpdateRegionPermission(card, region, slot));
 			} catch (IOException e) {
@@ -442,15 +451,10 @@ public class Controller {
 			}
 		}
 	}
-	
-	public void sendEmporium(String player, String city){
-		city.toUpperCase();
-		if(city.length()>1){
-			city= city.substring(0,1)+city.substring(1).toLowerCase();
-		}
-		
-		for(ClientInt client: playersMap.keySet()){
-			try{
+
+	public void sendEmporium(String player, String city) {
+		for (ClientInt client : playersMap.keySet()) {
+			try {
 				client.notify(new UpdateEmporiumBuilt(player, city));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
@@ -459,4 +463,16 @@ public class Controller {
 		}
 	}
 
+	public void sendKingLocation(String city) {
+		Set<ClientInt> clients = playersMap.keySet();
+		for (ClientInt client : clients) {
+			if (!playersMap.get(client).getSuspended())
+				try {
+					client.notify(new NotifyKingLocation(city));
+				} catch (IOException e) {
+					logger.log(Level.WARNING, e.getMessage(), e);
+					playersMap.get(client).setSuspension(true);
+				}
+		}
+	}
 }

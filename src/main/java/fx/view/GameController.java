@@ -360,7 +360,9 @@ public class GameController {
 						if("dragKing".equals(actionSelected)) {
 							king.setVisible(true);
 						}
-						else if (db.hasString()) {
+						else if (db.hasString() && "emporium".equals(actionSelected)) {
+							String action = actionSelected + " -city " + cityPane.getId() + " -permission " + db.getString();
+							logger.appendText(action);
 							mainApp.sendMsg(actionSelected + " -city " + cityPane.getId() + " -permission " + db.getString());
 						}
 					});
@@ -393,9 +395,13 @@ public class GameController {
 					king.setOnDragDropped(event -> {
 						Dragboard db = event.getDragboard();
 						if(db.hasString()) {
+							// TODO print here
+							logger.appendText(actionSelected + 
+									" -city " + cityPane.getId()
+									+ " -cards " + db.getString());
 							mainApp.sendMsg(actionSelected + 
-									" -city " + innerPane.getId()
-									+ " -cards" + db.getString());
+									" -city " + cityPane.getId()
+									+ " -cards " + db.getString());
 						}
 					});
 					

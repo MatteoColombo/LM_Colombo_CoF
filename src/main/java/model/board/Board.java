@@ -183,9 +183,9 @@ public class Board {
 	}
 
 	/**
-	 * Returns the number of this {@link Region}.
+	 * Returns the number of the {@link Region Regions}.
 	 * 
-	 * @return the number of this Region
+	 * @return the number of the Regions
 	 * @see Board
 	 */
 	public int getRegionsNumber() {
@@ -275,18 +275,6 @@ public class Board {
 	 */
 	public BoardRewardsManager getBoardRewardsManager() {
 		return this.boardRewManager;
-	}
-
-	/**
-	 * Sets the {@link BoardRewardsManager}.
-	 * 
-	 * @param bRewardsManager
-	 *            the BoardRewardsManager that will be used to manage the
-	 *            BoardRewards
-	 * @see Board
-	 */
-	public void setBoardRewardsManager(BoardRewardsManager bRewardsManager) {
-		this.boardRewManager = bRewardsManager;
 	}
 
 	/**

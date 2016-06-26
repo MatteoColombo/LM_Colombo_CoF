@@ -1,7 +1,6 @@
 package fx.view;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import fx.MainApp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -18,14 +16,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -36,7 +32,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import model.player.PermissionCard;
 
 public class GameController {
 
@@ -119,8 +114,8 @@ public class GameController {
 	private TextArea logger;
 
 	private String actionSelected = "";
-	private ImageView kingOldPosition;
-	private ImageView kingNewPosition;
+	private Node kingOldPosition;
+	private Node kingNewPosition;
 	
 	public void logMsg(String msg) {
 		logger.appendText(msg);
@@ -199,7 +194,6 @@ public class GameController {
 			kingOldPosition.setVisible(true);
 			kingOldPosition = null;
 		}
-
 	}
 	
 	private void initMyData() {
@@ -346,7 +340,7 @@ public class GameController {
 					Label cityName = (Label) innerPane.lookup("#cityName");
 					cityName.setText(sc.getName());
 
-					ImageView king = (ImageView) innerPane.lookup("#king");
+					Node king = innerPane.lookup("#king");
 					king.visibleProperty().bindBidirectional(sc.hasKing());
 					
 					FlowPane emporiumBox = (FlowPane) innerPane.lookup("#emporiumBox");
@@ -376,6 +370,7 @@ public class GameController {
 						// TODO not yet tested
 						Dragboard db = event.getDragboard();
 						if("dragKing".equals(actionSelected)) {
+							actionSelected = "king";
 							kingNewPosition = king;
 							king.setVisible(true);
 						}
@@ -383,52 +378,10 @@ public class GameController {
 							String action = actionSelected + " -city " + cityPane.getId() + " -permission " + db.getString();
 							logger.appendText(action);
 							mainApp.sendMsg(actionSelected + " -city " + cityPane.getId() + " -permission " + db.getString());
+							actionSelected = "";
 						}
 					});
 
-					king.setOnDragDetected(event -> {
-
-						Dragboard db = king.startDragAndDrop(TransferMode.ANY);
-						ClipboardContent content = new ClipboardContent();
-						actionSelected = "dragKing";
-						content.putString("king");
-						db.setContent(content);
-						event.consume();
-					});
-					
-					king.setOnDragDone(event -> {
-						if(kingOldPosition == null) {
-							kingOldPosition = king;
-						}
-						king.setVisible(false);
-					});
-					
-					king.setOnDragOver(event -> {
-						if("king".equals(actionSelected)) {
-							king.setEffect(new Glow());
-							event.acceptTransferModes(TransferMode.MOVE);
-						}	
-						event.consume();
-					});
-					
-					king.setOnDragExited(event -> {
-						king.setEffect(null);
-					});
-					
-					king.setOnDragDropped(event -> {
-						Dragboard db = event.getDragboard();
-						if(db.hasString()) {
-							// TODO print here
-							logger.appendText(actionSelected + 
-									" -city " + cityPane.getId()
-									+ " -cards " + db.getString());
-							resetKing();
-							mainApp.sendMsg(actionSelected + 
-									" -city " + cityPane.getId()
-									+ " -cards " + db.getString());
-						}
-					});
-					
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
 
@@ -436,6 +389,9 @@ public class GameController {
 						bonusBox.getChildren().add(bonusPane);
 					}
 					cityPane.getChildren().add(innerPane);
+					
+					initKing(cityPane, king);
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -443,7 +399,51 @@ public class GameController {
 			}
 		}
 	}
+	
+	private void initKing(AnchorPane cityPane, Node king) {
+		king.setOnDragDetected(event -> {
 
+			Dragboard db = king.startDragAndDrop(TransferMode.ANY);
+			ClipboardContent content = new ClipboardContent();
+			if("king".equals(actionSelected)) {
+				actionSelected = "dragKing";
+				content.putString("king");
+				db.setContent(content);
+				event.consume();
+			}		
+		});
+		
+		king.setOnDragDone(event -> {
+			if(kingOldPosition == null) {
+				kingOldPosition = king;
+			}
+			king.setVisible(false);
+		});
+		
+		king.setOnDragOver(event -> {
+			if("king".equals(actionSelected)) {
+				king.setEffect(new Glow());
+				event.acceptTransferModes(TransferMode.MOVE);
+			}	
+			event.consume();
+		});
+		
+		king.setOnDragExited(event -> {
+			king.setEffect(null);
+		});
+		
+		king.setOnDragDropped(event -> {
+			Dragboard db = event.getDragboard();
+			if(db.hasString()) {
+				resetKing();
+				mainApp.sendMsg(actionSelected + 
+						" -city " + cityPane.getId()
+						+ " -cards " + db.getString());
+				actionSelected = "";
+			}
+		});
+	}
+	
 	private void initConnections() {
 		for (SimpleRegion r : mainApp.getLocalModel().getMap().getRegions()) {
 			for (SimpleCity sc : r.getCities()) {
@@ -532,6 +532,7 @@ public class GameController {
 					int index = Integer.valueOf(id.substring(id.length() - 1));
 					index++;
 					mainApp.sendMsg(actionSelected + " -council " + index + " -color " + db.getString());
+					actionSelected = "";
 				}
 			}
 		});
@@ -700,6 +701,7 @@ public class GameController {
 						int regionIndex = Integer.valueOf(region) + 1;
 						mainApp.sendMsg(actionSelected + " -region " + regionIndex + " -permission " + cardIndex
 								+ " -cards " + db.getString());
+						actionSelected = "";
 					}
 				});
 

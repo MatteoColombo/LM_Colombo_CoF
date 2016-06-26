@@ -119,7 +119,9 @@ public class GameController {
 	private TextArea logger;
 
 	private String actionSelected = "";
-
+	private ImageView kingOldPosition;
+	private ImageView kingNewPosition;
+	
 	public void logMsg(String msg) {
 		logger.appendText(msg);
 	}
@@ -141,16 +143,19 @@ public class GameController {
 
 	@FXML
 	private void handleSlideCouncil() throws IOException {
+		resetKing();
 		actionSelected = "slide";
 	}
 
 	@FXML
 	private void handleBuyPermission() throws IOException {
+		resetKing();
 		actionSelected = "permission";
 	}
 
 	@FXML
 	private void handleBuildEmporium() throws IOException {
+		resetKing();
 		actionSelected = "emporium";
 	}
 
@@ -161,29 +166,42 @@ public class GameController {
 
 	@FXML
 	private void handleBuyAssistant() throws IOException {
+		resetKing();
 		mainApp.sendMsg("assistant");
 	}
 
 	@FXML
 	private void handleShuffle() throws IOException {
-
+		resetKing();
 	}
 
 	@FXML
 	private void handleExtraAction() throws IOException {
+		resetKing();
 		mainApp.sendMsg("extra");
 	}
 
 	@FXML
 	private void handleSlideSide() throws IOException {
+		resetKing();
 		actionSelected = "secondarySlide";
 	}
 
 	@FXML
 	private void handlePass() throws IOException {
+		resetKing();
 		mainApp.sendMsg("end");
 	}
 
+	private void resetKing() {
+		if(kingOldPosition != null) {
+			kingNewPosition.setVisible(false);
+			kingOldPosition.setVisible(true);
+			kingOldPosition = null;
+		}
+
+	}
+	
 	private void initMyData() {
 		PlayerProperty myData = mainApp.getLocalModel().getMyPlayerData();
 
@@ -358,6 +376,7 @@ public class GameController {
 						// TODO not yet tested
 						Dragboard db = event.getDragboard();
 						if("dragKing".equals(actionSelected)) {
+							kingNewPosition = king;
 							king.setVisible(true);
 						}
 						else if (db.hasString() && "emporium".equals(actionSelected)) {
@@ -368,6 +387,7 @@ public class GameController {
 					});
 
 					king.setOnDragDetected(event -> {
+
 						Dragboard db = king.startDragAndDrop(TransferMode.ANY);
 						ClipboardContent content = new ClipboardContent();
 						actionSelected = "dragKing";
@@ -377,6 +397,9 @@ public class GameController {
 					});
 					
 					king.setOnDragDone(event -> {
+						if(kingOldPosition == null) {
+							kingOldPosition = king;
+						}
 						king.setVisible(false);
 					});
 					
@@ -399,6 +422,7 @@ public class GameController {
 							logger.appendText(actionSelected + 
 									" -city " + cityPane.getId()
 									+ " -cards " + db.getString());
+							resetKing();
 							mainApp.sendMsg(actionSelected + 
 									" -city " + cityPane.getId()
 									+ " -cards " + db.getString());

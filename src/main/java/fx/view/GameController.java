@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Bloom;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
@@ -274,7 +275,10 @@ public class GameController {
 					// TODO
 					System.out.println(item.used().get() + " 270");
 					if(item.used().get()) {
-						permissionPane.setEffect(new SepiaTone());
+						ColorAdjust grayScale = new ColorAdjust();
+						grayScale.setSaturation(-1);
+						permissionPane.setEffect(grayScale);
+						this.disableProperty().set(true);
 					}
 					setGraphic(permissionPane);
 				}
@@ -287,7 +291,7 @@ public class GameController {
 						db.setContent(content);
 						event.consume();
 					}
-				});
+				});				
 			}
 		});
 	}
@@ -764,6 +768,7 @@ public class GameController {
 		int regionNumbers = mainApp.getLocalModel().getMap().getRegions().size();
 		for(int i = 0; i < regionNumbers; i ++) {
 			Node regionSymbol = mapPane.lookup("#region" + i);
+			
 			regionSymbol.setOnMouseEntered(event -> {
 				if("shuffle".equals(actionSelected)) {
 					regionSymbol.setEffect(new Bloom());
@@ -776,7 +781,7 @@ public class GameController {
 			
 			regionSymbol.setOnMouseClicked(event -> {
 				if("shuffle".equals(actionSelected)) {
-					 int number = Integer.valueOf(regionSymbol.getId().substring(regionSymbol.getId().length()-1));
+					int number = Integer.valueOf(regionSymbol.getId().substring(regionSymbol.getId().length()-1));
 					mainApp.sendMsg(actionSelected + " -region " + (number+1));
 				}
 			});

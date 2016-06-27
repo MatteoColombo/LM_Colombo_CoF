@@ -14,11 +14,15 @@
    <bottom>
       <HBox minHeight="59.0" prefHeight="186.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane prefHeight="186.0" prefWidth="167.0">
                <children>
-                  <Rectangle fx:id="myColor" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="35.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Rectangle fx:id="myColor" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="64.0" layoutX="13.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="128.0" AnchorPane.topAnchor="0.0" />
                   <Button layoutX="14.0" layoutY="150.0" mnemonicParsing="false" text="Disconnect" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
-                  <Label fx:id="nameLabel" layoutX="15.0" layoutY="14.0" text="PLAYER" />
+                  <Label fx:id="nameLabel" layoutX="25.0" layoutY="14.0" text="PLAYER" />
+                  <Button layoutX="14.0" layoutY="68.0" mnemonicParsing="false" onAction="#handlePass" prefHeight="44.0" prefWidth="129.0" text="PASS">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Button>
                </children>
             </AnchorPane>
             <GridPane alignment="CENTER" layoutX="43.0" layoutY="40.0" prefHeight="170.0" prefWidth="146.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -72,7 +76,7 @@
                </columnResizePolicy>
             </TableView>
             <ListView fx:id="permissionList" prefHeight="186.0" prefWidth="125.0" HBox.hgrow="NEVER" />
-            <GridPane layoutY="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane layoutY="40.0" prefHeight="186.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="142.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="10.0" prefWidth="144.0" />
@@ -84,29 +88,26 @@
                 <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="mainActionButton1" mnemonicParsing="false" onAction="#handleSlideCouncil" prefWidth="120.0" text="Slide Council" />
-                  <Button fx:id="sideActionButton1" mnemonicParsing="false" onAction="#handleSlideSide" prefWidth="120.0" text="Slide Council" GridPane.columnIndex="1" />
-                  <Button fx:id="mainActionButton2" mnemonicParsing="false" onAction="#handleBuyPermission" prefWidth="120.0" text="Buy Permission" GridPane.rowIndex="1" />
-                  <Button fx:id="sideActionButton2" mnemonicParsing="false" onAction="#handleBuyAssistant" prefWidth="120.0" text="Buy Assistant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="sideActionButton3" mnemonicParsing="false" onAction="#handleShuffle" prefWidth="120.0" text="Shuffle Perm." GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button fx:id="mainActionButton3" mnemonicParsing="false" onAction="#handleBuildEmporium" prefWidth="120.0" text="Build Emporium" GridPane.rowIndex="2" />
-                  <Button fx:id="sideActionButton4" mnemonicParsing="false" onAction="#handleExtraAction" prefWidth="120.0" text="Extra Action" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Button fx:id="mainActionButton4" mnemonicParsing="false" onAction="#handleBuildWithKing" prefWidth="120.0" text="Build with king" GridPane.rowIndex="3" />
+                  <Button fx:id="mainActionButton1" mnemonicParsing="false" onAction="#handleSlideCouncil" prefWidth="145.0" style="-fx-background-image: url('actions/slide.png'); -fx-background-size: cover;" text="Slide Council" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="sideActionButton1" mnemonicParsing="false" onAction="#handleSlideSide" prefWidth="145.0" text="Quick Slide" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="mainActionButton2" mnemonicParsing="false" onAction="#handleBuyPermission" prefWidth="145.0" text="Buy Perm." GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="sideActionButton2" mnemonicParsing="false" onAction="#handleBuyAssistant" prefWidth="145.0" text="Buy Assistant" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="sideActionButton3" mnemonicParsing="false" onAction="#handleShuffle" prefWidth="145.0" text="Shuffle Perm." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="mainActionButton3" mnemonicParsing="false" onAction="#handleBuildEmporium" prefWidth="145.0" text="Build Emp." GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="sideActionButton4" mnemonicParsing="false" onAction="#handleExtraAction" prefWidth="145.0" text="Extra Action" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button fx:id="mainActionButton4" mnemonicParsing="false" onAction="#handleBuildWithKing" prefWidth="145.0" text="Build w. king" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
                </children>
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
             </GridPane>
-            <AnchorPane prefHeight="199.0" prefWidth="140.0">
-               <children>
-                  <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#handlePass" text="PASS" />
-                  <Button layoutX="18.0" layoutY="73.0" mnemonicParsing="false" text="BUY" />
-               </children>
-            </AnchorPane>
+            <AnchorPane prefHeight="199.0" prefWidth="140.0" />
             <TableView layoutX="43.0" layoutY="-8.0" prefHeight="170.0" prefWidth="244.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="Seller" />
-                <TableColumn prefWidth="75.0" text="Item" />
                   <TableColumn prefWidth="75.0" text="Price" />
               </columns>
                <columnResizePolicy>
@@ -119,14 +120,14 @@
    <right>
       <VBox fx:id="opponentsBox" prefHeight="701.0" prefWidth="214.0" BorderPane.alignment="CENTER">
          <children>
-            <TextArea fx:id="logger" layoutX="8.0" prefHeight="109.0" prefWidth="242.0" text="Event Logger" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TextArea fx:id="logger" layoutX="8.0" prefHeight="163.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </VBox>
    </right>
    <center>
       <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane fx:id="mapPane" prefHeight="833.0" prefWidth="921.0">
+          <AnchorPane fx:id="mapPane" prefHeight="833.0">
                <children>
                   <ImageView fitHeight="833.0" fitWidth="1073.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -167,17 +168,17 @@
                   <Pane fx:id="permit0_0" layoutX="116.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
                   <Pane fx:id="permit0_1" layoutX="201.0" layoutY="545.0" prefHeight="88.0" prefWidth="76.0" />
                   <FlowPane fx:id="councilorPool" layoutX="836.0" layoutY="711.0" prefHeight="67.0" prefWidth="123.0" />
-                  <ImageView fx:id="region2" fitHeight="49.0" fitWidth="80.0" layoutX="767.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                  <ImageView fx:id="region2" fitHeight="49.0" fitWidth="80.0" layoutX="767.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../simboli/Montagne.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="region1" fitHeight="49.0" fitWidth="80.0" layoutX="387.0" layoutY="566.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                  <ImageView fx:id="region1" fitHeight="49.0" fitWidth="80.0" layoutX="387.0" layoutY="566.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../simboli/Colline.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="region0" fitHeight="49.0" fitWidth="80.0" layoutX="43.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                  <ImageView fx:id="region0" fitHeight="49.0" fitWidth="80.0" layoutX="43.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../simboli/Mare.png" />
                      </image>

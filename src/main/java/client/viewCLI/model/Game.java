@@ -17,6 +17,9 @@ import server.model.configuration.Configuration;
 import server.model.configuration.XMLFileException;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
+import server.model.reward.BVictoryPoints;
+import server.model.reward.BoardColorReward;
+import server.model.reward.BoardRegionReward;
 import server.model.reward.Bonus;
 import server.model.reward.Reward;
 
@@ -196,5 +199,12 @@ public class Game implements ModelInterface {
 			}
 		}
 
+	}
+
+	@Override
+	public void updateBoardReward(List<BVictoryPoints> kingReward, List<BoardColorReward> colorReward,
+			List<BoardRegionReward> regionReward) {
+		// TODO Auto-generated method stub
+		
 	}
 }

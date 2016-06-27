@@ -1,5 +1,7 @@
 package server.model.reward;
 
+import java.io.IOException;
+
 import server.model.player.Player;
 
 public class BRewardFromPermissionCard extends Bonus {
@@ -24,7 +26,12 @@ public class BRewardFromPermissionCard extends Bonus {
 
 	@Override
 	public void assignBonusTo(Player p) {
-		// TODO ask the player for a specific card
+		try {
+			p.getClient().askSelectRewardOfPermissionCard();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

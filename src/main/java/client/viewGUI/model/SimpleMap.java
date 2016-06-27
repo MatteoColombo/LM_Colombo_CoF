@@ -12,6 +12,7 @@ import javafx.beans.property.StringProperty;
 import server.model.board.Board;
 import server.model.board.Region;
 import server.model.board.council.Council;
+import server.model.reward.BVictoryPoints;
 import server.model.reward.BoardColorReward;
 import server.model.reward.BoardRegionReward;
 import server.model.reward.Bonus;
@@ -29,11 +30,11 @@ public class SimpleMap {
 	 * represent the current bonus visualized on the map
 	 */
 	private IntegerProperty kingBonus;
-	
+
 	private List<SimpleNobilityCell> nobilityTrack;
-	
+
 	private Map<String, IntegerProperty> councilorPool;
-	
+
 	public SimpleMap(Board board) {
 
 		regions = new ArrayList<>();
@@ -50,7 +51,7 @@ public class SimpleMap {
 
 		kingCouncil = new CouncilProperty();
 		kingCouncil.initCouncil(board.getKingCouncil().getCouncilorsColor().size());
-		
+
 		colorBonuses = new HashMap<>();
 		for (BoardColorReward br : board.getBoardRewardsManager().getRemainingBoardColorRewards()) {
 			String hex = ColorConverter.awtToWeb(br.getBRKey());
@@ -59,25 +60,25 @@ public class SimpleMap {
 		}
 
 		kingBonuses = new ArrayList<>();
-		for(Bonus br: board.getBoardRewardsManager().getRemainingBoardKingRewards()) {
+		for (Bonus br : board.getBoardRewardsManager().getRemainingBoardKingRewards()) {
 			kingBonuses.add(br.getAmount());
 		}
-		
+
 		kingBonus = new SimpleIntegerProperty();
 		kingBonus.set(kingBonuses.remove(0));
-		
+
 		nobilityTrack = new ArrayList<>(board.getNobleTrack().getMaxPoint());
-		for(Reward r: board.getNobleTrack().getTrack()) {
-			if(r != null) {
+		for (Reward r : board.getNobleTrack().getTrack()) {
+			if (r != null) {
 				nobilityTrack.add(new SimpleNobilityCell(r));
 			} else {
 				nobilityTrack.add(null);
 			}
 		}
-		
+
 		councilorPool = new HashMap<>();
 		int maxCouncilors = board.getCouncilorPool().getCouncPerColor();
-		for(Color c: board.getCouncilorPool().getListColor()) {
+		for (Color c : board.getCouncilorPool().getListColor()) {
 			councilorPool.put(ColorConverter.awtToWeb(c), new SimpleIntegerProperty(maxCouncilors));
 		}
 	}
@@ -85,7 +86,7 @@ public class SimpleMap {
 	public List<SimpleRegion> getRegions() {
 		return regions;
 	}
-	
+
 	public List<SimpleNobilityCell> getNobilityTrack() {
 		return nobilityTrack;
 	}
@@ -97,7 +98,7 @@ public class SimpleMap {
 	public Map<String, IntegerProperty> getColorBonuses() {
 		return colorBonuses;
 	}
-	
+
 	public Map<String, IntegerProperty> getCouncilorPool() {
 		return councilorPool;
 	}
@@ -123,22 +124,37 @@ public class SimpleMap {
 			regions.get(number).getCouncil().set(c);
 		}
 	}
-	
+
 	public void setNextKingBonus() {
-		if(kingBonuses.size() > 0) {
+		if (kingBonuses.size() > 0) {
 			kingBonus.set(kingBonuses.remove(0));
 		}
 	}
-	
+
+	public void updateColorReward(List<BoardColorReward> colorReward) {
+		for (BoardColorReward br : colorReward) {
+			String hex = ColorConverter.awtToWeb(br.getBRKey());
+			colorBonuses.get(hex).set(br.getBRBonus().getAmount());
+		}
+	}
+
+	public void updateKingBonus(List<BVictoryPoints> kingReward) {
+		if (kingReward.isEmpty())
+			kingBonus.set(0);
+		else
+			kingBonus.set(kingReward.get(0).getAmount());
+
+	}
+
 	public void initCouncilorPool() {
-		for(StringProperty color: kingCouncil.colors()) {
+		for (StringProperty color : kingCouncil.colors()) {
 			IntegerProperty value = councilorPool.get(color.get());
 			int newValue = value.get() - 1;
 			value.set(newValue);
 		}
-		
-		for(SimpleRegion region: regions) {
-			for(StringProperty color: region.getCouncil().colors()) {
+
+		for (SimpleRegion region : regions) {
+			for (StringProperty color : region.getCouncil().colors()) {
 				IntegerProperty value = councilorPool.get(color.get());
 				value.set(value.get() - 1);
 			}

@@ -129,6 +129,7 @@ public class BoardRewardsManager {
 			if (br != null && br.getBRKey().equals(bColorRewardAwarded)) {
 				int i = this.bColorRewards.indexOf(br);
 				BVictoryPoints bColorReward = this.bColorRewards.remove(i).getBRBonus();
+				this.bColorRewards.add(i,new BoardColorReward(bColorRewardAwarded, 0));
 				BVictoryPoints bKingReward = assingBoardKingReward();
 				return new BVictoryPoints(bColorReward.getAmount() + bKingReward.getAmount());
 			}
@@ -157,6 +158,7 @@ public class BoardRewardsManager {
 			if (br != null && br.getBRKey().equals(bRegionRewardAwarded)) {
 				int i = this.bRegionRewards.indexOf(br);
 				BVictoryPoints bRegionReward = this.bRegionRewards.remove(i).getBRBonus();
+				this.bRegionRewards.add(i,new BoardRegionReward(bRegionRewardAwarded, 0));
 				BVictoryPoints bKingReward = assingBoardKingReward();
 				return new BVictoryPoints(bRegionReward.getAmount() + bKingReward.getAmount());
 			}
@@ -175,7 +177,7 @@ public class BoardRewardsManager {
 	 *         BVictoryPoints if the list is empty
 	 * @see BoardRewardsManager
 	 */
-	public BVictoryPoints assingBoardKingReward() {
+	private BVictoryPoints assingBoardKingReward() {
 		if (this.bKingRewards.isEmpty())
 			return new BVictoryPoints(0);
 		else

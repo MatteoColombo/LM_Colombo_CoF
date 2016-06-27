@@ -24,7 +24,9 @@ import server.model.player.Player;
  * @see Reward
  */
 public class BoardRegionReward extends BoardReward {
-	private Region bRegionRewardKey;
+
+	private static final long serialVersionUID = -159897097059005958L;
+	private transient Region bRegionRewardKey;
 
 	/**
 	 * Initializes the {@link Region Region key} and the amount of
@@ -49,5 +51,9 @@ public class BoardRegionReward extends BoardReward {
 	 */
 	public Region getBRKey() {
 		return this.bRegionRewardKey;
+	}
+	
+	public BoardRegionReward newCopy(){
+		return new BoardRegionReward(bRegionRewardKey, this.getBRBonus().getAmount());
 	}
 }

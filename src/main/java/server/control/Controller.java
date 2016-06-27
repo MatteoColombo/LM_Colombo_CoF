@@ -21,6 +21,7 @@ import server.control.dialogue.update.NotifyKingLocation;
 import server.control.dialogue.update.NotifyPlayerJoined;
 import server.control.dialogue.update.NotifyPlayersList;
 import server.control.dialogue.update.NotifyUpdatePlayer;
+import server.control.dialogue.update.UpdateBoardRewards;
 import server.control.dialogue.update.UpdateCouncil;
 import server.control.dialogue.update.UpdateEmporiumBuilt;
 import server.control.dialogue.update.UpdateRegionPermission;
@@ -28,6 +29,7 @@ import server.control.dialogue.update.UpdateSendCityBonus;
 import server.model.Game;
 import server.model.TurnManager;
 import server.model.action.IllegalActionException;
+import server.model.board.BoardRewardsManager;
 import server.model.board.Region;
 import server.model.board.city.City;
 import server.model.board.council.Council;
@@ -39,6 +41,9 @@ import server.model.player.Assistants;
 import server.model.player.Emporium;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
+import server.model.reward.BVictoryPoints;
+import server.model.reward.BoardColorReward;
+import server.model.reward.BoardRegionReward;
 import server.model.reward.Bonus;
 import server.model.reward.Reward;
 
@@ -137,7 +142,7 @@ public class Controller {
 				throw new IllegalActionException("Illegal index");
 			if (playersMap.get(client).getCoins().getAmount() < items.get(index - 1).getPrice())
 				throw new IllegalActionException("Not enough money");
-			OnSaleItem solditem=items.get(index - 1);
+			OnSaleItem solditem = items.get(index - 1);
 			game.getMarket().buyItem(solditem, playersMap.get(client));
 			updatePlayers(playersMap.get(client), game.getPlayers().indexOf(playersMap.get(client)));
 			updatePlayers(solditem.getOwner(), game.getPlayers().indexOf(solditem.getOwner()));
@@ -301,6 +306,8 @@ public class Controller {
 			default:
 				throw new IllegalActionException("Unrecognized action");
 			}
+			if ("emporium".equals(args[0]) || "king".equals(args[0]))
+				updateBoardRewards();
 			updatePlayers(player, playerIndex);
 
 		} catch (IllegalActionException | ParseException e) {
@@ -354,6 +361,7 @@ public class Controller {
 			}
 			for (Reward r : reward)
 				r.assignBonusTo(player);
+			updatePlayers(player, game.getPlayers().indexOf(player));
 		} catch (IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction(e);
@@ -365,10 +373,11 @@ public class Controller {
 	public void parseRewardOfPermissionCard(String card, ClientInt client) throws IOException {
 		try {
 			int index = Integer.parseInt(card);
-			if (index > playersMap.get(client).getPermissionCard().size() || index < 1)
-				throw new IllegalActionException("Out of bound");
-			playersMap.get(client).getPermissionCard().get(index - 1).getCardReward()
-					.assignBonusTo(playersMap.get(client));
+			Player player = playersMap.get(client);
+			if (index > player.getPermissionCard().size() || index < 1)
+				throw new IllegalActionException("wrong selection");
+			player.getPermissionCard().get(index - 1).getCardReward().assignBonusTo(playersMap.get(client));
+			updatePlayers(player, game.getPlayers().indexOf(player));
 		} catch (IllegalActionException | NumberFormatException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction(new IllegalActionException("wrong selection"));
@@ -378,13 +387,18 @@ public class Controller {
 
 	public void parseBonusFreePermissionCard(String card, ClientInt client) throws IOException {
 		String[] parameters = card.split(" ");
+		Player player = playersMap.get(client);
 		try {
 			int region = Integer.parseInt(parameters[0]);
 			int index = Integer.parseInt(parameters[1]);
 			if (index > config.getNumberDisclosedCards() || index < 1 || region < 1
 					|| region > game.getBoard().getRegions().size())
 				throw new IllegalActionException("Out of bound");
-			playersMap.get(client).getPermissionCard().add(game.getBoard().getRegion(region).givePermissionCard(index));
+			player.getPermissionCard().add(game.getBoard().getRegion(region - 1).givePermissionCard(index - 1));
+			notifySendPermission(game.getBoard().getRegion(region - 1).getPermissionCard(index - 1), region - 1,
+					index - 1);
+			updatePlayers(player, game.getPlayers().indexOf(player));
+
 		} catch (NumberFormatException | IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction(new IllegalActionException("wrong selection"));
@@ -481,6 +495,31 @@ public class Controller {
 			if (!playersMap.get(client).getSuspended())
 				try {
 					client.notify(new NotifyKingLocation(city));
+				} catch (IOException e) {
+					logger.log(Level.WARNING, e.getMessage(), e);
+					playersMap.get(client).setSuspension(true);
+				}
+		}
+	}
+
+	public void updateBoardRewards() {
+		Set<ClientInt> clients = playersMap.keySet();
+		BoardRewardsManager manager = game.getBoard().getBoardRewardsManager();
+		List<BVictoryPoints> copyKing= new ArrayList<>();
+		for(BVictoryPoints king: manager.getRemainingBoardKingRewards())
+			copyKing.add(new BVictoryPoints(king.getAmount()));
+		List<BoardRegionReward> copyRegion= new ArrayList<>();
+		for(BoardRegionReward region: manager.getRemainingBoardRegionRewards())
+			copyRegion.add(region.newCopy());
+		List<BoardColorReward> copyColor= new ArrayList<>();
+		for(BoardColorReward color: manager.getRemainingBoardColorRewards())
+			copyColor.add(color.newCopy());
+		
+		for (ClientInt client : clients) {
+			if (!playersMap.get(client).getSuspended())
+				try {
+					client.notify(new UpdateBoardRewards(copyKing,
+							copyColor, copyRegion));
 				} catch (IOException e) {
 					logger.log(Level.WARNING, e.getMessage(), e);
 					playersMap.get(client).setSuspension(true);

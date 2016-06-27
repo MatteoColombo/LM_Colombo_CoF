@@ -1,5 +1,7 @@
 package server.model.reward;
 
+import java.io.Serializable;
+
 import server.model.board.Board;
 import server.model.player.Player;
 
@@ -20,7 +22,9 @@ import server.model.player.Player;
  * @see Player
  * @see Reward
  */
-public abstract class BoardReward {
+public abstract class BoardReward implements Serializable {
+
+	private static final long serialVersionUID = -4608779705698062118L;
 	private BVictoryPoints bRewardBonus;
 
 	/**

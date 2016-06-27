@@ -17,6 +17,9 @@ import server.model.player.Assistants;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
 import server.model.player.PoliticCard;
+import server.model.reward.BVictoryPoints;
+import server.model.reward.BoardColorReward;
+import server.model.reward.BoardRegionReward;
 import server.model.reward.Reward;
 
 public class GameProperty implements ModelInterface {
@@ -150,5 +153,15 @@ public class GameProperty implements ModelInterface {
 				if(city.getName().equalsIgnoreCase(location))
 					city.setHasKing(true);
 			}
+	}
+
+	@Override
+	public void updateBoardReward(List<BVictoryPoints> kingReward, List<BoardColorReward> colorReward,
+			List<BoardRegionReward> regionReward) {
+		for(int i = 0; i<regionReward.size();i++)
+			map.getRegions().get(i).setCounquerBonus(regionReward.get(i).getBRBonus().getAmount());
+		map.updateColorReward(colorReward);
+		map.updateKingBonus(kingReward);
+			
 	}
 }

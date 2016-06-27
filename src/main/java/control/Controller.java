@@ -340,9 +340,9 @@ public class Controller {
 		try {
 			for (String cityName : cities) {
 				for (City city : allCitiesOfMap)
-					if (city.getName().equals(cityName) && !city.hasEmporiumOfPlayer(player))
+					if (city.getName().equalsIgnoreCase(cityName) && !city.hasEmporiumOfPlayer(player))
 						throw new IllegalActionException("You don't have an emporium in the city");
-					else if (city.getName().equals(cityName) && city.hasEmporiumOfPlayer(player))
+					else if (city.getName().equalsIgnoreCase(cityName) && city.hasEmporiumOfPlayer(player))
 						reward.add(city.getReward());
 			}
 			for (Reward r : reward) {

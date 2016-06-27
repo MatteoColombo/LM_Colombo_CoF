@@ -187,6 +187,7 @@ public class SocketClient implements ClientInt {
 				logger.log(Level.SEVERE, e.getMessage(), e);
 			}
 		}
+		controller.parseBonusGetCityBonus(cities, this);
 	}
 
 	@Override

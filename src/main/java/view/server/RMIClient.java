@@ -132,6 +132,7 @@ public class RMIClient implements ClientInt {
 		for (int i = 0; i < citiesNumber; i++) {
 			cities.add(client.requestAnswer(new RequestCity()));
 		}
+		controller.parseBonusGetCityBonus(cities, this);
 	}
 
 	@Override

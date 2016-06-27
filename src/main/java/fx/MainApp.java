@@ -266,6 +266,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void changeStatusToNobilityBonus(String message, String status) {
+		gameController.logMsg(message + "\n" + status);
 		gameController.changeStatus(status);
 	}
 

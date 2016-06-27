@@ -10,8 +10,11 @@ import javafx.scene.paint.Color;
 import model.board.Board;
 import model.board.council.Council;
 import model.exceptions.XMLFileException;
+import model.market.OnSaleItem;
+import model.player.Assistants;
 import model.player.PermissionCard;
 import model.player.Player;
+import model.player.PoliticCard;
 import model.reward.Reward;
 import model.Configuration;
 

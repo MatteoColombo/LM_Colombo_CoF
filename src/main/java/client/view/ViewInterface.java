@@ -17,5 +17,7 @@ public interface ViewInterface {
 	public void printAskWhichMapToUse();
 
 	public void printAskWhatActionToDo();
+	
+	public void changeStatusToNobilityBonus(String message, String status);
 
 }

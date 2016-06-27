@@ -213,4 +213,10 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
+	@Override
+	public void changeStatusToNobilityBonus(String message, String status) {
+		writer.println(message);
+		writer.flush();
+	}
+
 }

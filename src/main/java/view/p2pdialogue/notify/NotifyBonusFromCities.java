@@ -19,7 +19,7 @@ public class NotifyBonusFromCities implements Notify {
 	}
 	@Override
 	public void execute(ViewInterface view) {
-		view.printMessage("You can choose "+cities+ " bonus from the cities that you own!");
+		view.changeStatusToNobilityBonus("You can choose "+cities+ " bonus from the cities that you own!","city");
 	}
   
 }

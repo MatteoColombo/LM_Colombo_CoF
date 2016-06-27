@@ -259,11 +259,9 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		showConfigGame();
 	}
 
-	/**
-	 * This method isn't used because with javaFx we don't need to implement it!
-	 */
 	@Override
 	public void printAskWhatActionToDo() {
+		gameController.changeStatus("");
 	}
 
 }

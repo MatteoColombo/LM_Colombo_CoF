@@ -110,6 +110,7 @@ public class GameController {
 	private TextArea logger;
 
 	private String gameStatus = "";
+	
 	private Node kingOldPosition;
 	private Node kingNewPosition;
 	
@@ -287,7 +288,13 @@ public class GameController {
 						db.setContent(content);
 						event.consume();
 					}
-				});				
+				});
+				
+				this.setOnMouseClicked(event -> {
+					if("fromPermit".equals(gameStatus)) {
+						mainApp.sendMsg("" + (this.getIndex()+1));
+					}
+				});
 			}
 		});
 	}
@@ -385,11 +392,14 @@ public class GameController {
 							String action = gameStatus + " -city " + cityPane.getId() + " -permission " + db.getString();
 							logger.appendText(action);
 							mainApp.sendMsg(gameStatus + " -city " + cityPane.getId() + " -permission " + db.getString());
-							gameStatus = "";
 						}
 					});
 
-					// TODO set on mouse clicked for bonus from city
+					cityPane.setOnMouseClicked(event -> {
+						if("city".equals(gameStatus)) {
+							mainApp.sendMsg(cityPane.getId());
+						}
+					});
 					
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
@@ -448,7 +458,6 @@ public class GameController {
 				mainApp.sendMsg(gameStatus + 
 						" -city " + cityPane.getId()
 						+ " -cards " + db.getString());
-				gameStatus = "";
 			}
 		});
 	}
@@ -541,7 +550,6 @@ public class GameController {
 					int index = Integer.valueOf(id.substring(id.length() - 1));
 					index++;
 					mainApp.sendMsg(gameStatus + " -council " + index + " -color " + db.getString());
-					gameStatus = "";
 				}
 			}
 		});
@@ -710,13 +718,11 @@ public class GameController {
 						int regionIndex = Integer.valueOf(region) + 1;
 						mainApp.sendMsg(gameStatus + " -region " + regionIndex + " -permission " + cardIndex
 								+ " -cards " + db.getString());
-						gameStatus = "";
 					}
 				});
 
 				// generation
 				AnchorPane innerPane = generatePermission(permissions[j]);
-				// binding city Label
 				// binding bonuses
 				permissions[j].getBonuses().addListener((ListChangeListener.Change<? extends SimpleBonus> c) -> {
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
@@ -735,6 +741,18 @@ public class GameController {
 				});
 
 				outerPane.getChildren().add(innerPane);
+				
+				outerPane.setOnMouseClicked(event -> {
+					if("takePermission".equals(gameStatus)) {
+						String id = outerPane.getId();
+						String info = id.substring(id.length() - 3);
+						String card = info.substring(2);
+						String region = info.substring(0, 1);
+						int cardIndex = Integer.valueOf(card) + 1;
+						int regionIndex = Integer.valueOf(region) + 1;
+						mainApp.sendMsg(regionIndex + " " + cardIndex);
+					}
+				});
 			}
 		}
 	}

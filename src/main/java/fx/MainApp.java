@@ -40,6 +40,8 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	private GameProperty localGame = new GameProperty();
 	private Stage primaryStage;
 	private ServerManager manager;
+	
+	private GameController gameController;
 
 	@Override
 	public void run() {
@@ -146,7 +148,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			// Give the controller access to the main app.
-			GameController gameController = loader.getController();
+			gameController = loader.getController();
 			gameController.setAll(this);
 			localGame.yourTurnEnded();
 		} catch (IOException e) {
@@ -249,8 +251,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void printMessage(String message) {
-		// TODO Auto-generated method stub
-
+		gameController.logMsg(message);
 	}
 
 	@Override

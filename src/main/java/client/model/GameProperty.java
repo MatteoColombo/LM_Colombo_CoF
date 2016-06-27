@@ -27,6 +27,8 @@ public class GameProperty implements ModelInterface {
 	private SimpleMap map;
 	private int myIndex;
 	private Configuration config;
+	
+	private ObservableList<Object> market;
 
 	@Override
 	public void initMap(int choosen) {

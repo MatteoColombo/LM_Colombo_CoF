@@ -12,7 +12,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,7 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
-import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -87,12 +85,7 @@ public class GameController {
 
 	@FXML
 	private ListView<PermissionProperty> permissionList;
-	/*
-	 * @FXML private TableView<PermissionProperty> permissionCardsTable;
-	 * 
-	 * @FXML private TableColumn<PermissionProperty, String>
-	 * permissionCardsColumn;
-	 */
+
 	@FXML
 	private Button mainActionButton1;
 	@FXML
@@ -116,12 +109,16 @@ public class GameController {
 	@FXML
 	private TextArea logger;
 
-	private String actionSelected = "";
+	private String gameStatus = "";
 	private Node kingOldPosition;
 	private Node kingNewPosition;
 	
+	public void changeStatus(String newStatus) {
+		gameStatus = newStatus;
+	}
+	
 	public void logMsg(String msg) {
-		logger.appendText(msg);
+		logger.appendText(msg + "\n");
 	}
 
 	public void setAll(MainApp mainApp) {
@@ -143,24 +140,24 @@ public class GameController {
 	@FXML
 	private void handleSlideCouncil() throws IOException {
 		resetKing();
-		actionSelected = "slide";
+		gameStatus = "slide";
 	}
 
 	@FXML
 	private void handleBuyPermission() throws IOException {
 		resetKing();
-		actionSelected = "permission";
+		gameStatus = "permission";
 	}
 
 	@FXML
 	private void handleBuildEmporium() throws IOException {
 		resetKing();
-		actionSelected = "emporium";
+		gameStatus = "emporium";
 	}
 
 	@FXML
 	private void handleBuildWithKing() throws IOException {
-		actionSelected = "king";
+		gameStatus = "king";
 	}
 
 	@FXML
@@ -172,7 +169,7 @@ public class GameController {
 	@FXML
 	private void handleShuffle() throws IOException {
 		resetKing();
-		actionSelected = "shuffle";
+		gameStatus = "shuffle";
 	}
 
 	@FXML
@@ -184,7 +181,7 @@ public class GameController {
 	@FXML
 	private void handleSlideSide() throws IOException {
 		resetKing();
-		actionSelected = "secondarySlide";
+		gameStatus = "secondarySlide";
 	}
 
 	@FXML
@@ -225,7 +222,7 @@ public class GameController {
 		politicCardsTable.setItems(mainApp.getLocalModel().getMyPlayerData().getPoliticCards());
 
 		politicCardsTable.setOnDragDetected(event -> {
-			if (actionSelected.equals("king") || actionSelected.equals("permission")) {
+			if (gameStatus.equals("king") || gameStatus.equals("permission")) {
 				Dragboard db = politicCardsTable.startDragAndDrop(TransferMode.ANY);
 
 				ClipboardContent content = new ClipboardContent();
@@ -272,19 +269,18 @@ public class GameController {
 					setGraphic(null);
 				} else {
 					AnchorPane permissionPane = generatePermission(item);
-					// TODO
-					System.out.println(item.used().get() + " 270");
+					
 					if(item.used().get()) {
 						ColorAdjust grayScale = new ColorAdjust();
 						grayScale.setSaturation(-1);
 						permissionPane.setEffect(grayScale);
-						this.disableProperty().set(true);
+						//this.disableProperty().set(true);
 					}
 					setGraphic(permissionPane);
 				}
 
 				this.setOnDragDetected(event -> {
-					if ("emporium".equals(actionSelected)) {
+					if ("emporium".equals(gameStatus)) {
 						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
 						ClipboardContent content = new ClipboardContent();
 						content.putString("" + (this.getIndex()+1));
@@ -366,7 +362,7 @@ public class GameController {
 					});
 					
 					cityPane.setOnDragOver(event -> {
-						if ("emporium".equals(actionSelected) ||  "dragKing".equals(actionSelected)) {
+						if ("emporium".equals(gameStatus) ||  "dragKing".equals(gameStatus)) {
 							cityPane.setEffect(new Glow());
 							event.acceptTransferModes(TransferMode.MOVE);
 						}	
@@ -380,19 +376,21 @@ public class GameController {
 					cityPane.setOnDragDropped(event -> {
 						// TODO not yet tested
 						Dragboard db = event.getDragboard();
-						if("dragKing".equals(actionSelected)) {
-							actionSelected = "king";
+						if("dragKing".equals(gameStatus)) {
+							gameStatus = "king";
 							kingNewPosition = king;
 							king.setVisible(true);
 						}
-						else if (db.hasString() && "emporium".equals(actionSelected)) {
-							String action = actionSelected + " -city " + cityPane.getId() + " -permission " + db.getString();
+						else if (db.hasString() && "emporium".equals(gameStatus)) {
+							String action = gameStatus + " -city " + cityPane.getId() + " -permission " + db.getString();
 							logger.appendText(action);
-							mainApp.sendMsg(actionSelected + " -city " + cityPane.getId() + " -permission " + db.getString());
-							actionSelected = "";
+							mainApp.sendMsg(gameStatus + " -city " + cityPane.getId() + " -permission " + db.getString());
+							gameStatus = "";
 						}
 					});
 
+					// TODO set on mouse clicked for bonus from city
+					
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 					for (SimpleBonus sb : sc.getBonuses()) {
 
@@ -416,8 +414,8 @@ public class GameController {
 
 			Dragboard db = king.startDragAndDrop(TransferMode.ANY);
 			ClipboardContent content = new ClipboardContent();
-			if("king".equals(actionSelected)) {
-				actionSelected = "dragKing";
+			if("king".equals(gameStatus)) {
+				gameStatus = "dragKing";
 				content.putString("king");
 				db.setContent(content);
 				event.consume();
@@ -432,7 +430,7 @@ public class GameController {
 		});
 		
 		king.setOnDragOver(event -> {
-			if("king".equals(actionSelected)) {
+			if("king".equals(gameStatus)) {
 				king.setEffect(new Glow());
 				event.acceptTransferModes(TransferMode.MOVE);
 			}	
@@ -447,10 +445,10 @@ public class GameController {
 			Dragboard db = event.getDragboard();
 			if(db.hasString()) {
 				resetKing();
-				mainApp.sendMsg(actionSelected + 
+				mainApp.sendMsg(gameStatus + 
 						" -city " + cityPane.getId()
 						+ " -cards " + db.getString());
-				actionSelected = "";
+				gameStatus = "";
 			}
 		});
 	}
@@ -521,7 +519,7 @@ public class GameController {
 
 		location.setOnDragOver(event -> {
 			if (event.getGestureSource() != location
-					&& ("slide".equals(actionSelected) || "secondarySlide".equals(actionSelected))) {
+					&& ("slide".equals(gameStatus) || "secondarySlide".equals(gameStatus))) {
 				location.setEffect(new Glow());
 				event.acceptTransferModes(TransferMode.MOVE);
 			}
@@ -537,13 +535,13 @@ public class GameController {
 
 			if (db.hasString()) {
 				if (location.getId().equals("kingCouncilBox")) {
-					mainApp.sendMsg(actionSelected + " -council k -color " + db.getString());
+					mainApp.sendMsg(gameStatus + " -council k -color " + db.getString());
 				} else {
 					String id = location.getId();
 					int index = Integer.valueOf(id.substring(id.length() - 1));
 					index++;
-					mainApp.sendMsg(actionSelected + " -council " + index + " -color " + db.getString());
-					actionSelected = "";
+					mainApp.sendMsg(gameStatus + " -council " + index + " -color " + db.getString());
+					gameStatus = "";
 				}
 			}
 		});
@@ -565,7 +563,7 @@ public class GameController {
 				 * least one councilor of the selected color to drag from the
 				 * poll
 				 */
-				if (((actionSelected.equals("slide") || (actionSelected.equals("secondarySlide"))))
+				if (((gameStatus.equals("slide") || (gameStatus.equals("secondarySlide"))))
 						&& (pool.get(hexColor).get() > 0)) {
 					Dragboard db = councilor.startDragAndDrop(TransferMode.ANY);
 
@@ -690,7 +688,7 @@ public class GameController {
 				Pane outerPane = (Pane) mapPane.lookup("#permit" + String.valueOf(i) + "_" + String.valueOf(j));
 
 				outerPane.setOnDragOver(event -> {
-					if ("permission".equals(actionSelected)) {
+					if ("permission".equals(gameStatus)) {
 						outerPane.setEffect(new Glow());
 						event.acceptTransferModes(TransferMode.MOVE);
 					}
@@ -710,9 +708,9 @@ public class GameController {
 						String region = info.substring(0, 1);
 						int cardIndex = Integer.valueOf(card) + 1;
 						int regionIndex = Integer.valueOf(region) + 1;
-						mainApp.sendMsg(actionSelected + " -region " + regionIndex + " -permission " + cardIndex
+						mainApp.sendMsg(gameStatus + " -region " + regionIndex + " -permission " + cardIndex
 								+ " -cards " + db.getString());
-						actionSelected = "";
+						gameStatus = "";
 					}
 				});
 
@@ -770,7 +768,7 @@ public class GameController {
 			Node regionSymbol = mapPane.lookup("#region" + i);
 			
 			regionSymbol.setOnMouseEntered(event -> {
-				if("shuffle".equals(actionSelected)) {
+				if("shuffle".equals(gameStatus)) {
 					regionSymbol.setEffect(new Bloom());
 				}
 			});
@@ -780,9 +778,9 @@ public class GameController {
 			});
 			
 			regionSymbol.setOnMouseClicked(event -> {
-				if("shuffle".equals(actionSelected)) {
+				if("shuffle".equals(gameStatus)) {
 					int number = Integer.valueOf(regionSymbol.getId().substring(regionSymbol.getId().length()-1));
-					mainApp.sendMsg(actionSelected + " -region " + (number+1));
+					mainApp.sendMsg(gameStatus + " -region " + (number+1));
 				}
 			});
 		}

@@ -10,12 +10,14 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import control.Controller;
-import model.Configuration;
-import model.Game;
-import model.exceptions.ConfigurationErrorException;
-import view.server.ClientInt;
-import view.server.SocketClientConnectionHandler;
+import server.control.Controller;
+import server.control.connection.ClientInt;
+import server.control.connection.ServerInt;
+import server.control.connection.rmi.RMIServer;
+import server.control.connection.socket.SocketClientConnectionHandler;
+import server.model.Game;
+import server.model.configuration.Configuration;
+import server.model.configuration.ConfigurationErrorException;
 
 /**
  * This is the main class on the server side. If you want to start a game

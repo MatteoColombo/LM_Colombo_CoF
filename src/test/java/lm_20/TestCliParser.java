@@ -6,7 +6,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 import org.junit.Test;
 
-import control.CliParser;
+import server.control.CliParser;
 
 public class TestCliParser {
 

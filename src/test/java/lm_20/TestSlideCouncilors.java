@@ -9,12 +9,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.action.ASlideCouncil;
-import model.action.ASlideCouncilWithAssistant;
-import model.board.council.Council;
-import model.board.council.CouncilorPool;
-import model.exceptions.IllegalActionException;
-import model.player.Player;
+import server.model.action.ASlideCouncil;
+import server.model.action.ASlideCouncilWithAssistant;
+import server.model.action.IllegalActionException;
+import server.model.board.council.Council;
+import server.model.board.council.CouncilorPool;
+import server.model.player.Player;
 
 public class TestSlideCouncilors {
 	private List<Color> colorList;

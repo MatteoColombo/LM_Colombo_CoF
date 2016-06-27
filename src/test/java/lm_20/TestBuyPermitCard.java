@@ -9,17 +9,17 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Configuration;
-import model.action.ABuyPermissionCard;
-import model.board.council.Council;
-import model.board.council.CouncilorPool;
-import model.board.map.MapLoader;
-import model.board.nobility.NobilityLoader;
-import model.board.nobility.NobilityTrack;
-import model.exceptions.IllegalActionException;
-import model.player.PermissionCard;
-import model.player.Player;
-import model.player.PoliticCard;
+import server.model.action.ABuyPermissionCard;
+import server.model.action.IllegalActionException;
+import server.model.board.council.Council;
+import server.model.board.council.CouncilorPool;
+import server.model.board.map.MapLoader;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.player.PermissionCard;
+import server.model.player.Player;
+import server.model.player.PoliticCard;
 
 public class TestBuyPermitCard {
 	private List<Color> colorList;

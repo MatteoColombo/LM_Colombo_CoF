@@ -10,17 +10,17 @@ import org.junit.Test;
 
 import java.awt.Color;
 
-import model.Configuration;
-import model.action.AShufflePermissionCards;
-import model.action.Action;
-import model.board.Region;
-import model.board.city.City;
-import model.board.nobility.NobilityLoader;
-import model.board.nobility.NobilityTrack;
-import model.exceptions.IllegalActionException;
-import model.player.PermissionCard;
-import model.player.Player;
-import model.reward.RewardCity;
+import server.model.action.AShufflePermissionCards;
+import server.model.action.Action;
+import server.model.action.IllegalActionException;
+import server.model.board.Region;
+import server.model.board.city.City;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.player.PermissionCard;
+import server.model.player.Player;
+import server.model.reward.RewardCity;
 
 public class TestAShufflePermissionCards {
 	Region plains;

@@ -8,20 +8,20 @@ import java.util.List;
 
 import org.junit.*;
 
-import model.Configuration;
-import model.board.Board;
-import model.board.BoardRewardsManager;
-import model.board.King;
-import model.board.Region;
-import model.board.city.City;
-import model.board.council.Councilor;
-import model.board.council.CouncilorPool;
-import model.board.nobility.NobilityTrack;
-import model.exceptions.ConfigurationErrorException;
-import model.exceptions.XMLFileException;
-import model.reward.BVictoryPoints;
-import model.reward.BoardColorReward;
-import model.reward.BoardRegionReward;
+import server.model.board.Board;
+import server.model.board.BoardRewardsManager;
+import server.model.board.King;
+import server.model.board.Region;
+import server.model.board.city.City;
+import server.model.board.council.Councilor;
+import server.model.board.council.CouncilorPool;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.configuration.ConfigurationErrorException;
+import server.model.configuration.XMLFileException;
+import server.model.reward.BVictoryPoints;
+import server.model.reward.BoardColorReward;
+import server.model.reward.BoardRegionReward;
 
 public class TestBoard {
 	private Configuration config;

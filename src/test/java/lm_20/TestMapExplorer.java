@@ -9,15 +9,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Configuration;
-import model.board.Region;
-import model.board.council.CouncilorPool;
-import model.board.map.MapExplorer;
-import model.board.map.MapLoader;
-import model.board.nobility.NobilityLoader;
-import model.board.nobility.NobilityTrack;
-import model.player.Player;
-import model.reward.Reward;
+import server.model.board.Region;
+import server.model.board.council.CouncilorPool;
+import server.model.board.map.MapExplorer;
+import server.model.board.map.MapLoader;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.player.Player;
+import server.model.reward.Reward;
 
 public class TestMapExplorer {
 	ArrayList<Color> colors;

@@ -8,13 +8,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Configuration;
-import model.board.nobility.NobilityLoader;
-import model.board.nobility.NobilityTrack;
-import model.exceptions.ConfigurationErrorException;
-import model.exceptions.TrackXMLFileException;
-import model.market.Market;
-import model.player.*;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.configuration.ConfigurationErrorException;
+import server.model.configuration.TrackXMLFileException;
+import server.model.market.Market;
+import server.model.player.Player;
+import server.model.player.PoliticCard;
 
 public class TestMarket {
 	private List<Player> allPlayers;

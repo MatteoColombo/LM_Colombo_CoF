@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import model.board.city.City;
-import model.board.council.CouncilorPool;
-import model.board.map.MapExplorer;
-import model.board.map.MapLoader;
+import server.model.board.city.City;
+import server.model.board.council.CouncilorPool;
+import server.model.board.map.MapExplorer;
+import server.model.board.map.MapLoader;
 
 public class TestMinimalPath {
 

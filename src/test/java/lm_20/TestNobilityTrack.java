@@ -5,12 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Configuration;
-import model.board.nobility.NobilityLoader;
-import model.board.nobility.NobilityTrack;
-import model.exceptions.ConfigurationErrorException;
-import model.exceptions.TrackXMLFileException;
-import model.player.Player;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.configuration.ConfigurationErrorException;
+import server.model.configuration.TrackXMLFileException;
+import server.model.player.Player;
 
 public class TestNobilityTrack {
 	private Player player;

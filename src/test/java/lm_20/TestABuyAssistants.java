@@ -9,14 +9,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Configuration;
-import model.action.ABuyAssistant;
-import model.board.nobility.NobilityLoader;
-import model.board.nobility.NobilityTrack;
-import model.exceptions.ConfigurationErrorException;
-import model.exceptions.IllegalActionException;
-import model.exceptions.TrackXMLFileException;
-import model.player.Player;
+import server.model.action.ABuyAssistant;
+import server.model.action.IllegalActionException;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.configuration.ConfigurationErrorException;
+import server.model.configuration.TrackXMLFileException;
+import server.model.player.Player;
 
 public class TestABuyAssistants {
 

@@ -9,19 +9,19 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Configuration;
-import model.board.nobility.NobilityLoader;
-import model.board.nobility.NobilityTrack;
-import model.exceptions.ConfigurationErrorException;
-import model.exceptions.TrackXMLFileException;
-import model.player.Assistants;
-import model.player.Coins;
-import model.player.Emporium;
-import model.player.NoblePoints;
-import model.player.PermissionCard;
-import model.player.Player;
-import model.player.PoliticCard;
-import model.player.VictoryPoints;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.configuration.ConfigurationErrorException;
+import server.model.configuration.TrackXMLFileException;
+import server.model.player.Assistants;
+import server.model.player.Coins;
+import server.model.player.Emporium;
+import server.model.player.NoblePoints;
+import server.model.player.PermissionCard;
+import server.model.player.Player;
+import server.model.player.PoliticCard;
+import server.model.player.VictoryPoints;
 
 public class TestPlayer {
 

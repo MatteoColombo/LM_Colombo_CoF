@@ -2,11 +2,11 @@ package client.model;
 
 import java.util.List;
 
-import model.Configuration;
-import model.board.council.Council;
-import model.player.PermissionCard;
-import model.player.Player;
-import model.reward.Reward;
+import server.model.board.council.Council;
+import server.model.configuration.Configuration;
+import server.model.player.PermissionCard;
+import server.model.player.Player;
+import server.model.reward.Reward;
 
 public interface ModelInterface {
 	public void initMap(int choosen);

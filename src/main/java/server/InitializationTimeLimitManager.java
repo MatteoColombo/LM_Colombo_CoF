@@ -2,7 +2,7 @@ package server;
 
 import java.util.logging.Logger;
 
-import model.Game;
+import server.model.Game;
 
 public class InitializationTimeLimitManager extends Thread{
 	private Game startingGame;

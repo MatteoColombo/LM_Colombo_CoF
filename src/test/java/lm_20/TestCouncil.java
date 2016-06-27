@@ -9,10 +9,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.board.council.Council;
-import model.board.council.Councilor;
-import model.exceptions.IllegalActionException;
-import model.player.PoliticCard;
+import server.model.action.IllegalActionException;
+import server.model.board.council.Council;
+import server.model.board.council.Councilor;
+import server.model.player.PoliticCard;
 
 public class TestCouncil {
 	List<Councilor> members;

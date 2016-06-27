@@ -5,15 +5,15 @@ import org.junit.Test;
 
 import java.awt.Color;
 
-import model.Configuration;
-import model.board.city.City;
-import model.board.nobility.NobilityLoader;
-import model.board.nobility.NobilityTrack;
-import model.exceptions.ConfigurationErrorException;
-import model.exceptions.TrackXMLFileException;
-import model.player.Player;
-import model.reward.Reward;
-import model.reward.RewardCity;
+import server.model.board.city.City;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.configuration.ConfigurationErrorException;
+import server.model.configuration.TrackXMLFileException;
+import server.model.player.Player;
+import server.model.reward.Reward;
+import server.model.reward.RewardCity;
 
 public class TestCity {
 	

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.board.council.CouncilorPool;
-import model.board.map.MapLoader;
-import model.exceptions.MapXMLFileException;
+import server.model.board.council.CouncilorPool;
+import server.model.board.map.MapLoader;
+import server.model.board.map.MapXMLFileException;
 
 public class TestMapLoader {
 

@@ -8,20 +8,19 @@ import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 
-import model.board.nobility.NobilityLoader;
-import model.board.nobility.NobilityTrack;
-import model.exceptions.IllegalActionException;
-import model.player.Player;
-import model.player.PoliticCard;
+import server.control.ActionBuilder;
+import server.control.CliParser;
+import server.model.action.Action;
+import server.model.action.IllegalActionException;
+import server.model.board.Board;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.player.Player;
+import server.model.player.PoliticCard;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import control.ActionBuilder;
-import control.CliParser;
-import model.Configuration;
-import model.action.Action;
-import model.board.Board;
 /**
  * 
  * @author gianpaolobranca

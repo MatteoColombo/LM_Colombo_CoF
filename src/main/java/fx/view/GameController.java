@@ -272,9 +272,9 @@ public class GameController {
 					AnchorPane permissionPane = generatePermission(item);
 					
 					if(item.used().get()) {
-						ColorAdjust grayScale = new ColorAdjust();
-						grayScale.setSaturation(-1);
-						permissionPane.setEffect(grayScale);
+						ColorAdjust grayscale = new ColorAdjust();
+						grayscale.setSaturation(-1);
+						permissionPane.setEffect(grayscale);
 						//this.disableProperty().set(true);
 					}
 					setGraphic(permissionPane);
@@ -293,6 +293,22 @@ public class GameController {
 				this.setOnMouseClicked(event -> {
 					if("fromPermit".equals(gameStatus)) {
 						mainApp.sendMsg("" + (this.getIndex()+1));
+					}
+				});
+				
+				this.setOnMouseEntered(event -> {
+					if("fromPermit".equals(gameStatus)) {
+						this.setEffect(new Glow());
+					}
+				});
+				
+				this.setOnMouseExited(event -> {
+					if(this.isDisabled()) {
+						ColorAdjust grayscale = new ColorAdjust();
+						grayscale.setSaturation(-1);
+						this.setEffect(grayscale);
+					} else {
+						this.setEffect(null);
 					}
 				});
 			}
@@ -399,6 +415,16 @@ public class GameController {
 						if("city".equals(gameStatus)) {
 							mainApp.sendMsg(cityPane.getId());
 						}
+					});
+					
+					cityPane.setOnMouseEntered(event -> {
+						if("city".equals(gameStatus)) {
+							cityPane.setEffect(new Glow());
+						}
+					});
+					
+					cityPane.setOnMouseExited(event -> {
+						cityPane.setEffect(null);
 					});
 					
 					HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
@@ -752,6 +778,16 @@ public class GameController {
 						int regionIndex = Integer.valueOf(region) + 1;
 						mainApp.sendMsg(regionIndex + " " + cardIndex);
 					}
+				});
+				
+				outerPane.setOnMouseEntered(event -> {
+					if("takePermission".equals(gameStatus)) {
+						outerPane.setEffect(new Glow());
+					}
+				});
+				
+				outerPane.setOnMouseExited(event -> {
+					outerPane.setEffect(null);
 				});
 			}
 		}

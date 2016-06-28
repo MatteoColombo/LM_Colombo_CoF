@@ -14,7 +14,7 @@
             <Image url="@../simboli/permissionCard.png" />
          </image>
       </ImageView>
-      <HBox fx:id="bonusBox" alignment="CENTER" layoutX="5.0" layoutY="31.0" prefHeight="31.0" prefWidth="45.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <HBox fx:id="bonusBox" alignment="CENTER" layoutX="5.0" layoutY="31.0" prefHeight="31.0" prefWidth="45.0" />
       <Label fx:id="citiesLabel" layoutX="17.0" layoutY="10.0" text="Label" AnchorPane.leftAnchor="10.0" />
    </children>
 </AnchorPane>

@@ -104,7 +104,10 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </GridPane>
-            <AnchorPane prefHeight="199.0" prefWidth="140.0" />
+            <AnchorPane prefHeight="199.0" prefWidth="140.0">
+               <children>
+                  <Button layoutX="40.0" layoutY="134.0" mnemonicParsing="false" onAction="#showMarket" text="Button" />
+               </children></AnchorPane>
             <TableView layoutX="43.0" layoutY="-8.0" prefHeight="170.0" prefWidth="244.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="Seller" />

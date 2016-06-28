@@ -11,6 +11,7 @@ import client.viewGUI.model.GameProperty;
 import client.viewGUI.view.ConfigGameController;
 import client.viewGUI.view.GameController;
 import client.viewGUI.view.LoginController;
+import client.viewGUI.view.MarketController;
 import client.viewGUI.view.RoomController;
 import client.control.Controller;
 import client.control.RMIServerManager;
@@ -23,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import server.control.connection.ServerInt;
@@ -155,6 +157,32 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			e.printStackTrace();
 		}
 	}
+	
+	public void showMarket() {
+		
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/fxml/Market.fxml"));
+			BorderPane market = (BorderPane) loader.load();
+			// Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Sell");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(market);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            MarketController controller = loader.getController();
+            controller.setAll(this);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public Window getPrimaryStage() {
 		return this.primaryStage;
@@ -236,8 +264,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void printIllegalAction(Exception e) {
-		// TODO Auto-generated method stub
-
+		gameController.showAlert(e.getMessage());
 	}
 
 	@Override

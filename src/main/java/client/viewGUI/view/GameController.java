@@ -792,8 +792,12 @@ public class GameController {
 			itemPane.getChildren().add(amount);
 			
 		} else if(itemOnSale instanceof PoliticCard) {
-			
-			String politicColor = ColorConverter.awtToWeb(((PoliticCard) itemOnSale).getCardColor());
+			String politicColor;
+			if(((PoliticCard) itemOnSale).isMultipleColor()) {
+				politicColor = "multi";
+			} else {
+				politicColor = ColorConverter.awtToWeb(((PoliticCard) itemOnSale).getCardColor());
+			}
 			Image politicCardImage = new Image(PlayerProperty.getPoliticCardsImages().get(politicColor));
 			ImageView politicCard = new ImageView(politicCardImage);
 			politicCard.fitWidthProperty().set(100);

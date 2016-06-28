@@ -85,7 +85,6 @@ public class Controller {
 			game.getMarket().playerWantsToStop();
 			return;
 		}
-		System.out.println(item);
 		String[] parameters = item.split(" ");
 		Soldable itemOnSale;
 		try {
@@ -117,6 +116,7 @@ public class Controller {
 				throw new IllegalActionException("Wrong selection");
 			}
 			game.getMarket().addItemOnSale(itemOnSale, price, playersMap.get(client));
+			updatePlayers(playersMap.get(client), game.getPlayers().indexOf(playersMap.get(client)));
 		} catch (IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction(e);

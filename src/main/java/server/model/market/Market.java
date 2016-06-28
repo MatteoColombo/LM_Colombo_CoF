@@ -32,10 +32,13 @@ public class Market {
 
 	public void runMarket() {
 		startSellingTurns();
+		System.out.println("finito di vendere");
 		if (!itemsOnSale.isEmpty())
 			startBuyingTurns();
+		System.out.println("finito di comprare");
 		for (OnSaleItem item : itemsOnSale)
 			giveToplayer(item, item.getOwner());
+		System.out.println("restituisco!");
 		itemsOnSale.clear();
 	}
 
@@ -45,7 +48,8 @@ public class Market {
 	private void startSellingTurns() {
 		for (Player p : players) {
 			playerWantsToStop = false;
-			if (p.getSuspended())
+			if (p.getSuspended() || (p.getAssistants().getAmount() == 0 && p.getPermissionCard().size() == 0
+					&& p.getPoliticCard().size() == 0))
 				continue;
 			try {
 				p.getClient().notify(new NotifyMarketSellStarted());

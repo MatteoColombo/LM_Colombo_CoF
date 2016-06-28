@@ -327,13 +327,6 @@ public class GameController {
 					setGraphic(null);
 				} else {
 					AnchorPane permissionPane = Collection.permissionCard(item);
-					
-					if(item.used().get()) {
-						ColorAdjust grayscale = new ColorAdjust();
-						grayscale.setSaturation(-1);
-						permissionPane.setEffect(grayscale);
-						//this.disableProperty().set(true);
-					}
 					setGraphic(permissionPane);
 				}
 
@@ -801,6 +794,7 @@ public class GameController {
 			String politicColor = ColorConverter.awtToWeb(((PoliticCard) itemOnSale).getCardColor());
 			Image politicCardImage = new Image(PlayerProperty.getPoliticCardsImages().get(politicColor));
 			ImageView politicCard = new ImageView(politicCardImage);
+			politicCard.fitWidthProperty().set(100);
 			itemPane.getChildren().add(politicCard);
 			
 		} else if(itemOnSale instanceof PermissionCard) {

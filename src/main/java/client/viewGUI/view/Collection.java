@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -38,6 +39,13 @@ public class Collection {
 			HBox bonusBox = (HBox) permissionPane.lookup("#bonusBox");
 			for (SimpleBonus sb : pp.getBonuses()) {
 				bonusBox.getChildren().add(bonus(sb));
+			}
+			
+			if(pp.used().get()) {
+				ColorAdjust grayscale = new ColorAdjust();
+				grayscale.setSaturation(-1);
+				permissionPane.setEffect(grayscale);
+				//this.disableProperty().set(true);
 			}
 			
 			pp.getBonuses().addListener((ListChangeListener.Change<? extends SimpleBonus> c) -> {

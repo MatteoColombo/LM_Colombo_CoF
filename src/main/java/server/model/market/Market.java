@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import server.control.dialogue.notify.NotifyMarketSellStarted;
 import server.model.player.Assistants;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
@@ -22,13 +23,14 @@ public class Market {
 	private List<OnSaleItem> itemsOnSale;
 	private List<Player> players;
 	private boolean playerWantsToStop;
-	private Logger logger= Logger.getGlobal();
+	private Logger logger = Logger.getGlobal();
+
 	public Market(List<Player> players) {
 		this.players = players;
-		itemsOnSale = new ArrayList<>();	
+		itemsOnSale = new ArrayList<>();
 	}
 
-	public void runMarket(){
+	public void runMarket() {
 		startSellingTurns();
 		System.out.println("finished selling");
 		if (!itemsOnSale.isEmpty())
@@ -37,17 +39,23 @@ public class Market {
 			giveToplayer(item, item.getOwner());
 		itemsOnSale.clear();
 	}
+
 	/**
 	 * Ask the players what the want to sell
 	 */
 	private void startSellingTurns() {
 		for (Player p : players) {
 			playerWantsToStop = false;
-			if(p.getSuspended()){
-				System.out.println("è sospeso");
+			if (p.getSuspended())
 				continue;
+			try {
+				p.getClient().notify(new NotifyMarketSellStarted());
+			} catch (IOException e) {
+				p.setSuspension(true);
+				logger.log(Level.SEVERE, e.getMessage(), e);
+				playerWantsToStop = true;
 			}
-			
+
 			while (!playerWantsToStop) {
 				try {
 					p.getClient().askWichItemToSell();
@@ -68,7 +76,7 @@ public class Market {
 		int starting = new Random().nextInt(players.size());
 		for (int i = 0; i < players.size(); i++) {
 			playerWantsToStop = false;
-			if(players.get((i + starting) % players.size()).getSuspended())
+			if (players.get((i + starting) % players.size()).getSuspended())
 				continue;
 			while (!playerWantsToStop) {
 				if (itemsOnSale.isEmpty())
@@ -120,7 +128,8 @@ public class Market {
 	}
 
 	/**
-	 * Give the player an OnSaleItem, it is used 
+	 * Give the player an OnSaleItem, it is used
+	 * 
 	 * @param item
 	 * @param p
 	 */
@@ -133,14 +142,15 @@ public class Market {
 		else if (soldItem instanceof PermissionCard)
 			p.getPermissionCard().add((PermissionCard) soldItem);
 	}
-	
+
 	/**
 	 * Just for tests
+	 * 
 	 * @return the list of the items on sale
 	 * @deprecated it's just for tests
 	 */
 	@Deprecated
-	public List<OnSaleItem> getItemsOnSale(){
+	public List<OnSaleItem> getItemsOnSale() {
 		return this.itemsOnSale;
 	}
 }

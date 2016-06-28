@@ -81,10 +81,11 @@ public class Controller {
 	}
 
 	public void parseItemToSell(String item, ClientInt client) {
-		if ("".equals(item)) {
+		if ("end".equals(item)) {
 			game.getMarket().playerWantsToStop();
 			return;
 		}
+		System.out.println(item);
 		String[] parameters = item.split(" ");
 		Soldable itemOnSale;
 		try {
@@ -132,7 +133,7 @@ public class Controller {
 	 * @param client
 	 */
 	public void parseItemToBuy(List<OnSaleItem> items, String itemIndex, ClientInt client) {
-		if ("".equals(itemIndex)) {
+		if ("end".equals(itemIndex)) {
 			game.getMarket().playerWantsToStop();
 			return;
 		}

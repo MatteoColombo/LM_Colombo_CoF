@@ -90,9 +90,7 @@ public class GameController {
 	private Label nobilityLabel;
 
 	@FXML
-	private TableView<StringProperty> politicCardsTable;
-	@FXML
-	private TableColumn<StringProperty, String> politicCardsColumn;
+	private ListView<String> politicList;
 
 	@FXML
 	private ListView<PermissionProperty> permissionList;
@@ -153,7 +151,7 @@ public class GameController {
 		this.myData = mainApp.getLocalModel().getMyPlayerData();
 		initMyData();
 		initOpponentsPanes();
-		initPoliticTable();
+		initPoliticList();
 		initPermissionList();
 		initMap();
 		initRegionSymbols();
@@ -250,16 +248,17 @@ public class GameController {
 		sideActionButton4.disableProperty().bind(myData.canNotDoSideAction());
 	}
 
-	private void initPoliticTable() {
-		politicCardsTable.setItems(myData.getPoliticCards());
+	private void initPoliticList() {
+		politicList.setItems(myData.getPoliticCards());
+		politicList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		politicCardsTable.setOnDragDetected(event -> {
+		politicList.setOnDragDetected(event -> {
 			if (gameStatus.equals("king") || gameStatus.equals("permission")) {
-				Dragboard db = politicCardsTable.startDragAndDrop(TransferMode.ANY);
+				Dragboard db = politicList.startDragAndDrop(TransferMode.ANY);
 
 				ClipboardContent content = new ClipboardContent();
 				String buffer = "";
-				for (int i : politicCardsTable.getSelectionModel().getSelectedIndices()) {
+				for (int i : politicList.getSelectionModel().getSelectedIndices()) {
 					buffer += " " + (i + 1);
 				}
 				content.putString(buffer.substring(1));
@@ -269,17 +268,14 @@ public class GameController {
 			}
 		});
 
-		politicCardsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-		politicCardsColumn.setCellValueFactory(cell -> cell.getValue());
-		politicCardsColumn.setCellFactory(column -> {
-			return new TableCell<StringProperty, String>() {
+		politicList.setCellFactory(column -> {
+			return new ListCell<String>() {
 				@Override
 				protected void updateItem(String item, boolean empty) {
 					super.updateItem(item, empty);
 					if (item == null || empty) {
-						setStyle("");
-					} else {
+						setStyle(null);
+					} else {	
 						setStyle("-fx-background-image: url('"
 								+ GameController.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))
 								+ "'); -fx-background-size:cover;");

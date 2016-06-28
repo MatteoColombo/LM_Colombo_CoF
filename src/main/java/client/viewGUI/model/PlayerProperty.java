@@ -37,7 +37,7 @@ public class PlayerProperty {
 	/**
 	 * web color repreentation of each politic card color
 	 */
-	private ObservableList<StringProperty> politicCards;
+	private ObservableList<String> politicCards;
 	private ObservableList<PermissionProperty> permissions;
 		
 	public PlayerProperty() {
@@ -77,9 +77,9 @@ public class PlayerProperty {
 		politicCards.clear();
 		for(PoliticCard card: player.getPoliticCard()) {
 			if(!card.isMultipleColor()) {
-				politicCards.add(new SimpleStringProperty(ColorConverter.awtToWeb(card.getCardColor())));
+				politicCards.add(ColorConverter.awtToWeb(card.getCardColor()));
 			} else {
-				politicCards.add(new SimpleStringProperty("multi"));
+				politicCards.add("multi");
 			}
 		}	
 		return this;
@@ -159,7 +159,7 @@ public class PlayerProperty {
 		this.coins.set(nobility);
 	}
 	
-	public ObservableList<StringProperty> getPoliticCards() {
+	public ObservableList<String> getPoliticCards() {
 		return this.politicCards;
 	}
 	

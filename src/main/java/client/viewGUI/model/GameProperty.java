@@ -35,7 +35,7 @@ public class GameProperty implements ModelInterface {
 	private int myIndex;
 	private Configuration config;
 	
-	private ObservableList<Object> market;
+	private ObservableList<ItemProperty> market;
 
 	@Override
 	public void initMap(int choosen) {
@@ -163,5 +163,16 @@ public class GameProperty implements ModelInterface {
 		map.updateColorReward(colorReward);
 		map.updateKingBonus(kingReward);
 			
+	}
+	
+	public void setMarket(List<OnSaleItem> items) {
+		market.clear();
+		for(OnSaleItem item: items) {
+			market.add(new ItemProperty(item));
+		}
+	}
+	
+	public ObservableList<ItemProperty> getMarket() {
+		return this.market;
 	}
 }

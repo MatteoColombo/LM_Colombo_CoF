@@ -1,10 +1,8 @@
 package client.viewGUI.view;
 
 import client.viewGUI.control.MainApp;
-import client.viewGUI.model.SimpleItem;
 import client.viewGUI.model.PermissionProperty;
 import client.viewGUI.model.PlayerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -12,11 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -24,8 +19,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import server.model.market.OnSaleItem;
+import javafx.stage.Stage;
 
 public class MarketController {
 	@FXML
@@ -49,35 +43,22 @@ public class MarketController {
 	
 	private MainApp mainApp;
 	private PlayerProperty myData;
+	private Stage dialogStage;
 	
 	@FXML
 	private void initialize() {
 		permissionList.prefWidthProperty().bind(borderPane.widthProperty().divide(2));
-		politicList.prefWidthProperty().bind(borderPane.widthProperty().divide(2));
-		
-		priceField.setText("");
-		priceField.textProperty().addListener(new ChangeListener<String>() {
-	        @Override
-	        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            if (!newValue.matches("\\d*")) {
-	             priceField.setText(newValue.replaceAll("[^\\d]", ""));
-	            }
-	        }
-	    });
-		
-		
+		politicList.prefWidthProperty().bind(borderPane.widthProperty().divide(2));	
 		assistantField.setText("");
-		// force the field to be numberic only, and lesser than or equal to the total assistants
-		assistantField.textProperty().addListener(new ChangeListener<String>() {
-	        @Override
-	        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            if (!newValue.matches("\\d*") || (Integer.valueOf(newValue) > Integer.valueOf(assistantLabel.getText()))) {
-	               assistantField.setText(newValue.replaceAll("[^\\d]", ""));
-	            }
-	        }
-	    });
+		priceField.setText("");
 		
+		Collection.addNumericRestriction(assistantField);
+		Collection.addNumericRestriction(priceField);
 	}
+	
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
 	
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
@@ -86,6 +67,7 @@ public class MarketController {
 		initAssistants();
 		initPoliticList();
 		initMarket();
+		setExit();
 	}
 	
 	public void initPoliticList() {
@@ -183,6 +165,12 @@ public class MarketController {
 				}
 			}
 			
+		});
+	}
+	
+	private void setExit() {
+		dialogStage.setOnCloseRequest(event -> {
+			mainApp.sendMsg("end");
 		});
 	}
 }

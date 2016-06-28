@@ -99,12 +99,14 @@
             </GridPane>
             <AnchorPane prefHeight="199.0" prefWidth="140.0">
                <children>
-                  <Button layoutX="40.0" layoutY="134.0" mnemonicParsing="false" onAction="#showMarket" text="Button" />
+                  <Button fx:id="buyButton" disable="true" layoutY="128.0" mnemonicParsing="false" onAction="#handleBuy" text="BUY" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Pane fx:id="itemPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0" />
+                  <Button fx:id="endBuyButton" disable="true" layoutX="40.0" layoutY="159.0" mnemonicParsing="false" onAction="#handleEndBuying" text="PASS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children></AnchorPane>
-            <TableView layoutX="43.0" layoutY="-8.0" prefHeight="170.0" prefWidth="244.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="itemsTable" layoutX="43.0" layoutY="-8.0" prefHeight="170.0" prefWidth="244.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Seller" />
-                  <TableColumn prefWidth="75.0" text="Price" />
+                <TableColumn fx:id="ownerColumn" prefWidth="75.0" text="Seller" />
+                  <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

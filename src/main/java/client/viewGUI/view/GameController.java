@@ -11,7 +11,7 @@ import client.viewGUI.model.PermissionProperty;
 import client.viewGUI.model.PlayerProperty;
 import client.viewGUI.model.SimpleBonus;
 import client.viewGUI.model.SimpleCity;
-import client.viewGUI.model.SimpleItem;
+import client.viewGUI.model.ItemProperty;
 import client.viewGUI.model.SimpleNobilityCell;
 import client.viewGUI.model.SimpleRegion;
 import javafx.beans.binding.Bindings;
@@ -43,6 +43,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import server.model.market.OnSaleItem;
+import server.model.market.Soldable;
+import server.model.player.Assistants;
+import server.model.player.PermissionCard;
+import server.model.player.PoliticCard;
+import util.ColorConverter;
 
 public class GameController {
 
@@ -115,6 +120,18 @@ public class GameController {
 	@FXML
 	private VBox opponentsBox;
 	
+	@FXML
+	private TableView<ItemProperty> itemsTable;
+	@FXML
+	private TableColumn<ItemProperty, String> ownerColumn;
+	@FXML
+	private TableColumn<ItemProperty, String> priceColumn;
+	@FXML
+	private Pane itemPane; 
+	@FXML
+	private Button buyButton;
+	@FXML
+	private Button endBuyButton;
 	
 	@FXML
 	private TextArea logger;
@@ -142,7 +159,7 @@ public class GameController {
 		logger.appendText(msg + "\n");
 	}
 	
-	public void launchMarket() {
+	public void launchMarketSell() {
 		
 	}
 	
@@ -423,6 +440,7 @@ public class GameController {
 	}
 	
 	private void initKing(AnchorPane cityPane, Node king) {
+		// TODO fix the king disappear bug
 		king.setOnDragDetected(event -> {
 
 			Dragboard db = king.startDragAndDrop(TransferMode.ANY);
@@ -747,4 +765,61 @@ public class GameController {
 			});
 		}
 	}
+	
+	public void initMarketBuy() {
+		endBuyButton.setDisable(false);
+		itemsTable.setItems(mainApp.getLocalModel().getMarket());
+		ownerColumn.setCellValueFactory(cell -> cell.getValue().owner());
+		priceColumn.setCellValueFactory(cell -> cell.getValue().price().asString());
+		
+		itemsTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                	showItemDetails(newValue);
+                });
+	}
+	
+	private void showItemDetails(ItemProperty item) {
+		
+		itemPane.getChildren().clear();
+		buyButton.setDisable(false);
+		
+		Soldable itemOnSale = item.getItem();
+		
+		if(itemOnSale instanceof Assistants) {
+			
+			Image assistantImage = new Image(MainApp.class.getResource("/simboli/assistants.png").toString());
+			ImageView assistant = new ImageView(assistantImage);
+			itemPane.getChildren().add(assistant);
+			
+			Label amount = new Label();
+			amount.setText(String.valueOf(((Assistants) itemOnSale).getAmount()));
+			itemPane.getChildren().add(amount);
+			
+		} else if(itemOnSale instanceof PoliticCard) {
+			
+			String politicColor = ColorConverter.awtToWeb(((PoliticCard) itemOnSale).getCardColor());
+			Image politicCardImage = new Image(PlayerProperty.getPoliticCardsImages().get(politicColor));
+			ImageView politicCard = new ImageView(politicCardImage);
+			itemPane.getChildren().add(politicCard);
+			
+		} else if(itemOnSale instanceof PermissionCard) {
+			
+			PermissionProperty permission = new PermissionProperty((PermissionCard) itemOnSale);
+			AnchorPane permissionPane = Collection.permissionCard(permission);
+			itemPane.getChildren().add(permissionPane);
+		}
+	}
+	
+	@FXML
+	private void handleBuy() {
+		mainApp.sendMsg("" + (itemsTable.getSelectionModel().getSelectedIndex()+1));
+		buyButton.setDisable(true);
+	}
+	
+	@FXML
+	private void handleEndBuy() {
+		mainApp.sendMsg("");
+	}
+	
+	
 }

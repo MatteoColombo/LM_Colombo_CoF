@@ -14,6 +14,7 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -157,5 +158,13 @@ public class Collection {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static void addNumericRestriction(TextField tf) {
+		tf.textProperty().addListener((obs, oldVal, newVal) -> {
+			if (!newVal.matches("\\d*")) {
+				tf.setText(newVal.replaceAll("[^\\d]", ""));
+	            }
+		}); 
 	}
 }

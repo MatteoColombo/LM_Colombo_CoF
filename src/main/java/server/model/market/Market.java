@@ -45,7 +45,8 @@ public class Market {
 	private void startSellingTurns() {
 		for (Player p : players) {
 			playerWantsToStop = false;
-			if (p.getSuspended())
+			if (p.getSuspended() || (p.getAssistants().getAmount() == 0 && p.getPermissionCard().size() == 0
+					&& p.getPoliticCard().size() == 0))
 				continue;
 			try {
 				p.getClient().notify(new NotifyMarketSellStarted());

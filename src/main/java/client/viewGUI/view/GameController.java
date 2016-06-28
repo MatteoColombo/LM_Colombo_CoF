@@ -801,6 +801,7 @@ public class GameController {
 			String politicColor = ColorConverter.awtToWeb(((PoliticCard) itemOnSale).getCardColor());
 			Image politicCardImage = new Image(PlayerProperty.getPoliticCardsImages().get(politicColor));
 			ImageView politicCard = new ImageView(politicCardImage);
+			politicCard.fitWidthProperty().set(100);
 			itemPane.getChildren().add(politicCard);
 			
 		} else if(itemOnSale instanceof PermissionCard) {

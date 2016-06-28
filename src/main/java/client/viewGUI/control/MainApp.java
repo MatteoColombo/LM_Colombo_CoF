@@ -158,6 +158,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 	
+	@Override
 	public void showMarket() {
 		
 		try {

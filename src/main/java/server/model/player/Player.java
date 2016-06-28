@@ -34,7 +34,7 @@ public class Player implements Serializable {
 	private transient List<Color> pickedColours;
 	private int mainActions;
 	private boolean extraAction;
-	private transient int DEFAULTMAINACTION;
+	private static final transient int DEFAULTMAINACTION=1;
 	private transient ClientInt client;
 	private boolean isSuspended;
 
@@ -80,7 +80,6 @@ public class Player implements Serializable {
 			politicCard.add(new PoliticCard(pickedColours));
 		for (int i = 0; i < config.getInitialEmporiums(); i++)
 			emporium.add(new Emporium(this));
-		this.DEFAULTMAINACTION = 1;
 		this.mainActions = DEFAULTMAINACTION;
 		this.extraAction = false;
 		this.isSuspended = false;
@@ -97,7 +96,6 @@ public class Player implements Serializable {
 		this.permissionCard = new ArrayList<>();
 		for (int i = 0; i < config.getInitialEmporiums(); i++)
 			emporium.add(new Emporium(this));
-		this.DEFAULTMAINACTION = 1;
 		this.isSuspended = true;
 	}
 	
@@ -113,6 +111,7 @@ public class Player implements Serializable {
 	 * @param initalVictory
 	 * @param initialNoble
 	 */
+	@Deprecated
 	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
 			int initialNoble, NobilityTrack track, ClientInt client) {
 		this.coins = new Coins(money);
@@ -126,7 +125,6 @@ public class Player implements Serializable {
 			politicCard.add(new PoliticCard(pickedColours));
 		for (int i = 0; i < maxEmp; i++)
 			emporium.add(new Emporium(this));
-		this.DEFAULTMAINACTION = 1;
 		this.mainActions = DEFAULTMAINACTION;
 		this.extraAction = false;
 		this.pickedColours = pickedColours;
@@ -135,8 +133,7 @@ public class Player implements Serializable {
 	}
 
 	public Player getClientCopy() {
-		Player newp = new Player(this);
-		return newp;
+		return new Player(this);
 	}
 
 	/**

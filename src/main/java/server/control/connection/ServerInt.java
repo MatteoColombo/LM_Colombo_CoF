@@ -12,6 +12,7 @@ import server.control.connection.rmi.RMIServerManagerInterface;
  * @author Matteo Colombo
  *
  */
+@FunctionalInterface
 public interface ServerInt extends Remote {
 	
 	/**

@@ -64,7 +64,7 @@ public class RMIClient implements ClientInt {
 		try {
 			String action = answer.get(600, TimeUnit.SECONDS);
 			controller.performAction(this, action);
-		} catch (TimeoutException |  ExecutionException |InterruptedException e) {
+		} catch (TimeoutException | ExecutionException | InterruptedException e) {
 			throw new IOException(e);
 		} finally {
 			executor.shutdown();
@@ -93,7 +93,7 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void close() {
-
+		this.client = null;
 	}
 
 	@Override
@@ -107,11 +107,12 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public boolean isConnected() {
-		/*
-		 * try{ client.testConnection(); return true; }catch(IOExcetion e){
-		 * logger.log(Level.SEVERE, e.getMessage(), e); }
-		 */
-		return true;
+		try {
+			return client.testConnection();
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
+		}
+		return false;
 	}
 
 	@Override
@@ -152,4 +153,5 @@ public class RMIClient implements ClientInt {
 	public void notify(Dialogue dialog) throws IOException {
 		client.sendNotify(dialog);
 	}
+
 }

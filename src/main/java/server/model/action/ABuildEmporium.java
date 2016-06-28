@@ -75,13 +75,11 @@ public class ABuildEmporium extends Action {
 		this.bRewardsManager = bRewardsManager;
 		if (!permissionCard.getCardCity().contains(chosenCity))
 			throw new IllegalActionException("the chosen city is invalid");
-		if (chosenCity.hasEmporiumOfPlayer(player))
-			throw new IllegalActionException("you already have an emporium there");
+		if (chosenCity.hasEmporiumOfPlayer(player) || this.player.getEmporium().isEmpty())
+			throw new IllegalActionException("you can't build an emporium here!");
 		if ((chosenCity.getNumberOfEmporium() > 0)
 				&& (player.getAssistants().getAmount() < chosenCity.getNumberOfEmporium()))
 			throw new IllegalActionException("you can not afford it!");
-		if (this.player.getEmporium().isEmpty())
-			throw new IllegalActionException("you have no emporiums left!");
 		if (permissionCard.getIfCardUsed())
 			throw new IllegalActionException("this card was already used!");
 	}

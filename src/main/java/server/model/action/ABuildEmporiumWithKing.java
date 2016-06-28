@@ -56,7 +56,7 @@ public class ABuildEmporiumWithKing extends Action {
 	private King king;
 	private MapExplorer mx;
 	private int priceForMovement;
-	private final int PRICEPERROUTE = 2;
+	private static final int PRICEPERROUTE = 2;
 	private int priceForTheKingCouncil;
 	private BoardRewardsManager bRewardsManager;
 	private List<City> allMapCities;
@@ -103,12 +103,12 @@ public class ABuildEmporiumWithKing extends Action {
 		int difference = king.getKingCouncil().compareCardCouncil(politicCards);
 		priceForTheKingCouncil = calculatePrice(difference);
 		priceForTheKingCouncil += calculatePriceMultipleColoredCards();
+		
+		if (chosenCity.hasEmporiumOfPlayer(player) || this.player.getEmporium().isEmpty()) {
+			throw new IllegalActionException("you can't build an emporium here!");
+		}
 		if (player.getCoins().getAmount() < priceForTheKingCouncil) {
 			throw new IllegalActionException("you can not afford the king's council price!");
-		}
-
-		if (chosenCity.hasEmporiumOfPlayer(player)) {
-			throw new IllegalActionException("you already have an emporium there");
 		}
 
 		if ((chosenCity.getNumberOfEmporium() > 0)
@@ -118,9 +118,6 @@ public class ABuildEmporiumWithKing extends Action {
 		this.priceForMovement = PRICEPERROUTE * mx.getDistance(king.getKingLocation(), chosenCity);
 		if ((priceForMovement > 0) && (player.getCoins().getAmount() < priceForMovement + priceForTheKingCouncil)) {
 			throw new IllegalActionException("you can not pay the king's travel!");
-		}
-		if (this.player.getEmporium().isEmpty()) {
-			throw new IllegalActionException("you have no emporiums left!");
 		}
 
 	}

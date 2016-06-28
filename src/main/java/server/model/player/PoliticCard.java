@@ -9,7 +9,6 @@ import java.util.Random;
 import server.model.market.Soldable;
 
 /**
- * TODO JavaDoc
  * 
  * @author Davide Cavallini
  *
@@ -67,19 +66,19 @@ public class PoliticCard implements Serializable, Soldable {
 	public boolean equals(Object item) {
 		if (!(item instanceof PoliticCard))
 			return false;
-		if(this.isMultipleColor)
-			if(((PoliticCard)item).isMultipleColor)
+		if (this.isMultipleColor) {
+			if (((PoliticCard) item).isMultipleColor)
 				return true;
-			else 
-				return false;
+			return false;
+		}
 		if (this.color.equals(((PoliticCard) item).getCardColor()))
 			return true;
 		return false;
 	}
-	
+
 	@Override
-	public int hashCode(){
-		if(isMultipleColor)
+	public int hashCode() {
+		if (isMultipleColor)
 			return -1;
 		return color.getRGB();
 	}

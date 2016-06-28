@@ -3,8 +3,6 @@ package server.model.reward;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import client.gui.control.MainApp;
 import server.model.player.Player;
 
 public class BTakePermissionCard extends Bonus{

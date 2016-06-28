@@ -14,8 +14,10 @@ public class RMIServer extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
 	private transient Logger logger=Logger.getGlobal();
+	private long timestampCreation;
 	public RMIServer() throws RemoteException {
 		super();
+		timestampCreation= System.nanoTime();
 	}
 
 	@Override
@@ -27,6 +29,20 @@ public class RMIServer extends UnicastRemoteObject implements ServerInt{
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof RMIServer))
+			return false;
+		if(this.timestampCreation== ((RMIServer)obj).timestampCreation)
+			return true;
+		return false;
+	}
+	
+	@Override 
+	public int hashCode(){
+		return (int)timestampCreation;
 	}
 	
 }

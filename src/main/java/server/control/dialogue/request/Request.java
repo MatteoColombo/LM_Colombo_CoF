@@ -4,6 +4,7 @@ package server.control.dialogue.request;
 import client.control.ViewInterface;
 import server.control.dialogue.Dialogue;
 
+@FunctionalInterface
 public interface Request extends Dialogue {
 	/**
 	 * This is the method which, when called by the client-side controller,

@@ -37,7 +37,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import server.model.market.OnSaleItem;
 import server.model.market.Soldable;
 import server.model.player.Assistants;
 import server.model.player.PermissionCard;

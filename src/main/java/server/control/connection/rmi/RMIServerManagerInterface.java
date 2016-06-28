@@ -27,4 +27,5 @@ public interface RMIServerManagerInterface extends Remote {
 	 */
 	public void sendNotify(Dialogue dialogue) throws RemoteException;
 	
+	public boolean testConnection() throws RemoteException;
 }

@@ -6,7 +6,7 @@ import server.model.Game;
 
 public class InitializationTimeLimitManager extends Thread{
 	private Game startingGame;
-	private final static long WAIT_TIME=20000;
+	private static final long WAIT_TIME=20000;
 	private Logger logger= Logger.getGlobal();
 	
 	public InitializationTimeLimitManager(Game startingGame){

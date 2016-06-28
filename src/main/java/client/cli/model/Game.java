@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import client.cli.view.Cli;
@@ -32,6 +34,7 @@ public class Game implements ModelInterface {
 	private List<Integer> kingAward;
 	private Map<String, Integer> colorReward;
 	private List<String> kingCouncil;
+	private Logger logger= Logger.getGlobal();
 
 	public Game(Cli view) {
 		this.view = view;
@@ -59,8 +62,7 @@ public class Game implements ModelInterface {
 				regions.add(new CliRegion(regions.size(), cities, config.getNumberDisclosedCards()));
 			}
 		} catch (XMLFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "There is an error with the configuration, please fix it!",e);
 		}
 	}
 

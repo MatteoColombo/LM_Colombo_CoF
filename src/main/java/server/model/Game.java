@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import server.control.connection.ClientInt;	
+import server.control.connection.ClientInt;
 import server.control.dialogue.update.NotifyPlayerJoined;
 import server.control.dialogue.update.UpdateEmporiumBuilt;
 import server.model.board.Board;
@@ -113,8 +113,7 @@ public class Game extends Thread {
 	@Override
 	public void run() {
 		boolean someoneWon = false;
-		if (players.size() == 2)
-			configGameForTwo();
+		checkAndConfigGameForTwo();
 		turnManager = new TurnManager(players, config.getColorsList());
 		// This loops is for the regular game
 		while (!someoneWon) {
@@ -127,10 +126,12 @@ public class Game extends Thread {
 					someoneWon = true;
 				}
 			}
-			
-			 if (!someoneWon) { this.market = new Market(players);
-			  this.market.runMarket(); }
-			
+
+			if (!someoneWon) {
+				this.market = new Market(players);
+				this.market.runMarket();
+			}
+
 		}
 		// This loop is for the last round after that a player placed his 10th
 		// emporium
@@ -143,7 +144,9 @@ public class Game extends Thread {
 		publishWinner();
 	}
 
-	private void configGameForTwo() {
+	private void checkAndConfigGameForTwo() {
+		if(players.size()>2)
+			return;
 		Player server = new Player(config);
 		server.setName("_Server_");
 		sendServer(server);

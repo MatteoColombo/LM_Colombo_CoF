@@ -3,7 +3,12 @@ package server.control.dialogue.update;
 import client.model.ModelInterface;
 import server.control.dialogue.Dialogue;
 
+@FunctionalInterface
 public interface Update extends Dialogue{
 
+	/**
+	 * This is the method called when a model update is needed
+	 * @param model it's the model on the client
+	 */
 	public void execute(ModelInterface model);
 }

@@ -4,6 +4,7 @@ import client.model.ModelInterface;
 
 public class NotifyKingLocation implements Update {
 
+	private static final long serialVersionUID = 2653404705987899118L;
 	private String location;
 	
 	public NotifyKingLocation(String location) {

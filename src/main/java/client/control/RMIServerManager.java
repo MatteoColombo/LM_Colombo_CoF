@@ -92,5 +92,10 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 	    return (int)timestampcreation;
 	  }
 
+	@Override
+	public boolean testConnection() throws RemoteException {
+		return true;
+	}
+
 	
 }

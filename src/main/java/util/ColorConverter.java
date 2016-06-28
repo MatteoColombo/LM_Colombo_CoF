@@ -4,6 +4,8 @@ import javafx.scene.paint.Color;
 
 public class ColorConverter {
 	
+	private ColorConverter(){}
+	
 	public static Color awtToFx(java.awt.Color color) {
 		int red = color.getRed();
 		int green = color.getGreen();

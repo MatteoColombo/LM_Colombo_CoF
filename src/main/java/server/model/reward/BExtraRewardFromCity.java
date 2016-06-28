@@ -2,6 +2,8 @@ package server.model.reward;
 
 import java.io.IOException;
 
+import server.model.configuration.Configuration;
+import server.model.configuration.ConfigurationErrorException;
 import server.model.player.Player;
 
 public class BExtraRewardFromCity extends Bonus{
@@ -27,10 +29,15 @@ public class BExtraRewardFromCity extends Bonus{
 	@Override
 	public void assignBonusTo(Player p) {
 		try {
+			Configuration config= new Configuration();
+			if(p.getEmporium().size()== config.getInitialEmporiums())
+				return;
+			if((config.getInitialEmporiums()- p.getEmporium().size())<this.getAmount())
+				p.getClient().askCityToGetNobilityReward(config.getInitialEmporiums()- p.getEmporium().size());
 			p.getClient().askCityToGetNobilityReward(this.getAmount());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException | ConfigurationErrorException e) {
+			//TODO log
+			return;
 		}
 	}
 	

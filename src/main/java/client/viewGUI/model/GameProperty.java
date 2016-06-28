@@ -35,7 +35,7 @@ public class GameProperty implements ModelInterface {
 	private int myIndex;
 	private Configuration config;
 	
-	private ObservableList<ItemProperty> market;
+	private ObservableList<ItemProperty> market = FXCollections.observableArrayList();
 
 	@Override
 	public void initMap(int choosen) {

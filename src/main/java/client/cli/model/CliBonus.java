@@ -1,4 +1,4 @@
-package client.viewCLI.model;
+package client.cli.model;
 
 public class CliBonus {
 	private String name;

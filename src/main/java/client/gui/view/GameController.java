@@ -315,8 +315,8 @@ public class GameController {
 			public void updateItem(PermissionProperty item, boolean empty) {
 				super.updateItem(item, empty);
 				if (empty) {
-					setText(null);
 					setGraphic(null);
+					setText(null);
 				} else {
 					AnchorPane permissionPane = Collection.permissionCard(item);
 					setGraphic(permissionPane);

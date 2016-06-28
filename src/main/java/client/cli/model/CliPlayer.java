@@ -1,4 +1,4 @@
-package client.viewCLI.model;
+package client.cli.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package client.viewCLI.model;
+package client.cli.model;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import client.cli.view.Cli;
 import client.model.ModelInterface;
-import client.viewCLI.view.Cli;
 import server.model.board.Board;
 import server.model.board.Region;
 import server.model.board.city.City;
@@ -180,6 +180,7 @@ public class Game implements ModelInterface {
 		return this.kingCouncil;
 	}
 
+	@Override
 	public void buildEmporium(String city, String name) {
 		for (CliRegion region : regions)
 			for (CliCity c : region.getCities())

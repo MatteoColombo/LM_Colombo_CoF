@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import server.control.dialogue.Dialogue;
 
 public class SocketServerManager extends Thread implements ServerManager {
-	private transient Controller controller;
+	private 	Controller controller;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private Logger logger= Logger.getGlobal();

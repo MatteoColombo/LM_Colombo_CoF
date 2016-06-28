@@ -1,4 +1,4 @@
-package client.viewCLI.control;
+package client.cli.control;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -8,12 +8,12 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import client.cli.model.Game;
+import client.cli.view.Cli;
 import client.control.Controller;
 import client.control.RMIServerManager;
 import client.control.ServerManager;
 import client.control.SocketServerManager;
-import client.viewCLI.model.Game;
-import client.viewCLI.view.Cli;
 import server.control.connection.ServerInt;
 import server.control.dialogue.Dialogue;
 import server.control.dialogue.notify.Notify;
@@ -23,16 +23,14 @@ import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 
 public class CliController implements Runnable, Controller {
-
-	private static final long serialVersionUID = -1895721638081527089L;
-	private transient Scanner keyboard;
-	private transient Cli view;
-	private transient ServerManager serverManager;
-	private transient KeyboardListener keyboardListener;
-	private transient boolean canWrite;
-	private transient Logger logger = Logger.getGlobal();
-	private transient Game model;
-	private transient Configuration config;
+	private Scanner keyboard;
+	private Cli view;
+	private ServerManager serverManager;
+	private KeyboardListener keyboardListener;
+	private boolean canWrite;
+	private Logger logger = Logger.getGlobal();
+	private Game model;
+	private Configuration config;
 	public CliController(Scanner sc) {
 		try {
 			config= new Configuration();

@@ -64,7 +64,7 @@ public class RMIClient implements ClientInt {
 		try {
 			String action = answer.get(600, TimeUnit.SECONDS);
 			controller.performAction(this, action);
-		} catch (TimeoutException | InterruptedException | ExecutionException e) {
+		} catch (TimeoutException |  ExecutionException |InterruptedException e) {
 			throw new IOException(e);
 		} finally {
 			executor.shutdown();

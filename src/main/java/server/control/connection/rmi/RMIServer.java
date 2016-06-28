@@ -3,6 +3,8 @@ package server.control.connection.rmi;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import server.Server;
 import server.control.connection.ClientInt;
@@ -11,7 +13,7 @@ import server.control.connection.ServerInt;
 public class RMIServer extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
-
+	private transient Logger logger=Logger.getGlobal();
 	public RMIServer() throws RemoteException {
 		super();
 	}
@@ -23,8 +25,7 @@ public class RMIServer extends UnicastRemoteObject implements ServerInt{
 			rmiclient.askPlayerName();
 			Server.login(rmiclient);		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 	

@@ -1,17 +1,17 @@
-package client.viewCLI.view;
+package client.cli.view;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import client.cli.model.CliBonus;
+import client.cli.model.CliCity;
+import client.cli.model.CliPermission;
+import client.cli.model.CliPlayer;
+import client.cli.model.CliRegion;
+import client.cli.model.Game;
 import client.control.ViewInterface;
-import client.viewCLI.model.CliBonus;
-import client.viewCLI.model.CliCity;
-import client.viewCLI.model.CliPermission;
-import client.viewCLI.model.CliPlayer;
-import client.viewCLI.model.CliRegion;
-import client.viewCLI.model.Game;
 import server.model.configuration.Configuration;
 
 public class Cli implements ViewInterface {

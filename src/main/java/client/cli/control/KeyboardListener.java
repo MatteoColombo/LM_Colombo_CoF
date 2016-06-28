@@ -1,4 +1,4 @@
-package client.viewCLI.control;
+package client.cli.control;
 
 import java.util.Scanner;
 

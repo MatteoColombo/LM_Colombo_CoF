@@ -1,12 +1,17 @@
 package server.model.reward;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 import server.model.player.Player;
 
 public class BExtraRewardFromCity extends Bonus{
+	
+	private static final Logger log= Logger.getLogger( BExtraRewardFromCity.class.getName() );
+
 	
 	private static final long serialVersionUID = 6171860243613906131L;
 	// not really useful here, it may be removed in the future
@@ -36,8 +41,7 @@ public class BExtraRewardFromCity extends Bonus{
 				p.getClient().askCityToGetNobilityReward(config.getInitialEmporiums()- p.getEmporium().size());
 			p.getClient().askCityToGetNobilityReward(this.getAmount());
 		} catch (IOException | ConfigurationErrorException e) {
-			//TODO log
-			return;
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 	

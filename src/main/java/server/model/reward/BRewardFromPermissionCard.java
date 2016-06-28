@@ -1,10 +1,15 @@
 package server.model.reward;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import client.gui.control.MainApp;
 import server.model.player.Player;
 
 public class BRewardFromPermissionCard extends Bonus {
+	
+	private static final Logger log= Logger.getLogger( BRewardFromPermissionCard.class.getName() );
 	
 	private static final long serialVersionUID = 7090121575021199364L;
 	// not really useful here, it may be removed in the future
@@ -29,8 +34,7 @@ public class BRewardFromPermissionCard extends Bonus {
 		try {
 			p.getClient().askSelectRewardOfPermissionCard();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 	

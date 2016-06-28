@@ -1,27 +1,22 @@
-package client.viewGUI.view;
+package client.gui.view;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import client.model.*;
-import client.viewGUI.control.MainApp;
-import client.viewGUI.model.CouncilProperty;
-import client.viewGUI.model.PermissionProperty;
-import client.viewGUI.model.PlayerProperty;
-import client.viewGUI.model.SimpleBonus;
-import client.viewGUI.model.SimpleCity;
-import client.viewGUI.model.ItemProperty;
-import client.viewGUI.model.SimpleNobilityCell;
-import client.viewGUI.model.SimpleRegion;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.IntegerBinding;
+import client.gui.control.MainApp;
+import client.gui.model.CouncilProperty;
+import client.gui.model.ItemProperty;
+import client.gui.model.PermissionProperty;
+import client.gui.model.PlayerProperty;
+import client.gui.model.SimpleBonus;
+import client.gui.model.SimpleCity;
+import client.gui.model.SimpleNobilityCell;
+import client.gui.model.SimpleRegion;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -50,7 +45,7 @@ import server.model.player.PoliticCard;
 import util.ColorConverter;
 
 public class GameController {
-
+	
 	private static final int NOBILITY_START_X = 26;
 	private static final int NOBILITY_START_Y = 775;
 	private static final int NOBILITY_HEIGHT = 60;
@@ -152,7 +147,6 @@ public class GameController {
 	
 	public void changeStatus(String newStatus) {
 		gameStatus = newStatus;
-		System.out.println(gameStatus);
 	}
 	
 	public void logMsg(String msg) {
@@ -170,9 +164,7 @@ public class GameController {
 		priceColumn.setCellValueFactory(cell -> cell.getValue().price().asString());
 		
 		itemsTable.getSelectionModel().selectedItemProperty().addListener(
-	            (observable, oldValue, newValue) -> {
-	            	showItemDetails(newValue);
-	            });
+	            (observable, oldValue, newValue) -> showItemDetails(newValue));
 	}
 
 	public void setAll(MainApp mainApp) {

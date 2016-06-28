@@ -1,13 +1,15 @@
-package client.viewGUI.view;
+package client.gui.view;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import client.viewGUI.control.MainApp;
-import client.viewGUI.model.CouncilProperty;
-import client.viewGUI.model.PermissionProperty;
-import client.viewGUI.model.PlayerProperty;
-import client.viewGUI.model.SimpleBonus;
-import client.viewGUI.model.SimpleCity;
+import client.gui.control.MainApp;
+import client.gui.model.CouncilProperty;
+import client.gui.model.PermissionProperty;
+import client.gui.model.PlayerProperty;
+import client.gui.model.SimpleBonus;
+import client.gui.model.SimpleCity;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
 import javafx.collections.ListChangeListener;
@@ -28,6 +30,12 @@ import javafx.scene.shape.Rectangle;
 
 public class Collection {
 	
+	private static final Logger log= Logger.getLogger( Collection.class.getName() );
+	
+	private Collection() {
+		// hidden
+	}
+	
 	public static AnchorPane permissionCard(PermissionProperty pp) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -45,7 +53,6 @@ public class Collection {
 				ColorAdjust grayscale = new ColorAdjust();
 				grayscale.setSaturation(-1);
 				permissionPane.setEffect(grayscale);
-				//this.disableProperty().set(true);
 			}
 			
 			pp.getBonuses().addListener((ListChangeListener.Change<? extends SimpleBonus> c) -> {
@@ -53,21 +60,15 @@ public class Collection {
 				// since the amount of bonus in the box may change
 				// from card to card
 				bonusBox.getChildren().clear();
-				for (SimpleBonus sb : c.getList()) {
-					try {			
-						bonusBox.getChildren().add(Collection.bonus(sb));
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				for (SimpleBonus sb : c.getList()) {		
+					bonusBox.getChildren().add(Collection.bonus(sb));
 				}
 			});
 			// this is the real return
 			return permissionPane;
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 		// just cause without won't compile
 		return null;
@@ -88,8 +89,7 @@ public class Collection {
 			amountLabel.setText(String.valueOf(sb.getAmount()));
 			return bonusPane;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 		return null;
 	}
@@ -132,8 +132,7 @@ public class Collection {
 	
 			return cityPane;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 		return null;
 	}
@@ -162,8 +161,8 @@ public class Collection {
 			((Labeled) pane.lookup("#politicLabel")).textProperty().bind(politicSizeProperty.asString());
 			return pane;
 		} catch (IOException e) {
-			// TODO log
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
+
 		}
 		return null;
 	}

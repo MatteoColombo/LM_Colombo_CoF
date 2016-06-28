@@ -1,8 +1,10 @@
-package client.viewGUI.model;
+package client.gui.model;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import client.model.ModelInterface;
 import javafx.collections.FXCollections;
@@ -13,21 +15,21 @@ import server.model.board.council.Council;
 import server.model.configuration.Configuration;
 import server.model.configuration.XMLFileException;
 import server.model.market.OnSaleItem;
-import server.model.player.Assistants;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
-import server.model.player.PoliticCard;
 import server.model.reward.BVictoryPoints;
 import server.model.reward.BoardColorReward;
 import server.model.reward.BoardRegionReward;
 import server.model.reward.Reward;
 
 public class GameProperty implements ModelInterface {
+	
+	private static final Logger log= Logger.getLogger( GameProperty.class.getName() );
 	/**
 	 * This is the list of the available colors for each game. 
 	 * Each player have a color assigned to himself to distinguish from the others.
 	 */
-	private static List<Color> playersColors = new LinkedList<Color>(Arrays.asList(Color.ROYALBLUE, Color.CRIMSON, Color.GREEN,  Color.YELLOW,
+	private static List<Color> playersColors = new LinkedList<>(Arrays.asList(Color.ROYALBLUE, Color.CRIMSON, Color.GREEN,  Color.YELLOW,
 			Color.PURPLE, Color.WHITE, Color.ORANGE, Color.GRAY, Color.AQUA, Color.BROWN));
 
 	private ObservableList<PlayerProperty> players = FXCollections.observableArrayList();
@@ -43,10 +45,8 @@ public class GameProperty implements ModelInterface {
 			Board b = new Board(config, choosen);
 			this.map = new SimpleMap(b);
 		} catch (XMLFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
-		// TODO call the garbage collector
 	}
 
 	public PlayerProperty getMyPlayerData() {

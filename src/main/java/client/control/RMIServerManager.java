@@ -14,7 +14,7 @@ import server.control.dialogue.Dialogue;
 public class RMIServerManager extends UnicastRemoteObject implements RMIServerManagerInterface, ServerManager {
 
 	private static final long serialVersionUID = 2758599266722476388L;
-	private Controller controller;
+	private transient Controller controller;
 	private List<String> queue;
 	private transient Logger logger = Logger.getGlobal();
 

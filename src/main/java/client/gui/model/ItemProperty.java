@@ -1,6 +1,4 @@
-package client.viewGUI.model;
-
-import java.awt.Color;
+package client.gui.model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

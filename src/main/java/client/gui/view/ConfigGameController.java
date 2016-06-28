@@ -1,9 +1,9 @@
-package client.viewGUI.view;
+package client.gui.view;
 
 import java.io.IOException;
 import java.util.List;
 
-import client.viewGUI.control.MainApp;
+import client.gui.control.MainApp;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -41,11 +41,13 @@ public class ConfigGameController {
 		// TODO add listener for changes in map table selections
 	}
 	
-	@FXML private void initialize() {
+	@FXML 
+	private void initialize() {
 		mapColumn.setCellValueFactory(cell -> cell.getValue());
 	}
 	
-	@FXML private void handlePlay() throws IOException, ConfigurationErrorException, XMLFileException {
+	@FXML 
+	private void handlePlay() throws IOException, ConfigurationErrorException, XMLFileException {
 		if(playersNumber.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
@@ -68,7 +70,8 @@ public class ConfigGameController {
 		}
 	}
 	
-	@FXML private void handleAdd() {
+	@FXML 
+	private void handleAdd() {
 		this.mapList.add(0, new SimpleStringProperty("pluto"));
 	}
 

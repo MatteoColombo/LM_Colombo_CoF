@@ -1,10 +1,8 @@
-package client.viewGUI.view;
+package client.gui.view;
 
-import client.viewGUI.control.MainApp;
-import client.viewGUI.model.PermissionProperty;
-import client.viewGUI.model.PlayerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import client.gui.control.MainApp;
+import client.gui.model.PermissionProperty;
+import client.gui.model.PlayerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -73,8 +71,7 @@ public class MarketController {
 	public void initPoliticList() {
 		politicList.setItems(myData.getPoliticCards());
 		
-		politicList.setCellFactory(column -> {
-			return new ListCell<String>() {
+		politicList.setCellFactory(listView -> new ListCell<String>() {
 				@Override
 				protected void updateItem(String item, boolean empty) {
 					super.updateItem(item, empty);
@@ -94,8 +91,8 @@ public class MarketController {
 						event.consume();
 					});
 				}
-			};
-		});
+			}
+		);
 	}
 	
 	public void initPermissionList() {
@@ -146,12 +143,10 @@ public class MarketController {
 			event.consume();
 		});
 		
-		marketImage.setOnDragExited(event -> {
-			marketImage.setEffect(null);
-		});
+		marketImage.setOnDragExited(event -> marketImage.setEffect(null));
 		
 		marketImage.setOnDragDropped(event -> {
-			if(priceField.getText().equals("")) {
+			if("".equals(priceField.getText())) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.initOwner(mainApp.getPrimaryStage());
 				alert.setTitle("MISSING PRICE");
@@ -169,8 +164,6 @@ public class MarketController {
 	}
 	
 	private void setExit() {
-		dialogStage.setOnCloseRequest(event -> {
-			mainApp.sendMsg("end");
-		});
+		dialogStage.setOnCloseRequest(event -> mainApp.sendMsg("end"));
 	}
 }

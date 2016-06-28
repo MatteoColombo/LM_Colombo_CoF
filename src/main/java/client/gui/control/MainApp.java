@@ -1,4 +1,4 @@
-package client.viewGUI.control;
+package client.gui.control;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -6,18 +6,20 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import client.viewGUI.model.GameProperty;
-import client.viewGUI.view.ConfigGameController;
-import client.viewGUI.view.GameController;
-import client.viewGUI.view.LoginController;
-import client.viewGUI.view.MarketController;
-import client.viewGUI.view.RoomController;
 import client.control.Controller;
 import client.control.RMIServerManager;
 import client.control.ServerManager;
 import client.control.SocketServerManager;
 import client.control.ViewInterface;
+import client.gui.model.GameProperty;
+import client.gui.view.ConfigGameController;
+import client.gui.view.GameController;
+import client.gui.view.LoginController;
+import client.gui.view.MarketController;
+import client.gui.view.RoomController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +39,8 @@ import server.model.configuration.ConfigurationErrorException;
 
 public class MainApp extends Application implements ViewInterface, Runnable, Controller {
 
-	private static final long serialVersionUID = 8173423470055513329L;
+	private static final Logger log= Logger.getLogger( MainApp.class.getName() );
+	
 	private String myName;
 	private GameProperty localGame = new GameProperty();
 	private Stage primaryStage;
@@ -78,7 +81,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			RoomController roomController = loader.getController();
 			roomController.setMainApp(this);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 
@@ -95,7 +98,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			loginController.setMainApp(this);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 
@@ -118,7 +121,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			config.setMapList(maps);
 
 		} catch (IOException | ConfigurationErrorException e) {
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 
@@ -136,7 +139,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			roomController.setMainApp(this);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 
@@ -154,7 +157,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			gameController.setAll(this);
 			localGame.yourTurnEnded();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 	
@@ -181,8 +184,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 
@@ -198,26 +200,21 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		try {
 			manager.publishMessage(msg);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 
 	public void initSocketManager() {
 		try {
 			localGame.setConfiguration(new Configuration());
-			SocketServerManager manager = new SocketServerManager(
+			SocketServerManager socketManager = new SocketServerManager(
 					new Socket(localGame.getConfiguration().getServerAddress(),
 							localGame.getConfiguration().getSocketPort()),
 					this);
-			this.manager = manager;
-			manager.start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ConfigurationErrorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			manager = socketManager;
+			socketManager.start();
+		} catch (IOException | ConfigurationErrorException e) {
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 
@@ -226,15 +223,11 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			localGame.setConfiguration(new Configuration());
 			ServerInt server = (ServerInt) LocateRegistry.getRegistry(localGame.getConfiguration().getServerAddress(),
 					localGame.getConfiguration().getRmiPort()).lookup("ServerInt");
-			RMIServerManager manager = new RMIServerManager(this);
-			this.manager = manager;
-			new RMIUtilityClass(manager, server).start();
-		} catch (RemoteException | NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ConfigurationErrorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			RMIServerManager rmiManager = new RMIServerManager(this);
+			manager = rmiManager;
+			new RMIUtilityClass(rmiManager, server).start();
+		} catch (RemoteException | NotBoundException | ConfigurationErrorException e) {
+			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
 
@@ -246,13 +239,13 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			this.server = server;
 			this.manager = manager;
 		}
-
+		
+		@Override
 		public void run() {
 			try {
 				server.login(manager);
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.log( Level.SEVERE, e.toString(), e );
 			}
 		}
 	}
@@ -262,6 +255,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	 */
 	@Override
 	public void printAskWhichMapToUse() {
+		// not used
 	}
 
 	@Override

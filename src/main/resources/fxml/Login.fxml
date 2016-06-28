@@ -25,7 +25,7 @@
                   <Insets left="60.0" />
                </GridPane.margin>
             </RadioButton>
-            <Button mnemonicParsing="false" onAction="#HandleConnect" text="connect" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#handleConnect" text="connect" GridPane.rowIndex="2" />
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="129.0" />

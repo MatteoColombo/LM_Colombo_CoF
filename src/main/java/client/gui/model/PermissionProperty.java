@@ -1,4 +1,4 @@
-package client.viewGUI.model;
+package client.gui.model;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

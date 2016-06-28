@@ -1,8 +1,8 @@
-package client.viewGUI.view;
+package client.gui.view;
 
 import java.io.IOException;
 
-import client.viewGUI.control.MainApp;
+import client.gui.control.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -25,7 +25,7 @@ public class LoginController {
 	}
 
 	@FXML
-	private void HandleConnect() throws IOException {
+	private void handleConnect() throws IOException {
 		if(nameField.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());

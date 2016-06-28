@@ -1,4 +1,4 @@
-package client.viewGUI.model;
+package client.gui.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +46,7 @@ public class CouncilProperty {
 	
 	public void set(Council council) {
 		for(int i = 0; i < councilorsColors.size(); i++) {
-			String newHexColor = ColorConverter.awtToWeb((council.getCouncilorsColor().get(i)));
+			String newHexColor = ColorConverter.awtToWeb(council.getCouncilorsColor().get(i));
 			councilorsColors.get(i).set(newHexColor);
 		}
 	}

@@ -1,4 +1,4 @@
-package client.viewGUI.model;
+package client.gui.model;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package client.viewGUI.model;
+package client.gui.model;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import server.model.board.council.Council;
 import server.model.reward.BVictoryPoints;
 import server.model.reward.BoardColorReward;
 import server.model.reward.BoardRegionReward;
-import server.model.reward.Bonus;
 import server.model.reward.Reward;
 import util.ColorConverter;
 
@@ -24,8 +23,6 @@ public class SimpleMap {
 	private CouncilProperty kingCouncil;
 
 	private Map<String, IntegerProperty> colorBonuses;
-
-	private List<Integer> kingBonuses;
 	/**
 	 * represent the current bonus visualized on the map
 	 */
@@ -59,13 +56,9 @@ public class SimpleMap {
 			colorBonuses.put(hex, value);
 		}
 
-		kingBonuses = new ArrayList<>();
-		for (Bonus br : board.getBoardRewardsManager().getRemainingBoardKingRewards()) {
-			kingBonuses.add(br.getAmount());
-		}
 
 		kingBonus = new SimpleIntegerProperty();
-		kingBonus.set(kingBonuses.remove(0));
+		kingBonus.set(board.getBoardRewardsManager().getRemainingBoardKingRewards().get(0).getAmount());
 
 		nobilityTrack = new ArrayList<>(board.getNobleTrack().getMaxPoint());
 		for (Reward r : board.getNobleTrack().getTrack()) {
@@ -122,12 +115,6 @@ public class SimpleMap {
 			kingCouncil.set(c);
 		} else {
 			regions.get(number).getCouncil().set(c);
-		}
-	}
-
-	public void setNextKingBonus() {
-		if (kingBonuses.size() > 0) {
-			kingBonus.set(kingBonuses.remove(0));
 		}
 	}
 

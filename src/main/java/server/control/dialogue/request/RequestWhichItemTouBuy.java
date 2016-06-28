@@ -3,8 +3,8 @@ package server.control.dialogue.request;
 import java.util.List;
 
 import client.control.ViewInterface;
+import client.gui.model.GameProperty;
 import client.model.ModelInterface;
-import client.viewGUI.model.GameProperty;
 import server.control.dialogue.update.Update;
 import server.model.market.OnSaleItem;
 

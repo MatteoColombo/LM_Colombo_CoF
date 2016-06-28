@@ -20,4 +20,5 @@ public interface ViewInterface {
 	
 	public void changeStatusToNobilityBonus(String message, String status);
 
+	public void showMarket();
 }

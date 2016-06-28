@@ -221,4 +221,10 @@ public class Cli implements ViewInterface {
 		writer.flush();
 	}
 
+	@Override
+	public void showMarket() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

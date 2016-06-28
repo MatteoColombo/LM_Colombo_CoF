@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import server.control.connection.ClientInt;
-import server.control.dialogue.notify.NotifyGameStarted;
+import server.control.connection.ClientInt;	
 import server.control.dialogue.update.NotifyPlayerJoined;
 import server.control.dialogue.update.UpdateEmporiumBuilt;
 import server.model.board.Board;
@@ -17,7 +16,6 @@ import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 import server.model.configuration.XMLFileException;
 import server.model.market.Market;
-import server.model.player.Emporium;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
 
@@ -129,10 +127,10 @@ public class Game extends Thread {
 					someoneWon = true;
 				}
 			}
-			/*
+			
 			 if (!someoneWon) { this.market = new Market(players);
 			  this.market.runMarket(); }
-			 */
+			
 		}
 		// This loop is for the last round after that a player placed his 10th
 		// emporium

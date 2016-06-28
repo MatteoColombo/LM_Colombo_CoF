@@ -101,7 +101,7 @@
                <children>
                   <Button fx:id="buyButton" disable="true" layoutY="128.0" mnemonicParsing="false" onAction="#handleBuy" text="BUY" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                   <Pane fx:id="itemPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0" />
-                  <Button fx:id="endBuyButton" disable="true" layoutX="40.0" layoutY="159.0" mnemonicParsing="false" onAction="#handleEndBuying" text="PASS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Button fx:id="endBuyButton" disable="true" layoutX="40.0" layoutY="159.0" mnemonicParsing="false" onAction="#handleEndBuy" text="PASS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children></AnchorPane>
             <TableView fx:id="itemsTable" layoutX="43.0" layoutY="-8.0" prefHeight="170.0" prefWidth="244.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>

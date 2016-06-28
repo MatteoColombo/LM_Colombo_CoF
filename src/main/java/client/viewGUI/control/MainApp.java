@@ -174,8 +174,8 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
             // Set the person into the controller.
             MarketController controller = loader.getController();
-            controller.setAll(this);
             controller.setDialogStage(dialogStage);
+            controller.setAll(this);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();

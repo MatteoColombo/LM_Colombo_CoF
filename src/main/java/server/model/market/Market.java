@@ -32,13 +32,10 @@ public class Market {
 
 	public void runMarket() {
 		startSellingTurns();
-		System.out.println("finito di vendere");
 		if (!itemsOnSale.isEmpty())
 			startBuyingTurns();
-		System.out.println("finito di comprare");
 		for (OnSaleItem item : itemsOnSale)
 			giveToplayer(item, item.getOwner());
-		System.out.println("restituisco!");
 		itemsOnSale.clear();
 	}
 

@@ -160,9 +160,21 @@ public class GameController {
 	}
 	
 	public void launchMarketSell() {
-		
+		mainApp.showMarket();
 	}
 	
+	public void launchMarketBuy() {
+		endBuyButton.setDisable(false);
+		itemsTable.setItems(mainApp.getLocalModel().getMarket());
+		ownerColumn.setCellValueFactory(cell -> cell.getValue().owner());
+		priceColumn.setCellValueFactory(cell -> cell.getValue().price().asString());
+		
+		itemsTable.getSelectionModel().selectedItemProperty().addListener(
+	            (observable, oldValue, newValue) -> {
+	            	showItemDetails(newValue);
+	            });
+	}
+
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
 		this.myData = mainApp.getLocalModel().getMyPlayerData();
@@ -764,18 +776,6 @@ public class GameController {
 				}
 			});
 		}
-	}
-	
-	public void initMarketBuy() {
-		endBuyButton.setDisable(false);
-		itemsTable.setItems(mainApp.getLocalModel().getMarket());
-		ownerColumn.setCellValueFactory(cell -> cell.getValue().owner());
-		priceColumn.setCellValueFactory(cell -> cell.getValue().price().asString());
-		
-		itemsTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                	showItemDetails(newValue);
-                });
 	}
 	
 	private void showItemDetails(ItemProperty item) {

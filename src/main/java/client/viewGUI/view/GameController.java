@@ -783,10 +783,12 @@ public class GameController {
 			
 			Image assistantImage = new Image(MainApp.class.getResource("/simboli/assistants.png").toString());
 			ImageView assistant = new ImageView(assistantImage);
+			assistant.fitWidthProperty().set(40);
+			assistant.preserveRatioProperty().set(true);
 			itemPane.getChildren().add(assistant);
 			
 			Label amount = new Label();
-			amount.setText(String.valueOf(((Assistants) itemOnSale).getAmount()));
+			amount.setText("x" + String.valueOf(((Assistants) itemOnSale).getAmount()));
 			itemPane.getChildren().add(amount);
 			
 		} else if(itemOnSale instanceof PoliticCard) {
@@ -795,6 +797,7 @@ public class GameController {
 			Image politicCardImage = new Image(PlayerProperty.getPoliticCardsImages().get(politicColor));
 			ImageView politicCard = new ImageView(politicCardImage);
 			politicCard.fitWidthProperty().set(100);
+			politicCard.preserveRatioProperty().set(true);
 			itemPane.getChildren().add(politicCard);
 			
 		} else if(itemOnSale instanceof PermissionCard) {

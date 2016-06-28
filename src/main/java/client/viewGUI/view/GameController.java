@@ -163,7 +163,7 @@ public class GameController {
 		mainApp.showMarket();
 	}
 	
-	public void launchMarketBuy() {
+	private void initMarketBuy() {
 		endBuyButton.setDisable(false);
 		itemsTable.setItems(mainApp.getLocalModel().getMarket());
 		ownerColumn.setCellValueFactory(cell -> cell.getValue().owner());
@@ -190,6 +190,7 @@ public class GameController {
 		initNobility();
 		initPermissions();
 		initCouncilorPool();
+		initMarketBuy();
 	}
 
 	@FXML
@@ -818,8 +819,6 @@ public class GameController {
 	
 	@FXML
 	private void handleEndBuy() {
-		mainApp.sendMsg("");
+		mainApp.sendMsg("end");
 	}
-	
-	
 }

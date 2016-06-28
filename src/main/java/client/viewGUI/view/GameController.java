@@ -327,13 +327,6 @@ public class GameController {
 					setGraphic(null);
 				} else {
 					AnchorPane permissionPane = Collection.permissionCard(item);
-					
-					if(item.used().get()) {
-						ColorAdjust grayscale = new ColorAdjust();
-						grayscale.setSaturation(-1);
-						permissionPane.setEffect(grayscale);
-						//this.disableProperty().set(true);
-					}
 					setGraphic(permissionPane);
 				}
 

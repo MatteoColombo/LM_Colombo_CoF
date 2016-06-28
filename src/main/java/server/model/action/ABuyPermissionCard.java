@@ -85,6 +85,21 @@ public class ABuyPermissionCard extends Action {
 	}
 
 	/**
+	 * Calculates the extra money that have to be paid because of multiple
+	 * colored cards.
+	 * 
+	 * @return the extra price
+	 * @see ABuyPermissionCard
+	 */
+	private int calculatePriceMultipleColoredCards() {
+		int multipCards = 0;
+		for (PoliticCard card : politicCards)
+			if (card.isMultipleColor())
+				multipCards++;
+		return multipCards;
+	}
+	
+	/**
 	 * Calculates the money that can be paid instead of cards.
 	 * 
 	 * @param difference
@@ -99,18 +114,5 @@ public class ABuyPermissionCard extends Action {
 		return difference * 3 + 1;
 	}
 
-	/**
-	 * Calculates the extra money that have to be paid because of multiple
-	 * colored cards.
-	 * 
-	 * @return the extra price
-	 * @see ABuyPermissionCard
-	 */
-	private int calculatePriceMultipleColoredCards() {
-		int multipCards = 0;
-		for (PoliticCard card : politicCards)
-			if (card.isMultipleColor())
-				multipCards++;
-		return multipCards;
-	}
+	
 }

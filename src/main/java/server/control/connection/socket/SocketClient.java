@@ -52,7 +52,6 @@ public class SocketClient implements ClientInt {
 		this.outputStream = clientSocket.getOutputStream();
 		this.out = new ObjectOutputStream(outputStream);
 		this.in = new ObjectInputStream(inputStream);
-		// this.clientSocket.setSoTimeout(60000);
 	}
 
 	@Override
@@ -68,6 +67,11 @@ public class SocketClient implements ClientInt {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
+	
+	@Override
+	public String getName() {
+		return clientName;
+	}
 
 	@Override
 	public void setController(Controller controller) {
@@ -80,6 +84,7 @@ public class SocketClient implements ClientInt {
 		out.writeObject(new RequestWhatActionToDo());
 		out.flush();
 		Future<String> answer = executor.submit(new Callable<String>() {
+			@Override
 			public String call() throws ClassNotFoundException, IOException {
 				String choosenAction;
 				choosenAction = (String) in.readObject();
@@ -94,11 +99,6 @@ public class SocketClient implements ClientInt {
 		} finally {
 			executor.shutdown();
 		}
-	}
-
-	@Override
-	public String getName() {
-		return clientName;
 	}
 
 	@Override

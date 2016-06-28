@@ -95,17 +95,17 @@ public class Controller {
 			if (index < 0 || price < 0)
 				throw new IllegalActionException("Wrong parameters");
 			switch (object) {
-			case "permit":
+			case "permission":
 				if (playersMap.get(client).getPermissionCard().size() < index)
 					throw new IllegalActionException("You dont have enough assistants");
-				if (playersMap.get(client).getPermissionCard().get(index).getIfCardUsed())
+				if (playersMap.get(client).getPermissionCard().get(index-1).getIfCardUsed())
 					throw new IllegalActionException("Card is already used, can't be sold");
-				itemOnSale = playersMap.get(client).getPermissionCard().remove(index);
+				itemOnSale = playersMap.get(client).getPermissionCard().remove(index-1);
 				break;
 			case "politic":
 				if (playersMap.get(client).getPoliticCard().size() < index)
 					throw new IllegalActionException("You dont have enough assistants");
-				itemOnSale = playersMap.get(client).getPoliticCard().remove(index);
+				itemOnSale = playersMap.get(client).getPoliticCard().remove(index-1);
 				break;
 			case "assistant":
 				if (playersMap.get(client).getAssistants().getAmount() < index)

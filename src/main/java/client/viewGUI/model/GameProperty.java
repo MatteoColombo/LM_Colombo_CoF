@@ -70,6 +70,7 @@ public class GameProperty implements ModelInterface {
 	public void isYourTurn() {
 		players.get(myIndex).canNotDoMainAction().set(false);
 		players.get(myIndex).canNotDoSideAction().set(false);
+		market.clear();
 	}
 
 	@Override

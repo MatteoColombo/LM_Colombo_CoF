@@ -32,7 +32,6 @@ public class Market {
 
 	public void runMarket() {
 		startSellingTurns();
-		System.out.println("finished selling");
 		if (!itemsOnSale.isEmpty())
 			startBuyingTurns();
 		for (OnSaleItem item : itemsOnSale)

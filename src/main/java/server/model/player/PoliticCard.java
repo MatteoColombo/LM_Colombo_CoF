@@ -15,13 +15,14 @@ import server.model.market.Soldable;
  */
 public class PoliticCard implements Serializable, Soldable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3808938190487455501L;
 	private Color color;
 	private boolean isMultipleColor;
 
+	/**
+	 * This is the constructor which generates a copy of another card
+	 * @param color
+	 */
 	public PoliticCard(Color color) {
 		if (color != null) {
 			this.color = color;
@@ -32,8 +33,9 @@ public class PoliticCard implements Serializable, Soldable {
 	}
 
 	/**
-	 * 
-	 * @param possibleColors
+	 * This is the constructor which generates a new politic card
+	 * in case of multiple colored card, the color is set null 
+	 * @param possibleColors the list of the possible colors 
 	 */
 	public PoliticCard(List<Color> possibleColors) {
 		Random r = new Random();
@@ -48,7 +50,7 @@ public class PoliticCard implements Serializable, Soldable {
 
 	/**
 	 * 
-	 * @return
+	 * @return true if it's multiple color, false otherwise
 	 */
 	public boolean isMultipleColor() {
 		return this.isMultipleColor;
@@ -56,7 +58,7 @@ public class PoliticCard implements Serializable, Soldable {
 
 	/**
 	 * 
-	 * @return
+	 * @return the Color of the card, it's null if it's multiplecolored
 	 */
 	public Color getCardColor() {
 		return this.color;

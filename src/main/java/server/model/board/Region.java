@@ -44,16 +44,6 @@ public class Region {
 	private PermissionCard[] permissionCards;
 
 	/**
-	 * Initializes the default number of uncovered {@link PermissionCard
-	 * PermissionCards} for this Region
-	 * 
-	 * @see Region
-	 */
-	public Region() {
-		this.NUM_CARDS = 2;
-	}
-
-	/**
 	 * Initializes the permission cards, it receives the parameters
 	 * 
 	 * @param regionName

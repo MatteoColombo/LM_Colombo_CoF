@@ -150,6 +150,8 @@ public class GameController {
 	private Button buyButton;
 	@FXML
 	private Button endBuyButton;
+	@FXML
+	private Button muteButton;
 
 	@FXML
 	private TextArea logger;
@@ -171,6 +173,17 @@ public class GameController {
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		mediaPlayer.play();
+	}
+
+	@FXML
+	private void handleMute() {
+		if(mediaPlayer.isMute()) {
+			mediaPlayer.setMute(false);
+			muteButton.setText("MUTE");
+		} else {
+			mediaPlayer.setMute(true);
+			muteButton.setText("UNMUTE");
+		}
 	}
 	
 	/**

@@ -17,7 +17,7 @@
             <AnchorPane prefHeight="186.0" prefWidth="167.0">
                <children>
                   <Rectangle fx:id="myColor" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="64.0" layoutX="13.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="128.0" AnchorPane.topAnchor="0.0" />
-                  <Button layoutX="14.0" layoutY="150.0" mnemonicParsing="false" text="Disconnect" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
+                  <Button fx:id="muteButton" layoutX="14.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleMute" text="Mute" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
                   <Label fx:id="nameLabel" layoutX="25.0" layoutY="14.0" text="PLAYER" />
                   <Button layoutX="14.0" layoutY="68.0" mnemonicParsing="false" onAction="#handlePass" prefHeight="44.0" prefWidth="129.0" text="PASS">
                      <font>

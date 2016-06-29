@@ -86,7 +86,7 @@ public class TestGUIModel {
 	
 	@Test
 	public void testPlayerProperty() {
-		Player p1 = new Player(config);
+		Player p1 = new Player(config,null);
 		p1.setName("ciccio");
 
 		game.setAllPlayers(Arrays.asList(p1));

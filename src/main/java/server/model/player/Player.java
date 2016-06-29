@@ -95,11 +95,11 @@ public class Player implements Serializable {
 	 * 
 	 * @param config
 	 */
-	public Player(Configuration config) {
+	public Player(Configuration config, NobilityTrack track) {
 		this.coins = new Coins(0);
 		this.assistants = new Assistants(0);
 		this.victoryPoints = new VictoryPoints(0);
-		this.noblePoints = new NoblePoints(0, this, null);
+		this.noblePoints = new NoblePoints(0, this, track);
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
 		for(int i=0;i<config.getInitialPoliticCards();i++)
@@ -109,6 +109,7 @@ public class Player implements Serializable {
 			emporium.add(new Emporium(this));
 		this.isSuspended = true;
 		this.pickedColours=config.getColorsList();
+		this.mainActions=DEFAULTMAINACTION;
 	}
 
 	/**

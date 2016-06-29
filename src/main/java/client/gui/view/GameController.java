@@ -3,6 +3,7 @@ package client.gui.view;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import client.gui.control.MainApp;
 import client.gui.model.CouncilProperty;
@@ -50,6 +51,16 @@ public class GameController {
 	private static final int NOBILITY_HEIGHT = 60;
 	private static final double NOBILITY_STEP = 37.5;
 
+	// Game Status
+	private static final String EMP = "emporium";
+	private static final String KING = "king";
+	private static final String SLIDE = "slide";
+	private static final String PERM = "permission";
+	private static final String SHUFFLE = "shuffle";
+	private static final String SLIDE2 = "secondarySlide";
+	private static final String DRAGK = "dragKing";
+	
+	
 	private MainApp mainApp;
 	private PlayerProperty myData;
 
@@ -146,7 +157,6 @@ public class GameController {
 	
 	public void changeStatus(String newStatus) {
 		gameStatus = newStatus;
-		System.out.println("frfrf");
 	}
 	
 	public void logMsg(String msg) {
@@ -188,24 +198,24 @@ public class GameController {
 	@FXML
 	private void handleSlideCouncil() throws IOException {
 		resetKing();
-		gameStatus = "slide";
+		gameStatus = SLIDE;
 	}
 
 	@FXML
 	private void handleBuyPermission() throws IOException {
 		resetKing();
-		gameStatus = "permission";
+		gameStatus = PERM;
 	}
 
 	@FXML
 	private void handleBuildEmporium() throws IOException {
 		resetKing();
-		gameStatus = "emporium";
+		gameStatus = EMP;
 	}
 
 	@FXML
 	private void handleBuildWithKing() throws IOException {
-		gameStatus = "king";
+		gameStatus = KING;
 	}
 
 	@FXML
@@ -217,7 +227,7 @@ public class GameController {
 	@FXML
 	private void handleShuffle() throws IOException {
 		resetKing();
-		gameStatus = "shuffle";
+		gameStatus = SHUFFLE;
 	}
 
 	@FXML
@@ -229,7 +239,7 @@ public class GameController {
 	@FXML
 	private void handleSlideSide() throws IOException {
 		resetKing();
-		gameStatus = "secondarySlide";
+		gameStatus = SLIDE2;
 	}
 
 	@FXML
@@ -275,7 +285,7 @@ public class GameController {
 		politicList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 		politicList.setOnDragDetected(event -> {
-			if (gameStatus.equals("king") || gameStatus.equals("permission")) {
+			if (KING.equals(gameStatus) || PERM.equals(gameStatus)) {
 				Dragboard db = politicList.startDragAndDrop(TransferMode.ANY);
 
 				ClipboardContent content = new ClipboardContent();
@@ -290,20 +300,18 @@ public class GameController {
 			}
 		});
 
-		politicList.setCellFactory(column -> {
-			return new ListCell<String>() {
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null || empty) {
-						setStyle(null);
-					} else {	
-						setStyle("-fx-background-image: url('"
-								+ GameController.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))
-								+ "'); -fx-background-size:cover;");
-					}
+		politicList.setCellFactory(column -> new ListCell<String>() {
+			@Override
+			protected void updateItem(String item, boolean empty) {
+				super.updateItem(item, empty);
+				if (item == null || empty) {
+					setStyle(null);
+				} else {
+					setStyle("-fx-background-image: url('"
+							+ GameController.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))
+							+ "'); -fx-background-size:cover;");
 				}
-			};
+			}
 		});
 	}
 
@@ -323,7 +331,7 @@ public class GameController {
 				}
 
 				this.setOnDragDetected(event -> {
-					if ("emporium".equals(gameStatus)) {
+					if (EMP.equals(gameStatus)) {
 						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
 						ClipboardContent content = new ClipboardContent();
 						content.putString("" + (this.getIndex()+1));
@@ -381,26 +389,24 @@ public class GameController {
 				king.visibleProperty().bindBidirectional(sc.hasKing());
 				
 				cityPane.setOnDragOver(event -> {
-					if ("emporium".equals(gameStatus) ||  "dragKing".equals(gameStatus)) {
+					if (EMP.equals(gameStatus) ||  DRAGK.equals(gameStatus)) {
 						cityPane.setEffect(new Glow());
 						event.acceptTransferModes(TransferMode.MOVE);
 					}	
 					event.consume();
 				});
 
-				cityPane.setOnDragExited(event -> {
-					cityPane.setEffect(null);
-				});
+				cityPane.setOnDragExited(event -> cityPane.setEffect(null));
 
 				cityPane.setOnDragDropped(event -> {
 					// TODO not yet tested
 					Dragboard db = event.getDragboard();
-					if("dragKing".equals(gameStatus)) {
+					if(DRAGK.equals(gameStatus)) {
 						gameStatus = "king";
 						kingNewPosition = king;
 						king.setVisible(true);
 					}
-					else if (db.hasString() && "emporium".equals(gameStatus)) {
+					else if (db.hasString() && EMP.equals(gameStatus)) {
 						String action = gameStatus + " -city " + cityPane.getId() + " -permission " + db.getString();
 						logger.appendText(action);
 						mainApp.sendMsg(gameStatus + " -city " + cityPane.getId() + " -permission " + db.getString());
@@ -420,9 +426,7 @@ public class GameController {
 					event.consume();
 				});
 				
-				cityPane.setOnMouseExited(event -> {
-					cityPane.setEffect(null);
-				});
+				cityPane.setOnMouseExited(event -> cityPane.setEffect(null));
 				
 				HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 				for (SimpleBonus sb : sc.getBonuses()) {
@@ -443,9 +447,9 @@ public class GameController {
 
 			Dragboard db = king.startDragAndDrop(TransferMode.ANY);
 			ClipboardContent content = new ClipboardContent();
-			if("king".equals(gameStatus)) {
-				gameStatus = "dragKing";
-				content.putString("king");
+			if(KING.equals(gameStatus)) {
+				gameStatus = DRAGK;
+				content.putString(KING);
 				db.setContent(content);
 				event.consume();
 			}		
@@ -459,16 +463,14 @@ public class GameController {
 		});
 		
 		king.setOnDragOver(event -> {
-			if("king".equals(gameStatus)) {
+			if(KING.equals(gameStatus)) {
 				king.setEffect(new Glow());
 				event.acceptTransferModes(TransferMode.MOVE);
 			}	
 			event.consume();
 		});
 		
-		king.setOnDragExited(event -> {
-			king.setEffect(null);
-		});
+		king.setOnDragExited(event -> king.setEffect(null));
 		
 		king.setOnDragDropped(event -> {
 			Dragboard db = event.getDragboard();
@@ -523,7 +525,7 @@ public class GameController {
 
 		for (int i = 0; i < regions.size(); i++) {
 
-			HBox councilBox = (HBox) mapPane.lookup("#councilBox" + String.valueOf(i));
+			HBox councilBox = (HBox) mapPane.lookup("#councilBox" + i);
 			initCouncil(councilBox, regions.get(i).getCouncil());
 		}
 	}
@@ -547,26 +549,24 @@ public class GameController {
 
 		location.setOnDragOver(event -> {
 			if (event.getGestureSource() != location
-					&& ("slide".equals(gameStatus) || "secondarySlide".equals(gameStatus))) {
+					&& (SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus))) {
 				location.setEffect(new Glow());
 				event.acceptTransferModes(TransferMode.MOVE);
 			}
 			event.consume();
 		});
 
-		location.setOnDragExited(event -> {
-			location.setEffect(null);
-		});
+		location.setOnDragExited(event -> location.setEffect(null));
 
 		location.setOnDragDropped(event -> {
 			Dragboard db = event.getDragboard();
 
 			if (db.hasString()) {
-				if (location.getId().equals("kingCouncilBox")) {
+				if ("kingCouncilBox".equals(location.getId())) {
 					mainApp.sendMsg(gameStatus + " -council k -color " + db.getString());
 				} else {
 					String id = location.getId();
-					int index = Integer.valueOf(id.substring(id.length() - 1));
+					int index = Integer.parseInt(id.substring(id.length() - 1));
 					mainApp.sendMsg(gameStatus + " -council " + (index+1) + " -color " + db.getString());
 				}
 			}
@@ -577,20 +577,20 @@ public class GameController {
 		mainApp.getLocalModel().getMap().initCouncilorPool();
 
 		Map<String, IntegerProperty> pool = mainApp.getLocalModel().getMap().getCouncilorPool();
-		for (String hexColor : pool.keySet()) {
+		for (Entry<String, IntegerProperty> hexColor : pool.entrySet()) {
 
-			Rectangle councilor = Collection.councilor(hexColor);
+			Rectangle councilor = Collection.councilor(hexColor.getKey());
 			councilor.setHeight(councilor.getWidth());
 
 			councilor.setOnDragDetected(event -> {
 				/*
-				 * activate the drag only at two condition 1) "slide" or
+				 * activate the drag only at two condition 1) SLIDE or
 				 * "secondartSlide" is the current action wanted 2) there is at
 				 * least one councilor of the selected color to drag from the
 				 * poll
 				 */
-				if (((gameStatus.equals("slide") || (gameStatus.equals("secondarySlide"))))
-						&& (pool.get(hexColor).get() > 0)) {
+				if ((SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus))
+						&& (hexColor.getValue().get() > 0)) {
 					Dragboard db = councilor.startDragAndDrop(TransferMode.ANY);
 
 					ClipboardContent content = new ClipboardContent();
@@ -680,19 +680,17 @@ public class GameController {
 
 			for (int j = 0; j < permissions.length; j++) {
 
-				Pane outerPane = (Pane) mapPane.lookup("#permit" + String.valueOf(i) + "_" + String.valueOf(j));
+				Pane outerPane = (Pane) mapPane.lookup("#permit" + i + "_" + j);
 
 				outerPane.setOnDragOver(event -> {
-					if ("permission".equals(gameStatus)) {
+					if (PERM.equals(gameStatus)) {
 						outerPane.setEffect(new Glow());
 						event.acceptTransferModes(TransferMode.MOVE);
 					}
 					event.consume();
 				});
 
-				outerPane.setOnDragExited(event -> {
-					outerPane.setEffect(null);
-				});
+				outerPane.setOnDragExited(event -> outerPane.setEffect(null));
 
 				outerPane.setOnDragDropped(event -> {
 					Dragboard db = event.getDragboard();
@@ -732,9 +730,7 @@ public class GameController {
 					event.consume();
 				});
 				
-				outerPane.setOnMouseExited(event -> {
-					outerPane.setEffect(null);
-				});
+				outerPane.setOnMouseExited(event -> outerPane.setEffect(null));
 			}
 		}
 	}
@@ -745,18 +741,16 @@ public class GameController {
 			Node regionSymbol = mapPane.lookup("#region" + i);
 			
 			regionSymbol.setOnMouseEntered(event -> {
-				if("shuffle".equals(gameStatus)) {
+				if(SHUFFLE.equals(gameStatus)) {
 					regionSymbol.setEffect(new Bloom());
 				}
 				event.consume();
 			});
 			
-			regionSymbol.setOnMouseExited(event -> {
-				regionSymbol.setEffect(null);
-			});
+			regionSymbol.setOnMouseExited(event -> regionSymbol.setEffect(null));
 			
 			regionSymbol.setOnMouseClicked(event -> {
-				if("shuffle".equals(gameStatus)) {
+				if(SHUFFLE.equals(gameStatus)) {
 					int number = Integer.valueOf(regionSymbol.getId().substring(regionSymbol.getId().length()-1));
 					mainApp.sendMsg(gameStatus + " -region " + (number+1));
 				}
@@ -780,7 +774,7 @@ public class GameController {
 			itemPane.getChildren().add(assistant);
 			
 			Label amount = new Label();
-			amount.setText("x" + String.valueOf(((Assistants) itemOnSale).getAmount()));
+			amount.setText("x" + ((Assistants) itemOnSale).getAmount());
 			itemPane.getChildren().add(amount);
 			
 		} else if(itemOnSale instanceof PoliticCard) {

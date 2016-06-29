@@ -187,7 +187,7 @@ public class Game implements ModelInterface {
 		for (CliRegion region : regions)
 			for (CliCity c : region.getCities())
 				if (c.getName().equalsIgnoreCase(city)) {
-
+					c.addEmporium(name);
 					return;
 				}
 	}

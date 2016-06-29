@@ -2,7 +2,6 @@ package server.model.player;
 
 import java.util.List;
 
-
 import java.awt.Color;
 
 import server.control.connection.ClientInt;
@@ -34,7 +33,7 @@ public class Player implements Serializable {
 	private transient List<Color> pickedColours;
 	private int mainActions;
 	private boolean extraAction;
-	private static final transient int DEFAULTMAINACTION=1;
+	private static final transient int DEFAULTMAINACTION = 1;
 	private transient ClientInt client;
 	private boolean isSuspended;
 
@@ -49,22 +48,20 @@ public class Player implements Serializable {
 		this.assistants = new Assistants(p.getAssistants().getAmount());
 		this.noblePoints = new NoblePoints(p.getNoblePoints().getAmount(), null, null);
 		this.victoryPoints = new VictoryPoints(p.getVictoryPoints().getAmount());
-		this.permissionCard= new ArrayList<>();
-		this.mainActions= p.getMainActionsLeft();
-		this.extraAction= p.getIfExtraActionDone();
-		for(PermissionCard card: p.getPermissionCard()){
-			PermissionCard copyCard=new PermissionCard(card.getCardCity(), card.getCardReward());
-			if(card.getIfCardUsed())
+		this.permissionCard = new ArrayList<>();
+		this.mainActions = p.getMainActionsLeft();
+		this.extraAction = p.getIfExtraActionDone();
+		for (PermissionCard card : p.getPermissionCard()) {
+			PermissionCard copyCard = new PermissionCard(card.getCardCity(), card.getCardReward());
+			if (card.getIfCardUsed())
 				copyCard.setCardUsed();
 			this.permissionCard.add(copyCard);
-			}
+		}
 		this.politicCard = new ArrayList<>();
 		for (PoliticCard card : p.getPoliticCard()) {
 			this.politicCard.add(new PoliticCard(card.getCardColor()));
 		}
 	}
-
-	
 
 	public Player(Configuration config, int numberOfPlayers, ClientInt client, NobilityTrack track) {
 		this.coins = new Coins(config.getInitialPlayerMoney() + numberOfPlayers);
@@ -86,6 +83,12 @@ public class Player implements Serializable {
 		this.client = client;
 	}
 
+	/**
+	 * This is used to create a fake player which is used when the game has only
+	 * 2 players and we need to place some emporiums in the map
+	 * 
+	 * @param config
+	 */
 	public Player(Configuration config) {
 		this.coins = new Coins(0);
 		this.assistants = new Assistants(0);
@@ -98,7 +101,6 @@ public class Player implements Serializable {
 			emporium.add(new Emporium(this));
 		this.isSuspended = true;
 	}
-	
 
 	/**
 	 * This is @deprecated and used just for tests
@@ -129,7 +131,7 @@ public class Player implements Serializable {
 		this.extraAction = false;
 		this.pickedColours = pickedColours;
 		this.isSuspended = false;
-		this.client=client;
+		this.client = client;
 	}
 
 	public Player getClientCopy() {
@@ -280,7 +282,7 @@ public class Player implements Serializable {
 		return this.name;
 	}
 
-	public void setName(String name){
-		this.name=name;
+	public void setName(String name) {
+		this.name = name;
 	}
 }

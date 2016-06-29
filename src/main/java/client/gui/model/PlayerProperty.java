@@ -59,12 +59,7 @@ public class PlayerProperty {
 	public Color getColor() {
 		return this.color;
 	}
-	/**
-	 * since permission cards changes not so often as the others,
-	 * this distinction improve performance
-	 * @param player
-	 * @return
-	 */
+
 	public PlayerProperty setAllButPermissions(Player player) {
 		canNotDoMainAction.set(player.getMainActionsLeft()>0? false:true);
 		canNotDoSideAction.set(player.getIfExtraActionDone());
@@ -72,7 +67,7 @@ public class PlayerProperty {
 		assistants.set(player.getAssistants().getAmount());
 		victory.set(player.getVictoryPoints().getAmount());
 		coins.set(player.getCoins().getAmount());
-		nobility.set(player.getNoblePoints().getAmount());
+		nobility.set(player.getNobilityPoints().getAmount());
 		
 		politicCards.clear();
 		for(PoliticCard card: player.getPoliticCard()) {
@@ -94,14 +89,6 @@ public class PlayerProperty {
 	public StringProperty nameProperty() {
 		return name;
 	}
-	
-	public String getName() {
-		return name.get();
-	}
-	
-	public void setName(String name) {
-		this.name.set(name);
-	}
 
 	public BooleanProperty canNotDoMainAction() {
 		return this.canNotDoMainAction;
@@ -115,48 +102,16 @@ public class PlayerProperty {
 		return coins;
 	}
 	
-	public int getCoins() {
-		return coins.get();
-	}
-
-	public void setCoins(int coins) {
-		this.coins.set(coins);
-	}
-	
 	public IntegerProperty assistantsProperty() {
 		return assistants;
-	}
-	
-	public int getAssistants() {
-		return assistants.get();
-	}
-
-	public void setAssistants(int assistants) {
-		this.assistants.set(assistants);
 	}
 	
 	public IntegerProperty victoryProperty() {
 		return victory;
 	}
 	
-	public int getVictory() {
-		return victory.get();
-	}
-
-	public void setVictory(int victory) {
-		this.victory.set(victory);
-	}
-	
 	public IntegerProperty nobilityProperty() {
 		return nobility;
-	}
-	
-	public int getNobility() {
-		return nobility.get();
-	}
-
-	public void setNobility(int nobility) {
-		this.coins.set(nobility);
 	}
 	
 	public ObservableList<String> getPoliticCards() {

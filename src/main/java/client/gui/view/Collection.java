@@ -142,7 +142,7 @@ public class Collection {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/OpponentPane.fxml"));
 			AnchorPane pane = loader.load();
-			((Labeled) pane.lookup("#nameLabel")).textProperty().set(player.getName());
+			((Labeled) pane.lookup("#nameLabel")).textProperty().set(player.nameProperty().get());
 			((Rectangle) pane.lookup("#colorRectangle")).setFill(player.getColor());
 
 			((Labeled) pane.lookup("#victoryLabel")).textProperty()

@@ -45,7 +45,7 @@ public class Player implements Serializable {
 		this.name = p.getName();
 		this.coins = new Coins(p.getCoins().getAmount());
 		this.assistants = new Assistants(p.getAssistants().getAmount());
-		this.noblePoints = new NoblePoints(p.getNoblePoints().getAmount(), null, null);
+		this.noblePoints = new NoblePoints(p.getNobilityPoints().getAmount(), null, null);
 		this.victoryPoints = new VictoryPoints(p.getVictoryPoints().getAmount());
 		this.permissionCard = new ArrayList<>();
 		this.mainActions = p.getMainActionsLeft();
@@ -176,7 +176,7 @@ public class Player implements Serializable {
 	 * 
 	 * @return the noble points object
 	 */
-	public NoblePoints getNoblePoints() {
+	public NoblePoints getNobilityPoints() {
 		return this.noblePoints;
 	}
 

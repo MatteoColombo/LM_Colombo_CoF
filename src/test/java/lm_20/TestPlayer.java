@@ -94,7 +94,7 @@ public class TestPlayer {
 	 */
 	@Test
 	public void testNoblePoint() {
-		NoblePoints n = p.getNoblePoints();
+		NoblePoints n = p.getNobilityPoints();
  		assertEquals(0, n.getAmount());
 		n.increaseAmount(3);
 		assertEquals(3, n.getAmount());

@@ -131,7 +131,7 @@ public class GameProperty implements ModelInterface {
 	public void buildEmporium(String city, String name) {
 		Color playerColor = null;
 		for(PlayerProperty p: players) {
-			if(p.getName().equals(name)) {
+			if(p.nameProperty().get().equals(name)) {
 				playerColor = p.getColor();
 				break;
 			}

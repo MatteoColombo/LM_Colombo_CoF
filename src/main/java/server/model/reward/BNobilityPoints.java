@@ -24,7 +24,7 @@ public class BNobilityPoints extends Bonus {
 
 	@Override
 	public void assignBonusTo(Player p) {
-		p.getNoblePoints().increaseAmount(this.getAmount());
+		p.getNobilityPoints().increaseAmount(this.getAmount());
 	}
 	
 	@Override

@@ -24,7 +24,7 @@ public class TestNobilityTrack {
 	
 	@Test
 	public void testIncreaseByTwoPoints(){
-		player.getNoblePoints().increaseAmount(2);
+		player.getNobilityPoints().increaseAmount(2);
 		assertEquals(2, player.getVictoryPoints().getAmount());
 		assertEquals(12, player.getCoins().getAmount());
 	}

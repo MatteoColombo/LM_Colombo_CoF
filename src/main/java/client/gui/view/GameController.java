@@ -285,7 +285,7 @@ public class GameController {
 	 */
 	private void initMyData() {
 
-		nameLabel.setText(myData.getName());
+		nameLabel.setText(myData.nameProperty().get());
 		myColor.setFill(myData.getColor());
 		assistantsLabel.textProperty().bind(myData.assistantsProperty().asString());
 		coinsLabel.textProperty().bind(myData.coinsProperty().asString());

@@ -133,12 +133,12 @@ public class TestCliModel {
 	public void testPlayer() throws ConfigurationErrorException, XMLFileException{
 		Configuration config= new Configuration();
 		Player p= new Player(config);
-		p.getPoliticCard().add(new PoliticCard(config.getColorsList()));
+		p.getPoliticCard().add(0,new PoliticCard(config.getColorsList()));
 		PoliticCard c;
 		do{
 			c= new PoliticCard(config.getColorsList());
 		}while(!c.isMultipleColor());
-		p.getPoliticCard().add(c);
+		p.getPoliticCard().add(1,c);
 		p.getAssistants().increaseAmount(1);
 		p.getCoins().increaseAmount(1);
 		p.setName("Test");
@@ -152,7 +152,7 @@ public class TestCliModel {
 		assertEquals(1,player.getCoins());
 		assertEquals(1,player.getAssistants());
 		assertEquals(0,player.getNobility());
-		assertEquals(2,player.getPolitic().size());
+		assertEquals(8,player.getPolitic().size());
 		assertEquals("multi",player.getPolitic().get(1));
 		assertEquals(3,player.getVictory());
 		assertEquals(true, player.getPermission().get(0).isUsed());

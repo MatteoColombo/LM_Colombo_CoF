@@ -115,7 +115,7 @@ public class TestGUIModel {
 		assertEquals(game.getMyPlayerData().getPermissions().get(0).getBonuses().get(0).getName(), 
 				p1.getPermissionCard().get(0).getCardReward().getGeneratedRewards().get(0).getTagName());
 	
-		assertEquals(game.getMyPlayerData().getPoliticCards().size(), 1);
+		assertEquals(game.getMyPlayerData().getPoliticCards().size(), 7);
 	}
 	
 	@Test

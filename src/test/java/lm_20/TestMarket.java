@@ -8,12 +8,17 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import server.model.board.Board;
 import server.model.board.nobility.NobilityLoader;
 import server.model.board.nobility.NobilityTrack;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 import server.model.configuration.TrackXMLFileException;
+import server.model.configuration.XMLFileException;
 import server.model.market.Market;
+import server.model.market.OnSaleItem;
+import server.model.player.Assistants;
+import server.model.player.PermissionCard;
 import server.model.player.Player;
 import server.model.player.PoliticCard;
 
@@ -42,177 +47,39 @@ public class TestMarket {
 	}
 
 	@Test
-	public void testMarket() {
+	public void testMarketBuyPolitic() {
 		PoliticCard card = allPlayers.get(0).getPoliticCard().remove(0);
+		OnSaleItem item= new OnSaleItem(card, allPlayers.get(0), 3);
 		market.addItemOnSale(card, 3, allPlayers.get(0));
-		market.buyItem(market.getItemsOnSale().get(0), allPlayers.get(1));
-		assertEquals(13, allPlayers.get(0).getCoins().getAmount());
+		market.buyItem(item, allPlayers.get(1));
 		assertEquals(8, allPlayers.get(1).getCoins().getAmount());
+		assertEquals(13, allPlayers.get(0).getCoins().getAmount());
 		assertEquals(7, allPlayers.get(1).getPoliticCard().size());
 	}
-
-	/*
-	 * @Test public void testGetPlayerBundle() throws NegativeException { for
-	 * (int index = 0; index < this.allPlayers.size(); index++) { Player player
-	 * = this.allPlayers.get(index); GoodsBundle goodsBundle =
-	 * this.market.getPlayerBundle(player); assertEquals(player,
-	 * goodsBundle.getPlayerOwner()); } }
-	 * 
-	 * @Test public void testAddPermissionCardsToBundle() throws
-	 * NegativeException, IllegalActionException { Player player =
-	 * this.allPlayers.get(0); List<PermissionCard> permissionCard = new
-	 * ArrayList<>(); PermissionCard permissionCard1 = new PermissionCard(null,
-	 * null); PermissionCard permissionCard2 = new PermissionCard(null, null);
-	 * PermissionCard permissionCard3 = new PermissionCard(null, null);
-	 * permissionCard.add(permissionCard1); permissionCard.add(permissionCard2);
-	 * permissionCard.add(permissionCard3);
-	 * player.getPermissionCard().addAll(permissionCard); GoodsBundle
-	 * goodsBundle = this.market.getPlayerBundle(player);
-	 * this.market.assignPermissionCardsToBundle(player, permissionCard, 10);
-	 * assertEquals(10, goodsBundle.getPermissionCardsPrice().getAmount());
-	 * assertEquals(permissionCard2,
-	 * goodsBundle.getSellingPermissionCards().get(1)); }
-	 * 
-	 * @Test(expected = IllegalActionException.class) public void
-	 * testAlreadyUsedAddPermissionCardsToBundle() throws NegativeException,
-	 * IllegalActionException { Player player = this.allPlayers.get(0);
-	 * List<PermissionCard> permissionCard = new ArrayList<>(); PermissionCard
-	 * permissionCard1 = new PermissionCard(null, null); PermissionCard
-	 * permissionCard2 = new PermissionCard(null, null);
-	 * permissionCard2.setCardUsed(); PermissionCard permissionCard3 = new
-	 * PermissionCard(null, null); permissionCard.add(permissionCard1);
-	 * permissionCard.add(permissionCard2); permissionCard.add(permissionCard3);
-	 * player.getPermissionCard().addAll(permissionCard); GoodsBundle
-	 * goodsBundle = this.market.getPlayerBundle(player);
-	 * this.market.assignPermissionCardsToBundle(player, permissionCard, 10);
-	 * assertEquals(10, goodsBundle.getPermissionCardsPrice().getAmount());
-	 * assertEquals(permissionCard2,
-	 * goodsBundle.getSellingPermissionCards().get(0)); assertEquals(true,
-	 * player.getPermissionCard().isEmpty()); }
-	 * 
-	 * @Test public void testRemoveOnePermissionCardFromBundle() throws
-	 * NegativeException, IllegalActionException { Player player =
-	 * this.allPlayers.get(0); List<PermissionCard> permissionCard = new
-	 * ArrayList<>(); PermissionCard permissionCard1 = new PermissionCard(null,
-	 * null); PermissionCard permissionCard2 = new PermissionCard(null, null);
-	 * PermissionCard permissionCard3 = new PermissionCard(null, null);
-	 * permissionCard.add(permissionCard1); permissionCard.add(permissionCard2);
-	 * permissionCard.add(permissionCard3);
-	 * player.getPermissionCard().addAll(permissionCard); GoodsBundle
-	 * goodsBundle = this.market.getPlayerBundle(player);
-	 * this.market.assignPermissionCardsToBundle(player, permissionCard, 10);
-	 * this.market.removeOnePermissionCardFromBundle(player, permissionCard2);
-	 * assertEquals(10, goodsBundle.getPermissionCardsPrice().getAmount());
-	 * assertEquals(permissionCard3,
-	 * goodsBundle.getSellingPermissionCards().get(1));
-	 * assertEquals(permissionCard2, player.getPermissionCard().get(0)); }
-	 * 
-	 * @Test public void testRemoveAllPermissionCardsFromBundle() throws
-	 * IllegalActionException, NegativeException { Player player =
-	 * this.allPlayers.get(0); List<PermissionCard> permissionCard = new
-	 * ArrayList<>(); PermissionCard permissionCard1 = new PermissionCard(null,
-	 * null); PermissionCard permissionCard2 = new PermissionCard(null, null);
-	 * PermissionCard permissionCard3 = new PermissionCard(null, null);
-	 * permissionCard.add(permissionCard1); permissionCard.add(permissionCard2);
-	 * permissionCard.add(permissionCard3);
-	 * player.getPermissionCard().addAll(permissionCard); GoodsBundle
-	 * goodsBundle = this.market.getPlayerBundle(player);
-	 * this.market.assignPermissionCardsToBundle(player, permissionCard, 10);
-	 * this.market.removePermissionCardsFromBundle(player); assertEquals(0,
-	 * goodsBundle.getPermissionCardsPrice().getAmount()); assertEquals(true,
-	 * goodsBundle.getSellingPermissionCards().isEmpty());
-	 * assertEquals(permissionCard2, player.getPermissionCard().get(1)); }
-	 * 
-	 * @Test public void testAddPoliticCardsToBundle() throws
-	 * IllegalActionException, NegativeException { Player player =
-	 * this.allPlayers.get(0); List<PoliticCard> politicCard = new
-	 * ArrayList<>(); PoliticCard politicCard1 = new PoliticCard(colorList);
-	 * PoliticCard politicCard2 = new PoliticCard(colorList); PoliticCard
-	 * politicCard3 = new PoliticCard(colorList); politicCard.add(politicCard1);
-	 * politicCard.add(politicCard2); politicCard.add(politicCard3);
-	 * player.getPoliticCard().addAll(politicCard); GoodsBundle goodsBundle =
-	 * this.market.getPlayerBundle(player);
-	 * this.market.assignPoliticCardsToBundle(player, politicCard, 10);
-	 * assertEquals(10, goodsBundle.getPoliticCardsPrice().getAmount());
-	 * assertEquals(politicCard2, goodsBundle.getSellingPoliticCards().get(1));
-	 * }
-	 * 
-	 * @Test public void testRemoveOnePoliticCardFromBundle() throws
-	 * IllegalActionException, NegativeException { Player player =
-	 * this.allPlayers.get(0); List<PoliticCard> politicCard = new
-	 * ArrayList<>(); PoliticCard politicCard1 = new PoliticCard(colorList);
-	 * PoliticCard politicCard2 = new PoliticCard(colorList); PoliticCard
-	 * politicCard3 = new PoliticCard(colorList); politicCard.add(politicCard1);
-	 * politicCard.add(politicCard2); politicCard.add(politicCard3);
-	 * player.getPoliticCard().addAll(politicCard); GoodsBundle goodsBundle =
-	 * this.market.getPlayerBundle(player);
-	 * this.market.assignPoliticCardsToBundle(player, politicCard, 10);
-	 * this.market.removeOnePoliticCardFromBundle(player, politicCard2);
-	 * assertEquals(10, goodsBundle.getPoliticCardsPrice().getAmount());
-	 * assertEquals(politicCard3, goodsBundle.getSellingPoliticCards().get(1));
-	 * assertEquals(politicCard2, player.getPoliticCard().get(6)); }
-	 * 
-	 * @Test public void testRemoveAllPoliticCardsFromBundle() throws
-	 * IllegalActionException, NegativeException { Player player =
-	 * this.allPlayers.get(0); List<PoliticCard> politicCard = new
-	 * ArrayList<>(); PoliticCard politicCard1 = new PoliticCard(colorList);
-	 * PoliticCard politicCard2 = new PoliticCard(colorList); PoliticCard
-	 * politicCard3 = new PoliticCard(colorList); politicCard.add(politicCard1);
-	 * politicCard.add(politicCard2); politicCard.add(politicCard3);
-	 * player.getPoliticCard().addAll(politicCard); GoodsBundle goodsBundle =
-	 * this.market.getPlayerBundle(player);
-	 * this.market.assignPoliticCardsToBundle(player, politicCard, 10);
-	 * this.market.removePoliticCardsFromBundle(player); assertEquals(0,
-	 * goodsBundle.getPoliticCardsPrice().getAmount()); assertEquals(true,
-	 * goodsBundle.getSellingPoliticCards().isEmpty());
-	 * assertEquals(politicCard2, player.getPoliticCard().get(7)); }
-	 * 
-	 * @Test public void testAddAssistantsToBundle() throws
-	 * IllegalActionException, NegativeException { Player player =
-	 * this.allPlayers.get(0); player.getAssistants().increaseAmount(7);
-	 * GoodsBundle goodsBundle = this.market.getPlayerBundle(player);
-	 * this.market.assignAssistantsToBundle(player, 7, 10); assertEquals(10,
-	 * goodsBundle.getAssistantsPrice().getAmount()); assertEquals(7,
-	 * goodsBundle.getSellingAssistants().getAmount()); assertEquals(3,
-	 * player.getAssistants().getAmount()); }
-	 * 
-	 * @Test public void testRemoveAssistantsFromBundle() throws
-	 * IllegalActionException, NegativeException { Player player =
-	 * this.allPlayers.get(0); player.getAssistants().increaseAmount(7);
-	 * GoodsBundle goodsBundle = this.market.getPlayerBundle(player);
-	 * this.market.assignAssistantsToBundle(player, 7, 10);
-	 * this.market.removeAssistantsFromBundle(player); assertEquals(0,
-	 * goodsBundle.getAssistantsPrice().getAmount()); assertEquals(0,
-	 * goodsBundle.getSellingAssistants().getAmount()); assertEquals(10,
-	 * player.getAssistants().getAmount()); }
-	 * 
-	 * @Test public void testClearAllBundles() throws NegativeException,
-	 * IllegalActionException { Player player = this.allPlayers.get(0);
-	 * List<PoliticCard> politicCard = new ArrayList<>(); PoliticCard
-	 * politicCard1 = new PoliticCard(colorList); PoliticCard politicCard2 = new
-	 * PoliticCard(colorList); PoliticCard politicCard3 = new
-	 * PoliticCard(colorList); politicCard.add(politicCard1);
-	 * politicCard.add(politicCard2); politicCard.add(politicCard3);
-	 * player.getPoliticCard().addAll(politicCard);
-	 * player.getAssistants().increaseAmount(7); List<PermissionCard>
-	 * permissionCard = new ArrayList<>(); PermissionCard permissionCard1 = new
-	 * PermissionCard(null, null); PermissionCard permissionCard2 = new
-	 * PermissionCard(null, null); PermissionCard permissionCard3 = new
-	 * PermissionCard(null, null); permissionCard.add(permissionCard1);
-	 * permissionCard.add(permissionCard2); permissionCard.add(permissionCard3);
-	 * player.getPermissionCard().addAll(permissionCard); GoodsBundle
-	 * goodsBundle = this.market.getPlayerBundle(player);
-	 * this.market.assignAssistantsToBundle(player, 7, 10);
-	 * this.market.assignPoliticCardsToBundle(player, politicCard, 10);
-	 * this.market.assignPermissionCardsToBundle(player, permissionCard, 10);
-	 * this.market.giveBackUnsoldGoods(); assertEquals(0,
-	 * goodsBundle.getAssistantsPrice().getAmount()); assertEquals(10,
-	 * player.getAssistants().getAmount()); assertEquals(0,
-	 * goodsBundle.getPoliticCardsPrice().getAmount()); assertEquals(true,
-	 * goodsBundle.getSellingPoliticCards().isEmpty());
-	 * assertEquals(politicCard2, player.getPoliticCard().get(7));
-	 * assertEquals(0, goodsBundle.getPermissionCardsPrice().getAmount());
-	 * assertEquals(true, goodsBundle.getSellingPermissionCards().isEmpty());
-	 * assertEquals(permissionCard2, player.getPermissionCard().get(1)); }
-	 */
+	
+	@Test
+	public void testMarketBuyAssistants(){
+		allPlayers.get(0).getAssistants().decreaseAmount(1);
+		Assistants assist = new Assistants(1);
+		OnSaleItem item= new OnSaleItem(assist, allPlayers.get(0), 3);
+		market.addItemOnSale(assist, 3, allPlayers.get(0));
+		market.buyItem(item, allPlayers.get(1));
+		assertEquals(8, allPlayers.get(1).getCoins().getAmount());
+		assertEquals(13, allPlayers.get(0).getCoins().getAmount());
+		assertEquals(3, allPlayers.get(1).getAssistants().getAmount());
+		assertEquals(0, allPlayers.get(0).getAssistants().getAmount());
+	}
+	
+	@Test
+	public void testMarketBuyPermit() throws XMLFileException, ConfigurationErrorException {
+		Board b= new Board(new Configuration(), 1);
+		PermissionCard card = new PermissionCard(b.getRegion(0).getCities());
+		OnSaleItem item= new OnSaleItem(card, allPlayers.get(0), 3);
+		market.addItemOnSale(card, 3, allPlayers.get(0));
+		market.buyItem(item, allPlayers.get(1));
+		assertEquals(8, allPlayers.get(1).getCoins().getAmount());
+		assertEquals(13, allPlayers.get(0).getCoins().getAmount());
+		assertEquals(1, allPlayers.get(1).getPermissionCard().size());
+	}
+	
 }

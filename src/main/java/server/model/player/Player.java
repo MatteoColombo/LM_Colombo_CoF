@@ -102,10 +102,13 @@ public class Player implements Serializable {
 		this.noblePoints = new NoblePoints(0, this, null);
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
+		for(int i=0;i<config.getInitialPoliticCards();i++)
+			politicCard.add(new PoliticCard(config.getColorsList()));
 		this.permissionCard = new ArrayList<>();
 		for (int i = 0; i < config.getInitialEmporiums(); i++)
 			emporium.add(new Emporium(this));
 		this.isSuspended = true;
+		this.pickedColours=config.getColorsList();
 	}
 
 	/**

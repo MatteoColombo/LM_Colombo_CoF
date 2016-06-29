@@ -142,14 +142,4 @@ public class Market {
 			p.getPermissionCard().add((PermissionCard) soldItem);
 	}
 
-	/**
-	 * Just for tests
-	 * 
-	 * @return the list of the items on sale
-	 * @deprecated it's just for tests
-	 */
-	@Deprecated
-	public List<OnSaleItem> getItemsOnSale() {
-		return this.itemsOnSale;
-	}
 }

@@ -36,22 +36,16 @@ public class TurnManager {
 	 * player turn and goes on until when the player has no actions left or when
 	 * he wants to end and has completed all its main actions
 	 */
-	public void startTurn(int playerIndex) {
+	public void playTurn(int playerIndex) {
 		playerWantsToExit = false;
 		this.playerIndex = playerIndex;
 		this.players.get(playerIndex).actionsReset();
 		Player turnPlayer = players.get(playerIndex);
-		try {
-			turnPlayer.getPoliticCard().add(new PoliticCard(colors));
-			notifyUpdatePlayer();
-			turnPlayer.getClient().notify(new NotifyYourTurn());
-		} catch (IOException e) {
-			logger.log(Level.WARNING, e.getMessage(), e);
-			turnPlayer.setSuspension(true);
-			return;
-		}
 
-		while (!(turnPlayer.getIfExtraActionDone() && turnPlayer.getMainActionsLeft() == 0) && !(turnPlayer.getMainActionsLeft() == 0 && playerWantsToExit)) {
+		notifyTurnStarted(turnPlayer);
+
+		while (!(turnPlayer.getIfExtraActionDone() && turnPlayer.getMainActionsLeft() == 0)
+				&& !(turnPlayer.getMainActionsLeft() == 0 && playerWantsToExit)) {
 			try {
 				if (turnPlayer.getClient().isConnected())
 					turnPlayer.getClient().askPlayerWhatActionToDo();
@@ -66,15 +60,26 @@ public class TurnManager {
 				return;
 			}
 		}
+		notifyTurnEnded(turnPlayer);
+	}
+
+	private void notifyTurnStarted(Player turnPlayer) {
+		try {
+			turnPlayer.getPoliticCard().add(new PoliticCard(colors));
+			notifyUpdatePlayer();
+			turnPlayer.getClient().notify(new NotifyYourTurn());
+		} catch (IOException e) {
+			logger.log(Level.WARNING, e.getMessage(), e);
+		}
+	}
+
+	private void notifyTurnEnded(Player turnPlayer){
 		try {
 			turnPlayer.getClient().notify(new NotifyTurnEnded());
 		} catch (IOException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
-			turnPlayer.setSuspension(true);
-			return;
 		}
 	}
-
 	/**
 	 * This method is called by the controller and it executes an action
 	 * 

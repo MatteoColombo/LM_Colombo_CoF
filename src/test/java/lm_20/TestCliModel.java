@@ -83,9 +83,9 @@ public class TestCliModel {
 		
 		model.yourTurnEnded();
 		model.isYourTurn();
-		Player p1= new Player(config);
+		Player p1= new Player(config,null);
 		p1.setName("test1");
-		Player p2= new Player(config);
+		Player p2= new Player(config,null);
 		p2.setName("test2");
 		List<Player> players= new ArrayList<>();
 		players.add(p1);
@@ -132,7 +132,7 @@ public class TestCliModel {
 	@Test
 	public void testPlayer() throws ConfigurationErrorException, XMLFileException{
 		Configuration config= new Configuration();
-		Player p= new Player(config);
+		Player p= new Player(config,null);
 		p.getPoliticCard().add(0,new PoliticCard(config.getColorsList()));
 		PoliticCard c;
 		do{

@@ -115,39 +115,49 @@ public class Game extends Thread {
 		boolean someoneWon = false;
 		checkAndConfigGameForTwo();
 		turnManager = new TurnManager(players, config.getColorsList());
-		// This loops is for the regular game
+		
 		while (!someoneWon) {
-			for (int i = 0; countSuspendedPlayers() < (players.size() - 1) && i < players.size(); i++) {
-				if (players.get(i).getSuspended())
-					continue;
-				turnManager.startTurn(i);
-				if (players.get(i).getEmporium().isEmpty()) {
-					winningPlayer = i;
-					someoneWon = true;
-				}
-			}
-
-			if (!someoneWon) {
-				this.market = new Market(players);
-				this.market.runMarket();
-			}
-
+			someoneWon=regularCycle();
+			runMarket(someoneWon);
 		}
-		// This loop is for the last round after that a player placed his 10th
-		// emporium
-		for (int j = (winningPlayer + 1) % players.size(); countSuspendedPlayers() < (players.size() - 1)
-				&& j != winningPlayer; j = (j + 1) % players.size()) {
-			if (players.get(j).getSuspended())
-				continue;
-			turnManager.startTurn(j);
-		}
+		
+		lastCycle();
+		calculateWinner();
 		publishWinner();
 	}
 
+	private boolean regularCycle(){
+		for (int i = 0; countSuspendedPlayers() < (players.size() - 1) && i < players.size(); i++) {
+			if (players.get(i).getSuspended())
+				continue;
+			turnManager.playTurn(i);
+			if (players.get(i).getEmporium().isEmpty()) {
+				winningPlayer = i;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void lastCycle(){
+		for (int i = (winningPlayer + 1) % players.size(); countSuspendedPlayers() < (players.size() - 1)
+				&& i != winningPlayer; i = (i + 1) % players.size()) {
+			if (players.get(i).getSuspended())
+				continue;
+			turnManager.playTurn(i);
+		}
+	}
+	private void runMarket(boolean someoneWon){
+		if (!someoneWon && countSuspendedPlayers()< players.size()-1) {
+			this.market = new Market(players);
+			this.market.runMarket();
+		}
+	}
+	
 	private void checkAndConfigGameForTwo() {
 		if(players.size()>2)
 			return;
-		Player server = new Player(config);
+		Player server = new Player(config,null);
 		server.setName("_Server_");
 		sendServer(server);
 		players.add(server);
@@ -161,6 +171,9 @@ public class Game extends Thread {
 
 	}
 
+	public void calculateWinner(){
+		//TODO
+	}
 	public void publishWinner() {
 		// TODO
 	}

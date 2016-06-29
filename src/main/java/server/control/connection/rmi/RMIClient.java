@@ -1,10 +1,8 @@
 package server.control.connection.rmi;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,13 +52,7 @@ public class RMIClient implements ClientInt {
 	@Override
 	public void askPlayerWhatActionToDo() throws IOException {
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-		Future<String> answer = executor.submit(new Callable<String>() {
-			public String call() throws RemoteException {
-				String choosenAction;
-				choosenAction = client.requestAnswer(new RequestWhatActionToDo());
-				return choosenAction;
-			}
-		});
+		Future<String> answer = executor.submit(() -> client.requestAnswer(new RequestWhatActionToDo()));
 		try {
 			String action = answer.get(600, TimeUnit.SECONDS);
 			controller.performAction(this, action);

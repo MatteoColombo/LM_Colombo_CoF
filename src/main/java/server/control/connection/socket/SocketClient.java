@@ -9,7 +9,6 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import server.control.Controller;
 import server.control.connection.ClientInt;
 import server.control.dialogue.Dialogue;
@@ -67,7 +65,7 @@ public class SocketClient implements ClientInt {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
-	
+
 	@Override
 	public String getName() {
 		return clientName;
@@ -83,14 +81,7 @@ public class SocketClient implements ClientInt {
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		out.writeObject(new RequestWhatActionToDo());
 		out.flush();
-		Future<String> answer = executor.submit(new Callable<String>() {
-			@Override
-			public String call() throws ClassNotFoundException, IOException {
-				String choosenAction;
-				choosenAction = (String) in.readObject();
-				return choosenAction;
-			}
-		});
+		Future<String> answer = executor.submit(() -> (String) in.readObject());
 		try {
 			String action = answer.get(600, TimeUnit.SECONDS);
 			controller.performAction(this, action);
@@ -154,11 +145,11 @@ public class SocketClient implements ClientInt {
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
 		out.writeObject(new RequestWhichItemTouBuy(itemsOnSale));
 		out.flush();
-		try{
-			String item= (String)in.readObject();
+		try {
+			String item = (String) in.readObject();
 			controller.parseItemToBuy(itemsOnSale, item, this);
-		}catch(ClassNotFoundException e){
-			logger.log(Level.SEVERE, e.getMessage(),e);
+		} catch (ClassNotFoundException e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

@@ -105,10 +105,8 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void showConfigGame() {
 
 		try {
-			// TODO this is just a workaround that need to be fixed
 			Configuration clientConfig = new Configuration();
 			List<String> maps = clientConfig.getMaps();
-			// TODO end workaround
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/ConfigGame.fxml"));
 			AnchorPane configGame = (AnchorPane) loader.load();

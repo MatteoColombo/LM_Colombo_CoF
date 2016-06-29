@@ -53,8 +53,8 @@ public class Controller {
 	private Logger logger = Logger.getGlobal();
 	private Configuration config;
 	private int gameMap;
-	private static final String wrongSelection= "Wrong selection!";
-	private static final String notEnoughAssistants= "You don't have enough assistants!";
+	private static final String WRONGSELECTION= "Wrong selection!";
+	private static final String NOTENOUGHASSISTANTS= "You don't have enough assistants!";
 	public Controller(Game game, Configuration config) {
 		this.game = game;
 		this.config = config;
@@ -105,24 +105,22 @@ public class Controller {
 			switch (object) {
 			case "permission":
 				if (playersMap.get(client).getPermissionCard().size() < index)
-					throw new IllegalActionException(notEnoughAssistants);
-				if (playersMap.get(client).getPermissionCard().get(index-1).getIfCardUsed())
-					throw new IllegalActionException("Card is already used, can't be sold");
+					throw new IllegalActionException(NOTENOUGHASSISTANTS);
 				itemOnSale = playersMap.get(client).getPermissionCard().remove(index-1);
 				break;
 			case "politic":
 				if (playersMap.get(client).getPoliticCard().size() < index)
-					throw new IllegalActionException(notEnoughAssistants);
+					throw new IllegalActionException(NOTENOUGHASSISTANTS);
 				itemOnSale = playersMap.get(client).getPoliticCard().remove(index-1);
 				break;
 			case "assistant":
 				if (playersMap.get(client).getAssistants().getAmount() < index)
-					throw new IllegalActionException(notEnoughAssistants);
+					throw new IllegalActionException(NOTENOUGHASSISTANTS);
 				itemOnSale = new Assistants(index);
 				playersMap.get(client).getAssistants().decreaseAmount(index);
 				break;
 			default:
-				throw new IllegalActionException(wrongSelection);
+				throw new IllegalActionException(WRONGSELECTION);
 			}
 			game.getMarket().addItemOnSale(itemOnSale, price, playersMap.get(client));
 			updatePlayers(playersMap.get(client), game.getPlayers().indexOf(playersMap.get(client)));
@@ -402,12 +400,12 @@ public class Controller {
 			int index = Integer.parseInt(card);
 			Player player = playersMap.get(client);
 			if (index > player.getPermissionCard().size() || index < 1)
-				throw new IllegalActionException(wrongSelection);
+				throw new IllegalActionException(WRONGSELECTION);
 			player.getPermissionCard().get(index - 1).getCardReward().assignBonusTo(playersMap.get(client));
 			updatePlayers(player, game.getPlayers().indexOf(player));
 		} catch (IllegalActionException | NumberFormatException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
-			client.notifyIllegalAction(new IllegalActionException(wrongSelection));
+			client.notifyIllegalAction(new IllegalActionException(WRONGSELECTION));
 			client.askSelectRewardOfPermissionCard();
 		}
 	}
@@ -433,7 +431,7 @@ public class Controller {
 
 		} catch (NumberFormatException | IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
-			client.notifyIllegalAction(new IllegalActionException(wrongSelection));
+			client.notifyIllegalAction(new IllegalActionException(WRONGSELECTION));
 			client.askSelectRewardOfPermissionCard();
 		}
 	}

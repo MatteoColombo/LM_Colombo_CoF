@@ -43,13 +43,15 @@ import server.model.player.Assistants;
 import server.model.player.PermissionCard;
 import server.model.player.PoliticCard;
 import util.ColorConverter;
+
 /**
  * Game.fxml controller class
+ * 
  * @author gianpaolobranca
  *
  */
 public class GameController {
-	
+
 	// nobility scale parameters for positioning on the map
 	private static final int NOBILITY_START_X = 26;
 	private static final int NOBILITY_START_Y = 775;
@@ -64,8 +66,9 @@ public class GameController {
 	private static final String SHUFFLE = "shuffle";
 	private static final String SLIDE2 = "secondarySlide";
 	private static final String DRAGK = "dragKing";
-	
-	
+	private static final String CITY = " -city ";
+	private static final String PERMISSION = " -permission";
+
 	private MainApp mainApp;
 	private PlayerProperty myData;
 
@@ -129,7 +132,7 @@ public class GameController {
 
 	@FXML
 	private VBox opponentsBox;
-	
+
 	@FXML
 	private TableView<ItemProperty> itemsTable;
 	@FXML
@@ -137,23 +140,25 @@ public class GameController {
 	@FXML
 	private TableColumn<ItemProperty, String> priceColumn;
 	@FXML
-	private Pane itemPane; 
+	private Pane itemPane;
 	@FXML
 	private Button buyButton;
 	@FXML
 	private Button endBuyButton;
-	
+
 	@FXML
 	private TextArea logger;
 
 	private String gameStatus = "";
-	
+
 	private Node kingOldPosition;
 	private Node kingNewPosition;
-	
+
 	/**
 	 * create a popup when something goes wrong
-	 * @param msg the message to show in the alert popup
+	 * 
+	 * @param msg
+	 *            the message to show in the alert popup
 	 */
 	public void showAlert(String msg) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -163,26 +168,32 @@ public class GameController {
 		alert.setContentText(msg);
 		alert.show();
 	}
+
 	/**
 	 * change the game status
+	 * 
 	 * @param newStatus
 	 */
 	public void changeStatus(String newStatus) {
 		gameStatus = newStatus;
 	}
+
 	/**
 	 * log a message in the TextAreain the top-right corner of the screen
+	 * 
 	 * @param msg
 	 */
 	public void logMsg(String msg) {
 		logger.appendText(msg + "\n");
 	}
+
 	/**
 	 * show the sell window
 	 */
 	public void launchMarketSell() {
 		mainApp.showMarket();
 	}
+
 	/**
 	 * initialize the market table for buying
 	 */
@@ -191,9 +202,9 @@ public class GameController {
 		itemsTable.setItems(mainApp.getLocalModel().getMarket());
 		ownerColumn.setCellValueFactory(cell -> cell.getValue().owner());
 		priceColumn.setCellValueFactory(cell -> cell.getValue().price().asString());
-		
-		itemsTable.getSelectionModel().selectedItemProperty().addListener(
-	            (observable, oldValue, newValue) -> showItemDetails(newValue));
+
+		itemsTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showItemDetails(newValue));
 	}
 
 	public void setAll(MainApp mainApp) {
@@ -271,16 +282,17 @@ public class GameController {
 	private void showMarket() {
 		mainApp.showMarket();
 	}
-	
+
 	private void resetKing() {
-		if(kingOldPosition != null) {
+		if (kingOldPosition != null) {
 			kingNewPosition.setVisible(false);
 			kingOldPosition.setVisible(true);
 			kingOldPosition = null;
 		}
 	}
+
 	/**
-	 * initialize all the action buttons and the labels, binding them to the 
+	 * initialize all the action buttons and the labels, binding them to the
 	 * {@link PlayerProperty} of the user
 	 */
 	private void initMyData() {
@@ -305,7 +317,7 @@ public class GameController {
 	private void initPoliticList() {
 		politicList.setItems(myData.getPoliticCards());
 		politicList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		
+
 		// allow drag of the selected cards when the game is in
 		// "build emporium with king" (KING) or
 		// "buy permission card" (PERM) status
@@ -339,7 +351,7 @@ public class GameController {
 			}
 		});
 	}
-	
+
 	private void initPermissionList() {
 		permissionList.setItems(myData.getPermissions());
 
@@ -359,37 +371,39 @@ public class GameController {
 					if (EMP.equals(gameStatus)) {
 						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
 						ClipboardContent content = new ClipboardContent();
-						content.putString("" + (this.getIndex()+1));
+						content.putString("" + (this.getIndex() + 1));
 						db.setContent(content);
 						event.consume();
 					}
 				});
-				// trigger with the special bonus "take the reward from a permission card you have"
+				// trigger with the special bonus "take the reward from a
+				// permission card you have"
 				this.setOnMouseClicked(event -> {
-					if("fromPermit".equals(gameStatus)) {
-						mainApp.sendMsg("" + (this.getIndex()+1));
+					if ("fromPermit".equals(gameStatus)) {
+						mainApp.sendMsg("" + (this.getIndex() + 1));
 					}
 				});
-				
+
 				this.setOnMouseEntered(event -> {
-					if("fromPermit".equals(gameStatus)) {
+					if ("fromPermit".equals(gameStatus)) {
 						this.setEffect(new Glow());
 					}
 					event.consume();
 				});
-				
+
 				this.setOnMouseExited(event -> {
-					if(this.isDisabled()) {
+					if (this.isDisabled()) {
 						ColorAdjust grayscale = new ColorAdjust();
 						grayscale.setSaturation(-1);
 						this.setEffect(grayscale);
 					} else {
 						this.setEffect(null);
 					}
-				});				
+				});
 			}
 		});
 	}
+
 	// generate a pane for each opponent
 	private void initOpponentsPanes() {
 		ObservableList<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
@@ -403,57 +417,59 @@ public class GameController {
 
 	private void initMap() {
 		for (SimpleRegion r : mainApp.getLocalModel().getMap().getRegions()) {
-			
+
 			for (SimpleCity sc : r.getCities()) {
 
 				AnchorPane cityPane = (AnchorPane) mapPane.lookup("#" + sc.getName().toLowerCase());
 
 				AnchorPane innerPane = Collection.city(sc);
-				
+
 				Node king = innerPane.lookup("#king");
 				king.visibleProperty().bindBidirectional(sc.hasKing());
-				// allow drop when the king is dragged over, or when the player want to build
+				// allow drop when the king is dragged over, or when the player
+				// want to build
 				// an emporium here
 				cityPane.setOnDragOver(event -> {
-					if (EMP.equals(gameStatus) ||  DRAGK.equals(gameStatus)) {
+					if (EMP.equals(gameStatus) || DRAGK.equals(gameStatus)) {
 						cityPane.setEffect(new Glow());
 						event.acceptTransferModes(TransferMode.MOVE);
-					}	
+					}
 					event.consume();
 				});
 
 				cityPane.setOnDragExited(event -> cityPane.setEffect(null));
-				
+
 				cityPane.setOnDragDropped(event -> {
 					// TODO not yet tested
 					Dragboard db = event.getDragboard();
-					if(DRAGK.equals(gameStatus)) {
+					if (DRAGK.equals(gameStatus)) {
 						gameStatus = "king";
 						kingNewPosition = king;
 						king.setVisible(true);
-					}
-					else if (db.hasString() && EMP.equals(gameStatus)) {
-						String action = gameStatus + " -city " + cityPane.getId() + " -permission " + db.getString();
+					} else if (db.hasString() && EMP.equals(gameStatus)) {
+						String action = gameStatus + CITY + cityPane.getId() + PERMISSION + db.getString();
 						logger.appendText(action);
-						mainApp.sendMsg(gameStatus + " -city " + cityPane.getId() + " -permission " + db.getString());
+						mainApp.sendMsg(
+								gameStatus + CITY + cityPane.getId() + PERMISSION + db.getString());
 					}
 				});
-				// trigger when a player can take the Reward from this city with the nobility bonus
+				// trigger when a player can take the Reward from this city with
+				// the nobility bonus
 				cityPane.setOnMouseClicked(event -> {
-					if("city".equals(gameStatus)) {
+					if ("city".equals(gameStatus)) {
 						mainApp.sendMsg(cityPane.getId());
 					}
 				});
-				
+
 				cityPane.setOnMouseEntered(event -> {
-					if("city".equals(gameStatus)) {
+					if ("city".equals(gameStatus)) {
 						cityPane.setEffect(new Glow());
 					}
 					event.consume();
 				});
-				
+
 				cityPane.setOnMouseExited(event -> cityPane.setEffect(null));
-				
+
 				HBox bonusBox = (HBox) innerPane.lookup("#bonusBox");
 				for (SimpleBonus sb : sc.getBonuses()) {
 
@@ -461,56 +477,58 @@ public class GameController {
 					bonusBox.getChildren().add(bonusPane);
 				}
 				cityPane.getChildren().add(innerPane);
-				
+
 				initKing(cityPane, king);
 			}
 		}
 	}
-	
+
 	private void initKing(AnchorPane cityPane, Node king) {
 		// TODO fix the king disappear bug
 		king.setOnDragDetected(event -> {
-			
-			// allow dragging the king if the player want to buld emporium with it
+
+			// allow dragging the king if the player want to buld emporium with
+			// it
 			Dragboard db = king.startDragAndDrop(TransferMode.ANY);
 			ClipboardContent content = new ClipboardContent();
-			if(KING.equals(gameStatus)) {
+			if (KING.equals(gameStatus)) {
 				gameStatus = DRAGK;
 				content.putString(KING);
 				db.setContent(content);
 				event.consume();
-			}		
+			}
 		});
-		
+
 		king.setOnDragDone(event -> {
-			if(kingOldPosition == null) {
+			if (kingOldPosition == null) {
 				kingOldPosition = king;
 			}
 			king.setVisible(false);
 		});
-		
+
 		king.setOnDragOver(event -> {
-			if(KING.equals(gameStatus)) {
+			if (KING.equals(gameStatus)) {
 				king.setEffect(new Glow());
 				event.acceptTransferModes(TransferMode.MOVE);
-			}	
+			}
 			event.consume();
 		});
-		
+
 		king.setOnDragExited(event -> king.setEffect(null));
-		
-		// trigger when a player drop politic cards over it, sending the action to the server
+
+		// trigger when a player drop politic cards over it, sending the action
+		// to the server
 		king.setOnDragDropped(event -> {
 			Dragboard db = event.getDragboard();
-			if(db.hasString()) {
+			if (db.hasString()) {
 				resetKing();
-				mainApp.sendMsg(gameStatus + 
-						" -city " + cityPane.getId()
-						+ " -cards " + db.getString());
+				mainApp.sendMsg(gameStatus + CITY + cityPane.getId() + " -cards " + db.getString());
 			}
 		});
 	}
-	// connect the cities, it work since the Anchorpane on the map has the same id as the city linked
+
+	// connect the cities, it work since the Anchorpane on the map has the same
+	// id as the city linked
 	private void initConnections() {
 		for (SimpleRegion r : mainApp.getLocalModel().getMap().getRegions()) {
 			for (SimpleCity sc : r.getCities()) {
@@ -542,7 +560,6 @@ public class GameController {
 		}
 	}
 
-	
 	private void initCouncils() {
 		CouncilProperty kingCouncil = mainApp.getLocalModel().getMap().getKingCouncil();
 		initCouncil(kingCouncilBox, kingCouncil);
@@ -559,7 +576,8 @@ public class GameController {
 	private void initCouncil(HBox location, CouncilProperty council) {
 		for (StringProperty color : council.colors()) {
 			Rectangle councilor = Collection.councilor(color.get());
-			// ensure that the label indicating the remaining councilors is correct
+			// ensure that the label indicating the remaining councilors is
+			// correct
 			// without receiving the information from the server
 			color.addListener((observable, oldValue, newValue) -> {
 
@@ -575,8 +593,7 @@ public class GameController {
 		}
 		// allow drop is the player want to slide a council
 		location.setOnDragOver(event -> {
-			if (event.getGestureSource() != location
-					&& (SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus))) {
+			if (event.getGestureSource() != location && (SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus))) {
 				location.setEffect(new Glow());
 				event.acceptTransferModes(TransferMode.MOVE);
 			}
@@ -594,7 +611,7 @@ public class GameController {
 				} else {
 					String id = location.getId();
 					int index = Integer.parseInt(id.substring(id.length() - 1));
-					mainApp.sendMsg(gameStatus + " -council " + (index+1) + " -color " + db.getString());
+					mainApp.sendMsg(gameStatus + " -council " + (index + 1) + " -color " + db.getString());
 				}
 			}
 		});
@@ -616,8 +633,7 @@ public class GameController {
 				 * least one councilor of the selected color to drag from the
 				 * poll
 				 */
-				if ((SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus))
-						&& (hexColor.getValue().get() > 0)) {
+				if ((SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus)) && (hexColor.getValue().get() > 0)) {
 					Dragboard db = councilor.startDragAndDrop(TransferMode.ANY);
 
 					ClipboardContent content = new ClipboardContent();
@@ -703,7 +719,7 @@ public class GameController {
 
 	private void initPermissions() {
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
-		
+
 		for (int i = 0; i < regions.size(); i++) {
 			PermissionProperty[] permissions = regions.get(i).getPermissions();
 
@@ -720,7 +736,7 @@ public class GameController {
 				});
 
 				outerPane.setOnDragExited(event -> outerPane.setEffect(null));
-				// send the requested action to the server	
+				// send the requested action to the server
 				outerPane.setOnDragDropped(event -> {
 					Dragboard db = event.getDragboard();
 					if (db.hasString()) {
@@ -730,7 +746,7 @@ public class GameController {
 						String region = info.substring(0, 1);
 						int cardIndex = Integer.valueOf(card) + 1;
 						int regionIndex = Integer.valueOf(region) + 1;
-						mainApp.sendMsg(gameStatus + " -region " + regionIndex + " -permission " + cardIndex
+						mainApp.sendMsg(gameStatus + " -region " + regionIndex + PERMISSION + cardIndex
 								+ " -cards " + db.getString());
 					}
 				});
@@ -741,7 +757,7 @@ public class GameController {
 				outerPane.getChildren().add(innerPane);
 				// can trigger when the player can take a free permission card
 				outerPane.setOnMouseClicked(event -> {
-					if("takePermission".equals(gameStatus)) {
+					if ("takePermission".equals(gameStatus)) {
 						String id = outerPane.getId();
 						String info = id.substring(id.length() - 3);
 						String card = info.substring(2);
@@ -751,64 +767,65 @@ public class GameController {
 						mainApp.sendMsg(regionIndex + " " + cardIndex);
 					}
 				});
-				
+
 				outerPane.setOnMouseEntered(event -> {
-					if("takePermission".equals(gameStatus)) {
+					if ("takePermission".equals(gameStatus)) {
 						outerPane.setEffect(new Glow());
 					}
 					event.consume();
 				});
-				
+
 				outerPane.setOnMouseExited(event -> outerPane.setEffect(null));
 			}
 		}
 	}
+
 	private void initRegionSymbols() {
 		int regionNumbers = mainApp.getLocalModel().getMap().getRegions().size();
-		for(int i = 0; i < regionNumbers; i ++) {
+		for (int i = 0; i < regionNumbers; i++) {
 			Node regionSymbol = mapPane.lookup("#region" + i);
-			
+
 			// can trigger when a player want to shuffle this region
 			regionSymbol.setOnMouseEntered(event -> {
-				if(SHUFFLE.equals(gameStatus)) {
+				if (SHUFFLE.equals(gameStatus)) {
 					regionSymbol.setEffect(new Bloom());
 				}
 				event.consume();
 			});
-			
+
 			regionSymbol.setOnMouseExited(event -> regionSymbol.setEffect(null));
-			
+
 			regionSymbol.setOnMouseClicked(event -> {
-				if(SHUFFLE.equals(gameStatus)) {
-					int number = Integer.valueOf(regionSymbol.getId().substring(regionSymbol.getId().length()-1));
-					mainApp.sendMsg(gameStatus + " -region " + (number+1));
+				if (SHUFFLE.equals(gameStatus)) {
+					int number = Integer.valueOf(regionSymbol.getId().substring(regionSymbol.getId().length() - 1));
+					mainApp.sendMsg(gameStatus + " -region " + (number + 1));
 				}
 			});
 		}
 	}
-	
+
 	private void showItemDetails(ItemProperty item) {
-		
+
 		itemPane.getChildren().clear();
 		buyButton.setDisable(false);
-		
+
 		Soldable itemOnSale = item.getItem();
 		// show the item
-		if(itemOnSale instanceof Assistants) {
-			
+		if (itemOnSale instanceof Assistants) {
+
 			Image assistantImage = new Image(MainApp.class.getResource("/simboli/assistants.png").toString());
 			ImageView assistant = new ImageView(assistantImage);
 			assistant.fitWidthProperty().set(40);
 			assistant.preserveRatioProperty().set(true);
 			itemPane.getChildren().add(assistant);
-			
+
 			Label amount = new Label();
 			amount.setText("x" + ((Assistants) itemOnSale).getAmount());
 			itemPane.getChildren().add(amount);
-			
-		} else if(itemOnSale instanceof PoliticCard) {
+
+		} else if (itemOnSale instanceof PoliticCard) {
 			String politicColor;
-			if(((PoliticCard) itemOnSale).isMultipleColor()) {
+			if (((PoliticCard) itemOnSale).isMultipleColor()) {
 				politicColor = "multi";
 			} else {
 				politicColor = ColorConverter.awtToWeb(((PoliticCard) itemOnSale).getCardColor());
@@ -818,21 +835,21 @@ public class GameController {
 			politicCard.fitWidthProperty().set(100);
 			politicCard.preserveRatioProperty().set(true);
 			itemPane.getChildren().add(politicCard);
-			
-		} else if(itemOnSale instanceof PermissionCard) {
-			
+
+		} else if (itemOnSale instanceof PermissionCard) {
+
 			PermissionProperty permission = new PermissionProperty((PermissionCard) itemOnSale);
 			AnchorPane permissionPane = Collection.permissionCard(permission);
 			itemPane.getChildren().add(permissionPane);
 		}
 	}
-	
+
 	@FXML
 	private void handleBuy() {
-		mainApp.sendMsg("" + (itemsTable.getSelectionModel().getSelectedIndex()+1));
+		mainApp.sendMsg("" + (itemsTable.getSelectionModel().getSelectedIndex() + 1));
 		buyButton.setDisable(true);
 	}
-	
+
 	@FXML
 	private void handleEndBuy() {
 		mainApp.sendMsg("end");

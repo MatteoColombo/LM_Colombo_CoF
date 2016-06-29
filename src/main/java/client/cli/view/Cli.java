@@ -42,9 +42,9 @@ public class Cli implements ViewInterface {
 	 * use
 	 */
 	public void showGetConnectionType() {
-		writer.print("                             W E L C O M E !\n" + "\n" + "\n"
+		writer.println("                             W E L C O M E !\n" + "\n" + "\n"
 				+ "                    Select how do you want to connect:\n"
-				+ "                          (1) Socket - (2) RMI\n" + "                                 --> ");
+				+ "                          (1) Socket - (2) RMI");
 	}
 
 	/**

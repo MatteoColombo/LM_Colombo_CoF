@@ -19,6 +19,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.Bloom;
@@ -67,7 +68,7 @@ public class GameController {
 	private static final String SLIDE2 = "secondarySlide";
 	private static final String DRAGK = "dragKing";
 	private static final String CITY = " -city ";
-	private static final String PERMISSION = " -permission";
+	private static final String PERMISSION = " -permission ";
 
 	private MainApp mainApp;
 	private PlayerProperty myData;
@@ -153,7 +154,14 @@ public class GameController {
 
 	private Node kingOldPosition;
 	private Node kingNewPosition;
+	
+	SnapshotParameters params = new SnapshotParameters();
 
+	@FXML
+	private void Initialize() {
+		params.setFill(Color.TRANSPARENT);
+	}
+	
 	/**
 	 * create a popup when something goes wrong
 	 * 
@@ -284,7 +292,7 @@ public class GameController {
 	}
 
 	private void resetKing() {
-		if (kingOldPosition != null) {
+		if (kingOldPosition != null && kingNewPosition != null) {
 			kingNewPosition.setVisible(false);
 			kingOldPosition.setVisible(true);
 			kingOldPosition = null;
@@ -365,17 +373,19 @@ public class GameController {
 				} else {
 					AnchorPane permissionPane = Collection.permissionCard(item);
 					setGraphic(permissionPane);
+					
+					// allow drag when the player want to build emporium
+					permissionPane.setOnDragDetected(event -> {
+						if (EMP.equals(gameStatus)) {
+							Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+							ClipboardContent content = new ClipboardContent();
+							content.putString("" + (this.getIndex() + 1));
+							db.setContent(content);
+							db.setDragView(permissionPane.snapshot(params, null));
+							event.consume();
+						}
+					});
 				}
-				// allow drag when the player want to build emporium
-				this.setOnDragDetected(event -> {
-					if (EMP.equals(gameStatus)) {
-						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
-						ClipboardContent content = new ClipboardContent();
-						content.putString("" + (this.getIndex() + 1));
-						db.setContent(content);
-						event.consume();
-					}
-				});
 				// trigger with the special bonus "take the reward from a
 				// permission card you have"
 				this.setOnMouseClicked(event -> {
@@ -495,6 +505,7 @@ public class GameController {
 				gameStatus = DRAGK;
 				content.putString(KING);
 				db.setContent(content);
+				db.setDragView(king.snapshot(params, null));
 				event.consume();
 			}
 		});
@@ -639,12 +650,13 @@ public class GameController {
 					ClipboardContent content = new ClipboardContent();
 					content.putString(councilor.getId());
 					db.setContent(content);
+					db.setDragView(councilor.snapshot(null, null));
 					event.consume();
 				}
 			});
 
 			Label amount = new Label();
-			amount.textProperty().bind(pool.get(hexColor).asString());
+			amount.textProperty().bind(hexColor.getValue().asString());
 
 			amount.setStyle("-fx-background-color: black;");
 

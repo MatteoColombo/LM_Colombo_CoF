@@ -4,6 +4,7 @@ import client.gui.control.MainApp;
 import client.gui.model.PermissionProperty;
 import client.gui.model.PlayerProperty;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -17,6 +18,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class MarketController {
@@ -43,6 +45,8 @@ public class MarketController {
 	private PlayerProperty myData;
 	private Stage dialogStage;
 	
+	SnapshotParameters params = new SnapshotParameters();
+	
 	@FXML
 	private void initialize() {
 		permissionList.prefWidthProperty().bind(borderPane.widthProperty().divide(2));
@@ -52,6 +56,8 @@ public class MarketController {
 		
 		Collection.addNumericRestriction(assistantField);
 		Collection.addNumericRestriction(priceField);
+		
+		params.setFill(Color.TRANSPARENT);
 	}
 	
     public void setDialogStage(Stage dialogStage) {
@@ -87,6 +93,7 @@ public class MarketController {
 						ClipboardContent content = new ClipboardContent();
 						content.putString("politic " + (this.getIndex()+1));
 						db.setContent(content);
+						db.setDragView(this.snapshot(params, null));
 						event.consume();
 					});
 				}
@@ -102,7 +109,6 @@ public class MarketController {
 			public void updateItem(PermissionProperty item, boolean empty) {
 				super.updateItem(item, empty);
 				if (empty) {
-					setText(null);
 					setGraphic(null);
 				} else {
 					AnchorPane permissionPane = Collection.permissionCard(item);
@@ -113,6 +119,7 @@ public class MarketController {
 					ClipboardContent content = new ClipboardContent();
 					content.putString("permission " + (this.getIndex()+1));
 					db.setContent(content);
+					db.setDragView(this.getChildren().get(0).snapshot(null, null));
 					event.consume();
 				});
 			}
@@ -129,6 +136,7 @@ public class MarketController {
 				ClipboardContent content = new ClipboardContent();
 				content.putString("assistant " + assistantField.getText());
 				db.setContent(content);
+				db.setDragView(assistantImage.snapshot(params, null));
 				event.consume();
 			}		
 		});

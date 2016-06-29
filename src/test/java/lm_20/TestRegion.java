@@ -68,5 +68,6 @@ public class TestRegion {
 			city.addEmporium(p.getEmporium().remove(0));
 		}	
 		assertEquals(region.isCompleted(p), true);
+		assertEquals(null, region.getCity("dlksalk"));
 	}
 }

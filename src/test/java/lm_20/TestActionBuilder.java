@@ -175,4 +175,19 @@ public class TestActionBuilder {
 		a.execute();
 		assertEquals(2, player.getMainActionsLeft());
 	}
+	
+	@Test
+	public void testActionBuilderFails(){
+			ActionBuilder builder= new ActionBuilder(board, config);
+			try{
+				builder.parseCity(null);
+			}catch(IllegalActionException e){
+				assertEquals("no city given", e.getMessage());
+			}
+			try {
+				builder.parseCity("lsjfaskas");
+			} catch (IllegalActionException e) {
+				assertEquals("invalid city", e.getMessage());
+			}
+	}
 }

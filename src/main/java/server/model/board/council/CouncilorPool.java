@@ -22,9 +22,9 @@ import java.util.Random;
  * @see CouncilorColorAvailability
  */
 public class CouncilorPool {
-	private final int CONCPERCOLOR;
-	private final int COUNCILSIZE;
-	private final int COLORSNUMBER;
+	private final int concPerColor;
+	private final int councSize;
+	private final int colorsNumber;
 	private CouncilorColorAvailability[] availCounc;
 	private List<Color> colors;
 	private int generatedCouncils;
@@ -36,17 +36,17 @@ public class CouncilorPool {
 	 * 
 	 * @param councPerColor
 	 *            the number of Councilors per Color
-	 * @param councilSize
+	 * @param councSize
 	 *            the number of Councilors per Council
 	 * @param colors
 	 *            the list of the Colors of the Councilors
 	 * @see CouncilorPool
 	 */
-	public CouncilorPool(int councPerColor, int councilSize, List<Color> colors) {
-		this.CONCPERCOLOR = councPerColor;
-		this.COUNCILSIZE = councilSize;
+	public CouncilorPool(int councPerColor, int councSize, List<Color> colors) {
+		this.concPerColor = councPerColor;
+		this.councSize = councSize;
 		this.colors = colors;
-		this.COLORSNUMBER = colors.size();
+		this.colorsNumber = colors.size();
 		initializeAvailCounc();
 		generatedCouncils = 0;
 	}
@@ -58,9 +58,9 @@ public class CouncilorPool {
 	 * @see CouncilorPool
 	 */
 	private void initializeAvailCounc() {
-		availCounc = new CouncilorColorAvailability[COLORSNUMBER];
-		for (int i = 0; i < COLORSNUMBER; i++) {
-			availCounc[i] = new CouncilorColorAvailability(CONCPERCOLOR, colors.get(i));
+		availCounc = new CouncilorColorAvailability[colorsNumber];
+		for (int i = 0; i < colorsNumber; i++) {
+			availCounc[i] = new CouncilorColorAvailability(concPerColor, colors.get(i));
 		}
 	}
 
@@ -155,8 +155,8 @@ public class CouncilorPool {
 		Random r = new Random();
 		ArrayList<Councilor> generatedCouncil = new ArrayList<>();
 		int i = 0;
-		while (i < COUNCILSIZE) {
-			int temp = r.nextInt(COLORSNUMBER);
+		while (i < councSize) {
+			int temp = r.nextInt(colorsNumber);
 			if (isAvailable(colors.get(temp))) {
 				generatedCouncil.add(getCouncilor(colors.get(temp)));
 				i++;
@@ -174,7 +174,7 @@ public class CouncilorPool {
 	 * @see CouncilorPool
 	 */
 	public boolean canGenerateCouncil() {
-		if ((generatedCouncils * COUNCILSIZE) > (COLORSNUMBER * CONCPERCOLOR - COUNCILSIZE))
+		if ((generatedCouncils * councSize) > (colorsNumber * concPerColor - councSize))
 			return false;
 		return true;
 	}
@@ -191,7 +191,7 @@ public class CouncilorPool {
 	}
 	
 	public int getCouncPerColor() {
-		return this.CONCPERCOLOR;
+		return this.concPerColor;
 	}
 
 }

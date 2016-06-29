@@ -37,7 +37,7 @@ import server.model.player.Player;
  * @see Player
  */
 public class Region {
-	private final int NUM_CARDS;
+	private final int numDisclosedCards;
 	private String regionName;
 	private List<City> cities;
 	private Council regionCouncil;
@@ -57,12 +57,12 @@ public class Region {
 	 * @see Region
 	 */
 	public Region(String regionName, List<City> cities, Council regionCouncil, int numDisclosedPermCards) {
-		this.NUM_CARDS = numDisclosedPermCards;
+		this.numDisclosedCards = numDisclosedPermCards;
 		this.regionName = regionName;
 		this.regionCouncil = regionCouncil;
 		this.cities = cities;
 		this.regionCouncil = regionCouncil;
-		permissionCards = new PermissionCard[NUM_CARDS];
+		permissionCards = new PermissionCard[numDisclosedCards];
 		for (int i = 0; i < permissionCards.length; i++)
 			generatePermissionCard(i);
 	}

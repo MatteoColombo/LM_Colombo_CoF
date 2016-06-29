@@ -56,7 +56,11 @@ public class TestBoard {
 		assertEquals(8, bColorRew.get(1).getBRBonus().getAmount());
 		assertEquals(5, bRegionRew.get(0).getBRBonus().getAmount());
 		assertEquals(12, bKingRew.get(2).getAmount());
-
+		bRManager.getRemainingBoardKingRewards().clear();
+		bRManager.assingBoardColorReward(Color.decode("#000000"));
+		assertEquals(0,bRManager.assingBoardRegionReward(null).getAmount());
+		assertEquals(5,bRManager.assingBoardRegionReward(gameBoard.getRegion(0)).getAmount());
+		
 	}
 
 	@Test

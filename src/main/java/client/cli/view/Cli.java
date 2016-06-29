@@ -15,7 +15,7 @@ import client.control.ViewInterface;
 import server.model.configuration.Configuration;
 
 public class Cli implements ViewInterface {
-	
+
 	private static final String SEPARATOR = "---------------------------------------";
 
 	private PrintWriter writer;
@@ -24,25 +24,27 @@ public class Cli implements ViewInterface {
 
 	public Cli(Configuration config) {
 		this.config = config;
-		writer = new PrintWriter(System.out);
+		writer = new PrintWriter(System.out, true);
 	}
 
 	/**
 	 * This sets the model so that the view can query when it's neede
-	 * @param model the model
+	 * 
+	 * @param model
+	 *            the model
 	 */
 	public void setModel(Game model) {
 		this.model = model;
 	}
 
 	/**
-	 * This method is used to ask which type of connection the players wants to use
+	 * This method is used to ask which type of connection the players wants to
+	 * use
 	 */
 	public void showGetConnectionType() {
 		writer.print("                             W E L C O M E !\n" + "\n" + "\n"
 				+ "                    Select how do you want to connect:\n"
 				+ "                          (1) Socket - (2) RMI\n" + "                                 --> ");
-		writer.flush();
 	}
 
 	/**
@@ -66,14 +68,14 @@ public class Cli implements ViewInterface {
 				+ "                 l/                _) )_          \\I\n"
 				+ "                                   `\\ /'\n");
 
-		writer.flush();
 	}
 
-	
 	/**
-	 * This method prints the map, divided by regions 
-	 * It also prints the council and the permit cards
-	 * @param regions the regions of the map
+	 * This method prints the map, divided by regions It also prints the council
+	 * and the permit cards
+	 * 
+	 * @param regions
+	 *            the regions of the map
 	 */
 	public void printCities(List<CliRegion> regions) {
 		for (CliRegion region : regions) {
@@ -99,12 +101,12 @@ public class Cli implements ViewInterface {
 			}
 		}
 		writer.println(SEPARATOR);
-		writer.flush();
 	}
 
 	/**
-	 * Prints the players of the game and their statistics,
-	 * For the local player, also the permit and the politic cards are printed
+	 * Prints the players of the game and their statistics, For the local
+	 * player, also the permit and the politic cards are printed
+	 * 
 	 * @param players
 	 */
 	public void printPlayers(List<CliPlayer> players) {
@@ -123,14 +125,12 @@ public class Cli implements ViewInterface {
 				printPermission(players.get(i).getPermission());
 			}
 		}
-
 		writer.println(SEPARATOR);
-		writer.flush();
 	}
 
 	/**
-	 * Prints the bonus of a city
-	 * Prints the king if the city "contains" it
+	 * Prints the bonus of a city Prints the king if the city "contains" it
+	 * 
 	 * @param city
 	 */
 	private void printBonus(CliCity city) {
@@ -147,84 +147,75 @@ public class Cli implements ViewInterface {
 
 	/**
 	 * Prints the permission cards, it is used for the map and for the players
+	 * 
 	 * @param permissions
 	 */
 	private void printPermission(List<CliPermission> permissions) {
 		for (CliPermission perm : permissions) {
-			writer.print((permissions.indexOf(perm)+1) + ". ");
+			writer.print((permissions.indexOf(perm) + 1) + ". ");
 			perm.getCities().stream().map(city -> city.substring(0, 1).toUpperCase())
 					.forEach(letter -> writer.print(letter.toUpperCase() + "\\"));
 			perm.getReward().stream().forEach(reward -> writer
 					.print(" " + reward.getName().substring(0, 3).toUpperCase() + " " + reward.getValue() + " "));
 			writer.println(perm.isUsed() ? "| USED" : "| AVAILABLE");
 		}
-		writer.flush();
 	}
 
 	@Override
 	public void printAskPlayersNumber(int max) {
 		writer.println("Choose the maximum number of players. Game limit is " + max);
-		writer.flush();
 	}
 
 	@Override
 	public void printAskWhichMapToUse() {
 		writer.println("Choose the number of the map:");
 		List<String> maps = config.getMaps();
-		for (int i = 1; i <= maps.size(); i++) {
+		for (int i = 1; i <= maps.size(); i++) 
 			writer.println(i + ". Map " + i);
-		}
-		writer.flush();
 	}
 
 	@Override
 	public void printAskWhatActionToDo() {
 		writer.println("Type in the action that you want to do: (Read the README for instructions)");
-		writer.flush();
+
 	}
 
 	@Override
 	public void printAskPlayerName() {
 		writer.println("Type in your name:");
-		writer.flush();
 	}
 
 	@Override
 	public void printIllegalAction(Exception e) {
 		writer.println("Error: " + e.getMessage());
-		writer.flush();
+
 	}
 
 	@Override
 	public void showGame() {
 		writer.println(SEPARATOR);
 		writer.println("The game started");
-		writer.flush();
 		printCities(model.getRegions());
 	}
 
 	@Override
 	public void showRoom() {
 		writer.println("\nThe game will start soon");
-		writer.flush();
 	}
 
 	@Override
 	public void printMessage(String message) {
 		writer.println(message);
-		writer.flush();
 	}
 
 	@Override
 	public void changeStatusToNobilityBonus(String message, String status) {
 		writer.println(message);
-		writer.flush();
 	}
 
 	@Override
 	public void showMarket() {
-		// TODO Auto-generated method stub
-		
+		writer.println("The market started!");
 	}
 
 }

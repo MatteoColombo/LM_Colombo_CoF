@@ -28,9 +28,7 @@ import server.model.reward.RewardPermission;
  * @see Reward
  */
 public class PermissionCard implements Soldable, Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 8717409237659947557L;
 	private List<City> cities;
 	private Reward reward;

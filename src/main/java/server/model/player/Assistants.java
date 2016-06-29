@@ -16,9 +16,6 @@ import server.model.market.Soldable;
  */
 public class Assistants implements Serializable, Soldable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 9031524695299977578L;
 	private int amount;
 

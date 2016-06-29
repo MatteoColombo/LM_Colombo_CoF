@@ -13,8 +13,7 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author Davide Cavallini
- *
+ * This is the class which represents the game status of the player
  */
 public class Player implements Serializable {
 
@@ -63,6 +62,13 @@ public class Player implements Serializable {
 		}
 	}
 
+	/**
+	 * This is the constructor that should be used when creating a regular player for a client
+	 * @param config the configuration object, it's needed for the parameters
+	 * @param numberOfPlayers the number of players already in the game before this one
+	 * @param client the ClientInt of the client which represents this player
+	 * @param track the nobility track
+	 */
 	public Player(Configuration config, int numberOfPlayers, ClientInt client, NobilityTrack track) {
 		this.coins = new Coins(config.getInitialPlayerMoney() + numberOfPlayers);
 		this.assistants = new Assistants(config.getInitialPlayerHelpers() + numberOfPlayers);
@@ -134,13 +140,17 @@ public class Player implements Serializable {
 		this.client = client;
 	}
 
+	/**
+	 * 
+	 * @return a new Player which is a simplified copy of this one
+	 */
 	public Player getClientCopy() {
 		return new Player(this);
 	}
 
 	/**
 	 * 
-	 * @return
+	 * @return the Coins object
 	 */
 	public Coins getCoins() {
 		return this.coins;
@@ -148,7 +158,7 @@ public class Player implements Serializable {
 
 	/**
 	 * 
-	 * @return
+	 * @return the assistants object
 	 */
 	public Assistants getAssistants() {
 		return this.assistants;
@@ -156,7 +166,7 @@ public class Player implements Serializable {
 
 	/**
 	 * 
-	 * @return
+	 * @return the victory points object
 	 */
 	public VictoryPoints getVictoryPoints() {
 		return this.victoryPoints;
@@ -164,7 +174,7 @@ public class Player implements Serializable {
 
 	/**
 	 * 
-	 * @return
+	 * @return the noble points object
 	 */
 	public NoblePoints getNoblePoints() {
 		return this.noblePoints;
@@ -172,7 +182,7 @@ public class Player implements Serializable {
 
 	/**
 	 * 
-	 * @return
+	 * @return the list of politic cards
 	 */
 	public List<PoliticCard> getPoliticCard() {
 		return this.politicCard;
@@ -180,7 +190,7 @@ public class Player implements Serializable {
 
 	/**
 	 * 
-	 * @return
+	 * @return the list of permission cards
 	 */
 	public List<PermissionCard> getPermissionCard() {
 		return this.permissionCard;
@@ -188,7 +198,7 @@ public class Player implements Serializable {
 
 	/**
 	 * 
-	 * @return
+	 * @return the list of emporium not yet built
 	 */
 	public List<Emporium> getEmporium() {
 		return this.emporium;
@@ -196,14 +206,14 @@ public class Player implements Serializable {
 
 	/**
 	 * 
-	 * @return
+	 * @return returns the number of remaining main actions
 	 */
 	public int getMainActionsLeft() {
 		return this.mainActions;
 	}
 
 	/**
-	 * 
+	 * increases by one the number of main actions left
 	 */
 	public void increaseMainAction() {
 		this.mainActions++;
@@ -211,14 +221,14 @@ public class Player implements Serializable {
 
 	/**
 	 * 
-	 * @return
+	 * @return true if the extra action was done, false otherwise
 	 */
 	public boolean getIfExtraActionDone() {
 		return this.extraAction;
 	}
 
 	/**
-	 * 
+	 * Resets the extra and main action so that the player can start a new round
 	 */
 	public void actionsReset() {
 		this.mainActions = DEFAULTMAINACTION;
@@ -226,21 +236,21 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Decreases by one the number of main actions left
 	 */
 	public void doMainAction() {
 		this.mainActions--;
 	}
 
 	/**
-	 * 
+	 * Sets as done the extra action
 	 */
 	public void doExtraAction() {
 		this.extraAction = true;
 	}
 
 	/**
-	 * 	
+	 * 	Draws a new politic cards and adds it to the hand
 	 */
 	public void drawAPoliticCard() {
 		this.politicCard.add(new PoliticCard(this.pickedColours));
@@ -282,6 +292,10 @@ public class Player implements Serializable {
 		return this.name;
 	}
 
+	/**
+	 * Sets the name of the player
+	 * @param name the name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}

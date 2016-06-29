@@ -43,9 +43,14 @@ import server.model.player.Assistants;
 import server.model.player.PermissionCard;
 import server.model.player.PoliticCard;
 import util.ColorConverter;
-
+/**
+ * Game.fxml controller class
+ * @author gianpaolobranca
+ *
+ */
 public class GameController {
 	
+	// nobility scale parameters for positioning on the map
 	private static final int NOBILITY_START_X = 26;
 	private static final int NOBILITY_START_Y = 775;
 	private static final int NOBILITY_HEIGHT = 60;
@@ -146,6 +151,10 @@ public class GameController {
 	private Node kingOldPosition;
 	private Node kingNewPosition;
 	
+	/**
+	 * create a popup when something goes wrong
+	 * @param msg the message to show in the alert popup
+	 */
 	public void showAlert(String msg) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.initOwner(mainApp.getPrimaryStage());
@@ -154,19 +163,29 @@ public class GameController {
 		alert.setContentText(msg);
 		alert.show();
 	}
-	
+	/**
+	 * change the game status
+	 * @param newStatus
+	 */
 	public void changeStatus(String newStatus) {
 		gameStatus = newStatus;
 	}
-	
+	/**
+	 * log a message in the TextAreain the top-right corner of the screen
+	 * @param msg
+	 */
 	public void logMsg(String msg) {
 		logger.appendText(msg + "\n");
 	}
-	
+	/**
+	 * show the sell window
+	 */
 	public void launchMarketSell() {
 		mainApp.showMarket();
 	}
-	
+	/**
+	 * initialize the market table for buying
+	 */
 	private void initMarketBuy() {
 		endBuyButton.setDisable(false);
 		itemsTable.setItems(mainApp.getLocalModel().getMarket());
@@ -260,7 +279,10 @@ public class GameController {
 			kingOldPosition = null;
 		}
 	}
-	
+	/**
+	 * initialize all the action buttons and the labels, binding them to the 
+	 * {@link PlayerProperty} of the user
+	 */
 	private void initMyData() {
 
 		nameLabel.setText(myData.getName());
@@ -283,7 +305,10 @@ public class GameController {
 	private void initPoliticList() {
 		politicList.setItems(myData.getPoliticCards());
 		politicList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
+		
+		// allow drag of the selected cards when the game is in
+		// "build emporium with king" (KING) or
+		// "buy permission card" (PERM) status
 		politicList.setOnDragDetected(event -> {
 			if (KING.equals(gameStatus) || PERM.equals(gameStatus)) {
 				Dragboard db = politicList.startDragAndDrop(TransferMode.ANY);
@@ -299,7 +324,7 @@ public class GameController {
 				event.consume();
 			}
 		});
-
+		// populate the list. the card image is set as the cell background
 		politicList.setCellFactory(column -> new ListCell<String>() {
 			@Override
 			protected void updateItem(String item, boolean empty) {
@@ -314,7 +339,7 @@ public class GameController {
 			}
 		});
 	}
-
+	
 	private void initPermissionList() {
 		permissionList.setItems(myData.getPermissions());
 
@@ -329,7 +354,7 @@ public class GameController {
 					AnchorPane permissionPane = Collection.permissionCard(item);
 					setGraphic(permissionPane);
 				}
-
+				// allow drag when the player want to build emporium
 				this.setOnDragDetected(event -> {
 					if (EMP.equals(gameStatus)) {
 						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
@@ -339,7 +364,7 @@ public class GameController {
 						event.consume();
 					}
 				});
-				
+				// trigger with the special bonus "take the reward from a permission card you have"
 				this.setOnMouseClicked(event -> {
 					if("fromPermit".equals(gameStatus)) {
 						mainApp.sendMsg("" + (this.getIndex()+1));
@@ -365,7 +390,7 @@ public class GameController {
 			}
 		});
 	}
-
+	// generate a pane for each opponent
 	private void initOpponentsPanes() {
 		ObservableList<PlayerProperty> players = mainApp.getLocalModel().getPlayers();
 		int myIndex = mainApp.getLocalModel().getMyIndex();
@@ -387,7 +412,8 @@ public class GameController {
 				
 				Node king = innerPane.lookup("#king");
 				king.visibleProperty().bindBidirectional(sc.hasKing());
-				
+				// allow drop when the king is dragged over, or when the player want to build
+				// an emporium here
 				cityPane.setOnDragOver(event -> {
 					if (EMP.equals(gameStatus) ||  DRAGK.equals(gameStatus)) {
 						cityPane.setEffect(new Glow());
@@ -397,7 +423,7 @@ public class GameController {
 				});
 
 				cityPane.setOnDragExited(event -> cityPane.setEffect(null));
-
+				
 				cityPane.setOnDragDropped(event -> {
 					// TODO not yet tested
 					Dragboard db = event.getDragboard();
@@ -412,7 +438,7 @@ public class GameController {
 						mainApp.sendMsg(gameStatus + " -city " + cityPane.getId() + " -permission " + db.getString());
 					}
 				});
-
+				// trigger when a player can take the Reward from this city with the nobility bonus
 				cityPane.setOnMouseClicked(event -> {
 					if("city".equals(gameStatus)) {
 						mainApp.sendMsg(cityPane.getId());
@@ -444,7 +470,8 @@ public class GameController {
 	private void initKing(AnchorPane cityPane, Node king) {
 		// TODO fix the king disappear bug
 		king.setOnDragDetected(event -> {
-
+			
+			// allow dragging the king if the player want to buld emporium with it
 			Dragboard db = king.startDragAndDrop(TransferMode.ANY);
 			ClipboardContent content = new ClipboardContent();
 			if(KING.equals(gameStatus)) {
@@ -472,6 +499,7 @@ public class GameController {
 		
 		king.setOnDragExited(event -> king.setEffect(null));
 		
+		// trigger when a player drop politic cards over it, sending the action to the server
 		king.setOnDragDropped(event -> {
 			Dragboard db = event.getDragboard();
 			if(db.hasString()) {
@@ -482,7 +510,7 @@ public class GameController {
 			}
 		});
 	}
-	
+	// connect the cities, it work since the Anchorpane on the map has the same id as the city linked
 	private void initConnections() {
 		for (SimpleRegion r : mainApp.getLocalModel().getMap().getRegions()) {
 			for (SimpleCity sc : r.getCities()) {
@@ -514,9 +542,7 @@ public class GameController {
 		}
 	}
 
-	/**
-	 * 
-	 */
+	
 	private void initCouncils() {
 		CouncilProperty kingCouncil = mainApp.getLocalModel().getMap().getKingCouncil();
 		initCouncil(kingCouncilBox, kingCouncil);
@@ -524,7 +550,7 @@ public class GameController {
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
 
 		for (int i = 0; i < regions.size(); i++) {
-
+			// the council has an id ending with the number of regions
 			HBox councilBox = (HBox) mapPane.lookup("#councilBox" + i);
 			initCouncil(councilBox, regions.get(i).getCouncil());
 		}
@@ -533,7 +559,8 @@ public class GameController {
 	private void initCouncil(HBox location, CouncilProperty council) {
 		for (StringProperty color : council.colors()) {
 			Rectangle councilor = Collection.councilor(color.get());
-
+			// ensure that the label indicating the remaining councilors is correct
+			// without receiving the information from the server
 			color.addListener((observable, oldValue, newValue) -> {
 
 				councilor.setFill(Color.valueOf(newValue));
@@ -546,7 +573,7 @@ public class GameController {
 			});
 			location.getChildren().add(councilor);
 		}
-
+		// allow drop is the player want to slide a council
 		location.setOnDragOver(event -> {
 			if (event.getGestureSource() != location
 					&& (SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus))) {
@@ -557,7 +584,7 @@ public class GameController {
 		});
 
 		location.setOnDragExited(event -> location.setEffect(null));
-
+		// send the action to the server
 		location.setOnDragDropped(event -> {
 			Dragboard db = event.getDragboard();
 
@@ -630,7 +657,7 @@ public class GameController {
 		}
 
 		Map<String, IntegerProperty> colorRewards = mainApp.getLocalModel().getMap().getColorBonuses();
-
+		// if the bonuses are set to 0, the label became invisible
 		sapphireRewardLabel.textProperty().bind(colorRewards.get("#2268df").asString());
 		sapphireRewardLabel.visibleProperty().bind(colorRewards.get("#2268df").greaterThan(0));
 
@@ -667,6 +694,8 @@ public class GameController {
 			c.setFill(players.get(i).getColor());
 			c.setRadius(15.0);
 			c.setCenterY(NOBILITY_START_Y + i * NOBILITY_HEIGHT / totalPlayers);
+			// ensure that the circle moves as the nobility point rise
+			// (very cool binding)
 			c.centerXProperty().bind(players.get(i).nobilityProperty().multiply(NOBILITY_STEP).add(NOBILITY_START_X));
 			mapPane.getChildren().add(c);
 		}
@@ -681,7 +710,7 @@ public class GameController {
 			for (int j = 0; j < permissions.length; j++) {
 
 				Pane outerPane = (Pane) mapPane.lookup("#permit" + i + "_" + j);
-
+				// allow drop if a player want to buy a permission card
 				outerPane.setOnDragOver(event -> {
 					if (PERM.equals(gameStatus)) {
 						outerPane.setEffect(new Glow());
@@ -691,7 +720,7 @@ public class GameController {
 				});
 
 				outerPane.setOnDragExited(event -> outerPane.setEffect(null));
-
+				// send the requested action to the server	
 				outerPane.setOnDragDropped(event -> {
 					Dragboard db = event.getDragboard();
 					if (db.hasString()) {
@@ -710,7 +739,7 @@ public class GameController {
 				AnchorPane innerPane = Collection.permissionCard(permissions[j]);
 
 				outerPane.getChildren().add(innerPane);
-				
+				// can trigger when the player can take a free permission card
 				outerPane.setOnMouseClicked(event -> {
 					if("takePermission".equals(gameStatus)) {
 						String id = outerPane.getId();
@@ -734,12 +763,12 @@ public class GameController {
 			}
 		}
 	}
-	
 	private void initRegionSymbols() {
 		int regionNumbers = mainApp.getLocalModel().getMap().getRegions().size();
 		for(int i = 0; i < regionNumbers; i ++) {
 			Node regionSymbol = mapPane.lookup("#region" + i);
 			
+			// can trigger when a player want to shuffle this region
 			regionSymbol.setOnMouseEntered(event -> {
 				if(SHUFFLE.equals(gameStatus)) {
 					regionSymbol.setEffect(new Bloom());
@@ -764,7 +793,7 @@ public class GameController {
 		buyButton.setDisable(false);
 		
 		Soldable itemOnSale = item.getItem();
-		
+		// show the item
 		if(itemOnSale instanceof Assistants) {
 			
 			Image assistantImage = new Image(MainApp.class.getResource("/simboli/assistants.png").toString());

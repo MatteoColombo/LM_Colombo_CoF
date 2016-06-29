@@ -35,7 +35,8 @@ public class Server {
 	private static Logger logger = Logger.getGlobal();
 	private static ServerSocket socketServer;
 	private static Configuration gamesConfig;
-
+	private static boolean serverOn=true;
+	
 	private Server() {
 	}
 
@@ -148,7 +149,7 @@ public class Server {
 			logger.info("RMI server ready");
 			socketServer = new ServerSocket(gamesConfig.getSocketPort());
 			logger.info("Socket server ready");
-			while (true) {
+			while (serverOn) {
 				new SocketClientConnectionHandler(socketServer.accept()).start();
 			}
 		} catch (Exception e) {

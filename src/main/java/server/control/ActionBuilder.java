@@ -30,6 +30,10 @@ import server.model.player.PoliticCard;
 /**
  * 
  * @author gianpaolobranca
+ * Parse a string descriving an action into a real action Object <br>
+ * The string must follow the following format: <br>
+ * [Action] [Options...]
+ * e.g: slide -council 1 -color pink
  *
  */
 public class ActionBuilder {
@@ -41,7 +45,9 @@ public class ActionBuilder {
 		this.board = board;
 		this.config = config;
 	}
-
+	/**
+	 * end the turn
+	 */
 	public Action makeAEndTurn(Player player, TurnManager turnManager) throws IllegalActionException {
 		return new AEndTurn(player, turnManager);
 	}

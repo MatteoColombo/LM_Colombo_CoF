@@ -79,6 +79,16 @@ public class Controller {
 		}
 	}
 
+	
+	/**
+	 * parser for the requested item to be sold.
+	 * the string must be in the following format: <br>
+	 * [Object to sell] [amount/index] [price] <br>
+	 * e.g: politic 3 2, assistant 1 2 <br>
+	 * in case of index, it must start from 1
+	 * @param item the string representation of this item
+	 * @param client the seller
+	 */
 	public void parseItemToSell(String item, ClientInt client) {
 		if ("end".equals(item)) {
 			game.getMarket().playerWantsToStop();
@@ -126,7 +136,7 @@ public class Controller {
 
 	/**
 	 * Receives the choosen item to buy, checks if can buy it
-	 * 
+	 * The received string must be a simple integer 
 	 * @param items
 	 * @param itemIndex
 	 * @param client
@@ -151,7 +161,11 @@ public class Controller {
 			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));
 		}
 	}
-
+	/**
+	 * Send a {@link NotifyGameStarted} Dialogue to all the connected Clients.
+	 * this must be called at the beginning of the game, but after the model's dialogs
+	 * If a Client is not connects, it get suspended immeidately
+	 */
 	public void notifyGameStarted() {
 		Set<ClientInt> clients = playersMap.keySet();
 		for (ClientInt temp : clients) {
@@ -316,7 +330,14 @@ public class Controller {
 			client.askPlayerWhatActionToDo();
 		}
 	}
-
+	/**
+	 * send a {@link NotifyUpdatePlayer} to all clients connected to the game,
+	 * when the player's parameter change in the model.
+	 * If the client is disconnected it is immediately suspended
+	 * 
+	 * @param player
+	 * @param playerIndex
+	 */
 	private void updatePlayers(Player player, int playerIndex) {
 		Set<ClientInt> clients = playersMap.keySet();
 		Player simplifiedClone = new Player(player);
@@ -369,7 +390,13 @@ public class Controller {
 		}
 
 	}
-
+	/**
+	 * Parse the selected permission card, when the special
+	 * take the permission reward occurse.
+	 * @param card the index of the card starting from 1
+	 * @param client the active player
+	 * @throws IOException
+	 */
 	public void parseRewardOfPermissionCard(String card, ClientInt client) throws IOException {
 		try {
 			int index = Integer.parseInt(card);
@@ -384,7 +411,12 @@ public class Controller {
 			client.askSelectRewardOfPermissionCard();
 		}
 	}
-
+	/**
+	 * Parse the selected permission card when a player can take a free permission from the available slots
+	 * @param card the indexes of region and slot (both starting from 1)
+	 * @param client
+	 * @throws IOException
+	 */
 	public void parseBonusFreePermissionCard(String card, ClientInt client) throws IOException {
 		String[] parameters = card.split(" ");
 		Player player = playersMap.get(client);
@@ -405,7 +437,10 @@ public class Controller {
 			client.askSelectRewardOfPermissionCard();
 		}
 	}
-
+	/**
+	 * Send all the Reward in the cities to the client as a List
+	 * If a client is disconnected it got suspended
+	 */
 	public void notifySendCityRewards() {
 		List<Reward> rewards = new ArrayList<>();
 		List<City> cities = game.getBoard().getMap().getCitiesList();
@@ -422,6 +457,9 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * parse the council to update, and call notifySendCouncil.
+	 */
 	public void updateCouncil(String index) {
 		if ("k".equals(index))
 			notifySendCouncil(game.getBoard().getKingCouncil(), -1);
@@ -431,6 +469,11 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * send a {@link UpdateCouncil} to all the clients
+	 * @param council the council to send
+	 * @param index The council index. By convention, the king has index -1
+	 */
 	public void notifySendCouncil(Council council, int index) {
 		Council copy = new Council(council);
 		Set<ClientInt> clients = playersMap.keySet();
@@ -444,6 +487,9 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * send all councils one by one to the clients
+	 */
 	public void notifySetAllCouncil() {
 
 		Council kingCouncil = game.getBoard().getKingCouncil();
@@ -454,7 +500,10 @@ public class Controller {
 			notifySendCouncil(regions.get(i).getCouncil(), i);
 		}
 	}
-
+	
+	/**
+	 * send all permissions one by one to the client
+	 */
 	public void notifySetAllPermissions() {
 		List<Region> regions = game.getBoard().getRegions();
 		for (int i = 0; i < regions.size(); i++) {
@@ -467,6 +516,12 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * send a permission card to the client
+	 * @param card the permission card to send
+	 * @param region the region index
+	 * @param slot the region slot index
+	 */
 	public void notifySendPermission(PermissionCard card, int region, int slot) {
 		Set<ClientInt> clients=playersMap.keySet();
 		for (ClientInt client : clients) {
@@ -478,7 +533,11 @@ public class Controller {
 			}
 		}
 	}
-
+	/**
+	 * send a {@link UpdateEmporiumBuilt} to all the clients
+	 * @param player the player who bult the emporium
+	 * @param city the city where the emporium is built in
+	 */
 	public void sendEmporium(String player, String city) {
 		Set<ClientInt> clients=playersMap.keySet();
 		for (ClientInt client : clients) {
@@ -490,7 +549,10 @@ public class Controller {
 			}
 		}
 	}
-
+	/**
+	 * send a {@link NotifyKingLocation}  to the clients
+	 * @param city the new city where the king is placed
+	 */
 	public void sendKingLocation(String city) {
 		Set<ClientInt> clients = playersMap.keySet();
 		for (ClientInt client : clients) {
@@ -503,7 +565,9 @@ public class Controller {
 				}
 		}
 	}
-
+	/**
+	 * send all the board rewards to the clients
+	 */
 	public void updateBoardRewards() {
 		Set<ClientInt> clients = playersMap.keySet();
 		BoardRewardsManager manager = game.getBoard().getBoardRewardsManager();
@@ -518,7 +582,7 @@ public class Controller {
 			copyColor.add(color.newCopy());
 		
 		for (ClientInt client : clients) {
-			if (!playersMap.get(client).getSuspended())
+			if (!playersMap.get(client).getSuspended()) {
 				try {
 					client.notify(new UpdateBoardRewards(copyKing,
 							copyColor, copyRegion));
@@ -526,6 +590,7 @@ public class Controller {
 					logger.log(Level.WARNING, e.getMessage(), e);
 					playersMap.get(client).setSuspension(true);
 				}
+			}
 		}
 	}
 }

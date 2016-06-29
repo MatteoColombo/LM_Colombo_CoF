@@ -146,6 +146,7 @@ public class GameController {
 	
 	public void changeStatus(String newStatus) {
 		gameStatus = newStatus;
+		System.out.println("frfrf");
 	}
 	
 	public void logMsg(String msg) {

@@ -81,8 +81,7 @@ public class MarketController {
 						setStyle("-fx-background-image: url('"
 								+ GameController.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))
 								+ "'); -fx-background-size:cover;");
-					}
-					
+					}	
 					this.setOnDragDetected(event -> {
 						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
 						ClipboardContent content = new ClipboardContent();
@@ -108,8 +107,7 @@ public class MarketController {
 				} else {
 					AnchorPane permissionPane = Collection.permissionCard(item);
 					setGraphic(permissionPane);
-				}
-				
+				}			
 				this.setOnDragDetected(event -> {
 					Dragboard db = this.startDragAndDrop(TransferMode.ANY);
 					ClipboardContent content = new ClipboardContent();

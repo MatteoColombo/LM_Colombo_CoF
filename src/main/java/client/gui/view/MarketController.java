@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 public class MarketController {
 	@FXML
 	private BorderPane borderPane;
-	
+
 	@FXML
 	private ListView<PermissionProperty> permissionList;
 	@FXML
@@ -39,31 +39,30 @@ public class MarketController {
 	private ImageView assistantImage;
 	@FXML
 	private ImageView marketImage;
-	
-	
+
 	private MainApp mainApp;
 	private PlayerProperty myData;
 	private Stage dialogStage;
-	
+
 	SnapshotParameters params = new SnapshotParameters();
-	
+
 	@FXML
 	private void initialize() {
 		permissionList.prefWidthProperty().bind(borderPane.widthProperty().divide(2));
-		politicList.prefWidthProperty().bind(borderPane.widthProperty().divide(2));	
+		politicList.prefWidthProperty().bind(borderPane.widthProperty().divide(2));
 		assistantField.setText("");
 		priceField.setText("");
-		
+
 		Collection.addNumericRestriction(assistantField);
 		Collection.addNumericRestriction(priceField);
-		
+
 		params.setFill(Color.TRANSPARENT);
 	}
-	
-    public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
-    }
-	
+
+	public void setDialogStage(Stage dialogStage) {
+		this.dialogStage = dialogStage;
+	}
+
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
 		this.myData = mainApp.getLocalModel().getMyPlayerData();
@@ -73,37 +72,36 @@ public class MarketController {
 		initMarket();
 		setExit();
 	}
-	
+
 	public void initPoliticList() {
 		politicList.setItems(myData.getPoliticCards());
-		
+
 		politicList.setCellFactory(listView -> new ListCell<String>() {
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null || empty) {
-						setStyle(null);
-					} else {	
-						setStyle("-fx-background-image: url('"
-								+ GameController.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))
-								+ "'); -fx-background-size:cover;");
-					}	
-					this.setOnDragDetected(event -> {
-						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
-						ClipboardContent content = new ClipboardContent();
-						content.putString("politic " + (this.getIndex()+1));
-						db.setContent(content);
-						db.setDragView(this.snapshot(params, null));
-						event.consume();
-					});
+			@Override
+			protected void updateItem(String item, boolean empty) {
+				super.updateItem(item, empty);
+				if (item == null || empty) {
+					setStyle(null);
+				} else {
+					setStyle("-fx-background-image: url('"
+							+ GameController.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))
+							+ "'); -fx-background-size:cover;");
 				}
+				this.setOnDragDetected(event -> {
+					Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+					ClipboardContent content = new ClipboardContent();
+					content.putString("politic " + (this.getIndex() + 1));
+					db.setContent(content);
+					db.setDragView(this.snapshot(params, null));
+					event.consume();
+				});
 			}
-		);
+		});
 	}
-	
+
 	public void initPermissionList() {
 		permissionList.setItems(myData.getPermissions());
-		
+
 		permissionList.setCellFactory(listView -> new ListCell<PermissionProperty>() {
 			@Override
 			public void updateItem(PermissionProperty item, boolean empty) {
@@ -113,46 +111,46 @@ public class MarketController {
 				} else {
 					AnchorPane permissionPane = Collection.permissionCard(item);
 					setGraphic(permissionPane);
-				}			
-				this.setOnDragDetected(event -> {
-					Dragboard db = this.startDragAndDrop(TransferMode.ANY);
-					ClipboardContent content = new ClipboardContent();
-					content.putString("permission " + (this.getIndex()+1));
-					db.setContent(content);
-					db.setDragView(this.getChildren().get(0).snapshot(null, null));
-					event.consume();
-				});
+					permissionPane.setOnDragDetected(event -> {
+						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+						ClipboardContent content = new ClipboardContent();
+						content.putString("permission " + (this.getIndex() + 1));
+						db.setContent(content);
+						db.setDragView(permissionPane.snapshot(null, null));
+						event.consume();
+					});
+				}	
 			}
 		});
 	}
-	
+
 	public void initAssistants() {
 		assistantLabel.textProperty().bind(myData.assistantsProperty().asString());
-		
+
 		assistantImage.setOnDragDetected(event -> {
-			
-			if(!assistantField.getText().isEmpty()) {
+
+			if (!assistantField.getText().isEmpty()) {
 				Dragboard db = assistantImage.startDragAndDrop(TransferMode.ANY);
 				ClipboardContent content = new ClipboardContent();
 				content.putString("assistant " + assistantField.getText());
 				db.setContent(content);
 				db.setDragView(assistantImage.snapshot(params, null));
 				event.consume();
-			}		
+			}
 		});
 	}
-	
+
 	public void initMarket() {
 		marketImage.setOnDragOver(event -> {
 			marketImage.setEffect(new Glow());
 			event.acceptTransferModes(TransferMode.MOVE);
 			event.consume();
 		});
-		
+
 		marketImage.setOnDragExited(event -> marketImage.setEffect(null));
-		
+
 		marketImage.setOnDragDropped(event -> {
-			if("".equals(priceField.getText())) {
+			if ("".equals(priceField.getText())) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.initOwner(mainApp.getPrimaryStage());
 				alert.setTitle("MISSING PRICE");
@@ -161,14 +159,14 @@ public class MarketController {
 				alert.show();
 			} else {
 				Dragboard db = event.getDragboard();
-				if(db.hasString()) {
+				if (db.hasString()) {
 					mainApp.sendMsg(db.getString() + " " + priceField.getText());
 				}
 			}
-			
+
 		});
 	}
-	
+
 	private void setExit() {
 		dialogStage.setOnCloseRequest(event -> mainApp.sendMsg("end"));
 	}

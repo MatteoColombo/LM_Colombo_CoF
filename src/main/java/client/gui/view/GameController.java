@@ -1,6 +1,8 @@
 package client.gui.view;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,6 +37,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -156,10 +160,17 @@ public class GameController {
 	private Node kingNewPosition;
 	
 	SnapshotParameters params = new SnapshotParameters();
+	Media media;
+	MediaPlayer mediaPlayer;
 
 	@FXML
-	private void Initialize() {
+	private void initialize() {
 		params.setFill(Color.TRANSPARENT);
+		String path = MainApp.class.getResource("/soundtrack/tricks-of-the-trade.mp3").toString();
+		media = new Media(path);
+		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		mediaPlayer.play();
 	}
 	
 	/**

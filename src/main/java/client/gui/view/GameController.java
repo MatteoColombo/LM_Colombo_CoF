@@ -16,6 +16,7 @@ import client.gui.model.SimpleBonus;
 import client.gui.model.SimpleCity;
 import client.gui.model.SimpleNobilityCell;
 import client.gui.model.SimpleRegion;
+import javafx.beans.binding.Binding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -160,9 +161,9 @@ public class GameController {
 	private Node kingOldPosition;
 	private Node kingNewPosition;
 	
-	SnapshotParameters params = new SnapshotParameters();
-	Media media;
-	MediaPlayer mediaPlayer;
+	private SnapshotParameters params = new SnapshotParameters();
+	private Media media;
+	private MediaPlayer mediaPlayer;
 
 	@FXML
 	private void initialize() {
@@ -320,7 +321,7 @@ public class GameController {
 	 * {@link PlayerProperty} of the user
 	 */
 	private void initMyData() {
-
+		
 		nameLabel.setText(myData.nameProperty().get());
 		myColor.setFill(myData.getColor());
 		assistantsLabel.textProperty().bind(myData.assistantsProperty().asString());

@@ -278,7 +278,6 @@ public class GameController {
 
 	@FXML
 	private void handleBuyAssistant() throws IOException {
-		resetKing();
 		mainApp.sendMsg("assistant");
 	}
 
@@ -289,7 +288,6 @@ public class GameController {
 
 	@FXML
 	private void handleExtraAction() throws IOException {
-		resetKing();
 		mainApp.sendMsg("extra");
 	}
 
@@ -300,7 +298,6 @@ public class GameController {
 
 	@FXML
 	private void handlePass() throws IOException {
-		resetKing();
 		mainApp.sendMsg("end");
 	}
 

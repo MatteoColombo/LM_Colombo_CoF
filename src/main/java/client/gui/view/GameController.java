@@ -148,8 +148,7 @@ public class GameController {
 	private Pane itemPane;
 	@FXML
 	private Button buyButton;
-	@FXML
-	private Button endBuyButton;
+
 	@FXML
 	private Button muteButton;
 
@@ -207,6 +206,7 @@ public class GameController {
 	 * @param newStatus
 	 */
 	public void changeStatus(String newStatus) {
+		resetKing();
 		gameStatus = newStatus;
 	}
 
@@ -230,7 +230,6 @@ public class GameController {
 	 * initialize the market table for buying
 	 */
 	private void initMarketBuy() {
-		endBuyButton.setDisable(false);
 		itemsTable.setItems(mainApp.getLocalModel().getMarket());
 		ownerColumn.setCellValueFactory(cell -> cell.getValue().owner());
 		priceColumn.setCellValueFactory(cell -> cell.getValue().price().asString());
@@ -259,25 +258,22 @@ public class GameController {
 
 	@FXML
 	private void handleSlideCouncil() throws IOException {
-		resetKing();
-		gameStatus = SLIDE;
+		changeStatus(SLIDE);
 	}
 
 	@FXML
 	private void handleBuyPermission() throws IOException {
-		resetKing();
-		gameStatus = PERM;
+		changeStatus(PERM);
 	}
 
 	@FXML
 	private void handleBuildEmporium() throws IOException {
-		resetKing();
-		gameStatus = EMP;
+		changeStatus(EMP);
 	}
 
 	@FXML
 	private void handleBuildWithKing() throws IOException {
-		gameStatus = KING;
+		changeStatus(KING);
 	}
 
 	@FXML
@@ -288,8 +284,7 @@ public class GameController {
 
 	@FXML
 	private void handleShuffle() throws IOException {
-		resetKing();
-		gameStatus = SHUFFLE;
+		changeStatus(SHUFFLE);
 	}
 
 	@FXML
@@ -300,8 +295,7 @@ public class GameController {
 
 	@FXML
 	private void handleSlideSide() throws IOException {
-		resetKing();
-		gameStatus = SLIDE2;
+		changeStatus(SLIDE2);
 	}
 
 	@FXML
@@ -320,6 +314,7 @@ public class GameController {
 			kingNewPosition.setVisible(false);
 			kingOldPosition.setVisible(true);
 			kingOldPosition = null;
+			kingNewPosition = null;
 		}
 	}
 
@@ -526,6 +521,9 @@ public class GameController {
 			Dragboard db = king.startDragAndDrop(TransferMode.ANY);
 			ClipboardContent content = new ClipboardContent();
 			if (KING.equals(gameStatus)) {
+				if (kingOldPosition == null) {
+					kingOldPosition = king;
+				}
 				gameStatus = DRAGK;
 				content.putString(KING);
 				db.setContent(content);
@@ -535,10 +533,9 @@ public class GameController {
 		});
 
 		king.setOnDragDone(event -> {
-			if (kingOldPosition == null) {
-				kingOldPosition = king;
+			if(kingNewPosition != king && kingNewPosition != null) {
+				king.setVisible(false);
 			}
-			king.setVisible(false);
 		});
 
 		king.setOnDragOver(event -> {
@@ -884,10 +881,5 @@ public class GameController {
 	private void handleBuy() {
 		mainApp.sendMsg("" + (itemsTable.getSelectionModel().getSelectedIndex() + 1));
 		buyButton.setDisable(true);
-	}
-
-	@FXML
-	private void handleEndBuy() {
-		mainApp.sendMsg("end");
 	}
 }

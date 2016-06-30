@@ -116,7 +116,7 @@ public class MarketController {
 						ClipboardContent content = new ClipboardContent();
 						content.putString("permission " + (this.getIndex() + 1));
 						db.setContent(content);
-						db.setDragView(permissionPane.snapshot(null, null));
+						db.setDragView(permissionPane.snapshot(params, null));
 						event.consume();
 					});
 				}	

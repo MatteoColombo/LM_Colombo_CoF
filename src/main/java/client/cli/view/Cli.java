@@ -17,7 +17,8 @@ import server.model.configuration.Configuration;
 public class Cli implements ViewInterface {
 
 	private static final String SEPARATOR = "---------------------------------------";
-
+	private static final String[] EMPORIUM = {"🍅","🍇","🍈","🍉","🍐","🍒","🍓","🍍","🍄","🍔",""};
+	private static final String PLAYER = "🏠";
 	private PrintWriter writer;
 	private Configuration config;
 	private Game model;
@@ -84,12 +85,13 @@ public class Cli implements ViewInterface {
 			writer.print("Council: ");
 			List<String> council = region.getCouncil();
 			for (int i = council.size() - 1; i >= 0; i--)
-				writer.print(council.get(i) + " ");
+				writer.print(council.get(i) + (i==(council.size()-2)?"\n":" "));	
 			writer.println("Permission cards:");
 			printPermission(new ArrayList<CliPermission>(Arrays.asList(region.getPermission())));
 			for (CliCity city : region.getCities()) {
 				writer.print("| ");
 				printBonus(city);
+				printEmporium(city);
 				if (city.getName().length() < 8)
 					writer.print(city.getName() + "\t-->");
 				else
@@ -113,7 +115,7 @@ public class Cli implements ViewInterface {
 		writer.println("Players");
 		for (int i = 0; i < players.size(); i++) {
 			writer.println(SEPARATOR);
-			writer.println(players.get(i).getName());
+			writer.println(players.get(i).getName() + " " + (i == model.getMyIndex() ? PLAYER :EMPORIUM[i]));
 			writer.println("Victory points: " + players.get(i).getVictory() + ", Coins: " + players.get(i).getCoins()
 					+ ", Assitants: " + players.get(i).getAssistants() + ", Politics:"
 					+ players.get(i).getPolitic().size() + ", Nobility: " + players.get(i).getNobility());
@@ -126,6 +128,13 @@ public class Cli implements ViewInterface {
 			}
 		}
 		writer.println(SEPARATOR);
+	}
+
+	private void printEmporium(CliCity city) {
+		writer.print("(");
+		for (int index : city.getEmporiums())
+			writer.print(index == model.getMyIndex() ? PLAYER : EMPORIUM[index]);
+		writer.print(")\t");
 	}
 
 	/**
@@ -170,7 +179,7 @@ public class Cli implements ViewInterface {
 	public void printAskWhichMapToUse() {
 		writer.println("Choose the number of the map:");
 		List<String> maps = config.getMaps();
-		for (int i = 1; i <= maps.size(); i++) 
+		for (int i = 1; i <= maps.size(); i++)
 			writer.println(i + ". Map " + i);
 	}
 

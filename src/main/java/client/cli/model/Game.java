@@ -17,6 +17,7 @@ import server.model.board.city.City;
 import server.model.board.council.Council;
 import server.model.configuration.Configuration;
 import server.model.configuration.XMLFileException;
+import server.model.market.OnSaleItem;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
 import server.model.reward.BVictoryPoints;
@@ -31,16 +32,15 @@ public class Game implements ModelInterface {
 	private List<CliRegion> regions;
 	private int myIndex;
 	private Cli view;
-	private List<Integer> kingAward;
+	private int kingAward;
 	private Map<String, Integer> colorReward;
 	private List<String> kingCouncil;
-	private Logger logger= Logger.getGlobal();
+	private Logger logger = Logger.getGlobal();
 
 	public Game(Cli view) {
 		this.view = view;
 		this.players = new ArrayList<>();
 		this.regions = new ArrayList<>();
-		this.kingAward = new ArrayList<>();
 		this.kingCouncil = new ArrayList<>();
 		this.colorReward = new HashMap<>();
 	}
@@ -50,19 +50,14 @@ public class Game implements ModelInterface {
 		Board board;
 		try {
 			board = new Board(config, choosen);
-			regions = new ArrayList<>();
 			for (Region r : board.getRegions()) {
 				List<CliCity> cities = new ArrayList<>();
-				for (City c : r.getCities()) {
-					List<String> connections = new ArrayList<>();
-					for (City conn : c.getConnectedCities())
-						connections.add(conn.getName());
-					cities.add(new CliCity(c.getName(), connections, c.isCapital()));
-				}
+				for (City c : r.getCities())
+					cities.add(new CliCity(c.getName(), c.getConnectedCities(), c.isCapital()));
 				regions.add(new CliRegion(regions.size(), cities, config.getNumberDisclosedCards()));
 			}
 		} catch (XMLFileException e) {
-			logger.log(Level.SEVERE, "There is an error with the configuration, please fix it!",e);
+			logger.log(Level.SEVERE, "There is an error with the configuration, please fix it!", e);
 		}
 	}
 
@@ -148,7 +143,7 @@ public class Game implements ModelInterface {
 		return this.config;
 	}
 
-	public List<Integer> getKingAward() {
+	public int getKingAward() {
 		return kingAward;
 	}
 
@@ -184,10 +179,15 @@ public class Game implements ModelInterface {
 
 	@Override
 	public void buildEmporium(String city, String name) {
+		int owner;
+		for (owner = 0; owner < players.size(); owner++)
+			if (name.equals(players.get(owner).getName()))
+				break;
+
 		for (CliRegion region : regions)
 			for (CliCity c : region.getCities())
 				if (c.getName().equalsIgnoreCase(city)) {
-					c.addEmporium(name);
+					c.addEmporium(owner);
 					return;
 				}
 	}
@@ -207,7 +207,19 @@ public class Game implements ModelInterface {
 	@Override
 	public void updateBoardReward(List<BVictoryPoints> kingReward, List<BoardColorReward> colorReward,
 			List<BoardRegionReward> regionReward) {
-		// TODO Auto-generated method stub
-		
+		this.kingAward = kingReward.get(0).getAmount();
+		for (int i = 0; i < regions.size(); i++)
+			regions.get(i).setBonus(regionReward.get(i).getBRBonus().getAmount());
+		this.colorReward.clear();
+		for (BoardColorReward rew : colorReward)
+			this.colorReward.put(config.getColorsTranslationReverse().get(rew.getBRKey()),
+					rew.getBRBonus().getAmount());
+	}
+	
+	@Override
+	public void setMarket(List<OnSaleItem> items){
+		view.printMessage("Choose what item you want to buy:");
+		for(int i=1; i< items.size();i++)
+			view.printMessage(i+". "+items.get(i-1).printedMessage(config));
 	}
 }

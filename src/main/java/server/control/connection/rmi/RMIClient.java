@@ -24,7 +24,7 @@ import server.control.dialogue.request.RequestPlayerName;
 import server.control.dialogue.request.RequestRewardFromPermission;
 import server.control.dialogue.request.RequestWhatActionToDo;
 import server.control.dialogue.request.RequestWhichItemToSell;
-import server.control.dialogue.request.RequestWhichItemTouBuy;
+import server.control.dialogue.request.RequestWhichItemToBuy;
 import server.control.dialogue.request.RequestWichMapToUse;
 import server.model.action.IllegalActionException;
 import server.model.market.OnSaleItem;
@@ -109,7 +109,7 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
-		String item = client.requestAnswer(new RequestWhichItemTouBuy(itemsOnSale));
+		String item = client.requestAnswer(new RequestWhichItemToBuy(itemsOnSale));
 		controller.parseItemToBuy(itemsOnSale, item, this);
 	}
 

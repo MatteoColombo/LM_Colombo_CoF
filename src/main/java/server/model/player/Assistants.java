@@ -2,6 +2,7 @@ package server.model.player;
 
 import java.io.Serializable;
 
+import server.model.configuration.Configuration;
 import server.model.market.Soldable;
 
 /**
@@ -76,6 +77,11 @@ public class Assistants implements Serializable, Soldable {
 	@Override
 	public int hashCode(){
 		return this.amount;
+	}
+
+	@Override
+	public String getMarketMessage(Configuration config) {
+		return "Assistant: "+amount+" ";
 	}
 
 }

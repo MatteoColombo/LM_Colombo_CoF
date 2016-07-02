@@ -3,12 +3,14 @@ package client.cli.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.model.board.city.City;
+
 public class CliCity {
 	private String name;
 	private List<String> connections;
 	private boolean hasKing;
 	private List<CliBonus> rewards;
-	private List<String> emporiums;
+	private List<Integer> emporiums;
 
 	/**
 	 * Initializes a city with the parameters that can be loaded by file
@@ -16,9 +18,11 @@ public class CliCity {
 	 * @param connections the list of the connections
 	 * @param hasKing true if the city is capital, false otherwise
 	 */
-	public CliCity(String name, List<String> connections, boolean hasKing) {
+	public CliCity(String name, List<City> connections, boolean hasKing) {
 		this.name = name;
-		this.connections = connections;
+		this.connections= new ArrayList<>();
+		for(City c: connections)
+			this.connections.add(c.getName());
 		this.hasKing = hasKing;
 		this.emporiums= new ArrayList<>();
 	}
@@ -75,7 +79,7 @@ public class CliCity {
 	 * It is used when a player builds an emporium in this city
 	 * @param owner
 	 */
-	public void addEmporium(String owner){
+	public void addEmporium(int owner){
 		emporiums.add(owner);
 	}
 	
@@ -84,7 +88,7 @@ public class CliCity {
 	 * 
 	 * @return
 	 */
-	public List<String> getEmporiums(){
+	public List<Integer> getEmporiums(){
 		return emporiums;
 	}
 	

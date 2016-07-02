@@ -97,6 +97,8 @@ public class Controller {
 		String[] parameters = item.split(" ");
 		Soldable itemOnSale;
 		try {
+			if(parameters.length<3)
+				throw new IllegalActionException("wrong parameters!");
 			String object = parameters[0];
 			int index = Integer.parseInt(parameters[1]);
 			int price = Integer.parseInt(parameters[2]);

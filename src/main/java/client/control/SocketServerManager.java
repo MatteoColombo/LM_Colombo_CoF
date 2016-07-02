@@ -37,7 +37,7 @@ public class SocketServerManager extends Thread implements ServerManager {
 			logger.log(Level.SEVERE, "Connection lost, the client will terminate", e);
 			} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, "Data corrupted, the client will terminate", e);
-		}
+		} 
 	}
 
 }

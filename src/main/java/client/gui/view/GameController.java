@@ -227,6 +227,11 @@ public class GameController {
 		mainApp.showMarket();
 	}
 
+	@FXML
+	private void handleScores() {
+		mainApp.showResults();
+	}
+	
 	/**
 	 * initialize the market table for buying
 	 */

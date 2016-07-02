@@ -23,6 +23,7 @@
                      <font>
                         <Font size="24.0" />
                      </font></Button>
+                  <Button onAction="#handleScores" layoutX="51.0" layoutY="112.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="61.0" text="Button" />
                </children>
             </AnchorPane>
             <GridPane alignment="CENTER" layoutX="43.0" layoutY="40.0" prefHeight="170.0" prefWidth="146.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="456.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="456.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.view.ResultsController">
    <center>
       <TableView fx:id="resultsTable" prefHeight="304.0" prefWidth="422.0" BorderPane.alignment="CENTER">
         <columns>
@@ -19,7 +19,4 @@
          </columnResizePolicy>
       </TableView>
    </center>
-   <top>
-      <Label styleClass="label-header" text="FINAL RESULTS" BorderPane.alignment="CENTER" />
-   </top>
 </BorderPane>

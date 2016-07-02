@@ -189,7 +189,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			BorderPane results = (BorderPane) loader.load();
 			// Create the dialog Stage.
             Stage stage = new Stage();
-            stage.setTitle("Sell");
+            stage.setTitle("FINAL RESULTS");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(primaryStage);
             Scene scene = new Scene(results);

@@ -101,20 +101,20 @@ public class TestCliModel {
 	
 	/**
 	 * This tests the CliCity and the ClyBonus
+	 * @throws ConfigurationErrorException 
+	 * @throws XMLFileException 
 	 */
 	@Test
-	public void testCity(){
-		List<String> connection= new ArrayList<>();
-		connection.add("torino");
-		connection.add("venezia");
-		CliCity city= new CliCity("milano", connection, false);
-		assertEquals("milano", city.getName());
+	public void testCity() throws XMLFileException, ConfigurationErrorException{
+		Board b= new Board(new Configuration(),0);
+		CliCity city= new CliCity("Arkon", b.getRegion(0).getCities().get(0).getConnectedCities(), false);
+		assertEquals("Arkon", city.getName());
 		assertEquals(2,city.getConnections().size());
 		assertEquals(false, city.isHasKing());
 		city.setHasKing(true);
 		assertEquals(true, city.isHasKing());
-		city.addEmporium("matteo");
-		assertEquals("matteo", city.getEmporiums().get(0));
+		city.addEmporium(0);
+		assertEquals(new Integer(0), city.getEmporiums().get(0));
 		CliBonus bonus= new CliBonus(2, "testBonus");
 		List<CliBonus> reward= new ArrayList<>();
 		reward.add(bonus);

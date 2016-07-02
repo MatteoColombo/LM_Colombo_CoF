@@ -17,7 +17,7 @@ public class InitializationTimeLimitManager extends Thread{
 	 * This is the thread which waits for 20 seconds and then it starts the game if it isn't complete
 	 */
 	@Override
-	public void run(){
+	public synchronized void run(){
 		try {
 			sleep(WAIT_TIME);
 		} catch (InterruptedException e) {

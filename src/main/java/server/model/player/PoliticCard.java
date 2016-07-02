@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
+import server.model.configuration.Configuration;
 import server.model.market.Soldable;
 
 /**
@@ -21,6 +22,7 @@ public class PoliticCard implements Serializable, Soldable {
 
 	/**
 	 * This is the constructor which generates a copy of another card
+	 * 
 	 * @param color
 	 */
 	public PoliticCard(Color color) {
@@ -33,9 +35,11 @@ public class PoliticCard implements Serializable, Soldable {
 	}
 
 	/**
-	 * This is the constructor which generates a new politic card
-	 * in case of multiple colored card, the color is set null 
-	 * @param possibleColors the list of the possible colors 
+	 * This is the constructor which generates a new politic card in case of
+	 * multiple colored card, the color is set null
+	 * 
+	 * @param possibleColors
+	 *            the list of the possible colors
 	 */
 	public PoliticCard(List<Color> possibleColors) {
 		Random r = new Random();
@@ -83,6 +87,11 @@ public class PoliticCard implements Serializable, Soldable {
 		if (isMultipleColor)
 			return -1;
 		return color.getRGB();
+	}
+
+	@Override
+	public String getMarketMessage(Configuration config) {
+		return "politic " + (this.isMultipleColor ? "multi " : config.getColorsTranslationReverse().get(color) + " ");
 	}
 
 }

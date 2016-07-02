@@ -2,6 +2,7 @@ package server.model.market;
 
 import java.io.Serializable;
 
+import server.model.configuration.Configuration;
 import server.model.player.Player;
 /**
  * The class which contains the items sold in the market
@@ -46,4 +47,7 @@ public class OnSaleItem implements Serializable{
 		return item;
 	}
 	
+	public String printedMessage(Configuration config){
+		return item.getMarketMessage(config)+" |  price: "+price+" | owner: "+owner.getName();
+	}
 }

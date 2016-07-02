@@ -4,6 +4,7 @@ import java.util.List;
 
 import server.model.board.council.Council;
 import server.model.configuration.Configuration;
+import server.model.market.OnSaleItem;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
 import server.model.reward.BVictoryPoints;
@@ -101,4 +102,7 @@ public interface ModelInterface {
 	 */
 	public void updateBoardReward(List<BVictoryPoints> kingReward, List<BoardColorReward> colorReward,
 			List<BoardRegionReward> regionReward);
+	
+	public void setMarket(List<OnSaleItem> items);
 }
+

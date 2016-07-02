@@ -6,6 +6,7 @@ import java.util.Random;
 import java.io.Serializable;
 
 import server.model.board.city.City;
+import server.model.configuration.Configuration;
 import server.model.market.Soldable;
 import server.model.reward.Bonus;
 import server.model.reward.Reward;
@@ -141,6 +142,17 @@ public class PermissionCard implements Soldable, Serializable {
 		int sum= 100*cities.size();
 		sum+= 5*reward.getGeneratedRewards().size();
 		return sum;
+	}
+
+	@Override
+	public String getMarketMessage(Configuration config) {
+		String message="Permit: cities: ";
+		for(City c: cities)
+			message+= c.getName().substring(0,1).toUpperCase()+"\\";
+		message+= " rewards: ";
+		for(Bonus bon: reward.getGeneratedRewards())
+			message+= bon.getTagName().substring(0,3).toUpperCase()+" "+bon.getAmount()+" ";
+		return message;
 	}
 
 }

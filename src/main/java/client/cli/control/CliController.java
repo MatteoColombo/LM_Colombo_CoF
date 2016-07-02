@@ -31,6 +31,11 @@ public class CliController implements Runnable, Controller {
 	private Logger logger = Logger.getGlobal();
 	private Game model;
 	private Configuration config;
+	
+	/**
+	 * Creates a CliController with the given scanner to read the user input
+	 * @param sc the scanner
+	 */
 	public CliController(Scanner sc) {
 		try {
 			config= new Configuration();
@@ -63,19 +68,25 @@ public class CliController implements Runnable, Controller {
 				this.canWrite = false;
 		}
 	}
-
+	/**
+	 * send a message to the serverManager
+	 * @param message the received message
+	 */
 	public void parseKeyboardMessage(String message) {
 		if (this.canWrite) {
 			try {
 				serverManager.publishMessage(message);
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Connection lost, the client will terminate", e);
+				return;
 			}
 
 			this.canWrite = false;
 		}
 	}
-
+	/**
+	 * start the Controller for the cli
+	 */
 	@Override
 	public void run() {
 		view.showInitMenu();
@@ -110,6 +121,7 @@ public class CliController implements Runnable, Controller {
 
 		} catch (IOException | NotBoundException e) {
 			logger.log(Level.SEVERE, "Connection problem, the application will terminate", e);
+			System.exit(1);
 		}
 	}
 }

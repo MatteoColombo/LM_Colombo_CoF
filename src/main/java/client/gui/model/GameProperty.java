@@ -141,6 +141,7 @@ public class GameProperty implements ModelInterface {
 			for(SimpleCity sc: sr.getCities()) {
 				if(sc.getName().equalsIgnoreCase(city)) {
 					sc.getEmporiums().add(playerColor);
+					break;
 				}
 			}
 		}

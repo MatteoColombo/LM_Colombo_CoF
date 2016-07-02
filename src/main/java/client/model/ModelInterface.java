@@ -38,14 +38,15 @@ public interface ModelInterface {
 	public void setCouncil(Council council, int index);
 
 	/**
-	 * setter to be called before the starting of the match for the generated Bonuses
+	 * set all the generated bonuses. This should be done only once when the game is configurated
 	 * @param bonus the list of the bonuses to add to the cities. 
 	 * The list is in the same order as the cities in the configuration file
 	 */
 	public void setBonus(List<Reward> bonus);
 
 	/**
-	 * setter called when the client connect to an existing game waiting for more players.
+	 * set all the players in the local model. This should be done when a new player join the game,
+	 * to give him all the data of the other players
 	 * @param players the players list, included itself as the last one.
 	 */
 	public void setAllPlayers(List<Player> players);

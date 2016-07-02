@@ -49,7 +49,10 @@ public class CliController implements Runnable, Controller {
 			logger.log(Level.SEVERE, "There is an error with the configuration file!", e);
 		}	
 	}
-
+	/**
+	 * execute a {@link Dialogue}
+	 * @param dialog the given Dialogue
+	 */
 	@Override
 	public synchronized void parseDialogue(Dialogue dialog) {
 		if (dialog instanceof Request) {

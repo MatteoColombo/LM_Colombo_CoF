@@ -15,10 +15,7 @@ import client.control.ServerManager;
 import client.control.SocketServerManager;
 import client.control.ViewInterface;
 import client.gui.model.GameProperty;
-import client.gui.view.ConfigGameController;
-import client.gui.view.GameController;
-import client.gui.view.LoginController;
-import client.gui.view.MarketController;
+import client.gui.view.*;
 import client.gui.view.RoomController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -174,7 +171,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
             Scene scene = new Scene(market);
             dialogStage.setScene(scene);
 
-            // Set the person into the controller.
             MarketController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setAll(this);
@@ -186,6 +182,28 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
+	public void showResults() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/fxml/Results.fxml"));
+			BorderPane results = (BorderPane) loader.load();
+			// Create the dialog Stage.
+            Stage stage = new Stage();
+            stage.setTitle("Sell");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(primaryStage);
+            Scene scene = new Scene(results);
+            stage.setScene(scene);
+            ResultsController controller = loader.getController();
+            controller.setAll(this);
+
+            // Show the dialog and wait until the user closes it
+            stage.showAndWait();
+		} catch (IOException e) {
+			log.log( Level.SEVERE, e.toString(), e );
+		}
+	}
+	
 	public Window getPrimaryStage() {
 		return this.primaryStage;
 	}

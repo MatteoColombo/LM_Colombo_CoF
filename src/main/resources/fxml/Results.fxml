@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="400.0" prefWidth="456.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TableView fx:id="resultsTable" prefHeight="304.0" prefWidth="422.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="playerColumn" prefWidth="120.0" text="Player" />
+          <TableColumn fx:id="victoryColumn" prefWidth="62.0" sortType="DESCENDING" text="VP" />
+            <TableColumn fx:id="assistantColumn" prefWidth="75.0" sortType="DESCENDING" text="Ass" />
+            <TableColumn fx:id="politicColumn" prefWidth="75.0" sortType="DESCENDING" text="Pol" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </center>
+   <top>
+      <Label styleClass="label-header" text="FINAL RESULTS" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>

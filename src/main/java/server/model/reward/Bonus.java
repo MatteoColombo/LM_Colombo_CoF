@@ -64,10 +64,10 @@ public abstract class Bonus implements Serializable{
 	 * 
 	 * @return all the concrete class that implements Bonus existing in the game
 	 */
-	public static Bonus[] getAllBonus() {
+	public static Bonus[] getNobilityBonus() {
 		return new Bonus[] { allStandardBonus[0],
 				 			 allStandardBonus[1],
-				 			 allStandardBonus[2],
+				 			 // [2] is nobility
 				 			 allStandardBonus[3],
 				 			 allStandardBonus[4], 
 				 			 allStandardBonus[5],

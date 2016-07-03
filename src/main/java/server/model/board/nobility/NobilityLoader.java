@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,6 +18,7 @@ import org.xml.sax.SAXException;
 import server.model.configuration.TrackXMLFileException;
 import server.model.reward.Bonus;
 import server.model.reward.Reward;
+import server.model.reward.RewardNobility;
 
 /**
  * A class that loads the information from the XML file and generates a list of
@@ -31,8 +34,9 @@ import server.model.reward.Reward;
  * @see Reward
  */
 public class NobilityLoader {
-	private final String xmlPath;
+	private String xmlPath;
 	private List<Reward> trackRewards;
+	private static final int MAXLENGTH = 21;
 
 	/**
 	 * Initializes the NobilityLoader saving this XML file and loading it.
@@ -46,6 +50,24 @@ public class NobilityLoader {
 		this.xmlPath = xmlPath;
 		this.trackRewards = new ArrayList<>();
 		loadXML();
+	}
+	
+	/**
+	 * random generator
+	 */
+	public NobilityLoader() {
+		this.trackRewards = new ArrayList<>();
+		
+		Random r = new Random();
+		
+		for(int i = 0; i < MAXLENGTH; i++) {
+			// 33% of chance that there is a bonus on the track
+			if(r.nextInt(2) == 0) {
+				trackRewards.add(new RewardNobility());
+			} else {
+				trackRewards.add(null);
+			}
+		}
 	}
 
 	/**
@@ -147,7 +169,7 @@ public class NobilityLoader {
 	 * @see NobilityLoader
 	 */
 	private Bonus instantiateBonus(String bonusType, int value) {
-		Bonus[] allTypeBonus = Bonus.getAllBonus();
+		Bonus[] allTypeBonus = Bonus.getNobilityBonus();
 		for (int i = 0; i < allTypeBonus.length; i++)
 			if (bonusType.equals(allTypeBonus[i].getTagName()))
 				return allTypeBonus[i].newCopy(value);

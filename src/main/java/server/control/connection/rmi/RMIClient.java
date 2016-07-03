@@ -29,12 +29,21 @@ import server.control.dialogue.request.RequestWichMapToUse;
 import server.model.action.IllegalActionException;
 import server.model.market.OnSaleItem;
 
+/**
+ * This is the RMI Client, it extends the ClientInt and it is used when the client connects through RMI
+ * @author Matteo Colombo
+ *
+ */
 public class RMIClient implements ClientInt {
 	private Controller controller;
 	private RMIServerManagerInterface client;
 	private String clientName;
 	private Logger logger = Logger.getGlobal();
 
+	/**
+	 * Saves the client which is the remote object of the client
+	 * @param client
+	 */
 	public RMIClient(RMIServerManagerInterface client) {
 		this.client = client;
 	}
@@ -75,10 +84,21 @@ public class RMIClient implements ClientInt {
 		controller.parseGameConfiguration(players, map, this);
 	}
 
+	/**
+	 * Private method which is used to ask the max number of players
+	 * @param maxNumberOfPlayers
+	 * @return
+	 * @throws IOException
+	 */
 	private String askMaxNumberOfPlayers(int maxNumberOfPlayers) throws IOException {
 		return client.requestAnswer(new RequestMaxPlayersNumber(maxNumberOfPlayers));
 	}
 
+	/**
+	 * Private method which is used to ask the game map
+	 * @return
+	 * @throws IOException
+	 */
 	private String askWichMapToUse() throws IOException {
 		return client.requestAnswer(new RequestWichMapToUse());
 	}

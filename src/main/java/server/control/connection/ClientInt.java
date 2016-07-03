@@ -25,6 +25,10 @@ public interface ClientInt {
 	 */
 	public void setController(Controller controller);
 
+	/**
+	 * Ask to the player which action he whises to do
+	 * @throws IOException
+	 */
 	public void askPlayerWhatActionToDo() throws IOException;
 
 	/**
@@ -72,18 +76,43 @@ public interface ClientInt {
 	 */
 	public boolean isConnected();
 
+	/**
+	 * Sends a general notification to the client
+	 * @param dialog
+	 * @throws IOException
+	 */
 	public void notify(Dialogue dialog) throws IOException;
 	
-
+	/**
+	 * Asks to the client which item on sale he wishes to buy
+	 * @param itemsOnSale
+	 * @throws IOException
+	 */
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException;
 	
+	/**
+	 * Asks to the client which item he wishes to sell
+	 * @throws IOException
+	 */
 	public void askWichItemToSell() throws IOException;
 	
-	
+	/**
+	 * Ask to the client to choose the rewards from the specified number of cities
+	 * @param citiesNumber
+	 * @throws IOException
+	 */
 	public void askCityToGetNobilityReward(int citiesNumber) throws IOException;
 	
+	/**
+	 * Asks to the client to choose the reward of a permission card
+	 * @throws IOException
+	 */
 	public void askSelectRewardOfPermissionCard() throws IOException;
 	
+	/**
+	 * Asks to the client to choose one free permission card
+	 * @throws IOException
+	 */
 	public void askSelectFreePermissionCard() throws IOException;
 	
 }

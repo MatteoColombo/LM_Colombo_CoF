@@ -10,11 +10,21 @@ import server.Server;
 import server.control.connection.ClientInt;
 import server.control.connection.ServerInt;
 
+/**
+ * This is the RMI Server implementation, an object of this class is put on the registry
+ * @author Matteo Colombo
+ *
+ */
 public class RMIServer extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
 	private transient Logger logger=Logger.getGlobal();
 	private long timestampCreation;
+	
+	/**
+	 * Instantiate the object and saves the creation timestamp
+	 * @throws RemoteException
+	 */
 	public RMIServer() throws RemoteException {
 		super();
 		timestampCreation= System.nanoTime();

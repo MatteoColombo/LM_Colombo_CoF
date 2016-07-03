@@ -27,5 +27,10 @@ public interface RMIServerManagerInterface extends Remote {
 	 */
 	public void sendNotify(Dialogue dialogue) throws RemoteException;
 	
+	/**
+	 * This is used to check if the client is connected
+	 * @return true if it is connected, false otherwise
+	 * @throws RemoteException
+	 */
 	public boolean testConnection() throws RemoteException;
 }

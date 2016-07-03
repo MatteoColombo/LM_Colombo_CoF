@@ -25,11 +25,20 @@ public class Market {
 	private boolean playerWantsToStop;
 	private Logger logger = Logger.getGlobal();
 
+	/**
+	 * Instantiates the ArrayList of the items on sale and saves the players
+	 * 
+	 * @param players the players of the game
+	 */
 	public Market(List<Player> players) {
 		this.players = players;
 		itemsOnSale = new ArrayList<>();
 	}
 
+	/**
+	 * This is the class which manages the market rounds Asks to each player
+	 * what they whish to sell and then what they want to buy
+	 */
 	public void runMarket() {
 		startSellingTurns();
 		if (!itemsOnSale.isEmpty())

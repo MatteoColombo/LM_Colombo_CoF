@@ -26,6 +26,11 @@ public class TurnManager {
 	private List<Player> players;
 	private List<Color> colors;
 
+	/**
+	 * 
+	 * @param players the list of the players
+	 * @param colors the list of colors used by the politic cards
+	 */
 	public TurnManager(List<Player> players, List<Color> colors) {
 		this.players = players;
 		this.colors = colors;
@@ -63,6 +68,10 @@ public class TurnManager {
 		notifyTurnEnded(turnPlayer);
 	}
 
+	/**
+	 * Sends a notification to the current player notifying him that it's its turn to play
+	 * @param turnPlayer
+	 */
 	private void notifyTurnStarted(Player turnPlayer) {
 		try {
 			turnPlayer.getPoliticCard().add(new PoliticCard(colors));
@@ -73,6 +82,10 @@ public class TurnManager {
 		}
 	}
 
+	/**
+	 * Sends a notification to the player to notify him about the end of its turn
+	 * @param turnPlayer
+	 */
 	private void notifyTurnEnded(Player turnPlayer){
 		try {
 			turnPlayer.getClient().notify(new NotifyTurnEnded());
@@ -97,6 +110,10 @@ public class TurnManager {
 		this.playerWantsToExit = true;
 	}
 
+	/**
+	 * Sends to each client the update of the current player
+	 * @throws IOException
+	 */
 	public void notifyUpdatePlayer() throws IOException {
 		for (Player p : players) {
 			if (!p.getSuspended())

@@ -5,6 +5,11 @@ import java.util.List;
 
 import server.model.board.city.City;
 
+/**
+ * This is the simplified city used as model for the CLI
+ * @author Matteo Colombo
+ *
+ */
 public class CliCity {
 	private String name;
 	private List<String> connections;

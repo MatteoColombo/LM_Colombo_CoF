@@ -38,6 +38,10 @@ public class NobilityTrack {
 		this.track = track;
 	}
 
+	/**
+	 * 
+	 * @return returns the list which represents the nobility track
+	 */
 	public List<Reward> getTrack() {
 		return this.track;
 	}

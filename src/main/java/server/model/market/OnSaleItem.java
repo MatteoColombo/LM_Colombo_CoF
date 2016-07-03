@@ -17,6 +17,12 @@ public class OnSaleItem implements Serializable{
 	private Player owner;
 	private int price;
 	
+	/**
+	 * Creates the OnSaleItem
+	 * @param item the real item which is put on sale. Every item must implement Soldable
+	 * @param owner the owner, a Player
+	 * @param price the price, an integer
+	 */
 	public OnSaleItem(Soldable item, Player owner, int price){
 		this.owner= owner;
 		this.item=item;
@@ -47,6 +53,11 @@ public class OnSaleItem implements Serializable{
 		return item;
 	}
 	
+	/**
+	 * Returns a string which is is used to print the item, if needed
+	 * @param config the configuration, it is needed to translate the colors 
+	 * @return a string
+	 */
 	public String printedMessage(Configuration config){
 		return item.getMarketMessage(config)+" |  price: "+price+" | owner: "+owner.getName();
 	}

@@ -9,6 +9,9 @@ import server.model.player.PermissionCard;
 import server.model.player.Player;
 import server.model.player.PoliticCard;
 
+/**
+ * This is the simplified model of the player, it is used in the CLI
+ */
 public class CliPlayer {
 	private String name;
 	private int coins;
@@ -18,6 +21,11 @@ public class CliPlayer {
 	private List<CliPermission> permissions;
 	private List<String> politic;
 
+	/**
+	 * Instantiates the simplified player
+	 * @param p the player which need to be copied
+	 * @param config the configuration objext, it is used for the colors
+	 */
 	public CliPlayer(Player p, Configuration config) {
 		this.name = p.getName();
 		this.coins = p.getCoins().getAmount();
@@ -41,30 +49,58 @@ public class CliPlayer {
 
 	}
 
+	/**
+	 * 
+	 * @return the name of the player
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * 
+	 * @return the coins of the player
+	 */
 	public int getCoins() {
 		return coins;
 	}
 
+	/**
+	 * 
+	 * @return returns the number of assistants
+	 */
 	public int getAssistants() {
 		return assistants;
 	}
 
+	/**
+	 * 
+	 * @return the amount of victory points
+	 */
 	public int getVictory() {
 		return victory;
 	}
 
+	/**
+	 * 
+	 * @return the amount of nobility points
+	 */
 	public int getNobility() {
 		return nobility;
 	}
 
+	/**
+	 * Each String is the english name of the colors of the cards
+	 * @return a list of colors
+	 */
 	public List<String> getPolitic() {
 		return politic;
 	}
 
+	/**
+	 * A list of CliPermission cards owned by the player
+	 * @return the permission cards owned by the player
+	 */
 	public List<CliPermission> getPermission(){
 		return this.permissions;
 	}

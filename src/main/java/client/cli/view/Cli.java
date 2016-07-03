@@ -14,15 +14,28 @@ import client.cli.model.Game;
 import client.control.ViewInterface;
 import server.model.configuration.Configuration;
 
+/**
+ * This is the CLI class, it is used to print on the command line. It implements
+ * the ViewInterface
+ * 
+ * @author Matteo Colombo
+ *
+ */
 public class Cli implements ViewInterface {
 
 	private static final String SEPARATOR = "---------------------------------------";
-	private static final String[] EMPORIUM = {"🍅","🍇","🍈","🍉","🍐","🍒","🍓","🍍","🍄","🍔",""};
+	private static final String[] EMPORIUM = { "🍅", "🍇", "🍈", "🍉", "🍐", "🍒", "🍓", "🍍", "🍄", "🍔", "" };
 	private static final String PLAYER = "🏠";
 	private PrintWriter writer;
 	private Configuration config;
 	private Game model;
 
+	/**
+	 * Sets the configuration object and creates the writer.
+	 * 
+	 * @param config
+	 *            the configuration object
+	 */
 	public Cli(Configuration config) {
 		this.config = config;
 		writer = new PrintWriter(System.out, true);
@@ -79,22 +92,22 @@ public class Cli implements ViewInterface {
 	 *            the regions of the map
 	 */
 	public void printMap(List<CliRegion> regions) {
-		for(int i=0;i<3;i++)
+		for (int i = 0; i < 3; i++)
 			writer.println(SEPARATOR);
 		for (CliRegion region : regions) {
-			writer.println(SEPARATOR);	
-			writer.println("Region #" + (regions.indexOf(region) + 1)+ " bonus: "+region.getBonus());
+			writer.println(SEPARATOR);
+			writer.println("Region #" + (regions.indexOf(region) + 1) + " bonus: " + region.getBonus());
 			writer.print("Council: ");
 			List<String> council = region.getCouncil();
 			for (int i = council.size() - 1; i >= 0; i--)
-				writer.print(council.get(i) + (i==0?"\n":" "));	
+				writer.print(council.get(i) + (i == 0 ? "\n" : " "));
 			writer.println("Permission cards:");
 			printPermission(new ArrayList<CliPermission>(Arrays.asList(region.getPermission())));
 			for (CliCity city : region.getCities()) {
 				writer.print("| ");
 				printBonus(city);
 				printEmporium(city);
-				writer.print(city.getColor()+"\t");
+				writer.print(city.getColor() + "\t");
 				if (city.getName().length() < 8)
 					writer.print(city.getName() + "\t-->");
 				else
@@ -109,16 +122,20 @@ public class Cli implements ViewInterface {
 		printBoardRewards();
 	}
 
-	private void printBoardRewards(){
+	/**
+	 * Prints the rewards of the board
+	 */
+	private void printBoardRewards() {
 		writer.print("King's council: ");
-		for(int i=(model.getKingCouncil().size()-1);i>=0;i--)
-			writer.print(model.getKingCouncil().get(i)+(i==0?"\n":" "));
-		writer.println("Next King's reward: "+ model.getKingAward());
+		for (int i = (model.getKingCouncil().size() - 1); i >= 0; i--)
+			writer.print(model.getKingCouncil().get(i) + (i == 0 ? "\n" : " "));
+		writer.println("Next King's reward: " + model.getKingAward());
 		writer.println("Color rewards:");
-		for(String color: model.getColorReward().keySet())
-			writer.print(color+" "+model.getColorReward().get(color)+" ");
+		for (String color : model.getColorReward().keySet())
+			writer.print(color + " " + model.getColorReward().get(color) + " ");
 		writer.println();
 	}
+
 	/**
 	 * Prints the players of the game and their statistics, For the local
 	 * player, also the permit and the politic cards are printed
@@ -129,7 +146,7 @@ public class Cli implements ViewInterface {
 		writer.println("Players");
 		for (int i = 0; i < players.size(); i++) {
 			writer.println(SEPARATOR);
-			writer.println(players.get(i).getName() + " " + (i == model.getMyIndex() ? PLAYER :EMPORIUM[i]));
+			writer.println(players.get(i).getName() + " " + (i == model.getMyIndex() ? PLAYER : EMPORIUM[i]));
 			writer.println("Victory points: " + players.get(i).getVictory() + ", Coins: " + players.get(i).getCoins()
 					+ ", Assitants: " + players.get(i).getAssistants() + ", Politics:"
 					+ players.get(i).getPolitic().size() + ", Nobility: " + players.get(i).getNobility());
@@ -144,6 +161,12 @@ public class Cli implements ViewInterface {
 		writer.println(SEPARATOR);
 	}
 
+	/**
+	 * Prints the emporium built in the city
+	 * 
+	 * @param city
+	 *            the city of which we need to print the emporiums
+	 */
 	private void printEmporium(CliCity city) {
 		writer.print("(");
 		for (int index : city.getEmporiums())
@@ -184,11 +207,19 @@ public class Cli implements ViewInterface {
 		}
 	}
 
+	/**
+	 * Asks to the client the max number of the players. This is used during the
+	 * game config
+	 */
 	@Override
 	public void printAskPlayersNumber(int max) {
 		writer.println("Choose the maximum number of players. Game limit is " + max);
 	}
 
+	/**
+	 * Asks to the player which map he wants to use. This is used during the
+	 * game config
+	 */
 	@Override
 	public void printAskWhichMapToUse() {
 		writer.println("Choose the number of the map:");
@@ -197,23 +228,34 @@ public class Cli implements ViewInterface {
 			writer.println(i + ". Map " + i);
 	}
 
+	/**
+	 * Asks to the player which action he wants to do
+	 */
 	@Override
 	public void printAskWhatActionToDo() {
 		writer.println("Type in the action that you want to do: (Read the README for instructions)");
 
 	}
 
+	/**
+	 * Asks to the client which is his name
+	 */
 	@Override
 	public void printAskPlayerName() {
 		writer.println("Type in your name:");
 	}
 
+	/**
+	 * Prints a notification regarding an error
+	 */
 	@Override
 	public void printIllegalAction(Exception e) {
 		writer.println("Error: " + e.getMessage());
-
 	}
 
+	/**
+	 * Shows the map, the players list and all the game information
+	 */
 	@Override
 	public void showGame() {
 		writer.println(SEPARATOR);
@@ -221,21 +263,34 @@ public class Cli implements ViewInterface {
 		printMap(model.getRegions());
 	}
 
+	/**
+	 * Notifies the player about the fact that the game is loading and will
+	 * start soon
+	 */
 	@Override
 	public void showRoom() {
 		writer.println("\nThe game will start soon");
 	}
 
+	/**
+	 * Prints a generic message
+	 */
 	@Override
 	public void printMessage(String message) {
 		writer.println(message);
 	}
 
+	/**
+	 * This isn't very useful with the cli, it just call the generic printMessage method
+	 */
 	@Override
 	public void changeStatusToNobilityBonus(String message, String status) {
 		writer.println(message);
 	}
 
+	/**
+	 * Notifies the player that the market session just started
+	 */
 	@Override
 	public void showMarket() {
 		writer.println("The market started!");

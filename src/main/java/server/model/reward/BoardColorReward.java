@@ -54,6 +54,10 @@ public class BoardColorReward extends BoardReward {
 		return this.bColorRewardKey;
 	}
 	
+	/**
+	 * 
+	 * @return a new copy
+	 */
 	public BoardColorReward newCopy(){
 		return new BoardColorReward(bColorRewardKey, this.getBRBonus().getAmount());
 	}

@@ -53,6 +53,10 @@ public class BoardRegionReward extends BoardReward {
 		return this.bRegionRewardKey;
 	}
 	
+	/**
+	 * 
+	 * @return a new copy
+	 */
 	public BoardRegionReward newCopy(){
 		return new BoardRegionReward(bRegionRewardKey, this.getBRBonus().getAmount());
 	}

@@ -190,6 +190,10 @@ public class CouncilorPool {
 		return this.colors;
 	}
 	
+	/**
+	 * 
+	 * @return the number of councilors per color
+	 */
 	public int getCouncPerColor() {
 		return this.concPerColor;
 	}

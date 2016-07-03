@@ -41,6 +41,15 @@ public class Game extends Thread {
 	private Market market;
 	private Logger logger = Logger.getGlobal();
 
+	/**
+	 * Instantiates some objects and saves the configuration
+	 * 
+	 * @param gameConfig
+	 *            the configuration object
+	 * @param initialClient
+	 *            the client which is configuring the game
+	 * @throws ConfigurationErrorException
+	 */
 	public Game(Configuration gameConfig, ClientInt initialClient) throws ConfigurationErrorException {
 		this.config = gameConfig;
 		this.players = new ArrayList<>();
@@ -129,6 +138,11 @@ public class Game extends Thread {
 		publishWinner();
 	}
 
+	/**
+	 * This is the method which executes the regulare game cycle
+	 * 
+	 * @return true if a player placed the tenth emporium
+	 */
 	private boolean regularCycle() {
 		for (int i = 0; countSuspendedPlayers() < (players.size() - 1) && i < players.size(); i++) {
 			if (players.get(i).getSuspended())
@@ -142,6 +156,10 @@ public class Game extends Thread {
 		return false;
 	}
 
+	/**
+	 * This is the extra cycle which allows all the players but the one which
+	 * placed the tenth emporium to play another turn
+	 */
 	private void lastCycle() {
 		for (int i = (winningPlayer + 1) % players.size(); countSuspendedPlayers() < (players.size() - 1)
 				&& i != winningPlayer; i = (i + 1) % players.size()) {
@@ -151,6 +169,11 @@ public class Game extends Thread {
 		}
 	}
 
+	/**
+	 * This is the method which manages the market
+	 * 
+	 * @param someoneWon
+	 */
 	private void runMarket(boolean someoneWon) {
 		if (!someoneWon && countSuspendedPlayers() < players.size() - 1) {
 			this.market = new Market(players);
@@ -158,6 +181,10 @@ public class Game extends Thread {
 		}
 	}
 
+	/**
+	 * This is the method which configures the game with the 2 players
+	 * regulation, in case there are only 2 clients connected
+	 */
 	private void checkAndConfigGameForTwo() {
 		if (players.size() > 2)
 			return;
@@ -175,6 +202,11 @@ public class Game extends Thread {
 
 	}
 
+	/**
+	 * Assigns the extra points to the player who places the tenth emporium and
+	 * to the one who has more permission cards, then it sorts the players list
+	 * based on victory points
+	 */
 	public void calculateWinner() {
 		players.get(winningPlayer).getVictoryPoints().increaseAmount(3);
 
@@ -208,12 +240,14 @@ public class Game extends Thread {
 				else
 					return 0;
 			}
-		}
-		).collect(Collectors.toList());
+		}).collect(Collectors.toList());
 	}
 
+	/**
+	 * publishes the classification
+	 */
 	public void publishWinner() {
-		
+
 	}
 
 	/**
@@ -255,14 +289,26 @@ public class Game extends Thread {
 		return players;
 	}
 
+	/**
+	 * @return the market
+	 */
 	public Market getMarket() {
 		return this.market;
 	}
 
+	/**
+	 * Counts the number of suspended players
+	 * @return the number of suspended players
+	 */
 	private int countSuspendedPlayers() {
 		return (int) players.stream().filter(Player::getSuspended).count();
 	}
 
+	/**
+	 * Sends the emporium of the Server to the clients
+	 * @param name the server name
+	 * @param city the city in which the emporium is built
+	 */
 	private void sendEmporium(String name, String city) {
 		for (Player p : players)
 			if (!p.getSuspended()) {
@@ -274,6 +320,10 @@ public class Game extends Thread {
 			}
 	}
 
+	/**
+	 * Sends the server fake player to the clients
+	 * @param server the fake player
+	 */
 	private void sendServer(Player server) {
 		for (Player p : players)
 			if (!p.getSuspended()) {

@@ -2,6 +2,9 @@ package util;
 
 import javafx.scene.paint.Color;
 
+/**
+ * This class is used to convert the colors from java.awt to javafx and viceversa
+ */
 public class ColorConverter {
 	
 	private ColorConverter(){}

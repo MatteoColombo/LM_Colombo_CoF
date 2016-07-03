@@ -27,6 +27,11 @@ import server.model.reward.BoardRegionReward;
 import server.model.reward.Bonus;
 import server.model.reward.Reward;
 
+/**
+ * This is the main class of the simplified model used for the CLI
+ * @author Matteo Colombo
+ *
+ */
 public class Game implements ModelInterface {
 	private List<CliPlayer> players;
 	private Configuration config;
@@ -38,6 +43,10 @@ public class Game implements ModelInterface {
 	private List<String> kingCouncil;
 	private Logger logger = Logger.getGlobal();
 
+	/**
+	 * In
+	 * @param view
+	 */
 	public Game(Cli view) {
 		this.view = view;
 		this.players = new ArrayList<>();
@@ -45,6 +54,7 @@ public class Game implements ModelInterface {
 		this.kingCouncil = new ArrayList<>();
 		this.colorReward = new HashMap<>();
 	}
+
 
 	@Override
 	public void initMap(int choosen) {
@@ -64,6 +74,10 @@ public class Game implements ModelInterface {
 		}
 	}
 
+	/**
+	 * Sets the board rewards, it calls the method which is used to update them
+	 * @param b the board
+	 */
 	private void setBoardReward(Board b) {
 		BoardRewardsManager manager = b.getBoardRewardsManager();
 		updateBoardReward(manager.getRemainingBoardKingRewards(), manager.getRemainingBoardColorRewards(),
@@ -154,10 +168,18 @@ public class Game implements ModelInterface {
 		return this.config;
 	}
 
+	/**
+	 * Returns the next king reward
+	 * @return an integer which represents the next king's award
+	 */
 	public int getKingAward() {
 		return kingAward;
 	}
 
+	/**
+	 * Returns the map of the city colors rewards
+	 * @return the map of the colors reward
+	 */
 	public Map<String, Integer> getColorReward() {
 		return colorReward;
 	}

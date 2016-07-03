@@ -3,6 +3,11 @@ package server.control.dialogue.update;
 import client.model.ModelInterface;
 import server.control.dialogue.Dialogue;
 
+/**
+ * This is the Dialogue which is sent when a model update is needed
+ * @author Matteo Colombo
+ *
+ */
 @FunctionalInterface
 public interface Update extends Dialogue{
 

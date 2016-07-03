@@ -5,6 +5,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import server.model.player.Player;
 
+/**
+ * This is a nobility bonus which gives to who wins it a free reward from a permission card
+ * @author Matteo Colombo
+ *
+ */
 public class BRewardFromPermissionCard extends Bonus {
 	
 	private static final Logger log= Logger.getLogger( BRewardFromPermissionCard.class.getName() );
@@ -13,6 +18,9 @@ public class BRewardFromPermissionCard extends Bonus {
 	// not really useful here, it may be removed in the future
 	private static final int VALUE = 80;
 	private static final String NAME = "fromPermit";
+	/**
+	 * This sets the number of free rewards from permission cards
+	 */
 	public BRewardFromPermissionCard() {
 		super(1);
 	}

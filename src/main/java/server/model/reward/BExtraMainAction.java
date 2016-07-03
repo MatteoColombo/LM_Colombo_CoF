@@ -2,11 +2,17 @@ package server.model.reward;
 
 import server.model.player.Player;
 
+/**
+ * This bonus allows the player to do one main action more
+ */
 public class BExtraMainAction extends Bonus {
 
 	private static final long serialVersionUID = 2652339487323746030L;
 	private static final int VALUE = 99;
 	private static final String NAME = "extra";
+	/**
+	 * Sets to one the number of extra main action awarded
+	 */
 	public BExtraMainAction() {
 		super(1);
 	}

@@ -2,12 +2,19 @@ package server.model.reward;
 
 import server.model.player.Player;
 
+/**
+ * This gives to the player who wins it some nobility points
+ */
 public class BNobilityPoints extends Bonus {
 
 	private static final long serialVersionUID = -3756662449122371548L;
 	private static final int VALUE = 30;
 	private static final String NAME = "nobility";
 	
+	/**
+	 * Sets the amount of nobility points awarded
+	 * @param amount
+	 */
 	public BNobilityPoints(int amount) {
 		super(amount);
 	}

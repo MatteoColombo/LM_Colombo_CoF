@@ -18,6 +18,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * This is the class which loads the configuration from the xml file
+ * @author Matteo Colombo
+ *
+ */
 public class Configuration {
 	private static final String CONFIGPATH = "src/main/resources/config.xml";
 	private int initialPlayerMoney;
@@ -62,12 +67,17 @@ public class Configuration {
 	private static final String COLORREWARDPATH = "/config/city/reward/";
 	private static final String BOARDPATH = "/config/board/";
 	private static final String CITYCOLORPATH = "/config/citycolor/color/";
-
+	
+	/**
+	 * Calls the method which loads
+	 * @throws ConfigurationErrorException
+	 */
 	public Configuration() throws ConfigurationErrorException {
 		loadXMLFile();
 	}
 
-	public void loadXMLFile() throws ConfigurationErrorException {
+	
+	private void loadXMLFile() throws ConfigurationErrorException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
 			File xmlFile = new File(CONFIGPATH);
@@ -89,7 +99,7 @@ public class Configuration {
 		}
 	}
 
-	public void loadPlayersConfig(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+	private void loadPlayersConfig(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		NodeList list = (NodeList) xpath.compile(PLAYERPATH + "money").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.initialPlayerMoney = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(PLAYERPATH + "helpers").evaluate(xmlDoc, XPathConstants.NODESET);
@@ -106,7 +116,7 @@ public class Configuration {
 		this.maxNumberOfPlayer = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 	}
 
-	public void loadColors(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+	private void loadColors(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		colorsList = new ArrayList<>();
 		colorTranslation = new HashMap<>();
 		colorTranslationReverse = new HashMap<>();
@@ -122,7 +132,7 @@ public class Configuration {
 		}
 	}
 
-	public void loadCouncil(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+	private void loadCouncil(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		NodeList list = (NodeList) xpath.compile(COUNCILPATH + "councilorPerColor").evaluate(xmlDoc,
 				XPathConstants.NODESET);
 		this.councilorsPerColor = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
@@ -130,26 +140,26 @@ public class Configuration {
 		this.councilSize = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 	}
 
-	public void loadRegion(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+	private void loadRegion(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		NodeList list = (NodeList) xpath.compile(REGIONPATH + "disclosed").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.numberDisclosedCards = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(REGIONPATH + "award").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.rewardPerRegion = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 	}
 
-	public void loadNobility(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+	private void loadNobility(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		NodeList list = (NodeList) xpath.compile(NOBILITYPATH + "path").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.nobility = list.item(0).getFirstChild().getNodeValue();
 	}
 
-	public void loadMap(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+	private void loadMap(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		maps = new ArrayList<>();
 		NodeList list = (NodeList) xpath.compile(MAPPATH + "path").evaluate(xmlDoc, XPathConstants.NODESET);
 		for (int i = 0; i < list.getLength(); i++)
 			maps.add(list.item(i).getFirstChild().getNodeValue());
 	}
 
-	public void loadServer(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+	private void loadServer(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		NodeList list = (NodeList) xpath.compile(SERVERPATH + "rmi").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.rmiPort = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(SERVERPATH + "socket").evaluate(xmlDoc, XPathConstants.NODESET);
@@ -158,7 +168,7 @@ public class Configuration {
 		this.serverIp = list.item(0).getFirstChild().getNodeValue();
 	}
 
-	public void loadColorRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+	private void loadColorRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		colorRewards = new HashMap<>();
 		NodeList values = (NodeList) xpath.compile(COLORREWARDPATH + "value").evaluate(xmlDoc, XPathConstants.NODESET);
 		NodeList colors = (NodeList) xpath.compile(COLORREWARDPATH + "color").evaluate(xmlDoc, XPathConstants.NODESET);
@@ -167,7 +177,7 @@ public class Configuration {
 					Integer.parseInt(values.item(i).getFirstChild().getNodeValue()));
 	}
 
-	public void loadBoardRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+	private void loadBoardRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		boardRewards = new ArrayList<>();
 		NodeList list = (NodeList) xpath.compile(BOARDPATH + "value").evaluate(xmlDoc, XPathConstants.NODESET);
 		for (int i = 0; i < list.getLength(); i++)

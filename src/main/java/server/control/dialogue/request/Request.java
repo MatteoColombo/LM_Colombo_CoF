@@ -4,6 +4,11 @@ package server.control.dialogue.request;
 import client.control.ViewInterface;
 import server.control.dialogue.Dialogue;
 
+/**
+ * This is the dialogue which is sent when a response from the client is requested
+ * @author Matteo Colombo
+ *
+ */
 @FunctionalInterface
 public interface Request extends Dialogue {
 	/**

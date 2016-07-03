@@ -95,5 +95,9 @@ public abstract class Bonus implements Serializable{
 	 */
 	public abstract void assignBonusTo(Player p);
 	
+	/**
+	 * Returns the tagname of the bonus
+	 * @return
+	 */
 	public abstract String getTagName();
 }

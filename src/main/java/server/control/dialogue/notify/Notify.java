@@ -3,6 +3,11 @@ package server.control.dialogue.notify;
 import client.control.ViewInterface;
 import server.control.dialogue.Dialogue;
 
+/**
+ * This is the dialogue which is sent when a simple 	notification to the view is needed
+ * @author Matteo Colombo
+ *
+ */
 @FunctionalInterface
 public interface Notify extends Dialogue {
 	/**

@@ -8,6 +8,9 @@ import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 import server.model.player.Player;
 
+/**
+ * This is a nobility bonus and gives to the player who wins it a reward from a city 
+ */
 public class BExtraRewardFromCity extends Bonus{
 	
 	private static final Logger log= Logger.getLogger( BExtraRewardFromCity.class.getName() );
@@ -17,6 +20,11 @@ public class BExtraRewardFromCity extends Bonus{
 	// not really useful here, it may be removed in the future
 	public static final int VALUE = 60;
 	public static final String NAME = "city" ;
+	
+	/**
+	 * Sets the number of cities from which you can take the bonus
+	 * @param amount
+	 */
 	public BExtraRewardFromCity(int amount) {
 		super(amount);
 	}

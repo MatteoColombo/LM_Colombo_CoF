@@ -2,6 +2,11 @@ package server.model.configuration;
 
 import server.model.board.map.MapXMLFileException;
 
+/**
+ * This is the exception which indicates that there was a problem with one of the XML files
+ * @author Matteo Colombo
+ *
+ */
 public class XMLFileException extends Exception {
 	
 	private static final long serialVersionUID = 6160929647360037079L;

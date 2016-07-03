@@ -2,11 +2,18 @@ package server.model.reward;
 
 import server.model.player.Player;
 
+/**
+ * This bonus gives some coins to the player who receives it
+ */
 public class BCoins extends Bonus {
 
 	private static final long serialVersionUID = -2282867100826103325L;
 	private static final int VALUE = 11;
 	private static final String NAME = "coins";	
+	/**
+	 * Sets the number of coins awarded
+	 * @param amount
+	 */
 	public BCoins(int amount) {
 		super(amount);
 	}

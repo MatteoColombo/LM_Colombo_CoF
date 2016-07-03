@@ -69,6 +69,10 @@ public class Reward implements Serializable {
 	public void assignBonusTo(Player p) {
 		this.bonusList.forEach(bonus -> bonus.assignBonusTo(p));
 	}
+	/**
+	 * Returns the list of the bonus contained in the reward
+	 * @return a list of bonus
+	 */
 	public List<Bonus> getGeneratedRewards(){
 		return this.bonusList;
 	}

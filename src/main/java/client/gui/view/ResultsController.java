@@ -1,5 +1,6 @@
 package client.gui.view;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import client.gui.control.MainApp;
@@ -10,6 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import server.model.player.Player;
 
 
 public class ResultsController {
@@ -24,29 +27,23 @@ public class ResultsController {
 	private TableColumn<PlayerProperty, Integer> assistantColumn;
 	@FXML
 	private TableColumn<PlayerProperty, Integer> politicColumn;
-	
-	private MainApp mainApp;
-	
-	public void setAll(MainApp mainApp) {
-		this.mainApp = mainApp;
-		setResults();
-	}
-	
-	private void setResults() {
-		
-		ObservableList<PlayerProperty> filtered = FXCollections.observableArrayList();
-		
-		filtered.setAll(mainApp.getLocalModel().getPlayers().stream()
-						.filter(player -> player.victoryProperty().get() >= 0)
-						.collect(Collectors.toList()));
 
+	public void setResults(List<Player> players) {	
 		
-		resultsTable.setItems(filtered);
+		ObservableList<PlayerProperty> playersProperty = FXCollections.observableArrayList();
+		
+		// wrap the players  into playerproperty classes
+		for(Player player: players) {
+			if(player.getVictoryPoints().getAmount() >= 0) {
+				playersProperty.add(new PlayerProperty().setAllButPermissions(player));
+			}
+		}
+	
+		resultsTable.setItems(playersProperty);
 		playerColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
 		victoryColumn.setCellValueFactory(cell -> cell.getValue().victoryProperty().asObject());
 		assistantColumn.setCellValueFactory(cell -> cell.getValue().assistantsProperty().asObject());
 		politicColumn.setCellValueFactory(cell -> Bindings.size(cell.getValue().getPoliticCards()).asObject());		
 
-		resultsTable.getSortOrder().setAll(victoryColumn, assistantColumn, politicColumn);
 	}
 }

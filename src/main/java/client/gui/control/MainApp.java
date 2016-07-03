@@ -33,6 +33,7 @@ import server.control.dialogue.request.Request;
 import server.control.dialogue.update.Update;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
+import server.model.player.Player;
 
 public class MainApp extends Application implements ViewInterface, Runnable, Controller {
 
@@ -182,7 +183,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
-	public void showResults() {
+	public void showResults(List<Player> players) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/Results.fxml"));
@@ -195,7 +196,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
             Scene scene = new Scene(results);
             stage.setScene(scene);
             ResultsController controller = loader.getController();
-            controller.setAll(this);
+            controller.setResults(players);
 
             // Show the dialog and wait until the user closes it
             stage.showAndWait();

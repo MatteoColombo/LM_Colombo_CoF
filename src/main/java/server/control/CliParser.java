@@ -8,7 +8,7 @@ public class CliParser {
 	
 	public static final String OPTCOUNCIL ="council";
 	public static final String OPTCITY ="city";
-	public static final String OPTPERMISSION ="permission";
+	public static final String OPTPERMISSION ="slot";
 	public static final String OPTREGION ="region";
 	public static final String OPTCARDS ="cards";
 	public static final String OPTCOLOR ="color";

@@ -73,7 +73,7 @@ public class GameController {
 	private static final String SLIDE2 = "secondarySlide";
 	private static final String DRAGK = "dragKing";
 	private static final String CITY = " -city ";
-	private static final String PERMISSION = " -permission ";
+	private static final String PERMISSION = " -slot ";
 
 	private MainApp mainApp;
 	private PlayerProperty myData;

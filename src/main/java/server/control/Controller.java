@@ -263,8 +263,17 @@ public class Controller {
 
 	/**
 	 * translate a string action request from the client into its object
-	 * representation It notify the client if something went wrong
-	 * 
+	 * representation It notify the client if something went wrong. <br>
+	 * The string must respect the following convention:
+	 * [ACTION] [OPTIONS]
+	 * <br> If one index or more is required as an option argument, it must start from 1
+	 * <br>
+	 * eg:
+	 * <li>slide -council 1 -color pink <br>
+	 * <li>emporium -city castrum -permission 1 <br>
+	 * <li>extra <br>
+	 * <li>king -city arkon -cards 1 2 3 
+	 * <li>permission -region 2 -slot 1 -cards 1 3 5
 	 * @param s
 	 *            the input from the cli
 	 * @throws IOException

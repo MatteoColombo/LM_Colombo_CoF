@@ -73,7 +73,7 @@ public class GameController {
 	private static final String SLIDE2 = "secondarySlide";
 	private static final String DRAGK = "dragKing";
 	private static final String CITY = " -city ";
-	private static final String PERMISSION = " -slot ";
+	private static final String PERMISSION = " -card ";
 
 	private MainApp mainApp;
 	private PlayerProperty myData;
@@ -552,7 +552,7 @@ public class GameController {
 			Dragboard db = event.getDragboard();
 			if (db.hasString()) {
 				resetKing();
-				mainApp.sendMsg(gameStatus + CITY + cityPane.getId() + " -cards " + db.getString());
+				mainApp.sendMsg(gameStatus + CITY + cityPane.getId() + " -politic " + db.getString());
 			}
 		});
 	}
@@ -778,7 +778,7 @@ public class GameController {
 						int cardIndex = Integer.valueOf(card) + 1;
 						int regionIndex = Integer.valueOf(region) + 1;
 						mainApp.sendMsg(gameStatus + " -region " + regionIndex + PERMISSION + cardIndex
-								+ " -cards " + db.getString());
+								+ " -politic " + db.getString());
 					}
 				});
 

@@ -1,16 +1,20 @@
 package server.control;
 
 import org.apache.commons.cli.*;
-
+/**
+ * Parser for the string sent 
+ * @author gianpaolobranca
+ *
+ */
 public class CliParser {
 	private Options opt;
 	private CommandLineParser parser = new DefaultParser();
 	
 	public static final String OPTCOUNCIL ="council";
 	public static final String OPTCITY ="city";
-	public static final String OPTPERMISSION ="slot";
+	public static final String OPTPERMISSION ="card";
 	public static final String OPTREGION ="region";
-	public static final String OPTCARDS ="cards";
+	public static final String OPTCARDS ="politic";
 	public static final String OPTCOLOR ="color";
 	
 	public CliParser() {
@@ -22,7 +26,7 @@ public class CliParser {
 			.addOption(OPTREGION, true, "")
 			.addOption(OPTPERMISSION, true, "");	
 		
-		Option cards = new Option("cards", true, "");
+		Option cards = new Option(OPTCARDS, true, "");
 		cards.setArgs(4);
 		cards.setOptionalArg(true);
 		opt.addOption(cards);

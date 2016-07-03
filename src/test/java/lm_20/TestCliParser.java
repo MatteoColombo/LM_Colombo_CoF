@@ -13,13 +13,13 @@ public class TestCliParser {
 	@Test
 	public void test() throws ParseException {
 		CliParser parser = new CliParser();
-		String request = "permission -region 2 -permission 1 -cards 1 2 3";
+		String request = "permission -region 2 -card 1 -politic 1 2 3";
 		CommandLine cmd = parser.computeRequest(request.split(" "));
 		assertEquals("2", cmd.getOptionValue("region"));
-		assertEquals("1", cmd.getOptionValues("cards")[0]);
-		assertEquals("2", cmd.getOptionValues("cards")[1]);
-		assertEquals("3", cmd.getOptionValues("cards")[2]);
-		assertEquals("1", cmd.getOptionValue("permission"));
+		assertEquals("1", cmd.getOptionValues("politic")[0]);
+		assertEquals("2", cmd.getOptionValues("politic")[1]);
+		assertEquals("3", cmd.getOptionValues("politic")[2]);
+		assertEquals("1", cmd.getOptionValue("card"));
 	}
 
 }

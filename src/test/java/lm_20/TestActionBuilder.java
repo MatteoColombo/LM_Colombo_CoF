@@ -55,7 +55,7 @@ public class TestActionBuilder {
 		ActionBuilder builder = new ActionBuilder(board, config);
 		player.getPermissionCard().add(board.getRegion(0).givePermissionCard(0));
 		String cityname = player.getPermissionCard().get(0).getCardCity().get(0).getName();
-		String input = "emporium -city " + cityname + " -permission 1";
+		String input = "emporium -city " + cityname + " -card 1";
 		CommandLine parsed = parser.computeRequest(input.split(" "));
 		Action a = builder.makeABuildEmporium(player, parsed);
 		try{
@@ -109,7 +109,7 @@ public class TestActionBuilder {
 		player.getPoliticCard().add(new PoliticCard(board.getKingCouncil().getCouncilorsColor().get(1)));
 		player.getPoliticCard().add(new PoliticCard(board.getKingCouncil().getCouncilorsColor().get(2)));
 		ActionBuilder builder = new ActionBuilder(board, config);
-		String input = "king -city Juvelar -cards 1 2 3";
+		String input = "king -city Juvelar -politic 1 2 3";
 		CommandLine parsed = parser.computeRequest(input.split(" "));
 		Action a = builder.makeABuildEmporiumWithKing(player, parsed);
 		a.execute();
@@ -151,7 +151,7 @@ public class TestActionBuilder {
 
 	@Test(expected = IllegalActionException.class)
 	public void testBuyPermissionCard() throws IllegalActionException, ParseException {
-		String input = "permission -region 1 -permission 1 -cards 1";
+		String input = "permission -region 1 -card 1 -politic 1";
 		player.getCoins().increaseAmount(5);
 		PoliticCard c;
 		do {
@@ -163,7 +163,7 @@ public class TestActionBuilder {
 		Action a = builder.makeABuyPermissionCard(player, parsed);
 		a.execute();
 		assertEquals(1, player.getPermissionCard().size());
-		input = "permission -permission 1 -cards 1";
+		input = "permission -card 1 -politic 1";
 		parsed = parser.computeRequest(input.split(" "));
 		a = builder.makeABuyPermissionCard(player, parsed);
 	}

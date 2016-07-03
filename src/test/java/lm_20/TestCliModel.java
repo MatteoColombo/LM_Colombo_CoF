@@ -1,7 +1,6 @@
 package lm_20;
 import static org.junit.Assert.*;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +39,7 @@ public class TestCliModel {
 		Configuration config= new Configuration();
 		Cli cli= new Cli(config);
 		model= new Game(cli);
+		cli.setModel(model);
 		model.setConfiguration(config);
 		model.initMap(1);
 		List<Councilor> councMembers= new ArrayList<>();

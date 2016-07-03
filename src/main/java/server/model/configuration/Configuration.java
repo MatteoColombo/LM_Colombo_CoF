@@ -251,7 +251,7 @@ public class Configuration {
 	}
 
 	public Map<Color, Integer> getColorRewards() {
-		return (Map<Color,Integer>)((HashMap)colorRewards).clone();
+		return colorRewards;
 	}
 
 	public List<Integer> getBoardRewards() {

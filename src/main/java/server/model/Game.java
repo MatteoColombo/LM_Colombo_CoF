@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import com.sun.javafx.geom.transform.GeneralTransform3D;
 
 import server.control.connection.ClientInt;
 import server.control.dialogue.update.NotifyPlayerJoined;
@@ -115,18 +118,18 @@ public class Game extends Thread {
 		boolean someoneWon = false;
 		checkAndConfigGameForTwo();
 		turnManager = new TurnManager(players, config.getColorsList());
-		
+
 		while (!someoneWon) {
-			someoneWon=regularCycle();
+			someoneWon = regularCycle();
 			runMarket(someoneWon);
 		}
-		
+
 		lastCycle();
 		calculateWinner();
 		publishWinner();
 	}
 
-	private boolean regularCycle(){
+	private boolean regularCycle() {
 		for (int i = 0; countSuspendedPlayers() < (players.size() - 1) && i < players.size(); i++) {
 			if (players.get(i).getSuspended())
 				continue;
@@ -138,8 +141,8 @@ public class Game extends Thread {
 		}
 		return false;
 	}
-	
-	private void lastCycle(){
+
+	private void lastCycle() {
 		for (int i = (winningPlayer + 1) % players.size(); countSuspendedPlayers() < (players.size() - 1)
 				&& i != winningPlayer; i = (i + 1) % players.size()) {
 			if (players.get(i).getSuspended())
@@ -147,17 +150,18 @@ public class Game extends Thread {
 			turnManager.playTurn(i);
 		}
 	}
-	private void runMarket(boolean someoneWon){
-		if (!someoneWon && countSuspendedPlayers()< players.size()-1) {
+
+	private void runMarket(boolean someoneWon) {
+		if (!someoneWon && countSuspendedPlayers() < players.size() - 1) {
 			this.market = new Market(players);
 			this.market.runMarket();
 		}
 	}
-	
+
 	private void checkAndConfigGameForTwo() {
-		if(players.size()>2)
+		if (players.size() > 2)
 			return;
-		Player server = new Player(config,null);
+		Player server = new Player(config, null);
 		server.setName("_Server_");
 		sendServer(server);
 		players.add(server);
@@ -171,11 +175,45 @@ public class Game extends Thread {
 
 	}
 
-	public void calculateWinner(){
-		//TODO
+	public void calculateWinner() {
+		players.get(winningPlayer).getVictoryPoints().increaseAmount(3);
+
+		int maxNobility = players.stream().mapToInt(p -> p.getNobilityPoints().getAmount()).max().orElse(-1);
+		int playersWithMax = (int) players.stream().filter(p -> p.getNobilityPoints().getAmount() == maxNobility)
+				.count();
+		players.stream().filter(p -> p.getNobilityPoints().getAmount() == maxNobility)
+				.forEach(p -> p.getVictoryPoints().increaseAmount(5));
+		if (playersWithMax > 1) {
+			int secondNobility = players.stream().filter(p -> p.getNobilityPoints().getAmount() == maxNobility)
+					.mapToInt(p -> p.getNobilityPoints().getAmount()).max().orElse(-1);
+			players.stream().filter(p -> p.getNobilityPoints().getAmount() == secondNobility)
+					.forEach(p -> p.getVictoryPoints().increaseAmount(2));
+		}
+
+		int maxPermitCards = players.stream().mapToInt(p -> p.getPermissionCard().size()).max().orElse(-1);
+		players.stream().filter(p -> p.getPermissionCard().size() == maxPermitCards)
+				.forEach(p -> p.getVictoryPoints().increaseAmount(3));
+		players = players.stream().sorted((p1, p2) -> {
+			if (p1.getVictoryPoints().getAmount() > p2.getVictoryPoints().getAmount())
+				return 1;
+			else if (p1.getVictoryPoints().getAmount() < p2.getVictoryPoints().getAmount())
+				return -1;
+			else {
+				if ((p1.getPoliticCard().size() + p1.getAssistants().getAmount()) > (p2.getPoliticCard().size()
+						+ p2.getAssistants().getAmount()))
+					return 1;
+				else if ((p1.getPoliticCard().size() + p1.getAssistants().getAmount()) < (p2.getPoliticCard().size()
+						+ p2.getAssistants().getAmount()))
+					return -1;
+				else
+					return 0;
+			}
+		}
+		).collect(Collectors.toList());
 	}
+
 	public void publishWinner() {
-		// TODO
+		
 	}
 
 	/**

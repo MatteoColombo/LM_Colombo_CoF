@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import client.cli.view.Cli;
 import client.model.ModelInterface;
 import server.model.board.Board;
+import server.model.board.BoardRewardsManager;
 import server.model.board.Region;
 import server.model.board.city.City;
 import server.model.board.council.Council;
@@ -53,12 +54,20 @@ public class Game implements ModelInterface {
 			for (Region r : board.getRegions()) {
 				List<CliCity> cities = new ArrayList<>();
 				for (City c : r.getCities())
-					cities.add(new CliCity(c.getName(), c.getConnectedCities(), c.isCapital()));
+					cities.add(new CliCity(c.getName(), c.getConnectedCities(), c.isCapital(),
+							config.getCityColor().get(c.getColor())));
 				regions.add(new CliRegion(regions.size(), cities, config.getNumberDisclosedCards()));
+				setBoardReward(board);
 			}
 		} catch (XMLFileException e) {
 			logger.log(Level.SEVERE, "There is an error with the configuration, please fix it!", e);
 		}
+	}
+
+	private void setBoardReward(Board b) {
+		BoardRewardsManager manager = b.getBoardRewardsManager();
+		updateBoardReward(manager.getRemainingBoardKingRewards(), manager.getRemainingBoardColorRewards(),
+				manager.getRemainingBoardRegionRewards());
 	}
 
 	@Override
@@ -69,7 +78,7 @@ public class Game implements ModelInterface {
 	@Override
 	public void isYourTurn() {
 		view.printMessage("It's your turn!");
-		view.printCities(regions);
+		view.printMap(regions);
 		view.printPlayers(players);
 	}
 
@@ -122,6 +131,8 @@ public class Game implements ModelInterface {
 		players.remove(index);
 		CliPlayer player = new CliPlayer(p, config);
 		players.add(index, player);
+		view.printMap(regions);
+		view.printPlayers(players);
 	}
 
 	@Override
@@ -212,14 +223,13 @@ public class Game implements ModelInterface {
 			regions.get(i).setBonus(regionReward.get(i).getBRBonus().getAmount());
 		this.colorReward.clear();
 		for (BoardColorReward rew : colorReward)
-			this.colorReward.put(config.getColorsTranslationReverse().get(rew.getBRKey()),
-					rew.getBRBonus().getAmount());
+			this.colorReward.put(config.getCityColor().get(rew.getBRKey()), rew.getBRBonus().getAmount());
 	}
-	
+
 	@Override
-	public void setMarket(List<OnSaleItem> items){
+	public void setMarket(List<OnSaleItem> items) {
 		view.printMessage("Choose what item you want to buy:");
-		for(int i=1; i< items.size();i++)
-			view.printMessage(i+". "+items.get(i-1).printedMessage(config));
+		for (int i = 1; i < items.size(); i++)
+			view.printMessage(i + ". " + items.get(i - 1).printedMessage(config));
 	}
 }

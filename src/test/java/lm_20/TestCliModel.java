@@ -107,7 +107,7 @@ public class TestCliModel {
 	@Test
 	public void testCity() throws XMLFileException, ConfigurationErrorException{
 		Board b= new Board(new Configuration(),0);
-		CliCity city= new CliCity("Arkon", b.getRegion(0).getCities().get(0).getConnectedCities(), false);
+		CliCity city= new CliCity("Arkon", b.getRegion(0).getCities().get(0).getConnectedCities(), false,"iron");
 		assertEquals("Arkon", city.getName());
 		assertEquals(2,city.getConnections().size());
 		assertEquals(false, city.isHasKing());

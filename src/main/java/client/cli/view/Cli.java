@@ -78,20 +78,23 @@ public class Cli implements ViewInterface {
 	 * @param regions
 	 *            the regions of the map
 	 */
-	public void printCities(List<CliRegion> regions) {
-		for (CliRegion region : regions) {
+	public void printMap(List<CliRegion> regions) {
+		for(int i=0;i<3;i++)
 			writer.println(SEPARATOR);
-			writer.println("Region #" + (regions.indexOf(region) + 1));
+		for (CliRegion region : regions) {
+			writer.println(SEPARATOR);	
+			writer.println("Region #" + (regions.indexOf(region) + 1)+ " bonus: "+region.getBonus());
 			writer.print("Council: ");
 			List<String> council = region.getCouncil();
 			for (int i = council.size() - 1; i >= 0; i--)
-				writer.print(council.get(i) + (i==(council.size()-2)?"\n":" "));	
+				writer.print(council.get(i) + (i==0?"\n":" "));	
 			writer.println("Permission cards:");
 			printPermission(new ArrayList<CliPermission>(Arrays.asList(region.getPermission())));
 			for (CliCity city : region.getCities()) {
 				writer.print("| ");
 				printBonus(city);
 				printEmporium(city);
+				writer.print(city.getColor()+"\t");
 				if (city.getName().length() < 8)
 					writer.print(city.getName() + "\t-->");
 				else
@@ -103,8 +106,19 @@ public class Cli implements ViewInterface {
 			}
 		}
 		writer.println(SEPARATOR);
+		printBoardRewards();
 	}
 
+	private void printBoardRewards(){
+		writer.print("King's council: ");
+		for(int i=(model.getKingCouncil().size()-1);i>=0;i--)
+			writer.print(model.getKingCouncil().get(i)+(i==0?"\n":" "));
+		writer.println("Next King's reward: "+ model.getKingAward());
+		writer.println("Color rewards:");
+		for(String color: model.getColorReward().keySet())
+			writer.print(color+" "+model.getColorReward().get(color)+" ");
+		writer.println();
+	}
 	/**
 	 * Prints the players of the game and their statistics, For the local
 	 * player, also the permit and the politic cards are printed
@@ -204,7 +218,7 @@ public class Cli implements ViewInterface {
 	public void showGame() {
 		writer.println(SEPARATOR);
 		writer.println("The game started");
-		printCities(model.getRegions());
+		printMap(model.getRegions());
 	}
 
 	@Override

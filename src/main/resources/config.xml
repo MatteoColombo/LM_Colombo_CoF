@@ -39,6 +39,28 @@
 			<name>violet</name>
 		</color>
 	</colors>
+	<citycolor>
+		<color>
+			<name>purple</name>
+			<value>#ee82ee</value>
+		</color>
+		<color>
+			<name>gold</name>
+			<value>#ffd700</value>
+		</color>
+		<color>
+			<name>silver</name>
+			<value>#008000</value>
+		</color>
+		<color>
+			<name>bronze</name>
+			<value>#f44343</value>
+		</color>
+		<color>
+			<name>iron</name>
+			<value>#2268df</value>
+		</color>
+	</citycolor>
 	<council>
 		<size>4</size>
 		<councilorPerColor>4</councilorPerColor>

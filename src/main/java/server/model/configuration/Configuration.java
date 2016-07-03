@@ -14,7 +14,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -47,6 +46,8 @@ public class Configuration {
 	private int socketPort;
 	private String serverIp;
 
+	private Map<Color, String> cityColor;
+	
 	private Map<Color, Integer> colorRewards;
 
 	private List<Integer> boardRewards;
@@ -60,6 +61,7 @@ public class Configuration {
 	private static final String SERVERPATH = "/config/server/";
 	private static final String COLORREWARDPATH = "/config/city/reward/";
 	private static final String BOARDPATH = "/config/board/";
+	private static final String CITYCOLORPATH = "/config/citycolor/color/";
 
 	public Configuration() throws ConfigurationErrorException {
 		loadXMLFile();
@@ -81,15 +83,9 @@ public class Configuration {
 			loadServer(xpath, xmlDoc);
 			loadBoardRewards(xpath, xmlDoc);
 			loadColorRewards(xpath, xmlDoc);
-
-		} catch (ParserConfigurationException pec) {
-			throw new ConfigurationErrorException(pec);
-		} catch (IOException ioe) {
-			throw new ConfigurationErrorException(ioe);
-		} catch (SAXException saxe) {
-			throw new ConfigurationErrorException(saxe);
-		} catch (XPathExpressionException xpee) {
-			throw new ConfigurationErrorException(xpee);
+			loadCityColor(xpath, xmlDoc);
+		} catch (ParserConfigurationException | XPathExpressionException | SAXException | IOException e) {
+			throw new ConfigurationErrorException(e);
 		}
 	}
 
@@ -177,6 +173,14 @@ public class Configuration {
 		for (int i = 0; i < list.getLength(); i++)
 			boardRewards.add(Integer.parseInt(list.item(i).getFirstChild().getNodeValue()));
 	}
+	
+	private void loadCityColor(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+		cityColor= new HashMap<>();
+		NodeList values = (NodeList) xpath.compile(CITYCOLORPATH + "value").evaluate(xmlDoc, XPathConstants.NODESET);
+		NodeList colors = (NodeList) xpath.compile(CITYCOLORPATH + "name").evaluate(xmlDoc, XPathConstants.NODESET);
+		for(int i=0; i<values.getLength();i++)
+			cityColor.put(Color.decode(values.item(i).getFirstChild().getNodeValue()), colors.item(i).getFirstChild().getNodeValue());
+	}
 
 	public int getInitialPlayerMoney() {
 		return initialPlayerMoney;
@@ -207,11 +211,11 @@ public class Configuration {
 	}
 
 	public List<Color> getColorsList() {
-		return colorsList;
+		return (List<Color>)((ArrayList)colorsList).clone();
 	}
 
 	public Map<String, Color> getColorsTranslation() {
-		return colorTranslation;
+		return (Map<String,Color>)((HashMap)colorTranslation).clone();
 	}
 
 	public int getCouncilorsPerColor() {
@@ -231,7 +235,7 @@ public class Configuration {
 	}
 
 	public List<String> getMaps() {
-		return maps;
+		return (List<String>)((ArrayList<String>)maps).clone();
 	}
 
 	public int getRmiPort() {
@@ -247,11 +251,11 @@ public class Configuration {
 	}
 
 	public Map<Color, Integer> getColorRewards() {
-		return colorRewards;
+		return (Map<Color,Integer>)((HashMap)colorRewards).clone();
 	}
 
 	public List<Integer> getBoardRewards() {
-		return boardRewards;
+		return (List<Integer>)((ArrayList)boardRewards).clone();
 	}
 
 	public String getServerAddress() {
@@ -259,6 +263,10 @@ public class Configuration {
 	}
 
 	public Map<Color, String> getColorsTranslationReverse() {
-		return this.colorTranslationReverse;
+		return (Map<Color,String>)((HashMap)colorTranslationReverse).clone();
+	}
+	
+	public Map<Color, String> getCityColor(){
+		return (Map<Color,String>)((HashMap)this.cityColor).clone();
 	}
 }

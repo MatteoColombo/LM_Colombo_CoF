@@ -11,6 +11,7 @@ public class CliCity {
 	private boolean hasKing;
 	private List<CliBonus> rewards;
 	private List<Integer> emporiums;
+	private String color;
 
 	/**
 	 * Initializes a city with the parameters that can be loaded by file
@@ -18,13 +19,14 @@ public class CliCity {
 	 * @param connections the list of the connections
 	 * @param hasKing true if the city is capital, false otherwise
 	 */
-	public CliCity(String name, List<City> connections, boolean hasKing) {
+	public CliCity(String name, List<City> connections, boolean hasKing, String color) {
 		this.name = name;
 		this.connections= new ArrayList<>();
 		for(City c: connections)
 			this.connections.add(c.getName());
 		this.hasKing = hasKing;
 		this.emporiums= new ArrayList<>();
+		this.color=color;
 	}
 
 	/**
@@ -91,5 +93,13 @@ public class CliCity {
 	public List<Integer> getEmporiums(){
 		return emporiums;
 	}
-	
+
+	/**
+	 * Returns the color of the city
+	 * @return a String which is the name of the city color
+	 */
+	public String getColor() {
+		return color;
+	}
+
 }

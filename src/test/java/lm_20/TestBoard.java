@@ -77,7 +77,7 @@ public class TestBoard {
 		this.gameBoard = new Board(config, 1);
 		NobilityTrack nobilityTrack = this.gameBoard.getNobleTrack();
 		assertEquals(1, nobilityTrack.getReward(6).getGeneratedRewards().get(0).getAmount());
-		assertEquals(22, nobilityTrack.getMaxPoint());
+		assertEquals(20, nobilityTrack.getMaxPoint());
 
 	}
 

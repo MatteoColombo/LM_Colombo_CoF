@@ -76,7 +76,8 @@ public class Player implements Serializable {
 		this.noblePoints = new NoblePoints(config.getInitialNobilityPoints(), this, track);
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
-		this.name = client.getName();
+		if(client!=null)
+			this.name = client.getName();
 		this.permissionCard = new ArrayList<>();
 		this.pickedColours = config.getColorsList();
 		for (int i = 0; i < config.getInitialPoliticCards(); i++)
@@ -112,37 +113,7 @@ public class Player implements Serializable {
 		this.mainActions=DEFAULTMAINACTION;
 	}
 
-	/**
-	 * This is @deprecated and used just for tests
-	 * 
-	 * @param money
-	 * @param helper
-	 * @param draw
-	 * @param maxEmp
-	 * @param pickedColours
-	 * @param initalVictory
-	 * @param initialNoble
-	 */
-	@Deprecated
-	public Player(int money, int helper, int draw, int maxEmp, List<Color> pickedColours, int initalVictory,
-			int initialNoble, NobilityTrack track, ClientInt client) {
-		this.coins = new Coins(money);
-		this.assistants = new Assistants(helper);
-		this.victoryPoints = new VictoryPoints(initalVictory);
-		this.noblePoints = new NoblePoints(initialNoble, this, track);
-		this.politicCard = new ArrayList<>();
-		this.permissionCard = new ArrayList<>();
-		this.emporium = new ArrayList<>();
-		for (int i = 0; i < draw; i++)
-			politicCard.add(new PoliticCard(pickedColours));
-		for (int i = 0; i < maxEmp; i++)
-			emporium.add(new Emporium(this));
-		this.mainActions = DEFAULTMAINACTION;
-		this.extraAction = false;
-		this.pickedColours = pickedColours;
-		this.isSuspended = false;
-		this.client = client;
-	}
+	
 
 	/**
 	 * 

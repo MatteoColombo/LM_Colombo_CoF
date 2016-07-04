@@ -2,12 +2,10 @@ package lm_20;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-
 import server.model.board.Board;
 import server.model.board.nobility.NobilityLoader;
 import server.model.board.nobility.NobilityTrack;
@@ -24,25 +22,30 @@ import server.model.player.PoliticCard;
 
 public class TestMarket {
 	private List<Player> allPlayers;
-	private List<Color> colorList;
 	private Market market;
 
 	@Before
 	public void setUp() throws TrackXMLFileException, ConfigurationErrorException {
-		colorList = new ArrayList<>();
-		colorList.add(Color.BLACK);
-		colorList.add(Color.BLUE);
-		colorList.add(Color.RED);
-		colorList.add(Color.YELLOW);
-		colorList.add(Color.GREEN);
-		colorList.add(Color.ORANGE);
+		Configuration config= new Configuration();
 		allPlayers = new ArrayList<>();
 		NobilityTrack track = new NobilityTrack(
-				new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		allPlayers.add(new Player(10, 1, 6, 10, colorList, 0, 0, track, null));
-		allPlayers.add(new Player(11, 2, 6, 10, colorList, 0, 0, track, null));
-		allPlayers.add(new Player(12, 3, 6, 10, colorList, 0, 0, track, null));
-		allPlayers.add(new Player(13, 4, 6, 10, colorList, 0, 0, track, null));
+				new NobilityLoader(config.getNobility()).getNobilityTrack());
+		Player p1= new Player(config,track);
+		p1.getCoins().increaseAmount(10);
+		p1.getAssistants().increaseAmount(1);
+		Player p2= new Player(config,track);
+		p2.getCoins().increaseAmount(11);
+		p2.getAssistants().increaseAmount(2);
+		Player p3= new Player(config,track);
+		p3.getCoins().increaseAmount(12);
+		p3.getAssistants().increaseAmount(3);
+		Player p4= new Player(config,track);
+		p4.getCoins().increaseAmount(13);
+		p4.getAssistants().increaseAmount(4);
+		allPlayers.add(p1);
+		allPlayers.add(p2);
+		allPlayers.add(p3);
+		allPlayers.add(p4);
 		this.market = new Market(allPlayers);
 	}
 

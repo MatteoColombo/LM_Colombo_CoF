@@ -1,13 +1,8 @@
 package lm_20;
 
 import static org.junit.Assert.*;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import server.model.board.nobility.NobilityLoader;
 import server.model.board.nobility.NobilityTrack;
 import server.model.configuration.Configuration;
@@ -23,20 +18,14 @@ import server.model.reward.Bonus;
  *
  */
 public class TestBonus {
-	private List<Color> colorList;
 	private Player p;
 
 	@Before
 	public void initialization() throws TrackXMLFileException, ConfigurationErrorException {
-		colorList = new ArrayList<Color>();
-		colorList.add(Color.BLACK);
-		colorList.add(Color.WHITE);
-		colorList.add(Color.YELLOW);
-		colorList.add(Color.DARK_GRAY);
-		colorList.add(Color.GREEN);
-		colorList.add(Color.BLUE);
-		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		p = new Player(10, 1, 6, 10, colorList, 0, 0,track,null);
+		Configuration config= new Configuration();
+		p= new Player(config, new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
+		p.getCoins().increaseAmount(10);
+		p.getAssistants().increaseAmount(1);
 	}
 
 	@Test

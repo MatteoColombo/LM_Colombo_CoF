@@ -1,27 +1,20 @@
 package lm_20;
 
 import static org.junit.Assert.*;
-
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
-
 import server.model.board.nobility.NobilityLoader;
 import server.model.configuration.TrackXMLFileException;
-import server.model.player.Player;
-import server.model.reward.Reward;
 
 public class TestNobilityLoader {
-
+	private NobilityLoader nl;
 	@Test
 	public void testNobilityLoader() throws Exception{
-		NobilityLoader nl = new NobilityLoader("src/main/resources/nobtrack.xml");
+		nl = new NobilityLoader("src/main/resources/nobtrack.xml");
+		assertEquals(21, nl.getNobilityTrack().size());
 	}
 
 	@Test(expected=TrackXMLFileException.class)
 	public void testExceptionTrackXML() throws Exception{
-		NobilityLoader nl= new NobilityLoader("src/file.xml");
+		nl= new NobilityLoader("src/file.xml");
 	}
 }

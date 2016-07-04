@@ -42,9 +42,10 @@ public class TestCity {
 	
 	@Test
 	public void testEmporium() throws TrackXMLFileException, ConfigurationErrorException {
+		Configuration config= new Configuration();
 		City castrum = new City(Color.GRAY, "Castrum", new RewardCity());
-		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		Player p = new Player(0, 0, 0, 10, null, 0, 0,track,null);
+		NobilityTrack track= new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack());
+		Player p = new Player(config,track);
 		castrum.addEmporium(p.getEmporium().remove(0));
 		assertEquals(castrum.hasEmporiumOfPlayer(p), true);
 		assertEquals(castrum.getNumberOfEmporium(), 1);

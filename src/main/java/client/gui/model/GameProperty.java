@@ -176,6 +176,7 @@ public class GameProperty implements ModelInterface {
 			
 	}
 	
+	@Override
 	public void setMarket(List<OnSaleItem> items) {
 		market.clear();
 		for(OnSaleItem item: items) {

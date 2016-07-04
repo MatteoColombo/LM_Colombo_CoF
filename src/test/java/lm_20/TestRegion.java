@@ -25,6 +25,7 @@ public class TestRegion {
 	Region region;
 	List<City> cities = new ArrayList<City>();
 	Council council;
+	Configuration config;
 	@Before
 	public void setUp() throws Exception {
 		cities.add(new City(Color.BLUE, "Arkon", new RewardCity()));
@@ -32,12 +33,12 @@ public class TestRegion {
 		cities.add(new City(Color.GRAY, "Castrum", new RewardCity()));
 		cities.add(new City(Color.GRAY, "Dorful", new RewardCity()));
 		cities.add(new City(Color.RED, "Esti", new RewardCity()));
-		
+		config= new Configuration();
 		List<Councilor> members = new ArrayList<Councilor>();
-		members.add(new Councilor(Color.BLACK));
-		members.add(new Councilor(Color.WHITE));
-		members.add(new Councilor(Color.ORANGE));
-		members.add(new Councilor(Color.PINK));
+		members.add(new Councilor(config.getColorsList().get(0)));
+		members.add(new Councilor(config.getColorsList().get(1)));
+		members.add(new Councilor(config.getColorsList().get(2)));
+		members.add(new Councilor(config.getColorsList().get(3)));
 	
 		council = new Council(members);	
 	}
@@ -56,10 +57,9 @@ public class TestRegion {
 
 		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
 		region = new Region("sea", cities, council, 3);
-		Player p = new Player(0, 0, 0, 10, null, 0, 0, track, null);
+		Player p= new Player(config,track);
 		assertEquals(region.isCompleted(p), false);
-		
-		Player p2 = new Player(0, 0, 0, 10, null, 0, 0, track, null);
+		Player p2= new Player(config,track);
 		region.getCities().get(3).addEmporium(p2.getEmporium().remove(0));
 		region.getCities().get(0).addEmporium(p2.getEmporium().remove(0));	
 		assertEquals(region.isCompleted(p2), false);

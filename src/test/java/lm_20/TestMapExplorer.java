@@ -20,7 +20,7 @@ import server.model.player.Player;
 import server.model.reward.Reward;
 
 public class TestMapExplorer {
-	ArrayList<Color> colors;
+	List<Color> colors;
 	MapLoader ml;
 	Player p;
 	Player p2;
@@ -29,16 +29,11 @@ public class TestMapExplorer {
 
 	@Before
 	public void setUp() throws Exception {
-		colors = new ArrayList<Color>();
-		colors.add(Color.BLACK);
-		colors.add(Color.WHITE);
-		colors.add(Color.YELLOW);
-		colors.add(Color.DARK_GRAY);
-		colors.add(Color.GREEN);
-		colors.add(Color.BLUE);
-		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		p = new Player(0, 0, 0, 10, null, 0, 0,track,null);
-		p2 = new Player(0, 0, 0, 10, null, 0, 0,track,null);
+		Configuration config= new Configuration();
+		colors = config.getColorsList();
+		NobilityTrack track= new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack());
+		p= new Player(config,track);
+		p2= new Player(config,track);
 		ml = new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors));
 		plains = ml.getRegions().get(1);
 		mountain = ml.getRegions().get(2);

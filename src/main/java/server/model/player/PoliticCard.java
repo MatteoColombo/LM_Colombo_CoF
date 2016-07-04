@@ -12,9 +12,10 @@ import server.model.market.Soldable;
 /**
  * A class that represents every PoliticCard in the Game.
  * <p>
- * Each of them has a {@link #getCardColor() Color} that is picked randomly from a list of available
- * ones, included a {@link #isMultipleColor() "multicolor"} one that works as a jolly; they are used to
- * satisfy the Council at which a Player is interested.
+ * Each of them has a {@link #getCardColor() Color} that is picked randomly from
+ * a list of available ones, included a {@link #isMultipleColor() "multicolor"}
+ * one that works as a jolly; they are used to satisfy the Council at which a
+ * Player is interested.
  * 
  * @author Davide Cavallini
  * @see Color

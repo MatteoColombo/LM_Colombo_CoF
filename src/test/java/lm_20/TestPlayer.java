@@ -3,12 +3,8 @@ package lm_20;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import server.model.board.nobility.NobilityLoader;
 import server.model.board.nobility.NobilityTrack;
 import server.model.configuration.Configuration;
@@ -18,15 +14,14 @@ import server.model.player.Assistants;
 import server.model.player.Coins;
 import server.model.player.Emporium;
 import server.model.player.NoblePoints;
-import server.model.player.PermissionCard;
 import server.model.player.Player;
 import server.model.player.PoliticCard;
 import server.model.player.VictoryPoints;
 
 public class TestPlayer {
 
-	private List<Color> colorList;
 	private Player p;
+	private Configuration config;
 
 	/**
 	 * Creates a list with the colors and it initializes the player
@@ -35,15 +30,13 @@ public class TestPlayer {
 	 */
 	@Before
 	public void setUp() throws TrackXMLFileException, ConfigurationErrorException {
-		colorList = new ArrayList<Color>();
-		colorList.add(Color.BLACK);
-		colorList.add(Color.BLUE);
-		colorList.add(Color.RED);
-		colorList.add(Color.YELLOW);
-		colorList.add(Color.GREEN);
-		colorList.add(Color.ORANGE);
+
+		config= new Configuration();
 		NobilityTrack track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		p = new Player(10, 1, 6, 10, colorList, 0, 0,track, null);
+		p= new Player(config, track);
+		p.getCoins().increaseAmount(10);
+		p.getAssistants().increaseAmount(1);
+		
 	}
 
 	/**
@@ -66,6 +59,7 @@ public class TestPlayer {
 		a.increaseAmount(2);
 		a.decreaseAmount(1);
 		assertEquals(2, a.getAmount());
+		assertNotEquals(a, p);
 	}
 
 	/**
@@ -124,8 +118,11 @@ public class TestPlayer {
 	public void testPoliticCards(){
 		p.drawAPoliticCard();
 		assertEquals(7, p.getPoliticCard().size());
-		
 		System.out.println(p.getPoliticCard().get(0).isMultipleColor());
+		System.out.println(p.getPoliticCard().get(0).getMarketMessage(config));
+		assertNotEquals(p.getPoliticCard().get(0), p);
+		PoliticCard c= new PoliticCard((Color)null);
+		assertEquals(true, c.isMultipleColor());
 	}
 	
 	/**
@@ -141,7 +138,21 @@ public class TestPlayer {
 		assertEquals(p.getPoliticCard().get(0), pol2);
 		pol2= new PoliticCard(Color.decode("#eeeeee"));
 		assertNotEquals(p.getPoliticCard().get(0), pol2);
+		assertEquals(null, p.getClient());
 		
 	}
-
+	
+	@Test
+	public void testClone(){
+		p.setSuspension(true);
+		Player p2= p.getClientCopy();
+		assertNotEquals(p.getSuspended(), p2.getSuspended());
+	}
+	
+	@Test
+	public void testGamePlayer() throws TrackXMLFileException{
+		Player gamePlayer= new Player(config,1,null,new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
+		assertEquals(11, gamePlayer.getCoins().getAmount());
+		assertEquals(2, gamePlayer.getAssistants().getAmount());
+	}
 }

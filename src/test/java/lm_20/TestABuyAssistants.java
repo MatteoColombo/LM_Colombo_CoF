@@ -1,14 +1,8 @@
 package lm_20;
 
 import static org.junit.Assert.*;
-
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import server.model.action.ABuyAssistant;
 import server.model.action.IllegalActionException;
 import server.model.board.nobility.NobilityLoader;
@@ -20,9 +14,8 @@ import server.model.player.Player;
 
 public class TestABuyAssistants {
 
-	private List<Color> colorList;
 	private Player p;
-	private NobilityTrack track;
+	private Configuration config;
 	/**
 	 * Creates a list with the colors and it initializes the player
 	 * @throws ConfigurationErrorException 
@@ -30,16 +23,10 @@ public class TestABuyAssistants {
 	 */
 	@Before
 	public void setUp() throws TrackXMLFileException, ConfigurationErrorException {
-		colorList = new ArrayList<Color>();
-		colorList.add(Color.BLACK);
-		colorList.add(Color.WHITE);
-		colorList.add(Color.YELLOW);
-		colorList.add(Color.DARK_GRAY);
-		colorList.add(Color.GREEN);
-		colorList.add(Color.BLUE);
-		track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		
-		p = new Player(10, 1, 6, 10, colorList, 0, 0,track,null);
+		config= new Configuration();
+		p= new Player(config, new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
+		p.getCoins().increaseAmount(10);
+		p.getAssistants().increaseAmount(1);
 	}
 
 	/**
@@ -49,7 +36,6 @@ public class TestABuyAssistants {
 	 */
 	@Test
 	public void testActionBuyAssistant() throws IllegalActionException {
-		p = new Player(10, 1, 6, 10, colorList, 0, 0,track,null);
 		ABuyAssistant action = new ABuyAssistant(this.p);
 		action.execute();
 		assertEquals(7, p.getCoins().getAmount());
@@ -61,7 +47,6 @@ public class TestABuyAssistants {
 	 */
 	@Test(expected = IllegalActionException.class)
 	public void testActionBuyAssistantFailed() throws Exception {
-		p = new Player(10, 1, 6, 10, colorList, 0, 0,track,null);
 		p.getCoins().decreaseAmount(8);
 		assertEquals(2, p.getCoins().getAmount());
 		ABuyAssistant action = new ABuyAssistant(this.p);

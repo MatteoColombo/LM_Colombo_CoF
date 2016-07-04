@@ -38,6 +38,7 @@ public class Game extends Thread {
 	private ClientInt initialClient;
 	private Market market;
 	private Logger logger = Logger.getGlobal();
+	private static final String SERVERNAME = "_Server_";
 
 	/**
 	 * Instantiates some objects and saves the configuration
@@ -131,6 +132,7 @@ public class Game extends Thread {
 		}
 
 		lastCycle();
+		giveExtraPoints();
 		calculateWinner();
 		publishWinner();
 	}
@@ -186,14 +188,14 @@ public class Game extends Thread {
 		if (players.size() > 2)
 			return;
 		Player server = new Player(config, null);
-		server.setName("_Server_");
+		server.setName(SERVERNAME);
 		sendServer(server);
 		players.add(server);
 		for (Region r : gameBoard.getRegions()) {
 			PermissionCard card = new PermissionCard(r.getCities());
 			for (City c : card.getCardCity()) {
 				c.addEmporium(server.getEmporium().get(0));
-				sendEmporium("_Server_", c.getName());
+				sendEmporium(SERVERNAME, c.getName());
 			}
 		}
 
@@ -201,10 +203,9 @@ public class Game extends Thread {
 
 	/**
 	 * Assigns the extra points to the player who places the tenth emporium and
-	 * to the one who has more permission cards, then it sorts the players list
-	 * based on victory points
+	 * to the one who has more permission cards,
 	 */
-	public void calculateWinner() {
+	public void giveExtraPoints() {
 		players.get(winningPlayer).getVictoryPoints().increaseAmount(3);
 
 		int maxNobility = players.stream().mapToInt(p -> p.getNobilityPoints().getAmount()).max().orElse(-1);
@@ -222,6 +223,13 @@ public class Game extends Thread {
 		int maxPermitCards = players.stream().mapToInt(p -> p.getPermissionCard().size()).max().orElse(-1);
 		players.stream().filter(p -> p.getPermissionCard().size() == maxPermitCards)
 				.forEach(p -> p.getVictoryPoints().increaseAmount(3));
+
+	}
+
+	/**
+	 * It sorts the players list based on victory points
+	 */
+	public void calculateWinner() {
 		players = players.stream().sorted((p1, p2) -> {
 			if (p1.getVictoryPoints().getAmount() > p2.getVictoryPoints().getAmount())
 				return 1;
@@ -246,7 +254,7 @@ public class Game extends Thread {
 	public void publishWinner() {
 		List<Player> clones = new ArrayList<>();
 		for (Player p : players) {
-			if ("_Server_".equals(p.getName()) && p.getVictoryPoints().getAmount() == -1)
+			if (SERVERNAME.equals(p.getName()) && p.getVictoryPoints().getAmount() == -1)
 				continue;
 			clones.add(p.getClientCopy());
 		}

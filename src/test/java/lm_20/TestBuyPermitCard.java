@@ -33,20 +33,17 @@ public class TestBuyPermitCard {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		colorList = new ArrayList<Color>();
-		colorList.add(Color.BLACK);
-		colorList.add(Color.BLUE);
-		colorList.add(Color.RED);
-		colorList.add(Color.YELLOW);
-		colorList.add(Color.GREEN);
-		colorList.add(Color.ORANGE);
-		NobilityTrack track = new NobilityTrack(
-				new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		this.player = new Player(10, 3, 6, 10, colorList, 0, 0, track, null);
+		Configuration config= new Configuration();
+		colorList = config.getColorsList();
+		this.player= new Player(config, new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
+		player.getCoins().increaseAmount(10);
+		player.getAssistants().increaseAmount(3);
+		colorList = config.getColorsList();
 		this.pool = new CouncilorPool(4, 4, colorList);
 		this.council = pool.getCouncil();
 		ml = new MapLoader("src/main/resources/map.xml", pool);
 		this.pcard = ml.getRegions().get(0).getPermissionCard(0);
+		this.pcard.getMarketMessage(config);
 	}
 
 	/**

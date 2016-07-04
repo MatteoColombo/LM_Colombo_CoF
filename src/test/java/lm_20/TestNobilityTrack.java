@@ -14,12 +14,12 @@ import server.model.player.Player;
 
 public class TestNobilityTrack {
 	private Player player;
-	private NobilityTrack track;
 	@Before
 	public void test() throws ConfigurationErrorException, TrackXMLFileException {
 		Configuration config= new Configuration();
-		track= new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack());
-		player = new Player(10, 1, 6, 10, config.getColorsList(), 0, 0, track, null);
+		this.player= new Player(config, new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
+		player.getCoins().increaseAmount(10);
+		player.getAssistants().increaseAmount(1);
 	}
 	
 	@Test

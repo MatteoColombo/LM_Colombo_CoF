@@ -45,19 +45,15 @@ public class TestABuildEmporium {
 	private List<City> allMapCities;
 	MapExplorer mExplorer;
 	MapLoader mLoader;
-	private NobilityTrack track;
+	private Configuration config;
 
 	@Before
 	public void setUp() throws MapXMLFileException, TrackXMLFileException, ConfigurationErrorException {
-		colorList = new ArrayList<Color>();
-		colorList.add(Color.BLACK);
-		colorList.add(Color.BLUE);
-		colorList.add(Color.RED);
-		colorList.add(Color.YELLOW);
-		colorList.add(Color.GREEN);
-		colorList.add(Color.ORANGE);
-		track = new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		this.player = new Player(10, 3, 6, 10, colorList, 0, 0, track, null);
+		config= new Configuration();
+		colorList = config.getColorsList();
+		this.player= new Player(config, new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
+		player.getCoins().increaseAmount(10);
+		player.getAssistants().increaseAmount(3);
 		this.pool = new CouncilorPool(4, 4, colorList);
 		bColorRewards = new ArrayList<>();
 		bKingRewards = new ArrayList<>();
@@ -121,7 +117,9 @@ public class TestABuildEmporium {
 		PermissionCard card;
 		ABuildEmporium action;
 		card = new PermissionCard(this.mLoader.getRegions().get(0).getCities());
-		Player p2 = new Player(10, 0, 6, 10, colorList, 0, 0, track, null);
+		Player p2= new Player(config, new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
+		p2.getCoins().increaseAmount(10);
+		p2.getAssistants().increaseAmount(0);
 		action = new ABuildEmporium(player, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);
 		action.execute();
 		action = new ABuildEmporium(p2, card, card.getCardCity().get(0), this.allMapCities, this.bRewardManager);

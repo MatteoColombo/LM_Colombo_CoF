@@ -128,7 +128,7 @@ public class Cli implements ViewInterface {
 	 */
 	private void printBoardRewards() {
 		writer.print("King's council: ");
-		for (int i = (model.getKingCouncil().size() - 1); i >= 0; i--)
+		for (int i = model.getKingCouncil().size() - 1; i >= 0; i--)
 			writer.print(model.getKingCouncil().get(i) + (i == 0 ? "\n" : " "));
 		writer.println("Next King's reward: " + model.getKingAward());
 		writer.println("Color rewards:");

@@ -35,21 +35,22 @@ public class TestAShufflePermissionCards {
 		cities.add(new City(Color.GRAY, "Dorful", new RewardCity()));
 		cities.add(new City(Color.RED, "Esti", new RewardCity()));
 		plains = new Region("plains", cities, null, 2);
-		track= new NobilityTrack(new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
-		
+		Configuration config = new Configuration();	
+		track= new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack());
+		p = new Player(config,track);
+		p.getCoins().increaseAmount(5);
+		p.getAssistants().increaseAmount(3);
 	}
 
 	@Test
 	public void testIsMain() throws IllegalActionException{
-		p = new Player(5, 3, 0, 3, null, 0, 0,track,null);
 		Action a = new AShufflePermissionCards(p, plains);
 		assertEquals(false, a.isMain());
 	}
 	
 	@Test
 	public void testOk() throws IllegalActionException {
-		p = new Player(5, 3, 0, 3, null, 0, 0,track,null);
-		PermissionCard p1 = plains.getPermissionCard(0);
+	PermissionCard p1 = plains.getPermissionCard(0);
 		PermissionCard p2 = plains.getPermissionCard(1);
 		
 		Action a = new AShufflePermissionCards(p, plains);
@@ -62,7 +63,7 @@ public class TestAShufflePermissionCards {
 	
 	@Test(expected = IllegalActionException.class)
 	public void testKo() throws IllegalActionException {
-		p = new Player(5, 0, 0, 3, null, 0, 0,track,null);
+		p.getAssistants().decreaseAmount(3);
 		Action a = new AShufflePermissionCards(p, plains);
 		a.execute();
 	}

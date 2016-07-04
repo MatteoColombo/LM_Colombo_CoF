@@ -186,6 +186,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
+	@Override
 	public void showClassification(List<Player> players) {
 		try {
 			FXMLLoader loader = new FXMLLoader();

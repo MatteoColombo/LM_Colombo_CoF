@@ -1,19 +1,20 @@
 package lm_20;
 
 import static org.junit.Assert.*;
-
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import server.model.action.ASlideCouncil;
 import server.model.action.ASlideCouncilWithAssistant;
 import server.model.action.IllegalActionException;
 import server.model.board.council.Council;
 import server.model.board.council.CouncilorPool;
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+import server.model.configuration.Configuration;
+import server.model.configuration.ConfigurationErrorException;
+import server.model.configuration.TrackXMLFileException;
 import server.model.player.Player;
 
 public class TestSlideCouncilors {
@@ -24,17 +25,16 @@ public class TestSlideCouncilors {
 
 	/**
 	 * Creates a list with the colors and it initializes the player
+	 * @throws ConfigurationErrorException 
+	 * @throws TrackXMLFileException 
 	 */
 	@Before
-	public void setUp() {
-		colorList = new ArrayList<Color>();
-		colorList.add(Color.BLACK);
-		colorList.add(Color.BLUE);
-		colorList.add(Color.RED);
-		colorList.add(Color.YELLOW);
-		colorList.add(Color.GREEN);
-		colorList.add(Color.ORANGE);
-		this.player = new Player(10, 3, 6, 10, colorList, 0, 0,null,null);
+	public void setUp() throws ConfigurationErrorException, TrackXMLFileException {
+		Configuration config= new Configuration();
+		colorList = config.getColorsList();
+		this.player= new Player(config, new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
+		player.getCoins().increaseAmount(10);
+		player.getAssistants().increaseAmount(3);
 		this.pool = new CouncilorPool(4, 4, colorList);
 		this.council = pool.getCouncil();
 	}
@@ -110,7 +110,7 @@ public class TestSlideCouncilors {
 		ASlideCouncilWithAssistant action = new ASlideCouncilWithAssistant(player, pool, council, colorList.get(1));
 		action.execute();
 		List<Color> colorsFromCouncil = council.getCouncilorsColor();
-
+		colorsFromCouncil.get(0);
 	}
 
 	/**
@@ -123,6 +123,6 @@ public class TestSlideCouncilors {
 		ASlideCouncilWithAssistant action = new ASlideCouncilWithAssistant(player, pool, council, colorList.get(1));
 		action.execute();
 		List<Color> colorsFromCouncil = council.getCouncilorsColor();
-
+		colorsFromCouncil.get(0);
 	}
 }

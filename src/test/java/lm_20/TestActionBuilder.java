@@ -41,13 +41,16 @@ public class TestActionBuilder {
 		config = new Configuration();
 		board = new Board(config, 0);
 		NobilityTrack track = new NobilityTrack(
-				new NobilityLoader(new Configuration().getNobility()).getNobilityTrack());
+				new NobilityLoader(config.getNobility()).getNobilityTrack());
 		colors = new ArrayList<>();
 		colors.add(Color.BLACK);
 		colors.add(Color.WHITE);
 		colors.add(Color.PINK);
 		colors.add(Color.ORANGE);
-		player = new Player(10, 4, 0, 10, colors, 25, 3, track, null);
+		player = new Player(config,track);
+		player.getCoins().increaseAmount(10);
+		player.getAssistants().increaseAmount(4);
+		player.getVictoryPoints().increaseAmount(25);
 	}
 
 	@Test
@@ -105,9 +108,9 @@ public class TestActionBuilder {
 
 	@Test
 	public void testMakeABuildEmporiumWithKing() throws Exception {
-		player.getPoliticCard().add(new PoliticCard(board.getKingCouncil().getCouncilorsColor().get(0)));
-		player.getPoliticCard().add(new PoliticCard(board.getKingCouncil().getCouncilorsColor().get(1)));
-		player.getPoliticCard().add(new PoliticCard(board.getKingCouncil().getCouncilorsColor().get(2)));
+		player.getPoliticCard().add(0,new PoliticCard(board.getKingCouncil().getCouncilorsColor().get(0)));
+		player.getPoliticCard().add(1,new PoliticCard(board.getKingCouncil().getCouncilorsColor().get(1)));
+		player.getPoliticCard().add(2,new PoliticCard(board.getKingCouncil().getCouncilorsColor().get(2)));
 		ActionBuilder builder = new ActionBuilder(board, config);
 		String input = "king -city Juvelar -politic 1 2 3";
 		CommandLine parsed = parser.computeRequest(input.split(" "));

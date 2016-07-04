@@ -21,7 +21,7 @@ public class RMIServer extends UnicastRemoteObject implements ServerInt{
 	private static final long serialVersionUID = 1L;
 	private transient Logger logger=Logger.getGlobal();
 	private long timestampCreation;
-	private Configuration config;
+	private transient Configuration config;
 	/**
 	 * Instantiate the object and saves the creation timestamp
 	 * @throws RemoteException

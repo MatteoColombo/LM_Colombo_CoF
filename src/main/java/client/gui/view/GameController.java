@@ -1,12 +1,9 @@
 package client.gui.view;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import client.gui.control.MainApp;
 import client.gui.model.CouncilProperty;
 import client.gui.model.ItemProperty;
@@ -16,7 +13,6 @@ import client.gui.model.SimpleBonus;
 import client.gui.model.SimpleCity;
 import client.gui.model.SimpleNobilityCell;
 import client.gui.model.SimpleRegion;
-import javafx.beans.binding.Binding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;

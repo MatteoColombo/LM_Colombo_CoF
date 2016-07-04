@@ -65,12 +65,6 @@ public class Assistants implements Serializable, Soldable {
 		this.amount -= value;
 	}
 
-	/**
-	 * Checks if this two objects are both Assistants and with the same amount
-	 * of them.
-	 * 
-	 * @see Assistants
-	 */
 	@Override
 	public boolean equals(Object item) {
 		if (!(item instanceof Assistants))
@@ -80,13 +74,6 @@ public class Assistants implements Serializable, Soldable {
 		return false;
 	}
 
-	/**
-	 * Returns the amount of Assistants owned in this moment by this
-	 * {@link Player}.
-	 * 
-	 * @return the actual amount of Assistants
-	 * @see Assistants
-	 */
 	@Override
 	public int hashCode() {
 		return this.amount;

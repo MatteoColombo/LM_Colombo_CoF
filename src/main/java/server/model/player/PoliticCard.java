@@ -10,9 +10,16 @@ import server.model.configuration.Configuration;
 import server.model.market.Soldable;
 
 /**
+ * A class that represents every PoliticCard in the Game.
+ * <p>
+ * Each of them has a {@link #getCardColor() Color} that is picked randomly from a list of available
+ * ones, included a {@link #isMultipleColor() "multicolor"} one that works as a jolly; they are used to
+ * satisfy the Council at which a Player is interested.
  * 
  * @author Davide Cavallini
- *
+ * @see Color
+ * @see Council
+ * @see Player
  */
 public class PoliticCard implements Serializable, Soldable {
 
@@ -21,9 +28,11 @@ public class PoliticCard implements Serializable, Soldable {
 	private boolean isMultipleColor;
 
 	/**
-	 * This is the constructor which generates a copy of another card
+	 * Generates a copy of another PoliticCard using his {@link Color}.
 	 * 
 	 * @param color
+	 *            the Color used to create a new PoliticCard
+	 * @see PoliticCard
 	 */
 	public PoliticCard(Color color) {
 		if (color != null) {
@@ -35,11 +44,13 @@ public class PoliticCard implements Serializable, Soldable {
 	}
 
 	/**
-	 * This is the constructor which generates a new politic card in case of
-	 * multiple colored card, the color is set null
+	 * Generates a new PoliticCard using one of the available {@link Color
+	 * Colors} chosen randomly; it's set <code>null</code> if it will be the
+	 * multicolor one.
 	 * 
 	 * @param possibleColors
-	 *            the list of the possible colors
+	 *            the list of the possible Colors
+	 * @see PoliticCard
 	 */
 	public PoliticCard(List<Color> possibleColors) {
 		Random r = new Random();
@@ -53,16 +64,22 @@ public class PoliticCard implements Serializable, Soldable {
 	}
 
 	/**
+	 * Returns if this PoliticCard is a multicolor one or not.
 	 * 
-	 * @return true if it's multiple color, false otherwise
+	 * @return <code>true</code> if it's a multicolor one; <code>false</code>
+	 *         otherwise
+	 * @see PoliticCard
 	 */
 	public boolean isMultipleColor() {
 		return this.isMultipleColor;
 	}
 
 	/**
+	 * Returns the PoliticCard {@link Color}.
 	 * 
-	 * @return the Color of the card, it's null if it's multiplecolored
+	 * @return the Color of this PoliticCard; <code>null</code> if it's a
+	 *         multicolor one
+	 * @see PoliticCard
 	 */
 	public Color getCardColor() {
 		return this.color;

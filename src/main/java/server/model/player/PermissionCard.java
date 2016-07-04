@@ -13,7 +13,7 @@ import server.model.reward.Reward;
 import server.model.reward.RewardPermission;
 
 /**
- * A class that represents every PermissionCard in the game.
+ * A class that represents every PermissionCard in the Game.
  * <p>
  * Each of them has different features that form its own Bonuses, such as: the
  * {@link #getCardReward() Reward} that is given to the Player who obtains that
@@ -124,12 +124,6 @@ public class PermissionCard implements Soldable, Serializable {
 		this.used = true;
 	}
 
-	/**
-	 * Checks if this two objects are both PermissionCard and with the same
-	 * properties.
-	 * 
-	 * @see PermissionCard
-	 */
 	@Override
 	public boolean equals(Object item) {
 		if (!(item instanceof PermissionCard))
@@ -140,12 +134,6 @@ public class PermissionCard implements Soldable, Serializable {
 		return false;
 	}
 
-	/**
-	 * Returns the total size of this PermissionCard.
-	 * 
-	 * @return the total size of this PermissionCard
-	 * @see PermissionCard
-	 */
 	@Override
 	public int hashCode() {
 		int sum = 100 * cities.size();

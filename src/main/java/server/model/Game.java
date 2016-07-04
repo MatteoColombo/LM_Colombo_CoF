@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
-import com.sun.javafx.geom.transform.GeneralTransform3D;
-
 import server.control.connection.ClientInt;
+import server.control.dialogue.notify.NotifyClassification;
 import server.control.dialogue.update.NotifyPlayerJoined;
 import server.control.dialogue.update.UpdateEmporiumBuilt;
 import server.model.board.Board;
@@ -127,7 +125,6 @@ public class Game extends Thread {
 		boolean someoneWon = false;
 		checkAndConfigGameForTwo();
 		turnManager = new TurnManager(players, config.getColorsList());
-
 		while (!someoneWon) {
 			someoneWon = regularCycle();
 			runMarket(someoneWon);
@@ -247,7 +244,21 @@ public class Game extends Thread {
 	 * publishes the classification
 	 */
 	public void publishWinner() {
-
+		List<Player> clones = new ArrayList<>();
+		for (Player p : players) {
+			if ("_Server_".equals(p.getName()) && p.getVictoryPoints().getAmount() == -1)
+				continue;
+			clones.add(p.getClientCopy());
+		}
+		for (Player p : players) {
+			try {
+				if (p.getSuspended())
+					continue;
+				p.getClient().notify(new NotifyClassification(clones));
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, e.getMessage(), e);
+			}
+		}
 	}
 
 	/**
@@ -298,6 +309,7 @@ public class Game extends Thread {
 
 	/**
 	 * Counts the number of suspended players
+	 * 
 	 * @return the number of suspended players
 	 */
 	private int countSuspendedPlayers() {
@@ -306,8 +318,11 @@ public class Game extends Thread {
 
 	/**
 	 * Sends the emporium of the Server to the clients
-	 * @param name the server name
-	 * @param city the city in which the emporium is built
+	 * 
+	 * @param name
+	 *            the server name
+	 * @param city
+	 *            the city in which the emporium is built
 	 */
 	private void sendEmporium(String name, String city) {
 		for (Player p : players)
@@ -322,7 +337,9 @@ public class Game extends Thread {
 
 	/**
 	 * Sends the server fake player to the clients
-	 * @param server the fake player
+	 * 
+	 * @param server
+	 *            the fake player
 	 */
 	private void sendServer(Player server) {
 		for (Player p : players)

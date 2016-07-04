@@ -13,6 +13,7 @@ import client.cli.model.CliRegion;
 import client.cli.model.Game;
 import client.control.ViewInterface;
 import server.model.configuration.Configuration;
+import server.model.player.Player;
 
 /**
  * This is the CLI class, it is used to print on the command line. It implements
@@ -294,6 +295,16 @@ public class Cli implements ViewInterface {
 	@Override
 	public void showMarket() {
 		writer.println("The market started!");
+	}
+
+	@Override
+	public void showClassification(List<Player> players) {
+		writer.println("Game finished!\nClassification:");
+		for(int i=0;i<players.size();i++){
+			Player p= players.get(i);
+			writer.println(i+". "+p.getName()+" points: "+p.getVictoryPoints()+ " politics+assistants: "+(p.getPoliticCard().size()+p.getAssistants().getAmount()));
+		}
+		
 	}
 
 }

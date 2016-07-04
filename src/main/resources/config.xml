@@ -12,6 +12,7 @@
 		<rmi>1099</rmi>
 		<socket>1994</socket>
 		<ip>127.0.0.1</ip>
+		<timeout>300</timeout>
 	</server>>
 	<colors>
 		<color>

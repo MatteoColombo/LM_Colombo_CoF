@@ -8,7 +8,6 @@ import java.rmi.registry.LocateRegistry;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import client.control.Controller;
 import client.control.RMIServerManager;
 import client.control.ServerManager;
@@ -187,7 +186,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
-	public void showResults(List<Player> players) {
+	public void showClassification(List<Player> players) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/Results.fxml"));

@@ -65,7 +65,7 @@ public class NoblePoints implements Serializable {
 			Reward rew = track.getReward(amount);
 			if (rew != null)
 				rew.assignBonusTo(owner);
-		} else if ((amount + value) < track.getMaxPoint()) {
+		} else if ((amount + value) <= track.getMaxPoint()) {
 			amount += value;
 			Reward rew = track.getReward(amount);
 			if (rew != null)

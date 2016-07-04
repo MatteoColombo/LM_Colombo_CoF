@@ -43,13 +43,15 @@ public class SocketClient implements ClientInt {
 	private ObjectInputStream in;
 	private String clientName;
 	private Logger logger = Logger.getGlobal();
+	private final int timeout;
 
-	public SocketClient(Socket clientSocket) throws IOException {
+	public SocketClient(Socket clientSocket, int timeout) throws IOException {
 		this.clientSocket = clientSocket;
 		this.inputStream = clientSocket.getInputStream();
 		this.outputStream = clientSocket.getOutputStream();
 		this.out = new ObjectOutputStream(outputStream);
 		this.in = new ObjectInputStream(inputStream);
+		this.timeout=timeout;
 	}
 
 	@Override
@@ -83,7 +85,7 @@ public class SocketClient implements ClientInt {
 		out.flush();
 		Future<String> answer = executor.submit(() -> (String) in.readObject());
 		try {
-			String action = answer.get(600, TimeUnit.SECONDS);
+			String action = answer.get(timeout, TimeUnit.SECONDS);
 			controller.performAction(this, action);
 		} catch (TimeoutException | InterruptedException | ExecutionException e) {
 			throw new IOException(e);

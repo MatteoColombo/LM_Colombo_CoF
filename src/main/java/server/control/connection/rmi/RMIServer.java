@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import server.Server;
 import server.control.connection.ClientInt;
 import server.control.connection.ServerInt;
+import server.model.configuration.Configuration;
 
 /**
  * This is the RMI Server implementation, an object of this class is put on the registry
@@ -20,20 +21,21 @@ public class RMIServer extends UnicastRemoteObject implements ServerInt{
 	private static final long serialVersionUID = 1L;
 	private transient Logger logger=Logger.getGlobal();
 	private long timestampCreation;
-	
+	private Configuration config;
 	/**
 	 * Instantiate the object and saves the creation timestamp
 	 * @throws RemoteException
 	 */
-	public RMIServer() throws RemoteException {
+	public RMIServer(Configuration config) throws RemoteException {
 		super();
 		timestampCreation= System.nanoTime();
+		this.config= config;
 	}
 
 	@Override
 	public void login(RMIServerManagerInterface client) {
 		try {
-			ClientInt rmiclient= new RMIClient(client);
+			ClientInt rmiclient= new RMIClient(client,config.getTimeout());
 			rmiclient.askPlayerName();
 			Server.login(rmiclient);		
 		} catch (IOException e) {

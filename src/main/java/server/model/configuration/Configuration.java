@@ -50,6 +50,7 @@ public class Configuration {
 	private int rmiPort;
 	private int socketPort;
 	private String serverIp;
+	private int timeout;
 
 	private Map<Color, String> cityColor;
 	
@@ -166,6 +167,8 @@ public class Configuration {
 		this.socketPort = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(SERVERPATH + "ip").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.serverIp = list.item(0).getFirstChild().getNodeValue();
+		list = (NodeList) xpath.compile(SERVERPATH + "timeout").evaluate(xmlDoc, XPathConstants.NODESET);
+		this.timeout = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 	}
 
 	private void loadColorRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException {
@@ -278,5 +281,9 @@ public class Configuration {
 	
 	public Map<Color, String> getCityColor(){
 		return (Map<Color,String>)((HashMap)this.cityColor).clone();
+	}
+	
+	public int getTimeout(){
+		return this.timeout;
 	}
 }

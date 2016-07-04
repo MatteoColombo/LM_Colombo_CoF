@@ -1,5 +1,9 @@
 package client.control;
 
+import java.util.List;
+
+import server.model.player.Player;
+
 public interface ViewInterface {
 	/**
 	 * print the exception
@@ -58,4 +62,10 @@ public interface ViewInterface {
 	 * starts the market round
 	 */
 	public void showMarket();
+	
+	/**
+	 * Publishes the classification when the game ends
+	 * @param players
+	 */
+	public void showClassification(List<Player> players);
 }

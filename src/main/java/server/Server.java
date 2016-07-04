@@ -143,14 +143,14 @@ public class Server {
 		startingGames = new ArrayList<>();
 		configuringGames = new ArrayList<>();
 		try {
-			ServerInt room = new RMIServer();
+			ServerInt room = new RMIServer(gamesConfig);
 			Registry registry = LocateRegistry.createRegistry(gamesConfig.getRmiPort());
 			registry.rebind(NAME, room);
 			logger.info("RMI server ready");
 			socketServer = new ServerSocket(gamesConfig.getSocketPort());
 			logger.info("Socket server ready");
 			while (serverOn) {
-				new SocketClientConnectionHandler(socketServer.accept()).start();
+				new SocketClientConnectionHandler(socketServer.accept(),gamesConfig.getTimeout()).start();
 			}
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);

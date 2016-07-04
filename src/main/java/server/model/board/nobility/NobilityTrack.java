@@ -65,6 +65,6 @@ public class NobilityTrack {
 	 * @see NobilityTrack
 	 */
 	public int getMaxPoint() {
-		return track.size()+1;
+		return track.size()-1;
 	}
 }

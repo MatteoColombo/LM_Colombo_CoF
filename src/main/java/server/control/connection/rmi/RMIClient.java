@@ -39,13 +39,15 @@ public class RMIClient implements ClientInt {
 	private RMIServerManagerInterface client;
 	private String clientName;
 	private Logger logger = Logger.getGlobal();
-
+	private final int timeout;
+	
 	/**
 	 * Saves the client which is the remote object of the client
 	 * @param client
 	 */
-	public RMIClient(RMIServerManagerInterface client) {
+	public RMIClient(RMIServerManagerInterface client, int timeout) {
 		this.client = client;
+		this.timeout=timeout;
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class RMIClient implements ClientInt {
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		Future<String> answer = executor.submit(() -> client.requestAnswer(new RequestWhatActionToDo()));
 		try {
-			String action = answer.get(600, TimeUnit.SECONDS);
+			String action = answer.get(timeout, TimeUnit.SECONDS);
 			controller.performAction(this, action);
 		} catch (TimeoutException | ExecutionException | InterruptedException e) {
 			throw new IOException(e);

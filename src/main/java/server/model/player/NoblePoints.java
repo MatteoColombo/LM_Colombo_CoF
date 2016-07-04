@@ -9,12 +9,16 @@ import server.model.reward.Reward;
  * A class that represents the NoblePoints owned by a Player.
  * <p>
  * Each Player can have a different {@link #getAmount() amount} of them that can
- * be {@link #increaseAmount(int) increased}.
+ * be {@link #increaseAmount(int) increased}; so it increases the Player
+ * position in the NobilityTrack with the possibility of receiving a Reward, if
+ * it's present.
  * 
  * @author Davide Cavallini
+ * @see NobilityTrack
  * @see Player
+ * @see Reward
  */
-public class NoblePoints implements Serializable{
+public class NoblePoints implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int amount;
@@ -31,8 +35,8 @@ public class NoblePoints implements Serializable{
 	 */
 	public NoblePoints(int initialValue, Player owner, NobilityTrack track) {
 		this.amount = initialValue;
-		this.owner=owner;
-		this.track=track;
+		this.owner = owner;
+		this.track = track;
 	}
 
 	/**
@@ -47,24 +51,26 @@ public class NoblePoints implements Serializable{
 	}
 
 	/**
-	 * Increases the amount of NoblePoints owned by this {@link Player}.
+	 * Increases the amount of NoblePoints owned by this {@link Player}; then it
+	 * checks if there is a {@link Reward} associated with that position on the
+	 * {@link NobilityTrack}, assigning it to this Player if it's present.
 	 * 
 	 * @param value
 	 *            the amount used to increment the actual NoblePoints
 	 * @see NoblePoints
 	 */
 	public void increaseAmount(int value) {
-		if((amount + value)> track.getMaxPoint() && amount < track.getMaxPoint()){
-			amount=track.getMaxPoint();
-			Reward rew=track.getReward(amount);
-			if(rew != null)
+		if ((amount + value) > track.getMaxPoint() && amount < track.getMaxPoint()) {
+			amount = track.getMaxPoint();
+			Reward rew = track.getReward(amount);
+			if (rew != null)
 				rew.assignBonusTo(owner);
-		}else if((amount + value) < track.getMaxPoint()){
-			amount+=value;
-			Reward rew=track.getReward(amount);
-			if(rew != null)
+		} else if ((amount + value) < track.getMaxPoint()) {
+			amount += value;
+			Reward rew = track.getReward(amount);
+			if (rew != null)
 				rew.assignBonusTo(owner);
-		}		
+		}
 	}
 
 }

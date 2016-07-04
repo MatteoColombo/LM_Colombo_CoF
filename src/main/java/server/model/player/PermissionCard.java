@@ -29,7 +29,7 @@ import server.model.reward.RewardPermission;
  * @see Reward
  */
 public class PermissionCard implements Soldable, Serializable {
-	
+
 	private static final long serialVersionUID = 8717409237659947557L;
 	private List<City> cities;
 	private Reward reward;
@@ -37,7 +37,7 @@ public class PermissionCard implements Soldable, Serializable {
 
 	/**
 	 * Initializes the PermissionCard with a {@link Reward} and a list of
-	 * {@link City Cities}, where it can be used, that have already been chosen.
+	 * {@link City Cities} where it can be used, that have already been chosen.
 	 * 
 	 * @param cities
 	 *            the list of Cities that will be assigned to this
@@ -49,7 +49,7 @@ public class PermissionCard implements Soldable, Serializable {
 	public PermissionCard(List<City> cities, Reward reward) {
 		this.cities = cities;
 		this.reward = reward;
-		this.used=false;
+		this.used = false;
 	}
 
 	/**
@@ -73,13 +73,13 @@ public class PermissionCard implements Soldable, Serializable {
 			for (City x : citiesOfRegions) {
 				if (r.nextBoolean())
 					this.cities.add(x);
-				if(cities.size()== 3)
+				if (cities.size() == 3)
 					break;
 			}
 			empty = this.cities.isEmpty();
 		} while (empty);
 		this.reward = new RewardPermission();
-		this.used=false;
+		this.used = false;
 	}
 
 	/**
@@ -125,33 +125,42 @@ public class PermissionCard implements Soldable, Serializable {
 	}
 
 	/**
+	 * Checks if this two objects are both PermissionCard and with the same
+	 * properties.
 	 * 
+	 * @see PermissionCard
 	 */
 	@Override
 	public boolean equals(Object item) {
-		if(!(item instanceof PermissionCard))
+		if (!(item instanceof PermissionCard))
 			return false;
-		PermissionCard card=(PermissionCard)item;
-		if(this.cities.equals(card.cities) && this.reward.equals(card.reward) && this.used == card.used)
+		PermissionCard card = (PermissionCard) item;
+		if (this.cities.equals(card.cities) && this.reward.equals(card.reward) && this.used == card.used)
 			return true;
 		return false;
 	}
-	
+
+	/**
+	 * Returns the total size of this PermissionCard.
+	 * 
+	 * @return the total size of this PermissionCard
+	 * @see PermissionCard
+	 */
 	@Override
-	public int hashCode(){
-		int sum= 100*cities.size();
-		sum+= 5*reward.getGeneratedRewards().size();
+	public int hashCode() {
+		int sum = 100 * cities.size();
+		sum += 5 * reward.getGeneratedRewards().size();
 		return sum;
 	}
 
 	@Override
 	public String getMarketMessage(Configuration config) {
-		String message="Permit: cities: ";
-		for(City c: cities)
-			message+= c.getName().substring(0,1).toUpperCase()+"\\";
-		message+= " rewards: ";
-		for(Bonus bon: reward.getGeneratedRewards())
-			message+= bon.getTagName().substring(0,3).toUpperCase()+" "+bon.getAmount()+" ";
+		String message = "Permit: cities: ";
+		for (City c : cities)
+			message += c.getName().substring(0, 1).toUpperCase() + "\\";
+		message += " rewards: ";
+		for (Bonus bon : reward.getGeneratedRewards())
+			message += bon.getTagName().substring(0, 3).toUpperCase() + " " + bon.getAmount() + " ";
 		return message;
 	}
 

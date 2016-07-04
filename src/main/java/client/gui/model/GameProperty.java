@@ -48,15 +48,24 @@ public class GameProperty implements ModelInterface {
 			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
-
+	
+	/**
+	 * @return the data of the user
+	 */
 	public PlayerProperty getMyPlayerData() {
 		return players.get(myIndex);
 	}
 
+	/**
+	 * @return the list of players
+	 */
 	public ObservableList<PlayerProperty> getPlayers() {
 		return this.players;
 	}
 
+	/**
+	 * @return the local map
+	 */
 	public SimpleMap getMap() {
 		return this.map;
 	}

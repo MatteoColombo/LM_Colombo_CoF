@@ -34,7 +34,11 @@ import server.control.dialogue.update.Update;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 import server.model.player.Player;
-
+/**
+ * this is the entry point for the graphical user interface
+ * @author gianpaolobranca
+ *
+ */
 public class MainApp extends Application implements ViewInterface, Runnable, Controller {
 
 	private static final Logger log= Logger.getLogger( MainApp.class.getName() );

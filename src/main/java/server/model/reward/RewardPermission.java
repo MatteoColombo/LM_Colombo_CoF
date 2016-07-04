@@ -7,7 +7,10 @@ package server.model.reward;
 public class RewardPermission extends Reward{
 	
 	private static final long serialVersionUID = -5265241063177120154L;
-
+	
+	/**
+	 * creates a new {@link Reward} for permissions
+	 */
 	public RewardPermission() {
 		super(Bonus.getAllStandardBonus(), 3, 120);
 	}

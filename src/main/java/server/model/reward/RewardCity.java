@@ -7,7 +7,9 @@ package server.model.reward;
 public class RewardCity extends Reward{
 	
 	private static final long serialVersionUID = 8328602223482028431L;
-
+	/**
+	 * creates a new {@link Reward} for cities
+	 */
 	public RewardCity() {	
 		super(Bonus.getCityBonus(), 2, 50);
 	}

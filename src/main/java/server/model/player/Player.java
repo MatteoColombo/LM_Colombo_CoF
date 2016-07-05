@@ -5,6 +5,7 @@ import java.util.List;
 import java.awt.Color;
 
 import server.control.connection.ClientInt;
+import server.model.action.Action;
 import server.model.board.nobility.NobilityTrack;
 import server.model.configuration.Configuration;
 
@@ -12,14 +13,42 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * A class that represents the Game status of the Player.
+ * <p>
+ * Each of the {@link #getClientCopy() Players} that are playing in this game
+ * has several parameters that are:
+ * <ul>
+ * <li>Its {@link #getName() name}, that can be freely {@link #setName(String)
+ * set};</li>
+ * <li>Its {@link #getCoins() Coins};</li>
+ * <li>Its {@link #getAssistants() Assistants};</li>
+ * <li>Its {@link #getNobilityPoints() NoblePoints};</li>
+ * <li>Its {@link #getVictoryPoints() VictoryPoints};</li>
+ * <li>Its {@link #getPoliticCard() PoliticCard}, that are individually
+ * {@link #drawAPoliticCard() drawn};</li>
+ * <li>Its {@link #getPermissionCard() PermissionCard};</li>
+ * <li>Its {@link #getEmporium() Emporiums};</li>
+ * <li>Its Actions, which are the {@link #getMainActionsLeft() Main ones}, that
+ * can be {@link #increaseMainAction() increased} or {@link #doMainAction()
+ * decreased}, and the {@link #getIfExtraActionDone() Extra one}, that can only
+ * be {@link #doExtraAction() set as used} or not and both can be
+ * {@link #actionsReset() reseted} to their default state;</li>
+ * <li>Its {@link #getClient() Client};</li>
+ * <li>Its {@link #getSuspended() status}, that can be
+ * {@link #setSuspension(boolean) suspended} or not.</li>
+ * </ul>
  * 
- * This is the class which represents the game status of the player
+ * @see Action
+ * @see Assistants
+ * @see Coins
+ * @see Emporium
+ * @see NobilityTrack
+ * @see NoblePoints
+ * @see PermissionCard
+ * @see PoliticCard
+ * @see VictoryPoints
  */
 public class Player implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2872730191434091631L;
 	private Coins coins;
 	private Assistants assistants;
@@ -37,9 +66,11 @@ public class Player implements Serializable {
 	private boolean isSuspended;
 
 	/**
-	 * constructor for cloning an existing player
+	 * Initializes a new Player cloning it for an existing one.
 	 * 
 	 * @param p
+	 *            the Player used to clone
+	 * @see Player
 	 */
 	public Player(Player p) {
 		this.name = p.getName();
@@ -63,11 +94,17 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * This is the constructor that should be used when creating a regular player for a client
-	 * @param config the configuration object, it's needed for the parameters
-	 * @param numberOfPlayers the number of players already in the game before this one
-	 * @param client the ClientInt of the client which represents this player
-	 * @param track the nobility track
+	 * Initializes a regular Player for a Client.
+	 * 
+	 * @param config
+	 *            the Configuration object that is needed for all the parameters
+	 * @param numberOfPlayers
+	 *            the number of Players already in the game before this one
+	 * @param client
+	 *            the ClientInt of the client which will represent this Player
+	 * @param track
+	 *            the NobilityTrack of the Game
+	 * @see Player
 	 */
 	public Player(Configuration config, int numberOfPlayers, ClientInt client, NobilityTrack track) {
 		this.coins = new Coins(config.getInitialPlayerMoney() + numberOfPlayers);
@@ -76,7 +113,7 @@ public class Player implements Serializable {
 		this.noblePoints = new NoblePoints(config.getInitialNobilityPoints(), this, track);
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
-		if(client!=null)
+		if (client != null)
 			this.name = client.getName();
 		this.permissionCard = new ArrayList<>();
 		this.pickedColours = config.getColorsList();
@@ -91,10 +128,14 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * This is used to create a fake player which is used when the game has only
-	 * 2 players and we need to place some emporiums in the map
+	 * Creates a fake Player which is used when the Game has only two Players
+	 * and so some {@link Emporium Emporiums} need to be placed in the Map.
 	 * 
 	 * @param config
+	 *            the Configuration object that is needed for all the parameters
+	 * @param track
+	 *            the NobilityTrack of the Game
+	 * @see Player
 	 */
 	public Player(Configuration config, NobilityTrack track) {
 		this.coins = new Coins(0);
@@ -103,107 +144,131 @@ public class Player implements Serializable {
 		this.noblePoints = new NoblePoints(0, this, track);
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
-		for(int i=0;i<config.getInitialPoliticCards();i++)
+		for (int i = 0; i < config.getInitialPoliticCards(); i++)
 			politicCard.add(new PoliticCard(config.getColorsList()));
 		this.permissionCard = new ArrayList<>();
 		for (int i = 0; i < config.getInitialEmporiums(); i++)
 			emporium.add(new Emporium(this));
 		this.isSuspended = true;
-		this.pickedColours=config.getColorsList();
-		this.mainActions=DEFAULTMAINACTION;
+		this.pickedColours = config.getColorsList();
+		this.mainActions = DEFAULTMAINACTION;
 	}
 
-	
-
 	/**
+	 * Returns a simplified copy of this Player.
 	 * 
-	 * @return a new Player which is a simplified copy of this one
+	 * @return a new Player which is a simplified version of this one
+	 * @see Player
 	 */
 	public Player getClientCopy() {
 		return new Player(this);
 	}
 
 	/**
+	 * Returns the Player {@link Coins}.
 	 * 
-	 * @return the Coins object
+	 * @return the Player Coins
+	 * @see Player
 	 */
 	public Coins getCoins() {
 		return this.coins;
 	}
 
 	/**
+	 * Returns the Player {@link Assistants}.
 	 * 
-	 * @return the assistants object
+	 * @return the Player Assistants
+	 * @see Player
 	 */
 	public Assistants getAssistants() {
 		return this.assistants;
 	}
 
 	/**
+	 * Returns the Player {@link VictoryPoints}.
 	 * 
-	 * @return the victory points object
+	 * @return the Player VictoryPoints
+	 * @see Player
 	 */
 	public VictoryPoints getVictoryPoints() {
 		return this.victoryPoints;
 	}
 
 	/**
+	 * Returns the Player {@link NoblePoints}.
 	 * 
-	 * @return the noble points object
+	 * @return the Player NoblePoints
+	 * @see Player
 	 */
 	public NoblePoints getNobilityPoints() {
 		return this.noblePoints;
 	}
 
 	/**
+	 * Returns the Player {@link PoliticCard PoliticCards}.
 	 * 
-	 * @return the list of politic cards
+	 * @return the Player PoliticCards
+	 * @see Player
 	 */
 	public List<PoliticCard> getPoliticCard() {
 		return this.politicCard;
 	}
 
 	/**
+	 * Returns the Player {@link PermissionCard PermissionCards}.
 	 * 
-	 * @return the list of permission cards
+	 * @return the Player PermissionCard
+	 * @see Player
 	 */
 	public List<PermissionCard> getPermissionCard() {
 		return this.permissionCard;
 	}
 
 	/**
+	 * Returns the Player not yet built {@link Emporium Emporiums}.
 	 * 
-	 * @return the list of emporium not yet built
+	 * @return the Player not yet built Emporiums
+	 * @see Player
 	 */
 	public List<Emporium> getEmporium() {
 		return this.emporium;
 	}
 
 	/**
+	 * Returns the Player remaining {@link Action Main Actions}.
 	 * 
-	 * @return returns the number of remaining main actions
+	 * @return the Player remaining Main Actions
+	 * @see Player
 	 */
 	public int getMainActionsLeft() {
 		return this.mainActions;
 	}
 
 	/**
-	 * increases by one the number of main actions left
+	 * Increases by one the number of the Player remaining {@link Action Main
+	 * Actions}.
+	 * 
+	 * @see Player
 	 */
 	public void increaseMainAction() {
 		this.mainActions++;
 	}
 
 	/**
+	 * Returns if this Player still has his {@link Action Extra Action}.
 	 * 
-	 * @return true if the extra action was done, false otherwise
+	 * @return <code>true</code> if the Extra Action has been already done;
+	 *         <code>false</code> otherwise
+	 * @see Player
 	 */
 	public boolean getIfExtraActionDone() {
 		return this.extraAction;
 	}
 
 	/**
-	 * Resets the extra and main action so that the player can start a new round
+	 * Resets the Player {@link Action Extra and Main Actions}.
+	 * 
+	 * @see Player
 	 */
 	public void actionsReset() {
 		this.mainActions = DEFAULTMAINACTION;
@@ -211,65 +276,82 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Decreases by one the number of main actions left
+	 * Decreases by one the number of the Player remaining {@link Action Main
+	 * Actions}.
+	 * 
+	 * @see Player
 	 */
 	public void doMainAction() {
 		this.mainActions--;
 	}
 
 	/**
-	 * Sets as done the extra action
+	 * Sets the Player {@link Action Extra Action} as done.
+	 * 
+	 * @see Player
 	 */
 	public void doExtraAction() {
 		this.extraAction = true;
 	}
 
 	/**
-	 * 	Draws a new politic cards and adds it to the hand
+	 * Draws a new {@link PoliticCard} and adds it to the Player hand.
+	 * 
+	 * @see Player
 	 */
 	public void drawAPoliticCard() {
 		this.politicCard.add(new PoliticCard(this.pickedColours));
 	}
 
 	/**
-	 * Returns the Client interface which is used to dialogue with the view
+	 * Returns the Player Client Interface.
 	 * 
-	 * @return the Client Interface
+	 * @return the Player Client Interface
+	 * @see Player
 	 */
 	public ClientInt getClient() {
 		return this.client;
 	}
 
 	/**
-	 * Sets if the player is suspended or not
+	 * Sets if this Player is suspended or not.
 	 * 
 	 * @param suspendedStatus
+	 *            <code>true</code> if this Player is suspended;
+	 *            <code>false</code> otherwise
+	 * @see Player
 	 */
 	public void setSuspension(boolean suspendedStatus) {
 		this.isSuspended = suspendedStatus;
 	}
 
 	/**
-	 * Return if the player is suspended or not
+	 * Return if this Player is suspended or not.
 	 * 
-	 * @return return true if the player is suspended, false otherwise
+	 * @return <code>true</code> if this Player is suspended; <code>false</code>
+	 *         otherwise
+	 * @see Player
 	 */
 	public boolean getSuspended() {
 		return this.isSuspended;
 	}
 
 	/**
-	 * Returns the player's name
+	 * Returns the Player name.
 	 * 
-	 * @return
+	 * @return the Player name
+	 * @see Player
 	 */
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * Sets the name of the player
-	 * @param name the name
+	 * Sets the Player name.
+	 * 
+	 * @param name
+	 *            the Player name
+	 * @see Player
 	 */
 	public void setName(String name) {
 		this.name = name;

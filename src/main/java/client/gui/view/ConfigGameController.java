@@ -44,6 +44,7 @@ public class ConfigGameController {
 	@FXML 
 	private void initialize() {
 		mapColumn.setCellValueFactory(cell -> cell.getValue());
+		Collection.addNumericRestriction(playersNumber);
 	}
 	
 	@FXML 

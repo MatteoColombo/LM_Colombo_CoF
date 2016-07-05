@@ -1,8 +1,6 @@
 package client.gui.view;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,7 +14,6 @@ import client.gui.model.SimpleBonus;
 import client.gui.model.SimpleCity;
 import client.gui.model.SimpleNobilityCell;
 import client.gui.model.SimpleRegion;
-import javafx.beans.binding.Binding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -74,6 +71,9 @@ public class GameController {
 	private static final String DRAGK = "dragKing";
 	private static final String CITY = " -city ";
 	private static final String PERMISSION = " -card ";
+	
+	private static final String DRAGPOL = "dragPol";
+	private static final String DRAGPERM = "dragPerm";
 
 	private MainApp mainApp;
 	private PlayerProperty myData;
@@ -252,28 +252,28 @@ public class GameController {
 		initCouncils();
 		initBoardRewards();
 		initNobility();
-		initPermissions();
+		initPermissionsSlots();
 		initCouncilorPool();
 		initMarketBuy();
 	}
 
 	@FXML
-	private void handleSlideCouncil() throws IOException {
+	private void handleSlideCouncil() {
 		changeStatus(SLIDE);
 	}
 
 	@FXML
-	private void handleBuyPermission() throws IOException {
+	private void handleBuyPermission() {
 		changeStatus(PERM);
 	}
 
 	@FXML
-	private void handleBuildEmporium() throws IOException {
+	private void handleBuildEmporium() {
 		changeStatus(EMP);
 	}
 
 	@FXML
-	private void handleBuildWithKing() throws IOException {
+	private void handleBuildWithKing() {
 		changeStatus(KING);
 	}
 
@@ -283,7 +283,7 @@ public class GameController {
 	}
 
 	@FXML
-	private void handleShuffle() throws IOException {
+	private void handleShuffle() {
 		changeStatus(SHUFFLE);
 	}
 
@@ -293,7 +293,7 @@ public class GameController {
 	}
 
 	@FXML
-	private void handleSlideSide() throws IOException {
+	private void handleSlideSide() {
 		changeStatus(SLIDE2);
 	}
 
@@ -347,19 +347,21 @@ public class GameController {
 		// "build emporium with king" (KING) or
 		// "buy permission card" (PERM) status
 		politicList.setOnDragDetected(event -> {
-			if (KING.equals(gameStatus) || PERM.equals(gameStatus)) {
-				Dragboard db = politicList.startDragAndDrop(TransferMode.ANY);
-
-				ClipboardContent content = new ClipboardContent();
-				String buffer = "";
-				for (int i : politicList.getSelectionModel().getSelectedIndices()) {
-					buffer += " " + (i + 1);
-				}
-				content.putString(buffer.substring(1));
-				db.setContent(content);
-				db.setDragView(new Image(this.getClass().getResource("/simboli/politic.png").toString()));
-				event.consume();
+			if(gameStatus != DRAGK) {
+				resetKing();
 			}
+			gameStatus = DRAGPOL;
+			Dragboard db = politicList.startDragAndDrop(TransferMode.ANY);
+
+			ClipboardContent content = new ClipboardContent();
+			String buffer = "";
+			for (int i : politicList.getSelectionModel().getSelectedIndices()) {
+				buffer += " " + (i + 1);
+			}
+			content.putString(buffer.substring(1));
+			db.setContent(content);
+			db.setDragView(new Image(this.getClass().getResource("/simboli/politic.png").toString()));
+			event.consume();
 		});
 		// populate the list. the card image is set as the cell background
 		politicList.setCellFactory(column -> new ListCell<String>() {
@@ -393,14 +395,13 @@ public class GameController {
 					
 					// allow drag when the player want to build emporium
 					permissionPane.setOnDragDetected(event -> {
-						if (EMP.equals(gameStatus)) {
-							Dragboard db = this.startDragAndDrop(TransferMode.ANY);
-							ClipboardContent content = new ClipboardContent();
-							content.putString("" + (this.getIndex() + 1));
-							db.setContent(content);
-							db.setDragView(permissionPane.snapshot(params, null));
-							event.consume();
-						}
+						changeStatus(DRAGPERM);
+						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+						ClipboardContent content = new ClipboardContent();
+						content.putString("" + (this.getIndex() + 1));
+						db.setContent(content);
+						db.setDragView(permissionPane.snapshot(params, null));
+						event.consume();
 					});
 				}
 				// trigger with the special bonus "take the reward from a
@@ -457,7 +458,7 @@ public class GameController {
 				// want to build
 				// an emporium here
 				cityPane.setOnDragOver(event -> {
-					if (EMP.equals(gameStatus) || DRAGK.equals(gameStatus)) {
+					if (DRAGPERM.equals(gameStatus) || DRAGK.equals(gameStatus)) {
 						cityPane.setEffect(new Glow());
 						event.acceptTransferModes(TransferMode.MOVE);
 					}
@@ -467,17 +468,13 @@ public class GameController {
 				cityPane.setOnDragExited(event -> cityPane.setEffect(null));
 
 				cityPane.setOnDragDropped(event -> {
-					// TODO not yet tested
 					Dragboard db = event.getDragboard();
 					if (DRAGK.equals(gameStatus)) {
-						gameStatus = "king";
 						kingNewPosition = king;
 						king.setVisible(true);
-					} else if (db.hasString() && EMP.equals(gameStatus)) {
-						String action = gameStatus + CITY + cityPane.getId() + PERMISSION + db.getString();
-						logger.appendText(action);
+					} else if (db.hasString() && DRAGPERM.equals(gameStatus)) {
 						mainApp.sendMsg(
-								gameStatus + CITY + cityPane.getId() + PERMISSION + db.getString());
+								EMP + CITY + cityPane.getId() + PERMISSION + db.getString());
 					}
 				});
 				// trigger when a player can take the Reward from this city with
@@ -511,14 +508,12 @@ public class GameController {
 	}
 
 	private void initKing(AnchorPane cityPane, Node king) {
-		// TODO fix the king disappear bug
 		king.setOnDragDetected(event -> {
-
+			logger.appendText("starting\n");
 			// allow dragging the king if the player want to buld emporium with
 			// it
-			Dragboard db = king.startDragAndDrop(TransferMode.ANY);
+			Dragboard db = king.startDragAndDrop(TransferMode.MOVE);
 			ClipboardContent content = new ClipboardContent();
-			if (KING.equals(gameStatus)) {
 				if (kingOldPosition == null) {
 					kingOldPosition = king;
 				}
@@ -527,7 +522,6 @@ public class GameController {
 				db.setContent(content);
 				db.setDragView(king.snapshot(params, null));
 				event.consume();
-			}
 		});
 
 		king.setOnDragDone(event -> {
@@ -537,7 +531,7 @@ public class GameController {
 		});
 
 		king.setOnDragOver(event -> {
-			if (KING.equals(gameStatus)) {
+			if (DRAGPOL.equals(gameStatus)) {
 				king.setEffect(new Glow());
 				event.acceptTransferModes(TransferMode.MOVE);
 			}
@@ -552,7 +546,7 @@ public class GameController {
 			Dragboard db = event.getDragboard();
 			if (db.hasString()) {
 				resetKing();
-				mainApp.sendMsg(gameStatus + CITY + cityPane.getId() + " -politic " + db.getString());
+				mainApp.sendMsg(KING + CITY + cityPane.getId() + " -politic " + db.getString());
 			}
 		});
 	}
@@ -748,7 +742,7 @@ public class GameController {
 		}
 	}
 
-	private void initPermissions() {
+	private void initPermissionsSlots() {
 		List<SimpleRegion> regions = mainApp.getLocalModel().getMap().getRegions();
 
 		for (int i = 0; i < regions.size(); i++) {
@@ -759,7 +753,7 @@ public class GameController {
 				Pane outerPane = (Pane) mapPane.lookup("#permit" + i + "_" + j);
 				// allow drop if a player want to buy a permission card
 				outerPane.setOnDragOver(event -> {
-					if (PERM.equals(gameStatus)) {
+					if (DRAGPOL.equals(gameStatus)) {
 						outerPane.setEffect(new Glow());
 						event.acceptTransferModes(TransferMode.MOVE);
 					}
@@ -777,7 +771,7 @@ public class GameController {
 						String region = info.substring(0, 1);
 						int cardIndex = Integer.valueOf(card) + 1;
 						int regionIndex = Integer.valueOf(region) + 1;
-						mainApp.sendMsg(gameStatus + " -region " + regionIndex + PERMISSION + cardIndex
+						mainApp.sendMsg(PERM + " -region " + regionIndex + PERMISSION + cardIndex
 								+ " -politic " + db.getString());
 					}
 				});
@@ -828,8 +822,9 @@ public class GameController {
 
 			regionSymbol.setOnMouseClicked(event -> {
 				if (SHUFFLE.equals(gameStatus)) {
+					changeStatus("");
 					int number = Integer.valueOf(regionSymbol.getId().substring(regionSymbol.getId().length() - 1));
-					mainApp.sendMsg(gameStatus + " -region " + (number + 1));
+					mainApp.sendMsg(SHUFFLE + " -region " + (number + 1));
 				}
 			});
 		}
@@ -863,8 +858,8 @@ public class GameController {
 			}
 			Image politicCardImage = new Image(PlayerProperty.getPoliticCardsImages().get(politicColor));
 			ImageView politicCard = new ImageView(politicCardImage);
-			politicCard.fitWidthProperty().set(100);
-			politicCard.preserveRatioProperty().set(true);
+			politicCard.setFitWidth(100.0);
+			politicCard.setPreserveRatio(true);
 			itemPane.getChildren().add(politicCard);
 
 		} else if (itemOnSale instanceof PermissionCard) {

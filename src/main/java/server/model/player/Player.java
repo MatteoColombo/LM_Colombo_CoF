@@ -140,7 +140,7 @@ public class Player implements Serializable {
 	public Player(Configuration config, NobilityTrack track) {
 		this.coins = new Coins(0);
 		this.assistants = new Assistants(0);
-		this.victoryPoints = new VictoryPoints(0);
+		this.victoryPoints = new VictoryPoints(-1);
 		this.noblePoints = new NoblePoints(0, this, track);
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
@@ -355,5 +355,12 @@ public class Player implements Serializable {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * Sets to null the ClientInt reference
+	 */
+	public void removeClient(){
+		this.client=null;
 	}
 }

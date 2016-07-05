@@ -54,6 +54,7 @@ public class TestABuildEmporium {
 		this.player= new Player(config, new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
 		player.getCoins().increaseAmount(10);
 		player.getAssistants().increaseAmount(3);
+		player.getVictoryPoints().increaseAmount(1);
 		this.pool = new CouncilorPool(4, 4, colorList);
 		bColorRewards = new ArrayList<>();
 		bKingRewards = new ArrayList<>();

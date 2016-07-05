@@ -71,7 +71,7 @@ public class TestCliModel {
 		}
 		model.setBonus(reward);
 		assertNotEquals(null, model.getRegions().get(2).getCities().get(4).getBonus());
-		model.buildEmporium("Juvelar", "matteo");
+		model.buildEmporium("Juvelar", 0);
 		assertEquals(1, model.getRegions().get(1).getCities().get(2).getEmporiums().size());
 		model.setKingLocation("Framek");
 		for(int i=0;i<model.getRegions().size();i++)
@@ -142,6 +142,7 @@ public class TestCliModel {
 		p.getAssistants().increaseAmount(1);
 		p.getCoins().increaseAmount(1);
 		p.setName("Test");
+		p.getVictoryPoints().increaseAmount(1);
 		p.getVictoryPoints().increaseAmount(3);
 		Board b= new Board(config,0);
 		PermissionCard card= new PermissionCard(b.getRegion(0).getCities());

@@ -97,5 +97,10 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 		return true;
 	}
 
+	@Override
+	public void disconnect() {
+		//nothing to do with RMI!
+	}
+
 	
 }

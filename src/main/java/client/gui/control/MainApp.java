@@ -314,4 +314,9 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		gameController.changeStatus(status);
 	}
 
+	@Override
+	public void disconnected() {
+		//Nothing to do with the GUI
+	}
+
 }

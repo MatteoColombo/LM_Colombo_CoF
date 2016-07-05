@@ -463,7 +463,6 @@ public class GameController {
 				cityPane.setOnDragExited(event -> cityPane.setEffect(null));
 
 				cityPane.setOnDragDropped(event -> {
-					// TODO not yet tested
 					Dragboard db = event.getDragboard();
 					if (DRAGK.equals(gameStatus)) {
 						gameStatus = "king";
@@ -507,7 +506,6 @@ public class GameController {
 	}
 
 	private void initKing(AnchorPane cityPane, Node king) {
-		// TODO fix the king disappear bug
 		king.setOnDragDetected(event -> {
 
 			// allow dragging the king if the player want to buld emporium with

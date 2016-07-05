@@ -16,6 +16,7 @@ import server.control.connection.ServerInt;
 import server.control.connection.rmi.RMIServer;
 import server.control.connection.socket.SocketClientConnectionHandler;
 import server.model.Game;
+import server.model.GameListener;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 
@@ -26,7 +27,7 @@ import server.model.configuration.ConfigurationErrorException;
  * @author Matteo Colombo
  *
  */
-public class Server {
+public class Server implements GameListener {
 
 	private static List<Game> startingGames;
 	private static List<Game> configuringGames;
@@ -155,6 +156,11 @@ public class Server {
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
+	}
+
+	@Override
+	public void gameEnded(Game game) {
+		gameControllerMap.remove(game);
 	}
 
 }

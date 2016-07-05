@@ -86,7 +86,7 @@ public interface ModelInterface {
 	public void setPermission(PermissionCard pc, int region, int slot);
 
 
-	public void buildEmporium(String city, String name);
+	public void buildEmporium(String city, int playerIndex);
 
 	/**
 	 * changes the king's position on the map

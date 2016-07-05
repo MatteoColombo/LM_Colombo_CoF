@@ -76,6 +76,10 @@ public class CliController implements Runnable, Controller {
 	 * @param message the received message
 	 */
 	public void parseKeyboardMessage(String message) {
+		if("quit".equals(message)){
+			serverManager.disconnect();
+			return;
+		}
 		if (this.canWrite) {
 			try {
 				serverManager.publishMessage(message);
@@ -124,7 +128,13 @@ public class CliController implements Runnable, Controller {
 
 		} catch (IOException | NotBoundException e) {
 			logger.log(Level.SEVERE, "Connection problem, the application will terminate", e);
-			System.exit(1);
+			disconnected();
 		}
+		System.out.println("keyboard: " + keyboardListener.isAlive());
+		System.out.println("Working client is gone");
+	}
+	@Override
+	public void disconnected() {
+		System.exit(0);
 	}
 }

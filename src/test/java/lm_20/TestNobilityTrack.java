@@ -20,6 +20,7 @@ public class TestNobilityTrack {
 		this.player= new Player(config, new NobilityTrack(new NobilityLoader(config.getNobility()).getNobilityTrack()));
 		player.getCoins().increaseAmount(10);
 		player.getAssistants().increaseAmount(1);
+		player.getVictoryPoints().increaseAmount(1);
 	}
 	
 	@Test

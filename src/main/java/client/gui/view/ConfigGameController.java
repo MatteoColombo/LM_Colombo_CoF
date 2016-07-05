@@ -37,8 +37,6 @@ public class ConfigGameController {
 			mapList.add(new SimpleStringProperty(map));
 		}
 		mapTable.setItems(mapList);
-		
-		// TODO add listener for changes in map table selections
 	}
 	
 	@FXML 

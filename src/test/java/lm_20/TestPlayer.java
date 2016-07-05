@@ -36,6 +36,7 @@ public class TestPlayer {
 		p= new Player(config, track);
 		p.getCoins().increaseAmount(10);
 		p.getAssistants().increaseAmount(1);
+		p.getVictoryPoints().increaseAmount(1);
 		
 	}
 

@@ -137,14 +137,8 @@ public class GameProperty implements ModelInterface {
 	}
 
 	@Override
-	public void buildEmporium(String city, String name) {
-		Color playerColor = null;
-		for(PlayerProperty p: players) {
-			if(p.nameProperty().get().equals(name)) {
-				playerColor = p.getColor();
-				break;
-			}
-		}
+	public void buildEmporium(String city, int playerIndex) {
+		Color playerColor = players.get(playerIndex).getColor();
 		
 		for(SimpleRegion sr: map.getRegions()) {
 			for(SimpleCity sc: sr.getCities()) {

@@ -8,10 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
-
 import server.Server;
 import server.control.connection.ClientInt;
 import server.control.dialogue.notify.NotifyGameLoading;
@@ -26,6 +24,7 @@ import server.control.dialogue.update.UpdateEmporiumBuilt;
 import server.control.dialogue.update.UpdateRegionPermission;
 import server.control.dialogue.update.UpdateSendCityBonus;
 import server.model.Game;
+import server.model.GameListener;
 import server.model.TurnManager;
 import server.model.action.IllegalActionException;
 import server.model.board.BoardRewardsManager;
@@ -45,7 +44,7 @@ import server.model.reward.BoardRegionReward;
 import server.model.reward.Bonus;
 import server.model.reward.Reward;
 
-public class Controller {
+public class Controller implements GameListener{
 	private Game game;
 	private CliParser parser;
 	private ActionBuilder builder;
@@ -316,11 +315,11 @@ public class Controller {
 				break;
 			case "emporium":
 				tm.performAction(builder.makeABuildEmporium(player, cmd));
-				sendEmporium(player.getName(), cmd.getOptionValue(CliParser.OPTCITY));
+				sendEmporium(game.getPlayers().indexOf(player), cmd.getOptionValue(CliParser.OPTCITY));
 				break;
 			case "king":
 				tm.performAction(builder.makeABuildEmporiumWithKing(player, cmd));
-				sendEmporium(player.getName(), cmd.getOptionValue(CliParser.OPTCITY));
+				sendEmporium(game.getPlayers().indexOf(player), cmd.getOptionValue(CliParser.OPTCITY));
 				sendKingLocation(cmd.getOptionValue(CliParser.OPTCITY));
 				break;
 			case "end":
@@ -547,11 +546,11 @@ public class Controller {
 	 * @param player the player who bult the emporium
 	 * @param city the city where the emporium is built in
 	 */
-	public void sendEmporium(String player, String city) {
+	public void sendEmporium(int playerIndex, String city) {
 		Set<ClientInt> clients=playersMap.keySet();
 		for (ClientInt client : clients) {
 			try {
-				client.notify(new UpdateEmporiumBuilt(player, city));
+				client.notify(new UpdateEmporiumBuilt(playerIndex, city));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
 				playersMap.get(client).setSuspension(true);
@@ -602,4 +601,16 @@ public class Controller {
 			}
 		}
 	}
+
+	@Override
+	public void gameEnded(Game game) {
+		this.playersMap.clear();
+		this.playersMap=null;
+		this.game=null;
+		this.logger=null;
+		this.config=null;
+		this.parser=null;
+		this.builder=null;
+	}
+	
 }

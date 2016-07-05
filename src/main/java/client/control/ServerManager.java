@@ -2,7 +2,7 @@ package client.control;
 
 import java.io.IOException;
 
-@FunctionalInterface
+
 public interface ServerManager {
 	/**
 	 * send a message to the server to be parsed
@@ -11,4 +11,6 @@ public interface ServerManager {
 	 * @throws IOException if the connection fails
 	 */
 	public void publishMessage(String message) throws IOException;
+	
+	public void disconnect();
 }	

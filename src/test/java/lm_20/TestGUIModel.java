@@ -105,7 +105,7 @@ public class TestGUIModel {
 		assertEquals(game.getMyPlayerData().canNotDoMainAction().get(), true);
 		assertEquals(game.getMyPlayerData().canNotDoSideAction().get(), true);
 		
-		game.buildEmporium("Arkon", "ciccio");
+		game.buildEmporium("Arkon", 0);
 		assertEquals(javafx.scene.paint.Color.ROYALBLUE, game.getMap().getRegions().get(0).getCities().get(0).getEmporiums().get(0));
 	
 		PermissionCard p = new PermissionCard(board.getRegions().get(0).getCities());

@@ -27,18 +27,19 @@ import server.model.player.Player;
  * @author Matteo Colombo
  *
  */
-public class Game extends Thread {
+public class Game extends Thread  {
 	private List<Player> players;
 	private Board gameBoard;
 	private TurnManager turnManager;
 	private int winningPlayer;
-	private final Configuration config;
+	private Configuration config;
 	private int maxNumberOfPlayers;
 	private int choosenMap;
 	private ClientInt initialClient;
 	private Market market;
 	private Logger logger = Logger.getGlobal();
 	private static final String SERVERNAME = "_Server_";
+	private List<GameListener> listeners;
 
 	/**
 	 * Instantiates some objects and saves the configuration
@@ -54,6 +55,7 @@ public class Game extends Thread {
 		this.players = new ArrayList<>();
 		this.maxNumberOfPlayers = config.getMaxNumberOfPlayer();
 		this.initialClient = initialClient;
+		listeners= new ArrayList<>();
 	}
 
 	/**
@@ -135,6 +137,26 @@ public class Game extends Thread {
 		giveExtraPoints();
 		calculateWinner();
 		publishWinner();
+		cleanUp();
+	}
+	
+	/**
+	 * Removes the references and notifies the listeners
+	 */
+	public void cleanUp(){
+		for(Player p:players)
+			p.removeClient();
+		this.gameBoard=null;
+		this.turnManager=null;
+		this.players.clear();
+		this.players=null;
+		this.config=null;
+		this.market=null;
+		this.logger=null;
+		for(GameListener listener: listeners)
+			listener.gameEnded(this);
+		listeners.clear();
+		listeners=null;
 	}
 
 	/**
@@ -195,7 +217,7 @@ public class Game extends Thread {
 			PermissionCard card = new PermissionCard(r.getCities());
 			for (City c : card.getCardCity()) {
 				c.addEmporium(server.getEmporium().get(0));
-				sendEmporium(SERVERNAME, c.getName());
+				sendEmporium(players.indexOf(server), c.getName());
 			}
 		}
 
@@ -232,16 +254,16 @@ public class Game extends Thread {
 	public void calculateWinner() {
 		players = players.stream().sorted((p1, p2) -> {
 			if (p1.getVictoryPoints().getAmount() > p2.getVictoryPoints().getAmount())
-				return 1;
-			else if (p1.getVictoryPoints().getAmount() < p2.getVictoryPoints().getAmount())
 				return -1;
+			else if (p1.getVictoryPoints().getAmount() < p2.getVictoryPoints().getAmount())
+				return 1;
 			else {
 				if ((p1.getPoliticCard().size() + p1.getAssistants().getAmount()) > (p2.getPoliticCard().size()
 						+ p2.getAssistants().getAmount()))
 					return 1;
 				else if ((p1.getPoliticCard().size() + p1.getAssistants().getAmount()) < (p2.getPoliticCard().size()
 						+ p2.getAssistants().getAmount()))
-					return -1;
+					return 1;
 				else
 					return 0;
 			}
@@ -332,11 +354,11 @@ public class Game extends Thread {
 	 * @param city
 	 *            the city in which the emporium is built
 	 */
-	private void sendEmporium(String name, String city) {
+	private void sendEmporium(int index, String city) {
 		for (Player p : players)
 			if (!p.getSuspended()) {
 				try {
-					p.getClient().notify(new UpdateEmporiumBuilt(name, city));
+					p.getClient().notify(new UpdateEmporiumBuilt(index, city));
 				} catch (IOException e) {
 					logger.log(Level.SEVERE, e.getMessage(), e);
 				}
@@ -359,5 +381,9 @@ public class Game extends Thread {
 				}
 
 			}
+	}
+
+	public void addListener(GameListener listener){
+		this.listeners.add(listener);
 	}
 }

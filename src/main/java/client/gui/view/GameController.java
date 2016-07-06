@@ -120,21 +120,16 @@ public class GameController {
 	private ListView<PermissionProperty> permissionList;
 
 	@FXML
-	private Button mainActionButton1;
+	private Button assistantButton;
 	@FXML
-	private Button mainActionButton2;
+	private Button shuffleButton;
 	@FXML
-	private Button mainActionButton3;
+	private Button extraButton;
+	
 	@FXML
-	private Button mainActionButton4;
+	private RadioButton quickSlideRadio;
 	@FXML
-	private Button sideActionButton1;
-	@FXML
-	private Button sideActionButton2;
-	@FXML
-	private Button sideActionButton3;
-	@FXML
-	private Button sideActionButton4;
+	private RadioButton mainSlideRadio;
 
 	@FXML
 	private VBox opponentsBox;
@@ -257,25 +252,6 @@ public class GameController {
 		initMarketBuy();
 	}
 
-	@FXML
-	private void handleSlideCouncil() {
-		changeStatus(SLIDE);
-	}
-
-	@FXML
-	private void handleBuyPermission() {
-		changeStatus(PERM);
-	}
-
-	@FXML
-	private void handleBuildEmporium() {
-		changeStatus(EMP);
-	}
-
-	@FXML
-	private void handleBuildWithKing() {
-		changeStatus(KING);
-	}
 
 	@FXML
 	private void handleBuyAssistant() throws IOException {
@@ -290,11 +266,6 @@ public class GameController {
 	@FXML
 	private void handleExtraAction() throws IOException {
 		mainApp.sendMsg("extra");
-	}
-
-	@FXML
-	private void handleSlideSide() {
-		changeStatus(SLIDE2);
 	}
 
 	@FXML
@@ -329,14 +300,9 @@ public class GameController {
 		nobilityLabel.textProperty().bind(myData.nobilityProperty().asString());
 		victoryLabel.textProperty().bind(myData.victoryProperty().asString());
 
-		mainActionButton1.disableProperty().bind(myData.canNotDoMainAction());
-		mainActionButton2.disableProperty().bind(myData.canNotDoMainAction());
-		mainActionButton3.disableProperty().bind(myData.canNotDoMainAction());
-		mainActionButton4.disableProperty().bind(myData.canNotDoMainAction());
-		sideActionButton1.disableProperty().bind(myData.canNotDoSideAction());
-		sideActionButton2.disableProperty().bind(myData.canNotDoSideAction());
-		sideActionButton3.disableProperty().bind(myData.canNotDoSideAction());
-		sideActionButton4.disableProperty().bind(myData.canNotDoSideAction());
+		assistantButton.disableProperty().bind(myData.canNotDoSideAction());
+		shuffleButton.disableProperty().bind(myData.canNotDoSideAction());
+		extraButton.disableProperty().bind(myData.canNotDoSideAction());
 	}
 
 	private void initPoliticList() {
@@ -617,7 +583,7 @@ public class GameController {
 		}
 		// allow drop is the player want to slide a council
 		location.setOnDragOver(event -> {
-			if (event.getGestureSource() != location && (SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus))) {
+			if (SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus)) {
 				location.setEffect(new Glow());
 				event.acceptTransferModes(TransferMode.MOVE);
 			}
@@ -657,9 +623,13 @@ public class GameController {
 				 * least one councilor of the selected color to drag from the
 				 * poll
 				 */
-				if ((SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus)) && (hexColor.getValue().get() > 0)) {
+				if ((quickSlideRadio.isSelected() || mainSlideRadio.isSelected()) && (hexColor.getValue().get() > 0)) {
 					Dragboard db = councilor.startDragAndDrop(TransferMode.ANY);
-
+					if(quickSlideRadio.isSelected()) {
+						changeStatus(SLIDE2);
+					} else {
+						changeStatus(SLIDE);
+					}
 					ClipboardContent content = new ClipboardContent();
 					content.putString(councilor.getId());
 					db.setContent(content);

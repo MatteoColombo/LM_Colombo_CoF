@@ -69,29 +69,27 @@
             </GridPane>
             <ListView fx:id="politicList" prefHeight="186.0" prefWidth="145.0" />
             <ListView fx:id="permissionList" prefHeight="186.0" prefWidth="125.0" HBox.hgrow="NEVER" />
-            <GridPane layoutY="40.0" prefHeight="186.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane layoutY="40.0" prefHeight="41.0" prefWidth="318.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="142.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="10.0" prefWidth="144.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="81.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="235.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="89.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="mainActionButton1" mnemonicParsing="false" onAction="#handleSlideCouncil" prefWidth="145.0" style="-fx-background-image: url('actions/slide.png'); -fx-background-size: cover;" text="Slide Council" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="sideActionButton1" mnemonicParsing="false" onAction="#handleSlideSide" prefWidth="145.0" text="Quick Slide" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="mainActionButton2" mnemonicParsing="false" onAction="#handleBuyPermission" prefWidth="145.0" text="Buy Perm." GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="sideActionButton2" mnemonicParsing="false" onAction="#handleBuyAssistant" prefWidth="145.0" text="Buy Assistant" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="sideActionButton3" mnemonicParsing="false" onAction="#handleShuffle" prefWidth="145.0" text="Shuffle Perm." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Button fx:id="mainActionButton3" mnemonicParsing="false" onAction="#handleBuildEmporium" prefWidth="145.0" text="Build Emp." GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Button fx:id="sideActionButton4" mnemonicParsing="false" onAction="#handleExtraAction" prefWidth="145.0" text="Extra Action" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <Button fx:id="mainActionButton4" mnemonicParsing="false" onAction="#handleBuildWithKing" prefWidth="145.0" text="Build w. king" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
+                  <Button fx:id="assistantButton" mnemonicParsing="false" onAction="#handleBuyAssistant" prefWidth="145.0" style="-fx-background-color: green;" text="Buy Assistant" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="shuffleButton" mnemonicParsing="false" onAction="#handleShuffle" prefWidth="145.0" style="-fx-background-color: green;" text="Shuffle Perm." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="extraButton" mnemonicParsing="false" onAction="#handleExtraAction" prefWidth="145.0" style="-fx-background-color: green;" text="Extra Action" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Label text="SLIDE" />
+                  <RadioButton fx:id="quickSlideRadio" mnemonicParsing="false" text="QUICK" textFill="WHITE" GridPane.rowIndex="2">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="slide" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="mainSlideRadio" mnemonicParsing="false" text="MAIN" textFill="WHITE" toggleGroup="$slide" GridPane.rowIndex="1" />
                </children>
                <HBox.margin>
                   <Insets left="10.0" />

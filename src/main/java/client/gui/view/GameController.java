@@ -269,6 +269,7 @@ public class GameController {
 
 	@FXML
 	private void handlePass() throws IOException {
+		changeStatus("");
 		mainApp.sendMsg("end");
 	}
 
@@ -474,11 +475,9 @@ public class GameController {
 
 	private void initKing(AnchorPane cityPane, Node king) {
 		king.setOnDragDetected(event -> {
-			logger.appendText("starting\n");
-			// allow dragging the king if the player want to buld emporium with
-			// it
-			Dragboard db = king.startDragAndDrop(TransferMode.MOVE);
-			ClipboardContent content = new ClipboardContent();
+			if(!myData.canNotDoMainAction().get() || !myData.canNotDoSideAction().get()) {
+				Dragboard db = king.startDragAndDrop(TransferMode.MOVE);
+				ClipboardContent content = new ClipboardContent();
 				if (kingOldPosition == null) {
 					kingOldPosition = king;
 				}
@@ -487,6 +486,8 @@ public class GameController {
 				db.setContent(content);
 				db.setDragView(king.snapshot(params, null));
 				event.consume();
+			}
+			
 		});
 
 		king.setOnDragDone(event -> {

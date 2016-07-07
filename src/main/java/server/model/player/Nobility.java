@@ -6,7 +6,7 @@ import server.model.board.nobility.NobilityTrack;
 import server.model.reward.Reward;
 
 /**
- * A class that represents the NoblePoints owned by a Player.
+ * A class that represents the Nobility owned by a Player.
  * <p>
  * Each Player can have a different {@link #getAmount() amount} of them that can
  * be {@link #increaseAmount(int) increased}; so it increases the Player
@@ -18,7 +18,7 @@ import server.model.reward.Reward;
  * @see Player
  * @see Reward
  */
-public class NoblePoints implements Serializable {
+public class Nobility implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int amount;
@@ -26,50 +26,49 @@ public class NoblePoints implements Serializable {
 	private transient NobilityTrack track;
 
 	/**
-	 * Initializes the initial amount of NoblePoints owned by this
+	 * Initializes the initial amount of Nobility owned by this
 	 * {@link Player}.
 	 * 
 	 * @param initialValue
-	 *            the initial amount of NoblePoints to be set
-	 * @see NoblePoints
+	 *            the initial amount of Nobility to be set
+	 * @see Nobility
 	 */
-	public NoblePoints(int initialValue, Player owner, NobilityTrack track) {
+	public Nobility(int initialValue, Player owner, NobilityTrack track) {
 		this.amount = initialValue;
 		this.owner = owner;
 		this.track = track;
 	}
 
 	/**
-	 * Returns the amount of NoblePoints owned in this moment by this
+	 * Returns the amount of Nobility owned in this moment by this
 	 * {@link Player}.
 	 * 
-	 * @return the actual amount of NoblePoints
-	 * @see NoblePoints
+	 * @return the actual amount of Nobility
+	 * @see Nobility
 	 */
 	public int getAmount() {
 		return this.amount;
 	}
 
 	/**
-	 * Increases the amount of NoblePoints owned by this {@link Player}; then it
+	 * Increases the amount of Nobility owned by this {@link Player}; then it
 	 * checks if there is a {@link Reward} associated with that position on the
 	 * {@link NobilityTrack}, assigning it to this Player if it's present.
 	 * 
 	 * @param value
-	 *            the amount used to increment the actual NoblePoints
-	 * @see NoblePoints
+	 *            the amount used to increment the actual Nobility
+	 * @see Nobility
 	 */
 	public void increaseAmount(int value) {
+		int initial=this.getAmount();
 		if ((amount + value) > track.getMaxPoint() && amount < track.getMaxPoint()) {
 			amount = track.getMaxPoint();
-			Reward rew = track.getReward(amount);
-			if (rew != null)
-				rew.assignBonusTo(owner);
 		} else if ((amount + value) <= track.getMaxPoint()) {
 			amount += value;
-			Reward rew = track.getReward(amount);
-			if (rew != null)
-				rew.assignBonusTo(owner);
+		}
+		for(int i=initial; i<this.getAmount();i++){
+			if(track.getReward(i)!=null)
+				track.getReward(i).assignBonusTo(owner);
 		}
 	}
 

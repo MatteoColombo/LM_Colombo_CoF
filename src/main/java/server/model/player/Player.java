@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * set};</li>
  * <li>Its {@link #getCoins() Coins};</li>
  * <li>Its {@link #getAssistants() Assistants};</li>
- * <li>Its {@link #getNobilityPoints() NoblePoints};</li>
+ * <li>Its {@link #getNobilityPoints() Nobility};</li>
  * <li>Its {@link #getVictoryPoints() VictoryPoints};</li>
  * <li>Its {@link #getPoliticCard() PoliticCard}, that are individually
  * {@link #drawAPoliticCard() drawn};</li>
@@ -43,7 +43,7 @@ import java.util.ArrayList;
  * @see Coins
  * @see Emporium
  * @see NobilityTrack
- * @see NoblePoints
+ * @see Nobility
  * @see PermissionCard
  * @see PoliticCard
  * @see VictoryPoints
@@ -53,7 +53,7 @@ public class Player implements Serializable {
 	private Coins coins;
 	private Assistants assistants;
 	private VictoryPoints victoryPoints;
-	private NoblePoints noblePoints;
+	private Nobility nobility;
 	private List<PoliticCard> politicCard;
 	private String name;
 	private List<PermissionCard> permissionCard;
@@ -76,7 +76,7 @@ public class Player implements Serializable {
 		this.name = p.getName();
 		this.coins = new Coins(p.getCoins().getAmount());
 		this.assistants = new Assistants(p.getAssistants().getAmount());
-		this.noblePoints = new NoblePoints(p.getNobilityPoints().getAmount(), null, null);
+		this.nobility = new Nobility(p.getNobilityPoints().getAmount(), null, null);
 		this.victoryPoints = new VictoryPoints(p.getVictoryPoints().getAmount());
 		this.permissionCard = new ArrayList<>();
 		this.mainActions = p.getMainActionsLeft();
@@ -110,7 +110,7 @@ public class Player implements Serializable {
 		this.coins = new Coins(config.getInitialPlayerMoney() + numberOfPlayers);
 		this.assistants = new Assistants(config.getInitialPlayerHelpers() + numberOfPlayers);
 		this.victoryPoints = new VictoryPoints(config.getInitialVictoryPoints());
-		this.noblePoints = new NoblePoints(config.getInitialNobilityPoints(), this, track);
+		this.nobility = new Nobility(config.getInitialNobilityPoints(), this, track);
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
 		if (client != null)
@@ -141,7 +141,7 @@ public class Player implements Serializable {
 		this.coins = new Coins(0);
 		this.assistants = new Assistants(0);
 		this.victoryPoints = new VictoryPoints(-1);
-		this.noblePoints = new NoblePoints(0, this, track);
+		this.nobility = new Nobility(0, this, track);
 		this.politicCard = new ArrayList<>();
 		this.emporium = new ArrayList<>();
 		for (int i = 0; i < config.getInitialPoliticCards(); i++)
@@ -195,13 +195,13 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Returns the Player {@link NoblePoints}.
+	 * Returns the Player {@link Nobility}.
 	 * 
-	 * @return the Player NoblePoints
+	 * @return the Player Nobility
 	 * @see Player
 	 */
-	public NoblePoints getNobilityPoints() {
-		return this.noblePoints;
+	public Nobility getNobilityPoints() {
+		return this.nobility;
 	}
 
 	/**

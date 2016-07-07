@@ -57,6 +57,8 @@ public class Configuration {
 	private Map<Color, Integer> colorRewards;
 
 	private List<Integer> boardRewards;
+	
+	private boolean canBeConfigured;
 
 	private static final String PLAYERPATH = "/config/player/";
 	private static final String COLORPATH = "/config/colors/";
@@ -68,7 +70,7 @@ public class Configuration {
 	private static final String COLORREWARDPATH = "/config/city/reward/";
 	private static final String BOARDPATH = "/config/board/";
 	private static final String CITYCOLORPATH = "/config/citycolor/color/";
-	
+	private static final String CONFIGURABLE = "/config/configurable";
 	/**
 	 * Calls the method which loads
 	 * @throws ConfigurationErrorException
@@ -95,6 +97,7 @@ public class Configuration {
 			loadBoardRewards(xpath, xmlDoc);
 			loadColorRewards(xpath, xmlDoc);
 			loadCityColor(xpath, xmlDoc);
+			loadIfConfigurable(xpath, xmlDoc);
 		} catch (ParserConfigurationException | XPathExpressionException | SAXException | IOException e) {
 			throw new ConfigurationErrorException(e);
 		}
@@ -194,6 +197,11 @@ public class Configuration {
 		for(int i=0; i<values.getLength();i++)
 			cityColor.put(Color.decode(values.item(i).getFirstChild().getNodeValue()), colors.item(i).getFirstChild().getNodeValue());
 	}
+	
+	private void loadIfConfigurable(XPath xpath, Document xmlDoc) throws XPathExpressionException {
+		NodeList list = (NodeList) xpath.compile(CONFIGURABLE).evaluate(xmlDoc, XPathConstants.NODESET);
+		canBeConfigured= Boolean.parseBoolean(list.item(0).getFirstChild().getNodeValue());
+	}
 
 	public int getInitialPlayerMoney() {
 		return initialPlayerMoney;
@@ -285,5 +293,9 @@ public class Configuration {
 	
 	public int getTimeout(){
 		return this.timeout;
+	}
+	
+	public boolean canBeConfigured(){
+		return this.canBeConfigured;
 	}
 }

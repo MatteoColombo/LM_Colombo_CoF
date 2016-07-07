@@ -2,7 +2,7 @@ package server.model.board.nobility;
 
 import java.util.List;
 
-import server.model.player.NoblePoints;
+import server.model.player.Nobility;
 import server.model.player.Player;
 import server.model.reward.BVictoryPoints;
 import server.model.reward.Bonus;
@@ -11,7 +11,7 @@ import server.model.reward.Reward;
 /**
  * A class that represent the NobilityTrack of the Game.
  * <p>
- * Each Player have NoblePoints that represent the steps of the NobilityTrack
+ * Each Player have Nobility that represent the steps of the NobilityTrack
  * where they are that can be increased with the right Bonuses, rewarding with
  * special Rewards, if that step is not <code>null</code>, and BVictoryPoints
  * for who is more forward than the others into it at the end of the Game.
@@ -19,7 +19,7 @@ import server.model.reward.Reward;
  * @see Bonus
  * @see BVictoryPoints
  * @see NobilityLoader
- * @see NoblePoints
+ * @see Nobility
  * @see Player
  * @see Reward
  */

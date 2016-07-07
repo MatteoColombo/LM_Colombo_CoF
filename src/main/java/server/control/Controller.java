@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +34,7 @@ import server.model.board.city.City;
 import server.model.board.council.Council;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
+import server.model.configuration.XMLFileException;
 import server.model.market.OnSaleItem;
 import server.model.market.Soldable;
 import server.model.player.Assistants;
@@ -44,7 +46,7 @@ import server.model.reward.BoardRegionReward;
 import server.model.reward.Bonus;
 import server.model.reward.Reward;
 
-public class Controller implements GameListener{
+public class Controller implements GameListener {
 	private Game game;
 	private CliParser parser;
 	private ActionBuilder builder;
@@ -52,8 +54,9 @@ public class Controller implements GameListener{
 	private Logger logger = Logger.getGlobal();
 	private Configuration config;
 	private int gameMap;
-	private static final String WRONGSELECTION= "Wrong selection!";
-	private static final String NOTENOUGHASSISTANTS= "You don't have enough assistants!";
+	private static final String WRONGSELECTION = "Wrong selection!";
+	private static final String NOTENOUGHASSISTANTS = "You don't have enough assistants!";
+
 	public Controller(Game game, Configuration config) {
 		this.game = game;
 		this.config = config;
@@ -78,15 +81,17 @@ public class Controller implements GameListener{
 		}
 	}
 
-	
 	/**
-	 * parser for the requested item to be sold.
-	 * the string must be in the following format: <br>
+	 * parser for the requested item to be sold. the string must be in the
+	 * following format: <br>
 	 * [Object to sell] [amount/index] [price] <br>
 	 * e.g: politic 3 2, assistant 1 2 <br>
 	 * in case of index, it must start from 1
-	 * @param item the string representation of this item
-	 * @param client the seller
+	 * 
+	 * @param item
+	 *            the string representation of this item
+	 * @param client
+	 *            the seller
 	 */
 	public void parseItemToSell(String item, ClientInt client) {
 		if ("end".equals(item)) {
@@ -96,7 +101,7 @@ public class Controller implements GameListener{
 		String[] parameters = item.split(" ");
 		Soldable itemOnSale;
 		try {
-			if(parameters.length<3)
+			if (parameters.length < 3)
 				throw new IllegalActionException("wrong parameters!");
 			String object = parameters[0];
 			int index = Integer.parseInt(parameters[1]);
@@ -107,12 +112,12 @@ public class Controller implements GameListener{
 			case "permission":
 				if (playersMap.get(client).getPermissionCard().size() < index)
 					throw new IllegalActionException(NOTENOUGHASSISTANTS);
-				itemOnSale = playersMap.get(client).getPermissionCard().remove(index-1);
+				itemOnSale = playersMap.get(client).getPermissionCard().remove(index - 1);
 				break;
 			case "politic":
 				if (playersMap.get(client).getPoliticCard().size() < index)
 					throw new IllegalActionException(NOTENOUGHASSISTANTS);
-				itemOnSale = playersMap.get(client).getPoliticCard().remove(index-1);
+				itemOnSale = playersMap.get(client).getPoliticCard().remove(index - 1);
 				break;
 			case "assistant":
 				if (playersMap.get(client).getAssistants().getAmount() < index)
@@ -134,8 +139,9 @@ public class Controller implements GameListener{
 	}
 
 	/**
-	 * Receives the choosen item to buy, checks if can buy it
-	 * The received string must be a simple integer 
+	 * Receives the choosen item to buy, checks if can buy it The received
+	 * string must be a simple integer
+	 * 
 	 * @param items
 	 * @param itemIndex
 	 * @param client
@@ -160,10 +166,11 @@ public class Controller implements GameListener{
 			client.notifyIllegalAction(new IllegalActionException(e.getMessage()));
 		}
 	}
+
 	/**
 	 * Send a {@link NotifyGameStarted} Dialogue to all the connected Clients.
-	 * this must be called at the beginning of the game, but after the model's dialogs
-	 * If a Client is not connects, it get suspended immeidately
+	 * this must be called at the beginning of the game, but after the model's
+	 * dialogs If a Client is not connects, it get suspended immeidately
 	 */
 	public void notifyGameStarted() {
 		Set<ClientInt> clients = playersMap.keySet();
@@ -185,7 +192,18 @@ public class Controller implements GameListener{
 	 * @throws ConfigurationErrorException
 	 */
 	public void configGame() throws ConfigurationErrorException {
-		game.configGame();
+		if (config.canBeConfigured()) {
+			game.configGame();
+		} else {
+			Random r = new Random();
+			game.setChoosenMap(r.nextInt(config.getMaps().size()));
+			game.setMaxNumberOfPlayers(2 + r.nextInt(config.getMaxNumberOfPlayer() - 1));
+			try {
+				game.setBoard();
+			} catch (XMLFileException e) {
+				logger.log(Level.SEVERE, e.getMessage(),e);
+			}
+		}
 		Server.acceptPlayers(game);
 	}
 
@@ -263,16 +281,16 @@ public class Controller implements GameListener{
 	/**
 	 * translate a string action request from the client into its object
 	 * representation It notify the client if something went wrong. <br>
-	 * The string must respect the following convention:
-	 * [ACTION] [OPTIONS]
-	 * <br> If one index or more is required as an option argument, it must start from 1
-	 * <br>
+	 * The string must respect the following convention: [ACTION] [OPTIONS] <br>
+	 * If one index or more is required as an option argument, it must start
+	 * from 1 <br>
 	 * eg:
 	 * <li>slide -council 1 -color pink <br>
 	 * <li>emporium -city castrum -permission 1 <br>
 	 * <li>extra <br>
-	 * <li>king -city arkon -cards 1 2 3 
+	 * <li>king -city arkon -cards 1 2 3
 	 * <li>permission -region 2 -slot 1 -cards 1 3 5
+	 * 
 	 * @param s
 	 *            the input from the cli
 	 * @throws IOException
@@ -338,10 +356,11 @@ public class Controller implements GameListener{
 			client.askPlayerWhatActionToDo();
 		}
 	}
+
 	/**
 	 * send a {@link NotifyUpdatePlayer} to all clients connected to the game,
-	 * when the player's parameter change in the model.
-	 * If the client is disconnected it is immediately suspended
+	 * when the player's parameter change in the model. If the client is
+	 * disconnected it is immediately suspended
 	 * 
 	 * @param player
 	 * @param playerIndex
@@ -398,11 +417,15 @@ public class Controller implements GameListener{
 		}
 
 	}
+
 	/**
-	 * Parse the selected permission card, when the special
-	 * take the permission reward occurse.
-	 * @param card the index of the card starting from 1
-	 * @param client the active player
+	 * Parse the selected permission card, when the special take the permission
+	 * reward occurse.
+	 * 
+	 * @param card
+	 *            the index of the card starting from 1
+	 * @param client
+	 *            the active player
 	 * @throws IOException
 	 */
 	public void parseRewardOfPermissionCard(String card, ClientInt client) throws IOException {
@@ -419,9 +442,13 @@ public class Controller implements GameListener{
 			client.askSelectRewardOfPermissionCard();
 		}
 	}
+
 	/**
-	 * Parse the selected permission card when a player can take a free permission from the available slots
-	 * @param card the indexes of region and slot (both starting from 1)
+	 * Parse the selected permission card when a player can take a free
+	 * permission from the available slots
+	 * 
+	 * @param card
+	 *            the indexes of region and slot (both starting from 1)
 	 * @param client
 	 * @throws IOException
 	 */
@@ -445,9 +472,10 @@ public class Controller implements GameListener{
 			client.askSelectRewardOfPermissionCard();
 		}
 	}
+
 	/**
-	 * Send all the Reward in the cities to the client as a List
-	 * If a client is disconnected it got suspended
+	 * Send all the Reward in the cities to the client as a List If a client is
+	 * disconnected it got suspended
 	 */
 	public void notifySendCityRewards() {
 		List<Reward> rewards = new ArrayList<>();
@@ -479,8 +507,11 @@ public class Controller implements GameListener{
 
 	/**
 	 * send a {@link UpdateCouncil} to all the clients
-	 * @param council the council to send
-	 * @param index The council index. By convention, the king has index -1
+	 * 
+	 * @param council
+	 *            the council to send
+	 * @param index
+	 *            The council index. By convention, the king has index -1
 	 */
 	public void notifySendCouncil(Council council, int index) {
 		Council copy = new Council(council);
@@ -508,7 +539,7 @@ public class Controller implements GameListener{
 			notifySendCouncil(regions.get(i).getCouncil(), i);
 		}
 	}
-	
+
 	/**
 	 * send all permissions one by one to the client
 	 */
@@ -526,12 +557,16 @@ public class Controller implements GameListener{
 
 	/**
 	 * send a permission card to the client
-	 * @param card the permission card to send
-	 * @param region the region index
-	 * @param slot the region slot index
+	 * 
+	 * @param card
+	 *            the permission card to send
+	 * @param region
+	 *            the region index
+	 * @param slot
+	 *            the region slot index
 	 */
 	public void notifySendPermission(PermissionCard card, int region, int slot) {
-		Set<ClientInt> clients=playersMap.keySet();
+		Set<ClientInt> clients = playersMap.keySet();
 		for (ClientInt client : clients) {
 			try {
 				client.notify(new UpdateRegionPermission(card, region, slot));
@@ -541,13 +576,17 @@ public class Controller implements GameListener{
 			}
 		}
 	}
+
 	/**
 	 * send a {@link UpdateEmporiumBuilt} to all the clients
-	 * @param player the player who bult the emporium
-	 * @param city the city where the emporium is built in
+	 * 
+	 * @param player
+	 *            the player who bult the emporium
+	 * @param city
+	 *            the city where the emporium is built in
 	 */
 	public void sendEmporium(int playerIndex, String city) {
-		Set<ClientInt> clients=playersMap.keySet();
+		Set<ClientInt> clients = playersMap.keySet();
 		for (ClientInt client : clients) {
 			try {
 				client.notify(new UpdateEmporiumBuilt(playerIndex, city));
@@ -557,9 +596,12 @@ public class Controller implements GameListener{
 			}
 		}
 	}
+
 	/**
-	 * send a {@link NotifyKingLocation}  to the clients
-	 * @param city the new city where the king is placed
+	 * send a {@link NotifyKingLocation} to the clients
+	 * 
+	 * @param city
+	 *            the new city where the king is placed
 	 */
 	public void sendKingLocation(String city) {
 		Set<ClientInt> clients = playersMap.keySet();
@@ -573,27 +615,27 @@ public class Controller implements GameListener{
 				}
 		}
 	}
+
 	/**
 	 * send all the board rewards to the clients
 	 */
 	public void updateBoardRewards() {
 		Set<ClientInt> clients = playersMap.keySet();
 		BoardRewardsManager manager = game.getBoard().getBoardRewardsManager();
-		List<BVictoryPoints> copyKing= new ArrayList<>();
-		for(BVictoryPoints king: manager.getRemainingBoardKingRewards())
+		List<BVictoryPoints> copyKing = new ArrayList<>();
+		for (BVictoryPoints king : manager.getRemainingBoardKingRewards())
 			copyKing.add(new BVictoryPoints(king.getAmount()));
-		List<BoardRegionReward> copyRegion= new ArrayList<>();
-		for(BoardRegionReward region: manager.getRemainingBoardRegionRewards())
+		List<BoardRegionReward> copyRegion = new ArrayList<>();
+		for (BoardRegionReward region : manager.getRemainingBoardRegionRewards())
 			copyRegion.add(region.newCopy());
-		List<BoardColorReward> copyColor= new ArrayList<>();
-		for(BoardColorReward color: manager.getRemainingBoardColorRewards())
+		List<BoardColorReward> copyColor = new ArrayList<>();
+		for (BoardColorReward color : manager.getRemainingBoardColorRewards())
 			copyColor.add(color.newCopy());
-		
+
 		for (ClientInt client : clients) {
 			if (!playersMap.get(client).getSuspended()) {
 				try {
-					client.notify(new UpdateBoardRewards(copyKing,
-							copyColor, copyRegion));
+					client.notify(new UpdateBoardRewards(copyKing, copyColor, copyRegion));
 				} catch (IOException e) {
 					logger.log(Level.WARNING, e.getMessage(), e);
 					playersMap.get(client).setSuspension(true);
@@ -605,12 +647,12 @@ public class Controller implements GameListener{
 	@Override
 	public void gameEnded(Game game) {
 		this.playersMap.clear();
-		this.playersMap=null;
-		this.game=null;
-		this.logger=null;
-		this.config=null;
-		this.parser=null;
-		this.builder=null;
+		this.playersMap = null;
+		this.game = null;
+		this.logger = null;
+		this.config = null;
+		this.parser = null;
+		this.builder = null;
 	}
-	
+
 }

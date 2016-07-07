@@ -72,7 +72,7 @@ public class Game extends Thread  {
 			throw new ConfigurationErrorException(ioe);
 		}
 		try {
-			this.gameBoard = new Board(config, choosenMap);
+			setBoard();
 		} catch (XMLFileException e) {
 			throw new ConfigurationErrorException(e);
 		}
@@ -385,5 +385,9 @@ public class Game extends Thread  {
 
 	public void addListener(GameListener listener){
 		this.listeners.add(listener);
+	}
+	public void setBoard() throws XMLFileException{
+		this.gameBoard= new Board(config, choosenMap);
+	
 	}
 }

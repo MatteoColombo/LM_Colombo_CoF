@@ -110,5 +110,6 @@
 		<path>src/main/resources/map7.xml</path>
 		<path>src/main/resources/map8.xml</path>
 	</map>
+	<configurable>false</configurable>
 
 </config>

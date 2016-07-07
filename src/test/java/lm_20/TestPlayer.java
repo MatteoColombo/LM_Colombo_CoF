@@ -13,7 +13,7 @@ import server.model.configuration.TrackXMLFileException;
 import server.model.player.Assistants;
 import server.model.player.Coins;
 import server.model.player.Emporium;
-import server.model.player.NoblePoints;
+import server.model.player.Nobility;
 import server.model.player.Player;
 import server.model.player.PoliticCard;
 import server.model.player.VictoryPoints;
@@ -89,7 +89,7 @@ public class TestPlayer {
 	 */
 	@Test
 	public void testNoblePoint() {
-		NoblePoints n = p.getNobilityPoints();
+		Nobility n = p.getNobilityPoints();
  		assertEquals(0, n.getAmount());
 		n.increaseAmount(3);
 		assertEquals(3, n.getAmount());

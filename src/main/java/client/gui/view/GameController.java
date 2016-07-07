@@ -54,23 +54,28 @@ import util.ColorConverter;
  */
 public class GameController {
 
+	private static final String SOUNDTRACK = "/soundtrack/tricks-of-the-trade.mp3";
+	
 	// nobility scale parameters for positioning on the map
 	private static final int NOBILITY_START_X = 26;
 	private static final int NOBILITY_START_Y = 775;
 	private static final int NOBILITY_HEIGHT = 60;
 	private static final double NOBILITY_STEP = 37.5;
 
-	// Game Status
+	// Action names
 	private static final String EMP = "emporium";
 	private static final String KING = "king";
 	private static final String SLIDE = "slide";
 	private static final String PERM = "permission";
 	private static final String SHUFFLE = "shuffle";
 	private static final String SLIDE2 = "secondarySlide";
-	private static final String DRAGK = "dragKing";
+	
+	// options
 	private static final String CITY = " -city ";
 	private static final String PERMISSION = " -card ";
 	
+	// ausiliary status
+	private static final String DRAGK = "dragKing";
 	private static final String DRAGPOL = "dragPol";
 	private static final String DRAGPERM = "dragPerm";
 
@@ -162,7 +167,7 @@ public class GameController {
 	@FXML
 	private void initialize() {
 		params.setFill(Color.TRANSPARENT);
-		String path = MainApp.class.getResource("/soundtrack/tricks-of-the-trade.mp3").toString();
+		String path = MainApp.class.getResource(SOUNDTRACK).toString();
 		media = new Media(path);
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -309,9 +314,6 @@ public class GameController {
 		politicList.setItems(myData.getPoliticCards());
 		politicList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		// allow drag of the selected cards when the game is in
-		// "build emporium with king" (KING) or
-		// "buy permission card" (PERM) status
 		politicList.setOnDragDetected(event -> {
 			if(gameStatus != DRAGK) {
 				resetKing();
@@ -619,7 +621,7 @@ public class GameController {
 			councilor.setOnDragDetected(event -> {
 				/*
 				 * activate the drag only at two condition 1) SLIDE or
-				 * "secondartSlide" is the current action wanted 2) there is at
+				 * SLIDE2 is the current action wanted 2) there is at
 				 * least one councilor of the selected color to drag from the
 				 * poll
 				 */

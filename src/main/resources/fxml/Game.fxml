@@ -12,7 +12,7 @@
 
 <BorderPane prefHeight="900.0" prefWidth="1280.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.view.GameController">
    <bottom>
-      <HBox minHeight="59.0" prefHeight="186.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <HBox minHeight="59.0" prefHeight="186.0" prefWidth="1280.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="186.0" prefWidth="167.0">
                <children>
@@ -100,7 +100,7 @@
                   <Button fx:id="buyButton" disable="true" layoutY="148.0" mnemonicParsing="false" onAction="#handleBuy" text="BUY" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                   <Pane fx:id="itemPane" layoutY="18.0" prefHeight="126.0" prefWidth="98.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="18.0" />
                </children></AnchorPane>
-            <TableView fx:id="itemsTable" layoutX="43.0" layoutY="-8.0" prefHeight="170.0" prefWidth="244.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="itemsTable" layoutX="43.0" layoutY="-8.0" prefHeight="186.0" prefWidth="232.0" style="-fx-border-style: solid; -fx-border-color: white; -fx-border-width: 2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn fx:id="ownerColumn" prefWidth="75.0" text="Seller" />
                   <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />
@@ -113,16 +113,21 @@
       </HBox>
    </bottom>
    <right>
-      <VBox fx:id="opponentsBox" prefHeight="701.0" prefWidth="214.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="711.0" prefWidth="214.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
-            <TextArea fx:id="logger" layoutX="8.0" prefHeight="163.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TextArea fx:id="logger" layoutX="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="163.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ScrollPane hbarPolicy="NEVER" prefHeight="551.0" prefWidth="214.0" style="-fx-background-color: transparent;" styleClass="background" vbarPolicy="NEVER">
+               <content>
+                  <VBox fx:id="opponentsBox" prefWidth="214.0" styleClass="background" />
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
    </right>
    <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="background" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane fx:id="mapPane" prefHeight="833.0">
+          <AnchorPane fx:id="mapPane" prefHeight="833.0" styleClass="background">
                <children>
                   <ImageView fitHeight="833.0" fitWidth="1073.0" pickOnBounds="true" preserveRatio="true">
                      <image>

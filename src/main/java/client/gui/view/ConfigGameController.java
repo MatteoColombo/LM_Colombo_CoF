@@ -69,9 +69,8 @@ public class ConfigGameController {
 		}
 	}
 	
-	@FXML 
-	private void handleAdd() {
-		this.mapList.add(0, new SimpleStringProperty("pluto"));
+	@FXML
+	private void handlePlayRandom() {
+		mainApp.sendMsg("random");
 	}
-
 }

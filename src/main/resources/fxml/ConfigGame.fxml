@@ -28,12 +28,13 @@
                <children>
                   <TextField fx:id="playersNumber" layoutX="176.0" layoutY="10.0" maxHeight="0.0" maxWidth="50.0" prefWidth="50.0" AnchorPane.leftAnchor="176.0" AnchorPane.topAnchor="10.0" />
                   <Label layoutX="113.0" layoutY="15.0" text="Number of players:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="15.0" />
-                  <Separator layoutX="70.0" layoutY="127.0" prefHeight="3.0" prefWidth="429.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                  <Separator layoutY="100.0" prefHeight="3.0" prefWidth="429.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
                   <Button layoutX="316.0" layoutY="10.0" mnemonicParsing="false" onAction="#handlePlay" text="PLAY" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="Courier Bold" size="18.0" />
                      </font>
                   </Button>
+                  <Button layoutX="262.0" layoutY="55.0" mnemonicParsing="false" onAction="#handlePlayRandom" prefHeight="31.0" prefWidth="157.0" style="-fx-background-color: crimson;" text="PLAY RANDOM" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
                </children></AnchorPane>
         </items>
       </SplitPane>

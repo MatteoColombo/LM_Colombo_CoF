@@ -116,7 +116,7 @@
       <VBox prefHeight="711.0" prefWidth="214.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
             <TextArea fx:id="logger" layoutX="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="163.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <ScrollPane hbarPolicy="NEVER" prefHeight="551.0" prefWidth="214.0" style="-fx-background-color: transparent;" styleClass="background" vbarPolicy="NEVER">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="551.0" prefWidth="214.0" style="-fx-background: transparent;" styleClass="background" vbarPolicy="NEVER">
                <content>
                   <VBox fx:id="opponentsBox" prefWidth="214.0" styleClass="background" />
                </content>

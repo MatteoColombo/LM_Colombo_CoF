@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<player>
 		<money>10</money>
@@ -110,6 +111,6 @@
 		<path>src/main/resources/map7.xml</path>
 		<path>src/main/resources/map8.xml</path>
 	</map>
-	<configurable>false</configurable>
+	<configurable>true</configurable>
 
 </config>

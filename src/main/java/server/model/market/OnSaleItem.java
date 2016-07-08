@@ -29,6 +29,12 @@ public class OnSaleItem implements Serializable{
 		this.price=price;
 	}
 	
+	private OnSaleItem(OnSaleItem item){
+		this.item=item.item.newCopy();
+		this.owner=item.owner.getClientCopy();
+		this.price=item.price;
+	}
+	
 	/**
 	 * The price of the item on sale
 	 * @return an integer
@@ -62,13 +68,7 @@ public class OnSaleItem implements Serializable{
 		return item.getMarketMessage(config)+" |  price: "+price+" | owner: "+owner.getName();
 	}
 	
-	private OnSaleItem(OnSaleItem item){
-		this.item=item.item.clone();
-		this.owner=item.owner.getClientCopy();
-		this.price=item.price;
-	}
-	
-	public OnSaleItem clone(){
+	public OnSaleItem newCopy(){
 		return new OnSaleItem(this);
 	}
 }

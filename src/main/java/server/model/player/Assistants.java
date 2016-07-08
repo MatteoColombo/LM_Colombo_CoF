@@ -85,7 +85,7 @@ public class Assistants implements Serializable, Soldable {
 	}
 	
 	@Override
-	public Soldable clone(){
+	public Soldable newCopy(){
 		return new Assistants(this.getAmount());
 	}
 

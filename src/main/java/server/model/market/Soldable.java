@@ -17,5 +17,5 @@ public interface Soldable extends Serializable {
 	 */
 	public String getMarketMessage(Configuration config);
 	
-	public Soldable clone();
+	public Soldable newCopy();
 }

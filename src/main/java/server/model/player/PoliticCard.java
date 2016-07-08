@@ -113,7 +113,7 @@ public class PoliticCard implements Serializable, Soldable {
 	}
 	
 	@Override
-	public Soldable clone(){
+	public Soldable newCopy(){
 		return new PoliticCard(this.color);
 	}
 

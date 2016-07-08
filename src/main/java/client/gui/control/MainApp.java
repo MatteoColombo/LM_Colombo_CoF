@@ -317,6 +317,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void printAskPlayersNumber(int max) {
+		//We don't need this with the GUI
 	}
 
 	@Override

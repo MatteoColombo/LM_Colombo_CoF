@@ -36,7 +36,6 @@ import server.model.board.city.CityConnection;
 import server.model.board.council.Council;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
-import server.model.configuration.XMLFileException;
 import server.model.market.OnSaleItem;
 import server.model.market.Soldable;
 import server.model.player.Assistants;
@@ -154,7 +153,7 @@ public class Controller implements GameListener {
 		}
 		try {
 			int index = Integer.parseInt(itemIndex);
-			if (index > items.size() || index <1)
+			if (index > items.size() || index < 1)
 				throw new IllegalActionException("Illegal index");
 			if (playersMap.get(client).getCoins().getAmount() < items.get(index - 1).getPrice())
 				throw new IllegalActionException("Not enough money");
@@ -389,7 +388,7 @@ public class Controller implements GameListener {
 	}
 
 	/**
-	 * This is the method that checks if the city (or the cities) selcted for
+	 * This is the method that checks if the city (or the cities) selected for
 	 * the nobility bonus are eligible for the reward and in case it gives them
 	 * to the player
 	 * 
@@ -400,22 +399,10 @@ public class Controller implements GameListener {
 	 */
 	public void parseBonusGetCityBonus(List<String> cities, ClientInt client) throws IOException {
 		Player player = playersMap.get(client);
-		List<City> allCitiesOfMap = game.getBoard().getMap().getCitiesList();
-		List<Reward> reward = new ArrayList<>();
+		List<Reward> reward;
 		try {
-			for (String cityName : cities) {
-				for (City city : allCitiesOfMap)
-					if (city.getName().equalsIgnoreCase(cityName) && !city.hasEmporiumOfPlayer(player))
-						throw new IllegalActionException("You don't have an emporium in the city");
-					else if (city.getName().equalsIgnoreCase(cityName) && city.hasEmporiumOfPlayer(player))
-						reward.add(city.getReward());
-			}
-			for (Reward r : reward) {
-				for (Bonus bonus : r.getGeneratedRewards()) {
-					if ("nobility".equals(bonus.getTagName()))
-						throw new IllegalActionException("You can't select a city which has a nobility bonus");
-				}
-			}
+			reward = checkOwnsCity(cities, player);
+			checkCityWithNobilityBonus(reward);
 			for (Reward r : reward)
 				r.assignBonusTo(player);
 			updatePlayers(player, game.getPlayers().indexOf(player));
@@ -425,6 +412,28 @@ public class Controller implements GameListener {
 			client.askCityToGetNobilityReward(cities.size());
 		}
 
+	}
+
+	private List<Reward> checkOwnsCity(List<String> cities, Player player) throws IllegalActionException {
+		List<Reward> reward = new ArrayList<>();
+		List<City> allCitiesOfMap = game.getBoard().getMap().getCitiesList();
+		for (String cityName : cities) {
+			for (City city : allCitiesOfMap)
+				if (city.getName().equalsIgnoreCase(cityName) && !city.hasEmporiumOfPlayer(player))
+					throw new IllegalActionException("You don't have an emporium in the city");
+				else if (city.getName().equalsIgnoreCase(cityName) && city.hasEmporiumOfPlayer(player))
+					reward.add(city.getReward());
+		}
+		return reward;
+	}
+
+	private void checkCityWithNobilityBonus(List<Reward> rewards) throws IllegalActionException {
+		for (Reward r : rewards) {
+			for (Bonus bonus : r.getGeneratedRewards()) {
+				if ("nobility".equals(bonus.getTagName()))
+					throw new IllegalActionException("You can't select a city which has a nobility bonus");
+			}
+		}
 	}
 
 	/**

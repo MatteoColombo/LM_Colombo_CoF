@@ -226,10 +226,12 @@ public class Configuration {
 		return maxNumberOfPlayer;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Color> getColorsList() {
 		return (List<Color>)((ArrayList)colorsList).clone();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map<String, Color> getColorsTranslation() {
 		return (Map<String,Color>)((HashMap)colorTranslation).clone();
 	}
@@ -250,6 +252,7 @@ public class Configuration {
 		return nobility;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<String> getMaps() {
 		return (List<String>)((ArrayList<String>)maps).clone();
 	}
@@ -270,6 +273,7 @@ public class Configuration {
 		return colorRewards;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Integer> getBoardRewards() {
 		return (List<Integer>)((ArrayList)boardRewards).clone();
 	}
@@ -278,10 +282,12 @@ public class Configuration {
 		return serverIp;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map<Color, String> getColorsTranslationReverse() {
 		return (Map<Color,String>)((HashMap)colorTranslationReverse).clone();
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map<Color, String> getCityColor(){
 		return (Map<Color,String>)((HashMap)this.cityColor).clone();
 	}

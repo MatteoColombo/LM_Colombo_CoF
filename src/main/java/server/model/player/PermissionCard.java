@@ -153,7 +153,7 @@ public class PermissionCard implements Soldable, Serializable {
 	}
 	
 	@Override
-	public Soldable clone(){
+	public Soldable newCopy(){
 		return new PermissionCard(this.cities, this.reward);
 	}
 }

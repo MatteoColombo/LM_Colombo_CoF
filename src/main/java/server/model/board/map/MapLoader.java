@@ -41,7 +41,7 @@ public class MapLoader {
 	private CouncilorPool pool;
 	private List<CityConnection> connections;
 	private List<City> citiesOfMap;
-	private final static int MAXCONN = 2;
+	private static final int MAXCONN = 2;
 
 	/**
 	 * Initializes the MapLoader saving the XML file and the
@@ -286,25 +286,29 @@ public class MapLoader {
 	}
 
 	public void generateConnections() {
-		Random random = new Random();
 		for (Region r : regions) {
 			for (City c : r.getCities()) {
-				int connectionsNumber=1 + random.nextInt(MAXCONN);
-				while(c.getConnectedCities().size()<connectionsNumber){
-					for(int i=-3;i<=3;i++){
-						if(i==0)
-							continue;
-						int cityIndex= r.getCities().indexOf(c);
-						if((cityIndex+i)>=0 &&(cityIndex+i)<r.getCities().size() && !c.isConnectedTo(r.getCities().get(cityIndex+i))& random.nextBoolean()){
-							c.addConnection(r.getCities().get(cityIndex + i));
-							r.getCities().get(cityIndex+i).addConnection(c);
-						}
-					}
-				}
-			
+				generateConnectionsForACity(c, r);
 			}
 		}
 		addRegionConnections();
+	}
+	
+	private void generateConnectionsForACity(City c, Region r){
+		Random random = new Random();
+		int connectionsNumber = 1 + random.nextInt(MAXCONN);
+		while (c.getConnectedCities().size() < connectionsNumber) {
+			for (int i = -3; i <= 3; i++) {
+				if (i == 0)
+					continue;
+				int cityIndex = r.getCities().indexOf(c);
+				if ((cityIndex + i) >= 0 && (cityIndex + i) < r.getCities().size()
+						&& !c.isConnectedTo(r.getCities().get(cityIndex + i)) && random.nextBoolean()) {
+					c.addConnection(r.getCities().get(cityIndex + i));
+					r.getCities().get(cityIndex + i).addConnection(c);
+				}
+			}
+		}
 	}
 
 	private void addRegionConnections() {
@@ -319,10 +323,6 @@ public class MapLoader {
 			}
 		}
 
-	}
-
-	private int countConnections(City cit) {
-		return cit.getConnectedCities().size();
 	}
 
 }

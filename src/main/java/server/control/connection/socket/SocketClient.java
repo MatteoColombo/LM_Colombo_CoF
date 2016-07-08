@@ -148,7 +148,7 @@ public class SocketClient implements ClientInt {
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
 		List<OnSaleItem> clone= new ArrayList<>();
 		for(OnSaleItem item: itemsOnSale)
-			clone.add(item.clone());
+			clone.add(item.newCopy());
 		out.writeObject(new RequestWhichItemToBuy(clone));
 		out.flush();
 		try {

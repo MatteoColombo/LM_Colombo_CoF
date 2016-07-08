@@ -335,8 +335,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void printAskConfigurationMethod() {
-		// TODO Auto-generated method stub
-		
+		showRoom();
 	}
 
 

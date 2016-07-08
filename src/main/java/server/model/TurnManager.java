@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import server.control.dialogue.notify.NotifyPlayerDisconnected;
 import server.control.dialogue.update.NotifyTurnEnded;
 import server.control.dialogue.update.NotifyUpdatePlayer;
 import server.control.dialogue.update.NotifyYourTurn;
@@ -28,8 +29,10 @@ public class TurnManager {
 
 	/**
 	 * 
-	 * @param players the list of the players
-	 * @param colors the list of colors used by the politic cards
+	 * @param players
+	 *            the list of the players
+	 * @param colors
+	 *            the list of colors used by the politic cards
 	 */
 	public TurnManager(List<Player> players, List<Color> colors) {
 		this.players = players;
@@ -57,11 +60,17 @@ public class TurnManager {
 				else {
 					turnPlayer.setSuspension(true);
 					turnPlayer.getClient().close();
+					notifyDisconneted(turnPlayer.getName());
 					return;
 				}
 			} catch (IOException e) {
 				turnPlayer.setSuspension(true);
 				turnPlayer.getClient().close();
+				try {
+					notifyDisconneted(turnPlayer.getName());
+				} catch (Exception e2) {
+					logger.log(Level.WARNING, e2.getMessage(), e2);
+				}
 				logger.log(Level.WARNING, e.getMessage(), e);
 				return;
 			}
@@ -70,7 +79,9 @@ public class TurnManager {
 	}
 
 	/**
-	 * Sends a notification to the current player notifying him that it's its turn to play
+	 * Sends a notification to the current player notifying him that it's its
+	 * turn to play
+	 * 
 	 * @param turnPlayer
 	 */
 	private void notifyTurnStarted(Player turnPlayer) {
@@ -84,16 +95,19 @@ public class TurnManager {
 	}
 
 	/**
-	 * Sends a notification to the player to notify him about the end of its turn
+	 * Sends a notification to the player to notify him about the end of its
+	 * turn
+	 * 
 	 * @param turnPlayer
 	 */
-	private void notifyTurnEnded(Player turnPlayer){
+	private void notifyTurnEnded(Player turnPlayer) {
 		try {
 			turnPlayer.getClient().notify(new NotifyTurnEnded());
 		} catch (IOException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 		}
 	}
+
 	/**
 	 * This method is called by the controller and it executes an action
 	 * 
@@ -113,6 +127,7 @@ public class TurnManager {
 
 	/**
 	 * Sends to each client the update of the current player
+	 * 
 	 * @throws IOException
 	 */
 	public void notifyUpdatePlayer() throws IOException {
@@ -122,4 +137,10 @@ public class TurnManager {
 		}
 	}
 
+	public void notifyDisconneted(String name) throws IOException {
+		for (Player p : players) {
+			if (!p.getSuspended())
+				p.getClient().notify(new NotifyPlayerDisconnected(name));
+		}
+	}
 }

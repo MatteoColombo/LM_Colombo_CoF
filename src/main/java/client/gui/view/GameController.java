@@ -184,21 +184,6 @@ public class GameController {
 			muteButton.setText("UNMUTE");
 		}
 	}
-	
-	/**
-	 * create a popup when something goes wrong
-	 * 
-	 * @param msg
-	 *            the message to show in the alert popup
-	 */
-	public void showAlert(String msg) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.initOwner(mainApp.getPrimaryStage());
-		alert.setTitle("ERROR");
-		alert.setHeaderText("Action not available");
-		alert.setContentText(msg);
-		alert.show();
-	}
 
 	/**
 	 * change the game status

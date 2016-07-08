@@ -20,6 +20,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -103,7 +105,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
-	public void showConfigGame() {
+	public void showConfigGame(int maxplayer) {
 
 		try {
 			Configuration clientConfig = new Configuration();
@@ -118,6 +120,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			ConfigGameController config = loader.getController();
 			config.setMainApp(this);
 			config.setMapList(maps);
+			config.setMaxPlayers(maxplayer);
 
 		} catch (IOException | ConfigurationErrorException e) {
 			log.log( Level.SEVERE, e.toString(), e );
@@ -279,9 +282,20 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		// not used
 	}
 
+	/**
+	 * create a popup when something goes wrong
+	 * 
+	 * @param msg
+	 *            the message to show in the alert popup
+	 */
 	@Override
 	public void printIllegalAction(Exception e) {
-		gameController.showAlert(e.getMessage());
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.initOwner(primaryStage);
+		alert.setTitle("ERROR");
+		alert.setHeaderText("Action not available");
+		alert.setContentText(e.getMessage());
+		alert.show();
 	}
 
 	@Override
@@ -299,13 +313,8 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	}
 
 	@Override
-	public void printAskConfigurationMethod() {
-		showConfigGame();
-	}
-	
-	@Override
 	public void printAskPlayersNumber(int max) {
-		//not used
+		showConfigGame(max);
 	}
 
 	@Override
@@ -322,6 +331,12 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	@Override
 	public void disconnected() {
 		//Nothing to do with the GUI
+	}
+
+	@Override
+	public void printAskConfigurationMethod() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

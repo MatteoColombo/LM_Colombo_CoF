@@ -5,44 +5,45 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
 import client.cli.control.CliController;
 import client.gui.control.MainApp;
 
 public class WorkingClient {
 
+	private static final String CLI_OPT = "cli";
+	
+	private static CommandLineParser parser = new DefaultParser();
+	private static Options opt = new Options().addOption(CLI_OPT, false, "");
+	private static final Logger log= Logger.getLogger( WorkingClient.class.getName() );
+
+	
 	private WorkingClient() {
 	}
 
 	public static void main(String[] args) {
-		PrintWriter pw = new PrintWriter(System.out);
 		Scanner sc = new Scanner(System.in);
-		Logger logger = Logger.getGlobal();
-		int choiche = 0;
-		do {
-			pw.println("Choose the preferred interface:");
-			pw.println("1. CLI");
-			pw.println("2. GUI");
-			pw.flush();
-			try {
-				choiche = Integer.parseInt(sc.nextLine());
-			} catch (NumberFormatException e) {
-				logger.log(Level.WARNING, e.getMessage(), e);
+		CommandLine cl;
+		try {
+			cl = parser.parse(opt, args);
+			Thread t;
+			if(cl.hasOption(CLI_OPT)) {
+				CliController cliControl;
+				cliControl = new CliController(sc);
+				t = new Thread(cliControl);
+			} else {
+				MainApp def = new MainApp();
+				t = new Thread(def);
+				sc.close();
 			}
-		} while (choiche != 1 && choiche != 2);
-		Thread t;
-		switch (choiche) {
-		case 1:
-			CliController cliControl;
-			cliControl = new CliController(sc);
-			t = new Thread(cliControl);
-		break;
-		case 2:
-		default:
-			MainApp def = new MainApp();
-			t = new Thread(def);
-			sc.close();
-			break;
+			t.start();
+		} catch (ParseException e) {
+			log.log( Level.SEVERE, e.toString(), e );
 		}
-		t.start();
 	}
 }

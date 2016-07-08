@@ -35,6 +35,7 @@
                      </font>
                   </Button>
                   <Button layoutX="262.0" layoutY="55.0" mnemonicParsing="false" onAction="#handlePlayRandom" prefHeight="31.0" prefWidth="157.0" style="-fx-background-color: crimson;" text="PLAY RANDOM" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
+                  <Label fx:id="maxLabel" layoutX="235.0" layoutY="17.0" text="(max 0)" AnchorPane.leftAnchor="235.0" />
                </children></AnchorPane>
         </items>
       </SplitPane>

@@ -30,7 +30,7 @@ public class Configuration {
 	private int initialPoliticCards;
 	private int initialEmporiums;
 	private int initialVictoryPoints;
-	private int initialNobilityPoints;
+	private int initialNobility;
 	private int maxNumberOfPlayer;
 
 	private List<Color> colorsList;
@@ -113,7 +113,7 @@ public class Configuration {
 		list = (NodeList) xpath.compile(PLAYERPATH + "victory").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.initialVictoryPoints = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(PLAYERPATH + "nobility").evaluate(xmlDoc, XPathConstants.NODESET);
-		this.initialNobilityPoints = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
+		this.initialNobility = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(PLAYERPATH + "max").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.maxNumberOfPlayer = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 	}
@@ -218,8 +218,8 @@ public class Configuration {
 		return initialVictoryPoints;
 	}
 
-	public int getInitialNobilityPoints() {
-		return initialNobilityPoints;
+	public int getInitialNobility() {
+		return initialNobility;
 	}
 
 	public int getMaxNumberOfPlayer() {

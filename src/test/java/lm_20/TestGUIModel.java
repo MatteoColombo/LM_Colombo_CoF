@@ -95,7 +95,7 @@ public class TestGUIModel {
 		
 		assertEquals(p1.getVictoryPoints().getAmount(), game.getMyPlayerData().victoryProperty().get());
 		assertEquals(p1.getCoins().getAmount(), game.getPlayers().get(0).coinsProperty().get());
-		assertEquals(p1.getNobilityPoints().getAmount(), game.getMyPlayerData().nobilityProperty().get());
+		assertEquals(p1.getNobility().getAmount(), game.getMyPlayerData().nobilityProperty().get());
 		assertEquals(p1.getAssistants().getAmount(), game.getMyPlayerData().assistantsProperty().get());
 
 		game.isYourTurn();

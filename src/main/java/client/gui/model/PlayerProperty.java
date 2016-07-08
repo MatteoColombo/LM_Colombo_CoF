@@ -67,7 +67,7 @@ public class PlayerProperty {
 		assistants.set(player.getAssistants().getAmount());
 		victory.set(player.getVictoryPoints().getAmount());
 		coins.set(player.getCoins().getAmount());
-		nobility.set(player.getNobilityPoints().getAmount());
+		nobility.set(player.getNobility().getAmount());
 		
 		politicCards.clear();
 		for(PoliticCard card: player.getPoliticCard()) {

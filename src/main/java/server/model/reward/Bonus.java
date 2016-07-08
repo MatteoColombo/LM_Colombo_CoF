@@ -15,7 +15,7 @@ public abstract class Bonus implements Serializable{
 	private static final Bonus[] allStandardBonus = { 
 			 new BCoins(1),
 			 new BAssistants(1),
-			 new BNobilityPoints(1),
+			 new BNobility(1),
 			 new BVictoryPoints(1),
 			 new BPoliticCards(1),
 			 new BExtraMainAction()}; // 1 by default

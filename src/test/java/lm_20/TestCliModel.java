@@ -72,7 +72,7 @@ public class TestCliModel {
 		model.setBonus(reward);
 		assertNotEquals(null, model.getRegions().get(2).getCities().get(4).getBonus());
 		model.buildEmporium("Juvelar", 0);
-		assertEquals(1, model.getRegions().get(1).getCities().get(2).getEmporiums().size());
+		assertEquals(1, model.getRegions().get(1).getCities().get(3).getEmporiums().size());
 		model.setKingLocation("Framek");
 		for(int i=0;i<model.getRegions().size();i++)
 			for(int j=0;j<config.getNumberDisclosedCards();j++){

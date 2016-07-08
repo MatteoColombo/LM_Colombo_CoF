@@ -26,6 +26,7 @@ public class TestMinimalPath {
 		colors.add(Color.GREEN);
 		colors.add(Color.BLUE);
 			MapLoader ml = new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors));
+			ml.loadConnections();
 			City first=ml.getRegions().get(1).getCities().get(1);
 			System.out.println(first.getName());
 			City second= ml.getRegions().get(0).getCities().get(4);

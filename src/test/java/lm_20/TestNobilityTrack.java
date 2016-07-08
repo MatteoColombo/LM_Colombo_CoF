@@ -30,11 +30,5 @@ public class TestNobilityTrack {
 		assertEquals(12, player.getCoins().getAmount());
 		
 	}
-	
-	@Test
-	public void testIncreaseOverMax(){
-		player.getNobilityPoints().increaseAmount(25);
-		assertEquals(20, player.getNobilityPoints().getAmount());
-	}
 
 }

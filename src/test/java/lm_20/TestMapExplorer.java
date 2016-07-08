@@ -35,6 +35,7 @@ public class TestMapExplorer {
 		p= new Player(config,track);
 		p2= new Player(config,track);
 		ml = new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors));
+		ml.loadConnections();
 		plains = ml.getRegions().get(1);
 		mountain = ml.getRegions().get(2);
 		plains.getCity("Hellar").addEmporium(p.getEmporium().remove(0));

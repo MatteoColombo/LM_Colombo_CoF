@@ -66,7 +66,7 @@ public class Nobility implements Serializable {
 		} else if ((amount + value) <= track.getMaxPoint()) {
 			amount += value;
 		}
-		for(int i=initial; i<this.getAmount();i++){
+		for(int i=initial+1; i<=this.getAmount();i++){
 			if(track.getReward(i)!=null)
 				track.getReward(i).assignBonusTo(owner);
 		}

@@ -233,15 +233,15 @@ public class Game extends Thread {
 	public void giveExtraPoints() {
 		players.get(winningPlayer).getVictoryPoints().increaseAmount(3);
 
-		int maxNobility = players.stream().mapToInt(p -> p.getNobilityPoints().getAmount()).max().orElse(-1);
-		int playersWithMax = (int) players.stream().filter(p -> p.getNobilityPoints().getAmount() == maxNobility)
+		int maxNobility = players.stream().mapToInt(p -> p.getNobility().getAmount()).max().orElse(-1);
+		int playersWithMax = (int) players.stream().filter(p -> p.getNobility().getAmount() == maxNobility)
 				.count();
-		players.stream().filter(p -> p.getNobilityPoints().getAmount() == maxNobility)
+		players.stream().filter(p -> p.getNobility().getAmount() == maxNobility)
 				.forEach(p -> p.getVictoryPoints().increaseAmount(5));
 		if (playersWithMax > 1) {
-			int secondNobility = players.stream().filter(p -> p.getNobilityPoints().getAmount() == maxNobility)
-					.mapToInt(p -> p.getNobilityPoints().getAmount()).max().orElse(-1);
-			players.stream().filter(p -> p.getNobilityPoints().getAmount() == secondNobility)
+			int secondNobility = players.stream().filter(p -> p.getNobility().getAmount() == maxNobility)
+					.mapToInt(p -> p.getNobility().getAmount()).max().orElse(-1);
+			players.stream().filter(p -> p.getNobility().getAmount() == secondNobility)
 					.forEach(p -> p.getVictoryPoints().increaseAmount(2));
 		}
 

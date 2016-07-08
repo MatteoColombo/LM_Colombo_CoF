@@ -31,7 +31,7 @@ public class CliPlayer {
 		this.coins = p.getCoins().getAmount();
 		this.assistants = p.getAssistants().getAmount();
 		this.victory = p.getVictoryPoints().getAmount();
-		this.nobility = p.getNobilityPoints().getAmount();
+		this.nobility = p.getNobility().getAmount();
 		this.politic = new ArrayList<>();
 		this.permissions = new ArrayList<>();
 		for (PoliticCard card : p.getPoliticCard()) {

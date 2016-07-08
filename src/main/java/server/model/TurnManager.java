@@ -75,6 +75,7 @@ public class TurnManager {
 				return;
 			}
 		}
+		turnPlayer.doExtraAction();
 		notifyTurnEnded(turnPlayer);
 	}
 

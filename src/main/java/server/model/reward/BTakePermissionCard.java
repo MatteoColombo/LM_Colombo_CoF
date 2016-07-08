@@ -3,12 +3,23 @@ package server.model.reward;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import server.model.board.Board;
+import server.model.board.nobility.NobilityTrack;
+import server.model.player.PermissionCard;
 import server.model.player.Player;
 
 /**
- * This is a nobility bonus which gives to who wins it a free permission cards
- * @author Matteo Colombo
- *
+* A Bonus that assigns to a Player the face up PermissionCard on the Board he will choose.
+* <p>
+* This is a Bonus of the NobilityTrack.
+* 
+* @author Matteo Colombo
+* @see Board
+* @see Bonus
+* @see NobilityTrack
+* @see PermissionCard
+* @see Player
  */
 public class BTakePermissionCard extends Bonus{
 
@@ -21,7 +32,10 @@ public class BTakePermissionCard extends Bonus{
 	private static final String NAME = "takePermit";
 	
 	/**
-	 * This sets the number of free permission cards
+	 * Sets to one the number of {@link PermissionCard PermissionCards} that can
+	 * be chosen.
+	 * 
+	 * @see BTakePermissionCard
 	 */
 	public BTakePermissionCard() {
 		super(1);

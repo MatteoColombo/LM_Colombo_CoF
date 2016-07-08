@@ -20,8 +20,6 @@ public class BExtraMainAction extends Bonus {
 	/**
 	 * Sets to one the number of {@link Action MainActions} awarded.
 	 * 
-	 * @param amount
-	 *            the MainAction that will be awarded
 	 * @see BExtraMainAction
 	 */
 	public BExtraMainAction() {

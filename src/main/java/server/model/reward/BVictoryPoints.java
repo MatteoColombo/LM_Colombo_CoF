@@ -3,7 +3,12 @@ package server.model.reward;
 import server.model.player.Player;
 
 /**
- * This bonus gives some victory points to who whins it
+ * A Bonus that assigns an amount of VictoryPoints to the Player who is awarded
+ * with it.
+ * 
+ * @see Bonus
+ * @see Player
+ * @see VictoryPoints
  */
 public class BVictoryPoints extends Bonus {
 
@@ -12,8 +17,11 @@ public class BVictoryPoints extends Bonus {
 	private static final String NAME = "victory";
 	
 	/**
-	 * Sets the number of victory points awarded
+	 * Sets the number of {@link VictoryPoints} awarded.
+	 * 
 	 * @param amount
+	 *            the VictoryPoints that will be awarded
+	 * @see BVictoryPoints
 	 */
 	public BVictoryPoints(int amount) {
 		super(amount);

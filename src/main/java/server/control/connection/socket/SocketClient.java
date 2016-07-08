@@ -23,6 +23,7 @@ import server.control.dialogue.Dialogue;
 import server.control.dialogue.notify.NotifyBonusFromCities;
 import server.control.dialogue.notify.NotifyIllegalAction;
 import server.control.dialogue.request.RequestCity;
+import server.control.dialogue.request.RequestConfigurationMethod;
 import server.control.dialogue.request.RequestFreePermissionCard;
 import server.control.dialogue.request.RequestMaxPlayersNumber;
 import server.control.dialogue.request.RequestPlayerName;
@@ -212,5 +213,17 @@ public class SocketClient implements ClientInt {
 	public void notify(Dialogue dialog) throws IOException {
 		out.writeObject(dialog);
 		out.flush();
+	}
+
+	@Override
+	public void askConfigurationMethod() throws IOException {
+		out.writeObject(new RequestConfigurationMethod());
+		out.flush();
+		try {
+			String answer = (String) in.readObject();
+			controller.parseConfigurationType(answer);
+		} catch (ClassNotFoundException e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
+		}
 	}
 }

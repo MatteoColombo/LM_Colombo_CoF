@@ -1,5 +1,6 @@
 package server.model.board.city;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,9 @@ import java.util.List;
  * @author Matteo Colombo
  * @see City
  */
-public class CityConnection {
+public class CityConnection implements Serializable{
+
+	private static final long serialVersionUID = 1666612357631546239L;
 	private List<String> cities;
 
 	/**

@@ -75,7 +75,7 @@ public class TestMarket {
 	
 	@Test
 	public void testMarketBuyPermit() throws XMLFileException, ConfigurationErrorException {
-		Board b= new Board(new Configuration(), 1);
+		Board b= new Board(new Configuration(), 1, false);
 		PermissionCard card = new PermissionCard(b.getRegion(0).getCities());
 		OnSaleItem item= new OnSaleItem(card, allPlayers.get(0), 3);
 		market.addItemOnSale(card, 3, allPlayers.get(0));

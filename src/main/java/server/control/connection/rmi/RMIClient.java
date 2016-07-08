@@ -18,6 +18,7 @@ import server.control.dialogue.Dialogue;
 import server.control.dialogue.notify.NotifyBonusFromCities;
 import server.control.dialogue.notify.NotifyIllegalAction;
 import server.control.dialogue.request.RequestCity;
+import server.control.dialogue.request.RequestConfigurationMethod;
 import server.control.dialogue.request.RequestFreePermissionCard;
 import server.control.dialogue.request.RequestMaxPlayersNumber;
 import server.control.dialogue.request.RequestPlayerName;
@@ -166,6 +167,12 @@ public class RMIClient implements ClientInt {
 	@Override
 	public void notify(Dialogue dialog) throws IOException {
 		client.sendNotify(dialog);
+	}
+
+	@Override
+	public void askConfigurationMethod() throws IOException {
+		String answer = client.requestAnswer(new RequestConfigurationMethod());
+		controller.parseConfigurationType(answer);
 	}
 
 }

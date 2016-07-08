@@ -5,12 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import client.model.ModelInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import server.model.board.Board;
+import server.model.board.city.CityConnection;
 import server.model.board.council.Council;
 import server.model.configuration.Configuration;
 import server.model.configuration.XMLFileException;
@@ -42,7 +42,7 @@ public class GameProperty implements ModelInterface {
 	@Override
 	public void initMap(int choosen) {
 		try {
-			Board b = new Board(config, choosen);
+			Board b = new Board(config, choosen, false);
 			this.map = new SimpleMap(b);
 		} catch (XMLFileException e) {
 			log.log( Level.SEVERE, e.toString(), e );
@@ -180,5 +180,12 @@ public class GameProperty implements ModelInterface {
 	
 	public ObservableList<ItemProperty> getMarket() {
 		return this.market;
+	}
+
+	@Override
+	public void setConnections(List<CityConnection> connections) {
+		for(SimpleRegion r: map.getRegions())
+			for(SimpleCity c: r.getCities())
+				c.setConnections(connections);
 	}
 }

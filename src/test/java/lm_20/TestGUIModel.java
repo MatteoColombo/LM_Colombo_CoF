@@ -36,7 +36,7 @@ public class TestGUIModel {
 		config = new Configuration();
 		game.setConfiguration(config);
 		game.initMap(3);
-		board = new Board(config, 3);
+		board = new Board(config, 3, false);
 	}
 
 	@Test

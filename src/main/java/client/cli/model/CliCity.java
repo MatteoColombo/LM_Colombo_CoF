@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import server.model.board.city.City;
+import server.model.board.city.CityConnection;
 
 /**
  * This is the simplified city used as model for the CLI
@@ -105,6 +106,13 @@ public class CliCity {
 	 */
 	public String getColor() {
 		return color;
+	}
+	
+	public void setConnection(List<CityConnection> connections){
+		this.connections.clear();
+		for(CityConnection conn: connections)
+			if(this.name.equalsIgnoreCase(conn.getFirstCity()))
+				this.connections.add(conn.getSecondCity());
 	}
 
 }

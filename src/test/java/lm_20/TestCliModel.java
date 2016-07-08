@@ -58,7 +58,7 @@ public class TestCliModel {
 		assertEquals(5, model.getRegions().get(0).getCities().size());
 		assertEquals(config,model.getConfiguration());
 		assertEquals(0,model.getMyIndex());
-		Board b= new Board(config, 1);
+		Board b= new Board(config, 1, false);
 		PermissionCard pc= new PermissionCard(b.getRegion(1).getCities());
 		model.setPermission(pc, 1, 0);
 		CliPermission[] perm=model.getRegions().get(1).getPermission();
@@ -106,7 +106,7 @@ public class TestCliModel {
 	 */
 	@Test
 	public void testCity() throws XMLFileException, ConfigurationErrorException{
-		Board b= new Board(new Configuration(),0);
+		Board b= new Board(new Configuration(),0, false);
 		CliCity city= new CliCity("Arkon", b.getRegion(0).getCities().get(0).getConnectedCities(), false,"iron");
 		assertEquals("Arkon", city.getName());
 		assertEquals(2,city.getConnections().size());
@@ -144,7 +144,7 @@ public class TestCliModel {
 		p.setName("Test");
 		p.getVictoryPoints().increaseAmount(1);
 		p.getVictoryPoints().increaseAmount(3);
-		Board b= new Board(config,0);
+		Board b= new Board(config,0, false);
 		PermissionCard card= new PermissionCard(b.getRegion(0).getCities());
 		card.setCardUsed();
 		p.getPermissionCard().add(card);

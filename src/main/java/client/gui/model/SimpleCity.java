@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import server.model.board.city.City;
+import server.model.board.city.CityConnection;
 import server.model.reward.Bonus;
 import server.model.reward.Reward;
 import util.ColorConverter;
@@ -90,5 +91,12 @@ public class SimpleCity {
 	
 	public void setHasKing(boolean hasKing){
 		this.hasKing.set(hasKing);
+	}
+	
+	public void setConnections(List<CityConnection> connections){
+		this.connections.clear();
+		for(CityConnection conn: connections)
+			if(this.name.equalsIgnoreCase(conn.getFirstCity()))
+				this.connections.add(conn.getSecondCity());
 	}
 }

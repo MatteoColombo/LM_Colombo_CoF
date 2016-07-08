@@ -307,4 +307,9 @@ public class Cli implements ViewInterface {
 		
 	}
 
+	@Override
+	public void printAskConfigurationMethod() {
+		writer.println("Which method do you want to use to configurate the game?");
+	}
+
 }

@@ -11,12 +11,12 @@ import server.model.board.council.Council;
 import server.model.board.council.CouncilorPool;
 import server.model.configuration.ConfigurationErrorException;
 import server.model.reward.RewardCity;
-
 import javax.xml.parsers.*;
 import java.awt.Color;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A class that loads the information from the XML file and generates the whole
@@ -41,6 +41,7 @@ public class MapLoader {
 	private CouncilorPool pool;
 	private List<CityConnection> connections;
 	private List<City> citiesOfMap;
+	private final static int MAXCONN = 2;
 
 	/**
 	 * Initializes the MapLoader saving the XML file and the
@@ -59,7 +60,7 @@ public class MapLoader {
 		this.regions = new ArrayList<>();
 		this.citiesOfMap = new ArrayList<>();
 		loadXML();
-		loadConnections();
+
 	}
 
 	/**
@@ -67,7 +68,7 @@ public class MapLoader {
 	 * 
 	 * @see MapLoader
 	 */
-	private void loadConnections() {
+	public void loadConnections() {
 		for (City c : citiesOfMap) {
 			addConnections(c);
 		}
@@ -282,6 +283,46 @@ public class MapLoader {
 	 */
 	public List<City> getCitiesList() {
 		return this.citiesOfMap;
+	}
+
+	public void generateConnections() {
+		Random random = new Random();
+		for (Region r : regions) {
+			for (City c : r.getCities()) {
+				int connectionsNumber=1 + random.nextInt(MAXCONN);
+				while(c.getConnectedCities().size()<connectionsNumber){
+					for(int i=-3;i<=3;i++){
+						if(i==0)
+							continue;
+						int cityIndex= r.getCities().indexOf(c);
+						if((cityIndex+i)>=0 &&(cityIndex+i)<r.getCities().size() && !c.isConnectedTo(r.getCities().get(cityIndex+i))& random.nextBoolean()){
+							c.addConnection(r.getCities().get(cityIndex + i));
+							r.getCities().get(cityIndex+i).addConnection(c);
+						}
+					}
+				}
+			
+			}
+		}
+		addRegionConnections();
+	}
+
+	private void addRegionConnections() {
+		Random r = new Random();
+		for (int i = 0; i < regions.size() - 1; i++) {
+			for (int j = 0; j < regions.get(i).getCities().size(); j++) {
+				if ((j % 2 == 1 || j == regions.get(i).getCities().size() - 1) && r.nextInt(5) < 4) {
+					int secondIndex = i * 5 + j + ((j == regions.get(i).getCities().size() - 1) ? 5 : 4);
+					regions.get(i).getCities().get(j).addConnection(citiesOfMap.get(secondIndex));
+					citiesOfMap.get(secondIndex).addConnection(regions.get(i).getCities().get(j));
+				}
+			}
+		}
+
+	}
+
+	private int countConnections(City cit) {
+		return cit.getConnectedCities().size();
 	}
 
 }

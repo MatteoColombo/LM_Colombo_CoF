@@ -55,7 +55,7 @@ import util.ColorConverter;
 public class GameController {
 
 	private static final String SOUNDTRACK = "/soundtrack/tricks-of-the-trade.mp3";
-	
+
 	// nobility scale parameters for positioning on the map
 	private static final int NOBILITY_START_X = 26;
 	private static final int NOBILITY_START_Y = 775;
@@ -69,11 +69,11 @@ public class GameController {
 	private static final String PERM = "permission";
 	private static final String SHUFFLE = "shuffle";
 	private static final String SLIDE2 = "secondarySlide";
-	
+
 	// options
 	private static final String CITY = " -city ";
 	private static final String PERMISSION = " -card ";
-	
+
 	// ausiliary status
 	private static final String DRAGK = "dragKing";
 	private static final String DRAGPOL = "dragPol";
@@ -129,11 +129,16 @@ public class GameController {
 	private Button shuffleButton;
 	@FXML
 	private Button extraButton;
-	
 	@FXML
-	private RadioButton quickSlideRadio;
+	private Button kingButton;
 	@FXML
-	private RadioButton mainSlideRadio;
+	private Button emporiumButton;
+	@FXML
+	private Button slideButton;
+	@FXML
+	private Button slide2Button;
+	@FXML
+	private Button permissionButton;
 
 	@FXML
 	private VBox opponentsBox;
@@ -159,7 +164,7 @@ public class GameController {
 
 	private Node kingOldPosition;
 	private Node kingNewPosition;
-	
+
 	private SnapshotParameters params = new SnapshotParameters();
 	private Media media;
 	private MediaPlayer mediaPlayer;
@@ -176,7 +181,7 @@ public class GameController {
 
 	@FXML
 	private void handleMute() {
-		if(mediaPlayer.isMute()) {
+		if (mediaPlayer.isMute()) {
 			mediaPlayer.setMute(false);
 			muteButton.setText("MUTE");
 		} else {
@@ -210,7 +215,7 @@ public class GameController {
 	public void launchMarketSell() {
 		mainApp.showMarket();
 	}
-	
+
 	/**
 	 * initialize the market table for buying
 	 */
@@ -241,9 +246,8 @@ public class GameController {
 		initMarketBuy();
 	}
 
-
 	@FXML
-	private void handleBuyAssistant() throws IOException {
+	private void handleAssistant() throws IOException {
 		mainApp.sendMsg("assistant");
 	}
 
@@ -253,8 +257,33 @@ public class GameController {
 	}
 
 	@FXML
-	private void handleExtraAction() throws IOException {
+	private void handleSlide() {
+		changeStatus(SLIDE);
+	}
+
+	@FXML
+	private void handleSlide2() {
+		changeStatus(SLIDE2);
+	}
+
+	@FXML
+	private void handleExtra() throws IOException {
 		mainApp.sendMsg("extra");
+	}
+
+	@FXML
+	private void handleKing() {
+		changeStatus(KING);
+	}
+
+	@FXML
+	private void handleEmporium() {
+		changeStatus(EMP);
+	}
+
+	@FXML
+	private void handlePermission() {
+		changeStatus(PERM);
 	}
 
 	@FXML
@@ -282,7 +311,7 @@ public class GameController {
 	 * {@link PlayerProperty} of the user
 	 */
 	private void initMyData() {
-		
+
 		nameLabel.setText(myData.nameProperty().get());
 		myColor.setFill(myData.getColor());
 		assistantsLabel.textProperty().bind(myData.assistantsProperty().asString());
@@ -290,9 +319,16 @@ public class GameController {
 		nobilityLabel.textProperty().bind(myData.nobilityProperty().asString());
 		victoryLabel.textProperty().bind(myData.victoryProperty().asString());
 
+		slide2Button.disableProperty().bind(myData.canNotDoSideAction());
 		assistantButton.disableProperty().bind(myData.canNotDoSideAction());
 		shuffleButton.disableProperty().bind(myData.canNotDoSideAction());
 		extraButton.disableProperty().bind(myData.canNotDoSideAction());
+		
+		kingButton.disableProperty().bind(myData.canNotDoMainAction());
+		emporiumButton.disableProperty().bind(myData.canNotDoMainAction());
+		slideButton.disableProperty().bind(myData.canNotDoMainAction());
+		permissionButton.disableProperty().bind(myData.canNotDoMainAction());
+		
 	}
 
 	private void initPoliticList() {
@@ -300,21 +336,19 @@ public class GameController {
 		politicList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 		politicList.setOnDragDetected(event -> {
-			if(gameStatus != DRAGK) {
-				resetKing();
-			}
-			gameStatus = DRAGPOL;
-			Dragboard db = politicList.startDragAndDrop(TransferMode.ANY);
+			if (PERM.equals(gameStatus) || KING.equals(gameStatus)) {
+				Dragboard db = politicList.startDragAndDrop(TransferMode.ANY);
 
-			ClipboardContent content = new ClipboardContent();
-			String buffer = "";
-			for (int i : politicList.getSelectionModel().getSelectedIndices()) {
-				buffer += " " + (i + 1);
+				ClipboardContent content = new ClipboardContent();
+				String buffer = "";
+				for (int i : politicList.getSelectionModel().getSelectedIndices()) {
+					buffer += " " + (i + 1);
+				}
+				content.putString(buffer.substring(1));
+				db.setContent(content);
+				db.setDragView(new Image(this.getClass().getResource("/simboli/politic.png").toString()));
+				event.consume();
 			}
-			content.putString(buffer.substring(1));
-			db.setContent(content);
-			db.setDragView(new Image(this.getClass().getResource("/simboli/politic.png").toString()));
-			event.consume();
 		});
 		// populate the list. the card image is set as the cell background
 		politicList.setCellFactory(column -> new ListCell<String>() {
@@ -345,16 +379,17 @@ public class GameController {
 				} else {
 					AnchorPane permissionPane = Collection.permissionCard(item);
 					setGraphic(permissionPane);
-					
+
 					// allow drag when the player want to build emporium
 					permissionPane.setOnDragDetected(event -> {
-						changeStatus(DRAGPERM);
-						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
-						ClipboardContent content = new ClipboardContent();
-						content.putString("" + (this.getIndex() + 1));
-						db.setContent(content);
-						db.setDragView(permissionPane.snapshot(params, null));
-						event.consume();
+						if (EMP.equals(gameStatus)) {
+							Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+							ClipboardContent content = new ClipboardContent();
+							content.putString("" + (this.getIndex() + 1));
+							db.setContent(content);
+							db.setDragView(permissionPane.snapshot(params, null));
+							event.consume();
+						}
 					});
 				}
 				// trigger with the special bonus "take the reward from a
@@ -411,7 +446,7 @@ public class GameController {
 				// want to build
 				// an emporium here
 				cityPane.setOnDragOver(event -> {
-					if (DRAGPERM.equals(gameStatus) || DRAGK.equals(gameStatus)) {
+					if (EMP.equals(gameStatus) || DRAGK.equals(gameStatus)) {
 						cityPane.setEffect(new Glow());
 						event.acceptTransferModes(TransferMode.MOVE);
 					}
@@ -425,9 +460,8 @@ public class GameController {
 					if (DRAGK.equals(gameStatus)) {
 						kingNewPosition = king;
 						king.setVisible(true);
-					} else if (db.hasString() && DRAGPERM.equals(gameStatus)) {
-						mainApp.sendMsg(
-								EMP + CITY + cityPane.getId() + PERMISSION + db.getString());
+					} else if (db.hasString() && EMP.equals(gameStatus)) {
+						mainApp.sendMsg(gameStatus + CITY + cityPane.getId() + PERMISSION + db.getString());
 					}
 				});
 				// trigger when a player can take the Reward from this city with
@@ -462,7 +496,7 @@ public class GameController {
 
 	private void initKing(AnchorPane cityPane, Node king) {
 		king.setOnDragDetected(event -> {
-			if(!myData.canNotDoMainAction().get() || !myData.canNotDoSideAction().get()) {
+			if (KING.equals(gameStatus)) {
 				Dragboard db = king.startDragAndDrop(TransferMode.MOVE);
 				ClipboardContent content = new ClipboardContent();
 				if (kingOldPosition == null) {
@@ -474,17 +508,18 @@ public class GameController {
 				db.setDragView(king.snapshot(params, null));
 				event.consume();
 			}
-			
+
 		});
 
 		king.setOnDragDone(event -> {
-			if(kingNewPosition != king && kingNewPosition != null) {
+			if (kingNewPosition != king && kingNewPosition != null) {
 				king.setVisible(false);
 			}
+			gameStatus = KING;
 		});
 
 		king.setOnDragOver(event -> {
-			if (DRAGPOL.equals(gameStatus)) {
+			if (KING.equals(gameStatus)) {
 				king.setEffect(new Glow());
 				event.acceptTransferModes(TransferMode.MOVE);
 			}
@@ -499,7 +534,7 @@ public class GameController {
 			Dragboard db = event.getDragboard();
 			if (db.hasString()) {
 				resetKing();
-				mainApp.sendMsg(KING + CITY + cityPane.getId() + " -politic " + db.getString());
+				mainApp.sendMsg(gameStatus + CITY + cityPane.getId() + " -politic " + db.getString());
 			}
 		});
 	}
@@ -605,18 +640,12 @@ public class GameController {
 
 			councilor.setOnDragDetected(event -> {
 				/*
-				 * activate the drag only at two condition 1) SLIDE or
-				 * SLIDE2 is the current action wanted 2) there is at
-				 * least one councilor of the selected color to drag from the
-				 * poll
+				 * activate the drag only at two condition 1) SLIDE or SLIDE2 is
+				 * the current action wanted 2) there is at least one councilor
+				 * of the selected color to drag from the poll
 				 */
-				if ((quickSlideRadio.isSelected() || mainSlideRadio.isSelected()) && (hexColor.getValue().get() > 0)) {
+				if ((SLIDE.equals(gameStatus) || SLIDE2.equals(gameStatus)) && (hexColor.getValue().get() > 0)) {
 					Dragboard db = councilor.startDragAndDrop(TransferMode.ANY);
-					if(quickSlideRadio.isSelected()) {
-						changeStatus(SLIDE2);
-					} else {
-						changeStatus(SLIDE);
-					}
 					ClipboardContent content = new ClipboardContent();
 					content.putString(councilor.getId());
 					db.setContent(content);
@@ -710,7 +739,7 @@ public class GameController {
 				Pane outerPane = (Pane) mapPane.lookup("#permit" + i + "_" + j);
 				// allow drop if a player want to buy a permission card
 				outerPane.setOnDragOver(event -> {
-					if (DRAGPOL.equals(gameStatus)) {
+					if (PERM.equals(gameStatus)) {
 						outerPane.setEffect(new Glow());
 						event.acceptTransferModes(TransferMode.MOVE);
 					}
@@ -728,8 +757,8 @@ public class GameController {
 						String region = info.substring(0, 1);
 						int cardIndex = Integer.valueOf(card) + 1;
 						int regionIndex = Integer.valueOf(region) + 1;
-						mainApp.sendMsg(PERM + " -region " + regionIndex + PERMISSION + cardIndex
-								+ " -politic " + db.getString());
+						mainApp.sendMsg(gameStatus + " -region " + regionIndex + PERMISSION + cardIndex + " -politic "
+								+ db.getString());
 					}
 				});
 

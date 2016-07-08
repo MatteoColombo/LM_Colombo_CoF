@@ -20,5 +20,5 @@ Run the server.Server.java class with no arguments
 * #### GUI Client setup ####
 Run the client.Client.java class with no arguments
 * #### ClI Client setup ####
-Run the client.Client.Java class with "cli" as argument   
+Run the client.Client.Java class with "-cli" as argument   
 (client.Client.java -cli)

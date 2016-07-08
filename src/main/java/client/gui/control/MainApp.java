@@ -340,6 +340,4 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void printAskConfigurationMethod() {
 		showConfigGame();
 	}
-
-
 }

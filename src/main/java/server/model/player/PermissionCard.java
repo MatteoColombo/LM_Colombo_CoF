@@ -151,5 +151,9 @@ public class PermissionCard implements Soldable, Serializable {
 			message += bon.getTagName().substring(0, 3).toUpperCase() + " " + bon.getAmount() + " ";
 		return message;
 	}
-
+	
+	@Override
+	public Soldable clone(){
+		return new PermissionCard(this.cities, this.reward);
+	}
 }

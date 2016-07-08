@@ -146,7 +146,10 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
-		out.writeObject(new RequestWhichItemToBuy(itemsOnSale));
+		List<OnSaleItem> clone= new ArrayList<>();
+		for(OnSaleItem item: itemsOnSale)
+			clone.add(item.clone());
+		out.writeObject(new RequestWhichItemToBuy(clone));
 		out.flush();
 		try {
 			String item = (String) in.readObject();

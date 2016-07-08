@@ -105,7 +105,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
-	public void showConfigGame(int maxplayer) {
+	public void showConfigGame() {
 
 		try {
 			Configuration clientConfig = new Configuration();
@@ -120,7 +120,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			ConfigGameController config = loader.getController();
 			config.setMainApp(this);
 			config.setMapList(maps);
-			config.setMaxPlayers(maxplayer);
 
 		} catch (IOException | ConfigurationErrorException e) {
 			log.log( Level.SEVERE, e.toString(), e );
@@ -309,12 +308,16 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void printMessage(String message) {
-		gameController.logMsg(message);
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.initOwner(primaryStage);
+		alert.setTitle("INFO");
+		alert.setHeaderText("");
+		alert.setContentText(message);
+		alert.show();
 	}
 
 	@Override
 	public void printAskPlayersNumber(int max) {
-		showConfigGame(max);
 	}
 
 	@Override
@@ -324,7 +327,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void changeStatusToNobilityBonus(String message, String status) {
-		gameController.logMsg(message + "\n" + status);
+		printMessage(message);
 		gameController.changeStatus(status);
 	}
 
@@ -335,7 +338,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void printAskConfigurationMethod() {
-		showRoom();
+		showConfigGame();
 	}
 
 

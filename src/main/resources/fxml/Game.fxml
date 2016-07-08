@@ -71,25 +71,24 @@
             <ListView fx:id="permissionList" prefHeight="186.0" prefWidth="125.0" HBox.hgrow="NEVER" />
             <GridPane layoutY="40.0" prefHeight="41.0" prefWidth="318.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="81.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="235.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="157.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="161.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="89.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="89.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="89.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="assistantButton" mnemonicParsing="false" onAction="#handleBuyAssistant" prefWidth="145.0" style="-fx-background-color: green;" text="Buy Assistant" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="shuffleButton" mnemonicParsing="false" onAction="#handleShuffle" prefWidth="145.0" style="-fx-background-color: green;" text="Shuffle Perm." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="extraButton" mnemonicParsing="false" onAction="#handleExtraAction" prefWidth="145.0" style="-fx-background-color: green;" text="Extra Action" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Label text="SLIDE" />
-                  <RadioButton fx:id="quickSlideRadio" mnemonicParsing="false" text="QUICK" textFill="WHITE" GridPane.rowIndex="2">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="slide" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="mainSlideRadio" mnemonicParsing="false" text="MAIN" textFill="WHITE" toggleGroup="$slide" GridPane.rowIndex="1" />
+                  <Button fx:id="assistantButton" mnemonicParsing="false" onAction="#handleAssistant" prefWidth="145.0" style="-fx-background-color: green;" text="Buy Assistant" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="shuffleButton" mnemonicParsing="false" onAction="#handleShuffle" prefWidth="145.0" text="Shuffle Perm." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="extraButton" mnemonicParsing="false" onAction="#handleExtra" prefWidth="145.0" style="-fx-background-color: green;" text="Extra Action" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button fx:id="kingButton" mnemonicParsing="false" onAction="#handleKing" prefWidth="145.0" text="Build With K" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button fx:id="emporiumButton" mnemonicParsing="false" onAction="#handleEmporium" prefWidth="145.0" text="Build Emporium" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="slide2Button" mnemonicParsing="false" onAction="#handleSlide2" prefWidth="145.0" text="Second Slide" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="slideButton" mnemonicParsing="false" onAction="#handleSlide" prefWidth="145.0" text="Slide Council" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="permissionButton" mnemonicParsing="false" onAction="#handlePermission" prefWidth="145.0" text="Buy Permission" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                </children>
                <HBox.margin>
                   <Insets left="10.0" />
@@ -113,16 +112,11 @@
       </HBox>
    </bottom>
    <right>
-      <VBox prefHeight="711.0" prefWidth="214.0" styleClass="background" BorderPane.alignment="CENTER">
-         <children>
-            <TextArea fx:id="logger" layoutX="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="163.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <ScrollPane hbarPolicy="NEVER" prefHeight="551.0" prefWidth="214.0" style="-fx-background: transparent;" styleClass="background" vbarPolicy="NEVER">
-               <content>
-                  <VBox fx:id="opponentsBox" prefWidth="214.0" styleClass="background" />
-               </content>
-            </ScrollPane>
-         </children>
-      </VBox>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="551.0" prefWidth="214.0" style="-fx-background: transparent;" styleClass="background" vbarPolicy="NEVER">
+         <content>
+            <VBox fx:id="opponentsBox" prefWidth="214.0" styleClass="background" />
+         </content>
+      </ScrollPane>
    </right>
    <center>
       <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="background" BorderPane.alignment="CENTER">

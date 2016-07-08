@@ -164,7 +164,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	
 	@Override
 	public void showMarket() {
-		
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/fxml/Market.fxml"));
@@ -333,7 +332,10 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 
 	@Override
 	public void disconnected() {
-		//Nothing to do with the GUI
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.initOwner(primaryStage);
+		alert.setHeaderText("You got Disconnected");
+		alert.show();
 	}
 
 	@Override

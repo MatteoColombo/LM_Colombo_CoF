@@ -79,13 +79,14 @@ public class GameProperty implements ModelInterface {
 	public void isYourTurn() {
 		players.get(myIndex).canNotDoMainAction().set(false);
 		players.get(myIndex).canNotDoSideAction().set(false);
-		market.clear();
+		players.get(myIndex).isNotMyTurn().set(false);
 	}
 
 	@Override
 	public void yourTurnEnded() {
 		players.get(myIndex).canNotDoMainAction().set(true);
 		players.get(myIndex).canNotDoSideAction().set(true);
+		players.get(myIndex).isNotMyTurn().set(true);
 	}
 
 	@Override
@@ -172,6 +173,7 @@ public class GameProperty implements ModelInterface {
 	
 	@Override
 	public void setMarket(List<OnSaleItem> items) {
+		players.get(myIndex).isNotMyTurn().set(false);
 		market.clear();
 		for(OnSaleItem item: items) {
 			market.add(new ItemProperty(item));
@@ -187,5 +189,11 @@ public class GameProperty implements ModelInterface {
 		for(SimpleRegion r: map.getRegions())
 			for(SimpleCity c: r.getCities())
 				c.setConnections(connections);
+	}
+
+	@Override
+	public void endMarket() {
+		market.clear();
+		players.get(myIndex).isNotMyTurn().set(true);
 	}
 }

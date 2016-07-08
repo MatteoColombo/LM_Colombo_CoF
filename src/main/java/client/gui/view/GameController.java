@@ -76,8 +76,6 @@ public class GameController {
 
 	// ausiliary status
 	private static final String DRAGK = "dragKing";
-	private static final String DRAGPOL = "dragPol";
-	private static final String DRAGPERM = "dragPerm";
 
 	private MainApp mainApp;
 	private PlayerProperty myData;
@@ -88,6 +86,9 @@ public class GameController {
 	@FXML
 	private Rectangle myColor;
 
+	@FXML
+	private Button passButton;
+	
 	@FXML
 	private AnchorPane mapPane;
 
@@ -195,7 +196,7 @@ public class GameController {
 	 * 
 	 * @param newStatus
 	 */
-	public void changeStatus(String newStatus) {
+	public void changeStatus(String newStatus) {		
 		resetKing();
 		gameStatus = newStatus;
 	}
@@ -209,13 +210,10 @@ public class GameController {
 		logger.appendText(msg + "\n");
 	}
 
-	/**
-	 * show the sell window
-	 */
-	public void launchMarketSell() {
-		mainApp.showMarket();
+	public void setPassButton(boolean value) {
+		passButton.setDisable(value);
 	}
-
+	
 	/**
 	 * initialize the market table for buying
 	 */
@@ -288,13 +286,8 @@ public class GameController {
 
 	@FXML
 	private void handlePass() throws IOException {
-		changeStatus("");
+		changeStatus("wait");
 		mainApp.sendMsg("end");
-	}
-
-	@FXML
-	private void showMarket() {
-		mainApp.showMarket();
 	}
 
 	private void resetKing() {
@@ -327,8 +320,9 @@ public class GameController {
 		kingButton.disableProperty().bind(myData.canNotDoMainAction());
 		emporiumButton.disableProperty().bind(myData.canNotDoMainAction());
 		slideButton.disableProperty().bind(myData.canNotDoMainAction());
-		permissionButton.disableProperty().bind(myData.canNotDoMainAction());
+		permissionButton.disableProperty().bind(myData.canNotDoMainAction());	
 		
+		passButton.disableProperty().bind(myData.isNotMyTurn());
 	}
 
 	private void initPoliticList() {

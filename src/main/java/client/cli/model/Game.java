@@ -262,4 +262,9 @@ public class Game implements ModelInterface {
 			for(CliCity c: r.getCities())
 				c.setConnection(connections);
 	}
+
+	@Override
+	public void endMarket() {
+		// not implemented in cli
+	}
 }

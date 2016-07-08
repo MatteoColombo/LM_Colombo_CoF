@@ -52,12 +52,14 @@ public class BoardRegionReward extends BoardReward {
 	public Region getBRKey() {
 		return this.bRegionRewardKey;
 	}
-	
+
 	/**
+	 * Returns a new copy of this BoardRegionReward.
 	 * 
-	 * @return a new copy
+	 * @return a new copy of this BoardRegionReward
+	 * @see BoardRegionReward
 	 */
-	public BoardRegionReward newCopy(){
+	public BoardRegionReward newCopy() {
 		return new BoardRegionReward(bRegionRewardKey, this.getBRBonus().getAmount());
 	}
 }

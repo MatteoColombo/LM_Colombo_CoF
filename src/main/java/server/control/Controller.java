@@ -154,7 +154,7 @@ public class Controller implements GameListener {
 		}
 		try {
 			int index = Integer.parseInt(itemIndex);
-			if (index > items.size())
+			if (index > items.size() || index <1)
 				throw new IllegalActionException("Illegal index");
 			if (playersMap.get(client).getCoins().getAmount() < items.get(index - 1).getPrice())
 				throw new IllegalActionException("Not enough money");

@@ -20,7 +20,7 @@ public class Client {
 	private static CommandLineParser parser = new DefaultParser();
 	private static Options opt = new Options().addOption(CLI_OPT, false, "");
 	private static final Logger log= Logger.getLogger( Client.class.getName() );
-
+	
 	
 	private Client() {
 	}

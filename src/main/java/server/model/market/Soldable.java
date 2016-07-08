@@ -8,7 +8,6 @@ import server.model.configuration.Configuration;
  * @author Matteo Colombo
  *
  */
-@FunctionalInterface
 public interface Soldable extends Serializable {
 	
 	/**
@@ -18,4 +17,5 @@ public interface Soldable extends Serializable {
 	 */
 	public String getMarketMessage(Configuration config);
 	
+	public Soldable clone();
 }

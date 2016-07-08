@@ -252,7 +252,7 @@ public class Game implements ModelInterface {
 	@Override
 	public void setMarket(List<OnSaleItem> items) {
 		view.printMessage("Choose what item you want to buy:");
-		for (int i = 1; i < items.size(); i++)
+		for (int i = 1; i <= items.size(); i++)
 			view.printMessage(i + ". " + items.get(i - 1).printedMessage(config));
 	}
 

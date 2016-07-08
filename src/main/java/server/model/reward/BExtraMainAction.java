@@ -1,17 +1,28 @@
 package server.model.reward;
 
+import server.model.action.Action;
 import server.model.player.Player;
 
 /**
- * This bonus allows the player to do one main action more
+ * A Bonus that assigns an extra MainAction to the Player who is awarded with
+ * it.
+ * 
+ * @see Action
+ * @see Bonus
+ * @see Player
  */
 public class BExtraMainAction extends Bonus {
 
 	private static final long serialVersionUID = 2652339487323746030L;
 	private static final int VALUE = 99;
 	private static final String NAME = "extra";
+
 	/**
-	 * Sets to one the number of extra main action awarded
+	 * Sets to one the number of {@link Action MainActions} awarded.
+	 * 
+	 * @param amount
+	 *            the MainAction that will be awarded
+	 * @see BExtraMainAction
 	 */
 	public BExtraMainAction() {
 		super(1);
@@ -31,7 +42,7 @@ public class BExtraMainAction extends Bonus {
 	public void assignBonusTo(Player p) {
 		p.increaseMainAction();
 	}
-	
+
 	@Override
 	public String getTagName() {
 		return NAME;

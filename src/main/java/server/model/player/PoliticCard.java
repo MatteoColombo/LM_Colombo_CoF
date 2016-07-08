@@ -111,5 +111,10 @@ public class PoliticCard implements Serializable, Soldable {
 	public String getMarketMessage(Configuration config) {
 		return "politic " + (this.isMultipleColor ? "multi " : config.getColorsTranslationReverse().get(color) + " ");
 	}
+	
+	@Override
+	public Soldable clone(){
+		return new PoliticCard(this.color);
+	}
 
 }

@@ -1,11 +1,13 @@
 package server.control.dialogue.request;
 
 import java.util.List;
+
+import client.control.ViewInterface;
 import client.model.ModelInterface;
 import server.control.dialogue.update.Update;
 import server.model.market.OnSaleItem;
 
-public class RequestWhichItemToBuy implements Update{
+public class RequestWhichItemToBuy implements Update, Request{
 
 	private static final long serialVersionUID = -7887621821680475222L;
 	private List<OnSaleItem> items;
@@ -16,8 +18,12 @@ public class RequestWhichItemToBuy implements Update{
 
 	@Override
 	public void execute(ModelInterface model) {
-		model.setMarket(items);
-		
+		model.setMarket(items);		
+	}
+
+	@Override
+	public void execute(ViewInterface view) {
+		// We don't need to to any action here
 	}
 
 }

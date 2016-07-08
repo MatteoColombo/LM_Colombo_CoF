@@ -1,6 +1,5 @@
 package client;
 
-import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,16 +13,16 @@ import org.apache.commons.cli.ParseException;
 import client.cli.control.CliController;
 import client.gui.control.MainApp;
 
-public class WorkingClient {
+public class Client {
 
 	private static final String CLI_OPT = "cli";
 	
 	private static CommandLineParser parser = new DefaultParser();
 	private static Options opt = new Options().addOption(CLI_OPT, false, "");
-	private static final Logger log= Logger.getLogger( WorkingClient.class.getName() );
+	private static final Logger log= Logger.getLogger( Client.class.getName() );
 
 	
-	private WorkingClient() {
+	private Client() {
 	}
 
 	public static void main(String[] args) {

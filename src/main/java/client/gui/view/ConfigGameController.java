@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import server.model.configuration.ConfigurationErrorException;
 import server.model.configuration.XMLFileException;
 
@@ -22,11 +23,18 @@ public class ConfigGameController {
 	@FXML private TableView<StringProperty> mapTable;
 	@FXML private TableColumn<StringProperty, String> mapColumn;
 	@FXML private TextField playersNumber;
+	@FXML private Label maxLabel;
 	
 	private ObservableList<StringProperty> mapList;
 	
 	private MainApp mainApp;
 	
+	@FXML 
+	private void initialize() {
+		mapColumn.setCellValueFactory(cell -> cell.getValue());
+		Collection.addNumericRestriction(playersNumber);
+	}
+
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
@@ -39,10 +47,8 @@ public class ConfigGameController {
 		mapTable.setItems(mapList);
 	}
 	
-	@FXML 
-	private void initialize() {
-		mapColumn.setCellValueFactory(cell -> cell.getValue());
-		Collection.addNumericRestriction(playersNumber);
+	public void setMaxPlayers(int max) {
+		maxLabel.setText("(max " + max + ")");
 	}
 	
 	@FXML 
@@ -64,6 +70,7 @@ public class ConfigGameController {
 			alert.show();
 		} else {
 			mainApp.getLocalModel().initMap(mapTable.getSelectionModel().getSelectedIndex());
+			mainApp.sendMsg("manual");
 			mainApp.sendMsg(playersNumber.getText());
 			mainApp.sendMsg(String.valueOf(mapTable.getSelectionModel().getSelectedIndex()+1).toString());
 		}

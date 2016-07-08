@@ -6,8 +6,8 @@ import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.util.Scanner;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import client.cli.model.Game;
 import client.cli.view.Cli;
 import client.control.Controller;
@@ -28,7 +28,7 @@ public class CliController implements Runnable, Controller {
 	private ServerManager serverManager;
 	private KeyboardListener keyboardListener;
 	private boolean canWrite;
-	private Logger logger = Logger.getGlobal();
+	private Logger logger;
 	private Game model;
 	private Configuration config;
 	
@@ -37,6 +37,8 @@ public class CliController implements Runnable, Controller {
 	 * @param sc the scanner
 	 */
 	public CliController(Scanner sc) {
+		logger= Logger.getLogger(CliController.class);
+		PropertyConfigurator.configure("src/main/resources/logger");
 		try {
 			config= new Configuration();
 			view = new Cli(config);
@@ -46,7 +48,8 @@ public class CliController implements Runnable, Controller {
 			keyboard = sc;
 			this.canWrite = false;
 		} catch (ConfigurationErrorException e) {
-			logger.log(Level.SEVERE, "There is an error with the configuration file!", e);
+			logger.error(e);
+			view.printMessage("There is an error with the configuration file!");
 		}	
 	}
 	/**
@@ -84,7 +87,8 @@ public class CliController implements Runnable, Controller {
 			try {
 				serverManager.publishMessage(message);
 			} catch (IOException e) {
-				logger.log(Level.SEVERE, "Connection lost, the client will terminate", e);
+				logger.error(e);
+				view.printMessage("Connection lost, the client will terminate");
 				return;
 			}
 
@@ -103,7 +107,8 @@ public class CliController implements Runnable, Controller {
 				view.showGetConnectionType();
 				connectionType = Integer.parseInt(keyboard.nextLine());
 			} catch (NumberFormatException e) {
-				logger.log(Level.SEVERE, "Error, you didn't insert a number",e);
+				logger.error(e);
+				view.printMessage("Error, you didn't insert a number");
 			}
 		} while (connectionType != 1 && connectionType != 2);
 		try {
@@ -127,12 +132,13 @@ public class CliController implements Runnable, Controller {
 			}
 
 		} catch (IOException | NotBoundException e) {
-			logger.log(Level.SEVERE, "Connection problem, the application will terminate", e);
+			logger.error(e);
 			disconnected();
 		}
 	}
 	@Override
 	public void disconnected() {
+		view.printMessage("Connection lost, the client will terminate");
 		System.exit(0);
 	}
 }

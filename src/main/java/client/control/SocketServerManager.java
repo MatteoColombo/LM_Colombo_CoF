@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.*;
 
 import server.control.dialogue.Dialogue;
 
@@ -13,9 +13,11 @@ public class SocketServerManager extends Thread implements ServerManager {
 	private Controller controller;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
-	private Logger logger= Logger.getGlobal();
+	private Logger logger;
 	private Socket server;
 	public SocketServerManager(Socket server, Controller controller) throws IOException {
+		logger= Logger.getLogger(SocketServerManager.class);
+		PropertyConfigurator.configure("src/main/resources/logger");
 		this.controller = controller;
 		this.server=server;
 		this.out = new ObjectOutputStream(server.getOutputStream());
@@ -36,10 +38,10 @@ public class SocketServerManager extends Thread implements ServerManager {
 				controller.parseDialogue(dialogue);
 			}
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Connection lost, the client will terminate", e);
+			logger.error(e);
 			controller.disconnected();
 			} catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, "Data corrupted, the client will terminate", e);
+			logger.error(e);
 		} 
 	}
 
@@ -52,7 +54,7 @@ public class SocketServerManager extends Thread implements ServerManager {
 			server.close();
 			}
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Error while closing connection", e);
+			logger.error(e);
 		}
 	}
 

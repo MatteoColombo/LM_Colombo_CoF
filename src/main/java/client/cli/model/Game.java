@@ -17,6 +17,7 @@ import server.model.board.Region;
 import server.model.board.city.City;
 import server.model.board.city.CityConnection;
 import server.model.board.council.Council;
+import server.model.board.nobility.NobilityTrack;
 import server.model.configuration.Configuration;
 import server.model.configuration.XMLFileException;
 import server.model.market.OnSaleItem;
@@ -44,6 +45,7 @@ public class Game implements ModelInterface {
 	private Map<String, Integer> colorReward;
 	private List<String> kingCouncil;
 	private Logger logger = Logger.getGlobal();
+	private List<CliNobility> nobilityTrack;
 
 	/**
 	 * In
@@ -70,12 +72,29 @@ public class Game implements ModelInterface {
 							config.getCityColor().get(c.getColor())));
 				regions.add(new CliRegion(regions.size(), cities, config.getNumberDisclosedCards()));
 				setBoardReward(board);
+				loadNobilityTrack(board);
 			}
 		} catch (XMLFileException e) {
 			logger.log(Level.SEVERE, "There is an error with the configuration, please fix it!", e);
 		}
 	}
-
+	private void loadNobilityTrack(Board board){
+		nobilityTrack= new ArrayList<>();
+		NobilityTrack nob= board.getNobleTrack();
+		List<Reward> rew = nob.getTrack();
+		for(int i=0; i<rew.size();i++){
+			if(rew.get(i)==null)
+				nobilityTrack.add(null);
+			else{
+				List<Bonus> bonus= rew.get(i).getGeneratedRewards();
+				List<CliBonus> cliBonuses= new ArrayList<>();
+				for(Bonus b: bonus)
+					cliBonuses.add(new CliBonus(b.getAmount(), b.getTagName()));
+				nobilityTrack.add(new CliNobility(cliBonuses));
+			}
+				
+		}
+	}
 	/**
 	 * Sets the board rewards, it calls the method which is used to update them
 	 * 

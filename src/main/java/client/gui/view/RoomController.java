@@ -22,7 +22,6 @@ public class RoomController {
 	}
 	
 	@FXML private void handleDisconnect() {
-		// TODO complete
 		mainApp.showLogin();
 	}
 }

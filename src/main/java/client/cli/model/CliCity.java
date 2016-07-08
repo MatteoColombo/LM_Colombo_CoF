@@ -33,6 +33,7 @@ public class CliCity {
 		this.hasKing = hasKing;
 		this.emporiums= new ArrayList<>();
 		this.color=color;
+		this.rewards= new ArrayList<>();
 	}
 
 	/**

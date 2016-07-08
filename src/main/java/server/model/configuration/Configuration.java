@@ -67,7 +67,7 @@ public class Configuration {
 	private static final String MAPPATH = "/config/map/";
 	private static final String SERVERPATH = "/config/server/";
 	private static final String COLORREWARDPATH = "/config/city/reward/";
-	private static final String BOARDPATH = "/config/board/";
+	private static final String BOARDPATH = "/config/board/value";
 	private static final String CITYCOLORPATH = "/config/citycolor/color/";
 	
 	/**
@@ -183,7 +183,7 @@ public class Configuration {
 
 	private void loadBoardRewards(XPath xpath, Document xmlDoc) throws XPathExpressionException {
 		boardRewards = new ArrayList<>();
-		NodeList list = (NodeList) xpath.compile(BOARDPATH + "value").evaluate(xmlDoc, XPathConstants.NODESET);
+		NodeList list = (NodeList) xpath.compile(BOARDPATH).evaluate(xmlDoc, XPathConstants.NODESET);
 		for (int i = 0; i < list.getLength(); i++)
 			boardRewards.add(Integer.parseInt(list.item(i).getFirstChild().getNodeValue()));
 	}

@@ -111,7 +111,7 @@ public class Game implements ModelInterface {
 		for (Color c : council.getCouncilorsColor()) {
 			stringCouncil.add(config.getColorsTranslationReverse().get(c));
 		}
-		if (index == -1)
+		if (index == -1	)
 			this.kingCouncil = stringCouncil;
 		else
 			this.regions.get(index).setCouncil(stringCouncil);
@@ -123,9 +123,12 @@ public class Game implements ModelInterface {
 		for (CliRegion r : regions) {
 			for (CliCity c : r.getCities()) {
 				List<CliBonus> rewards = new ArrayList<>();
-				if (!c.isHasKing())
-					for (Bonus b : bonus.get(i).getGeneratedRewards())
-						rewards.add(new CliBonus(b.getAmount(), b.getTagName()));
+				if (c.isHasKing()) {
+					i++;
+					continue;
+				}
+				for (Bonus b : bonus.get(i).getGeneratedRewards())
+					rewards.add(new CliBonus(b.getAmount(), b.getTagName()));
 				c.setBonus(rewards);
 				i++;
 			}
@@ -258,8 +261,8 @@ public class Game implements ModelInterface {
 
 	@Override
 	public void setConnections(List<CityConnection> connections) {
-		for(CliRegion r: regions)
-			for(CliCity c: r.getCities())
+		for (CliRegion r : regions)
+			for (CliCity c : r.getCities())
 				c.setConnection(connections);
 	}
 

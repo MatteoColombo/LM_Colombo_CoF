@@ -6,7 +6,6 @@ public class KeyboardListener extends Thread {
 
 	private Scanner keyboard;
 	private CliController controller;
-	private boolean close;
 
 	/**
 	 * Create a new Keyboard listener
@@ -19,7 +18,6 @@ public class KeyboardListener extends Thread {
 	public KeyboardListener(CliController controller, Scanner keyboard) {
 		this.keyboard = keyboard;
 		this.controller = controller;
-		close = false;
 	}
 
 	@Override
@@ -27,14 +25,8 @@ public class KeyboardListener extends Thread {
 		String message = "";
 		while (!"quit".equals(message)) {
 			message = keyboard.nextLine();
-			if(!close)
-				controller.parseKeyboardMessage(message);
+			controller.parseKeyboardMessage(message);
 		}
 		keyboard.close();
-	}
-
-	public void setStop() {
-		this.close=true;
-		this.keyboard.close();
 	}
 }

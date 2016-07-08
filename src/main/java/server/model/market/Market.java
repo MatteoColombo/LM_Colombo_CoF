@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import server.control.dialogue.notify.NotifyMarketSellStarted;
-import server.control.dialogue.update.NotifyMarketEnded;
+import server.control.dialogue.update.NotifyMarketEnded2;
 import server.model.player.Assistants;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
@@ -100,7 +100,7 @@ public class Market {
 		
 		for(Player player : players) {
 			try {
-				player.getClient().notify(new NotifyMarketEnded());
+				player.getClient().notify(new NotifyMarketEnded2());
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, e.getMessage(), e);
 				player.setSuspension(true);

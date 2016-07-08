@@ -133,9 +133,6 @@ public class Board {
 			throw new XMLFileException(mxfe);
 		}
 		try {
-			if(randomConfig)
-				nl= new NobilityLoader();
-			else
 				nl = new NobilityLoader(nobilityPath);
 		} catch (TrackXMLFileException txfe) {
 			throw new XMLFileException(txfe);

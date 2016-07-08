@@ -1,6 +1,8 @@
 package client.gui.view;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import client.gui.control.MainApp;
@@ -42,7 +44,8 @@ public class ConfigGameController {
 	public void setMapList(List<String> maps) {
 		mapList = FXCollections.observableArrayList();
 		for(String map: maps) {
-			mapList.add(new SimpleStringProperty(map));
+			Path p = Paths.get(map);
+			mapList.add(new SimpleStringProperty(p.getFileName().toString()));
 		}
 		mapTable.setItems(mapList);
 	}

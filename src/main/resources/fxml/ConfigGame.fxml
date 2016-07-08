@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
@@ -9,9 +10,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.view.ConfigGameController">
+<AnchorPane prefHeight="299.0" prefWidth="471.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.view.ConfigGameController">
    <children>
-      <SplitPane dividerPositions="0.3213166144200627" layoutX="238.0" layoutY="126.0" prefHeight="480.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.3333333333333333" layoutX="238.0" layoutY="126.0" prefHeight="480.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -24,18 +25,19 @@
                      </columnResizePolicy>
                   </TableView>
                </children></AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="225.0" styleClass="background">
                <children>
-                  <TextField fx:id="playersNumber" layoutX="176.0" layoutY="10.0" maxHeight="0.0" maxWidth="50.0" prefWidth="50.0" AnchorPane.leftAnchor="176.0" AnchorPane.topAnchor="10.0" />
+                  <TextField fx:id="playersNumber" layoutX="178.0" layoutY="10.0" maxHeight="0.0" maxWidth="50.0" prefWidth="50.0" AnchorPane.leftAnchor="178.0" AnchorPane.topAnchor="10.0" />
                   <Label layoutX="113.0" layoutY="15.0" text="Number of players:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="15.0" />
-                  <Separator layoutY="100.0" prefHeight="3.0" prefWidth="429.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
-                  <Button layoutX="316.0" layoutY="10.0" mnemonicParsing="false" onAction="#handlePlay" text="PLAY" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <Button layoutX="74.0" layoutY="60.0" mnemonicParsing="false" onAction="#handlePlay" prefHeight="46.0" prefWidth="157.0" text="PLAY" AnchorPane.leftAnchor="74.0" AnchorPane.topAnchor="60.0">
                      <font>
                         <Font name="Courier Bold" size="18.0" />
                      </font>
                   </Button>
-                  <Button layoutX="262.0" layoutY="55.0" mnemonicParsing="false" onAction="#handlePlayRandom" prefHeight="31.0" prefWidth="157.0" style="-fx-background-color: crimson;" text="PLAY RANDOM" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
-                  <Label fx:id="maxLabel" layoutX="235.0" layoutY="17.0" text="(max 10)" AnchorPane.leftAnchor="235.0" />
+                  <Button layoutX="47.0" layoutY="184.0" mnemonicParsing="false" onAction="#handlePlayRandom" prefHeight="46.0" prefWidth="203.0" style="-fx-background-color: crimson;" text="PLAY RANDOM" AnchorPane.leftAnchor="47.0" AnchorPane.topAnchor="184.0" />
+                  <Label fx:id="maxLabel" layoutX="239.0" layoutY="15.0" text="(max 10)" AnchorPane.leftAnchor="239.0" />
+                  <Label layoutX="44.0" layoutY="154.0" text="No configuration needed!" AnchorPane.leftAnchor="44.0" />
+                  <Separator layoutY="124.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children></AnchorPane>
         </items>
       </SplitPane>

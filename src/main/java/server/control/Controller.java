@@ -133,9 +133,7 @@ public class Controller implements GameListener {
 		} catch (IllegalActionException e) {
 			logger.log(Level.WARNING, e.getMessage(), e);
 			client.notifyIllegalAction(e);
-			return;
 		}
-
 	}
 
 	/**

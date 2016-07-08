@@ -61,4 +61,14 @@ public class OnSaleItem implements Serializable{
 	public String printedMessage(Configuration config){
 		return item.getMarketMessage(config)+" |  price: "+price+" | owner: "+owner.getName();
 	}
+	
+	private OnSaleItem(OnSaleItem item){
+		this.item=item.item.clone();
+		this.owner=item.owner.getClientCopy();
+		this.price=item.price;
+	}
+	
+	public OnSaleItem clone(){
+		return new OnSaleItem(this);
+	}
 }

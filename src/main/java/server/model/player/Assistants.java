@@ -83,5 +83,10 @@ public class Assistants implements Serializable, Soldable {
 	public String getMarketMessage(Configuration config) {
 		return "Assistant: " + amount + " ";
 	}
+	
+	@Override
+	public Soldable clone(){
+		return new Assistants(this.getAmount());
+	}
 
 }

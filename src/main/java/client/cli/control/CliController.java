@@ -130,8 +130,6 @@ public class CliController implements Runnable, Controller {
 			logger.log(Level.SEVERE, "Connection problem, the application will terminate", e);
 			disconnected();
 		}
-		System.out.println("keyboard: " + keyboardListener.isAlive());
-		System.out.println("Working client is gone");
 	}
 	@Override
 	public void disconnected() {

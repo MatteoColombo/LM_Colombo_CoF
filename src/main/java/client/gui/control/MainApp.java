@@ -299,8 +299,13 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	}
 
 	@Override
-	public void printAskPlayersNumber(int max) {
+	public void printAskConfigurationMethod() {
 		showConfigGame();
+	}
+	
+	@Override
+	public void printAskPlayersNumber(int max) {
+		//not used
 	}
 
 	@Override
@@ -318,5 +323,6 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void disconnected() {
 		//Nothing to do with the GUI
 	}
+
 
 }

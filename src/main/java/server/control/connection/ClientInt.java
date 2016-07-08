@@ -115,4 +115,6 @@ public interface ClientInt {
 	 */
 	public void askSelectFreePermissionCard() throws IOException;
 	
+	public void askConfigurationMethod() throws IOException;
+	
 }

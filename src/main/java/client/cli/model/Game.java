@@ -15,6 +15,7 @@ import server.model.board.Board;
 import server.model.board.BoardRewardsManager;
 import server.model.board.Region;
 import server.model.board.city.City;
+import server.model.board.city.CityConnection;
 import server.model.board.council.Council;
 import server.model.configuration.Configuration;
 import server.model.configuration.XMLFileException;
@@ -61,7 +62,7 @@ public class Game implements ModelInterface {
 	public void initMap(int choosen) {
 		Board board;
 		try {
-			board = new Board(config, choosen);
+			board = new Board(config, choosen, false);
 			for (Region r : board.getRegions()) {
 				List<CliCity> cities = new ArrayList<>();
 				for (City c : r.getCities())
@@ -253,5 +254,12 @@ public class Game implements ModelInterface {
 		view.printMessage("Choose what item you want to buy:");
 		for (int i = 1; i < items.size(); i++)
 			view.printMessage(i + ". " + items.get(i - 1).printedMessage(config));
+	}
+
+	@Override
+	public void setConnections(List<CityConnection> connections) {
+		for(CliRegion r: regions)
+			for(CliCity c: r.getCities())
+				c.setConnection(connections);
 	}
 }

@@ -2,6 +2,7 @@ package client.model;
 
 import java.util.List;
 
+import server.model.board.city.CityConnection;
 import server.model.board.council.Council;
 import server.model.configuration.Configuration;
 import server.model.market.OnSaleItem;
@@ -104,5 +105,7 @@ public interface ModelInterface {
 			List<BoardRegionReward> regionReward);
 	
 	public void setMarket(List<OnSaleItem> items);
+	
+	public void setConnections(List<CityConnection> connections);
 }
 

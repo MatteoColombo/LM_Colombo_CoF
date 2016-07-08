@@ -39,7 +39,7 @@ public class TestActionBuilder {
 	@Before
 	public void setUp() throws Exception {
 		config = new Configuration();
-		board = new Board(config, 0);
+		board = new Board(config, 0,false);
 		NobilityTrack track = new NobilityTrack(
 				new NobilityLoader(config.getNobility()).getNobilityTrack());
 		colors = new ArrayList<>();

@@ -27,7 +27,7 @@ import server.model.player.Player;
  * @author Matteo Colombo
  *
  */
-public class Game extends Thread  {
+public class Game extends Thread {
 	private List<Player> players;
 	private Board gameBoard;
 	private TurnManager turnManager;
@@ -40,6 +40,7 @@ public class Game extends Thread  {
 	private Logger logger = Logger.getGlobal();
 	private static final String SERVERNAME = "_Server_";
 	private List<GameListener> listeners;
+	private boolean randomConfig;
 
 	/**
 	 * Instantiates some objects and saves the configuration
@@ -55,7 +56,7 @@ public class Game extends Thread  {
 		this.players = new ArrayList<>();
 		this.maxNumberOfPlayers = config.getMaxNumberOfPlayer();
 		this.initialClient = initialClient;
-		listeners= new ArrayList<>();
+		listeners = new ArrayList<>();
 	}
 
 	/**
@@ -67,12 +68,14 @@ public class Game extends Thread  {
 	 */
 	public void configGame() throws ConfigurationErrorException {
 		try {
-			initialClient.askConfiguration(maxNumberOfPlayers);
+			initialClient.askConfigurationMethod();
+			if(!randomConfig)
+				initialClient.askConfiguration(maxNumberOfPlayers);
 		} catch (IOException ioe) {
 			throw new ConfigurationErrorException(ioe);
 		}
 		try {
-			setBoard();
+			gameBoard = new Board(config, choosenMap, randomConfig);
 		} catch (XMLFileException e) {
 			throw new ConfigurationErrorException(e);
 		}
@@ -139,24 +142,24 @@ public class Game extends Thread  {
 		publishWinner();
 		cleanUp();
 	}
-	
+
 	/**
 	 * Removes the references and notifies the listeners
 	 */
-	public void cleanUp(){
-		for(Player p:players)
+	public void cleanUp() {
+		for (Player p : players)
 			p.removeClient();
-		this.gameBoard=null;
-		this.turnManager=null;
+		this.gameBoard = null;
+		this.turnManager = null;
 		this.players.clear();
-		this.players=null;
-		this.config=null;
-		this.market=null;
-		this.logger=null;
-		for(GameListener listener: listeners)
+		this.players = null;
+		this.config = null;
+		this.market = null;
+		this.logger = null;
+		for (GameListener listener : listeners)
 			listener.gameEnded(this);
 		listeners.clear();
-		listeners=null;
+		listeners = null;
 	}
 
 	/**
@@ -383,11 +386,11 @@ public class Game extends Thread  {
 			}
 	}
 
-	public void addListener(GameListener listener){
+	public void addListener(GameListener listener) {
 		this.listeners.add(listener);
 	}
-	public void setBoard() throws XMLFileException{
-		this.gameBoard= new Board(config, choosenMap);
-	
+
+	public void setConfigurationType(boolean randomConfig) {
+		this.randomConfig = randomConfig;
 	}
 }

@@ -24,6 +24,7 @@ import server.control.dialogue.update.UpdateCouncil;
 import server.control.dialogue.update.UpdateEmporiumBuilt;
 import server.control.dialogue.update.UpdateRegionPermission;
 import server.control.dialogue.update.UpdateSendCityBonus;
+import server.control.dialogue.update.UpdateSetConnections;
 import server.model.Game;
 import server.model.GameListener;
 import server.model.TurnManager;
@@ -31,6 +32,7 @@ import server.model.action.IllegalActionException;
 import server.model.board.BoardRewardsManager;
 import server.model.board.Region;
 import server.model.board.city.City;
+import server.model.board.city.CityConnection;
 import server.model.board.council.Council;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
@@ -192,19 +194,19 @@ public class Controller implements GameListener {
 	 * @throws ConfigurationErrorException
 	 */
 	public void configGame() throws ConfigurationErrorException {
-		if (config.canBeConfigured()) {
-			game.configGame();
-		} else {
-			Random r = new Random();
-			game.setChoosenMap(r.nextInt(config.getMaps().size()));
-			game.setMaxNumberOfPlayers(2 + r.nextInt(config.getMaxNumberOfPlayer() - 1));
-			try {
-				game.setBoard();
-			} catch (XMLFileException e) {
-				logger.log(Level.SEVERE, e.getMessage(),e);
-			}
-		}
+		game.configGame();
 		Server.acceptPlayers(game);
+	}
+
+	public void parseConfigurationType(String message) {
+		boolean choice = !"manual".equalsIgnoreCase(message);
+		if (choice) {
+			Random r = new Random(System.nanoTime());
+			game.setMaxNumberOfPlayers(2 + r.nextInt(config.getMaxNumberOfPlayer() - 2));
+			this.gameMap = r.nextInt(config.getMaps().size());
+			game.setChoosenMap(gameMap);
+			game.setConfigurationType(choice);
+		}
 	}
 
 	/**
@@ -273,9 +275,19 @@ public class Controller implements GameListener {
 		try {
 			client.notify(new NotifyPlayersList(game.getPlayers()));
 			client.notify(new NotifyGameLoading(this.gameMap));
+			client.notify(new UpdateSetConnections(getCityConnections()));
 		} catch (IOException e) {
 			logger.log(Level.INFO, e.getMessage(), e);
 		}
+	}
+
+	private List<CityConnection> getCityConnections() {
+		List<CityConnection> connections = new ArrayList<>();
+		for (City c : game.getBoard().getMap().getCitiesList())
+			for (City conn : c.getConnectedCities())
+				connections.add(new CityConnection(c.getName(), conn.getName()));
+
+		return connections;
 	}
 
 	/**

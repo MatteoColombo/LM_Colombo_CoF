@@ -40,12 +40,12 @@ public class TestBoard {
 
 	@Test
 	public void testBoardInitialization() throws XMLFileException {
-		this.gameBoard = new Board(config, 1);
+		this.gameBoard = new Board(config, 1,false );
 	}
 
 	@Test
 	public void testBoardRewardsInitialization() throws XMLFileException {
-		this.gameBoard = new Board(config, 1);
+		this.gameBoard = new Board(config, 1, false);
 		BoardRewardsManager bRManager = this.gameBoard.getBoardRewardsManager();
 		List<BoardColorReward> bColorRew = bRManager.getRemainingBoardColorRewards();
 		List<BoardRegionReward> bRegionRew = bRManager.getRemainingBoardRegionRewards();
@@ -65,7 +65,7 @@ public class TestBoard {
 
 	@Test
 	public void testBoardCouncilorPool() throws XMLFileException {
-		this.gameBoard = new Board(config, 1);
+		this.gameBoard = new Board(config, 1,false);
 		CouncilorPool councilorPool = this.gameBoard.getCouncilorPool();
 		assertEquals(4, councilorPool.getCouncPerColor());
 		assertEquals(6, councilorPool.getListColor().size());
@@ -74,7 +74,7 @@ public class TestBoard {
 
 	@Test
 	public void testBoardNobilityTrack() throws XMLFileException {
-		this.gameBoard = new Board(config, 1);
+		this.gameBoard = new Board(config, 1, false);
 		NobilityTrack nobilityTrack = this.gameBoard.getNobleTrack();
 		assertEquals(1, nobilityTrack.getReward(6).getGeneratedRewards().get(0).getAmount());
 		assertEquals(20, nobilityTrack.getMaxPoint());
@@ -83,7 +83,7 @@ public class TestBoard {
 
 	@Test
 	public void testBoardRegions() throws XMLFileException {
-		this.gameBoard = new Board(config, 1);
+		this.gameBoard = new Board(config, 1, false);
 		List<Region> regions = this.gameBoard.getRegions();
 		assertEquals(this.gameBoard.getRegion(0), regions.get(0));
 		assertEquals("Arkon", regions.get(0).getCity("Arkon").getName());
@@ -95,7 +95,7 @@ public class TestBoard {
 
 	@Test
 	public void testBoardKing() throws XMLFileException {
-		this.gameBoard = new Board(config, 1);
+		this.gameBoard = new Board(config, 1, false);
 		for (Councilor councilor : this.councilor)
 			this.gameBoard.getKingCouncil().insertCouncilor(councilor);
 		assertEquals(Color.decode("#000000"), this.gameBoard.getKingCouncil().getHeadColor());

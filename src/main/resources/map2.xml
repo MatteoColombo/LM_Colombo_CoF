@@ -48,6 +48,12 @@
 			<connection>Kultos</connection>
 		</city>
 		<city>
+			<name>Graden</name>
+			<color>#008000</color>
+			<connection>Juvelar</connection>
+			<connection>Dorful</connection>
+		</city>
+		<city>
 			<name>Juvelar</name>
 			<capital>true</capital>
 			<color>#EE82EE</color>
@@ -55,12 +61,6 @@
 			<connection>Graden</connection>
 			<connection>Hellar</connection>
 			<connection>Lyram</connection>
-		</city>
-		<city>
-			<name>Graden</name>
-			<color>#008000</color>
-			<connection>Juvelar</connection>
-			<connection>Dorful</connection>
 		</city>
 		<city>
 			<name>Hellar</name>

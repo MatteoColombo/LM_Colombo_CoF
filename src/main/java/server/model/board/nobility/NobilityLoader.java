@@ -36,7 +36,7 @@ import server.model.reward.RewardNobility;
 public class NobilityLoader {
 	private String xmlPath;
 	private List<Reward> trackRewards;
-	private static final int MAXLENGTH = 21;
+	private static final int MAXLENGTH = 20;
 
 	/**
 	 * Initializes the NobilityLoader saving this XML file and loading it.
@@ -57,12 +57,13 @@ public class NobilityLoader {
 	 */
 	public NobilityLoader() {
 		this.trackRewards = new ArrayList<>();
+		trackRewards.add(null);
 		
 		Random r = new Random();
 		
 		for(int i = 0; i < MAXLENGTH; i++) {
 			// 33% of chance that there is a bonus on the track
-			if(r.nextInt(2) == 0) {
+			if(r.nextInt(3) == 0) {
 				trackRewards.add(new RewardNobility());
 			} else {
 				trackRewards.add(null);

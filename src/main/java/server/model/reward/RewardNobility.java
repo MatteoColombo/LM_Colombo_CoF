@@ -1,18 +1,25 @@
 package server.model.reward;
-/**
- * specialization of the Reward type. this class take care of the arguments for the random constructor, 
- * in order to generate a balanced reward for a nobility step
- * @author Gianpaolo
- */
-public class RewardNobility extends Reward{
 
-	/**
-	 * 
-	 */
+import server.model.board.nobility.NobilityTrack;
+
+/**
+ * A contextual Reward randomly generated.
+ * <p>
+ * This one is designated specifically for the NobilityTrack.
+ * 
+ * @author Gianpaolo
+ * @see Bonus
+ * @see NobilityTrack
+ * @see Reward
+ */
+public class RewardNobility extends Reward {
+
 	private static final long serialVersionUID = -1108948848681251626L;
 
 	/**
-	 * creates a new {@link Reward} for nobility
+	 * Creates a new {@link Reward} for the {@link NobilityTrack}
+	 * 
+	 * @see RewardNobility
 	 */
 	public RewardNobility() {
 		super(Bonus.getNobilityBonus(), 2, 80);

@@ -121,7 +121,7 @@ public abstract class Bonus implements Serializable {
 	/**
 	 * Awards the Bonus to this {@link Player}.
 	 * 
-	 * @param Player
+	 * @param p
 	 *            the Player that will be rewarded
 	 * @see Bonus
 	 */

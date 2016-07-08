@@ -1,16 +1,27 @@
 package server.model.reward;
+
+import server.model.board.city.City;
+
 /**
- * specialization of the Reward type. this class take care of the arguments for the random constructor,
- * in order to generate a balanced reward for a city
+ * A contextual Reward randomly generated.
+ * <p>
+ * This one is designated specifically for a City.
+ * 
  * @author Gianpaolo
+ * @see Bonus
+ * @see City
+ * @see Reward
  */
-public class RewardCity extends Reward{
-	
+public class RewardCity extends Reward {
+
 	private static final long serialVersionUID = 8328602223482028431L;
+
 	/**
-	 * creates a new {@link Reward} for cities
+	 * Creates a new {@link Reward} for {@link City Cities}
+	 * 
+	 * @see RewardCity
 	 */
-	public RewardCity() {	
+	public RewardCity() {
 		super(Bonus.getCityBonus(), 2, 50);
 	}
 }

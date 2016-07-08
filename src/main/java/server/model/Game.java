@@ -131,7 +131,7 @@ public class Game extends Thread {
 		boolean someoneWon = false;
 		checkAndConfigGameForTwo();
 		turnManager = new TurnManager(players, config.getColorsList());
-		while (!someoneWon) {
+		while (!someoneWon && countSuspendedPlayers()<players.size()-1) {
 			someoneWon = regularCycle();
 			runMarket(someoneWon);
 		}

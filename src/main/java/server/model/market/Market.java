@@ -60,7 +60,6 @@ public class Market {
 			try {
 				p.getClient().notify(new NotifyMarketSellStarted());
 			} catch (IOException e) {
-				p.setSuspension(true);
 				logger.log(Level.SEVERE, e.getMessage(), e);
 				playerWantsToStop = true;
 			}
@@ -69,7 +68,6 @@ public class Market {
 				try {
 					p.getClient().askWichItemToSell();
 				} catch (IOException e) {
-					p.setSuspension(true);
 					logger.log(Level.SEVERE, e.getMessage(), e);
 					playerWantsToStop = true;
 				}
@@ -93,7 +91,6 @@ public class Market {
 				try {
 					players.get((i + starting) % players.size()).getClient().askPlayerItemToBuy(itemsOnSale);
 				} catch (IOException e) {
-					players.get((i + starting) % players.size()).setSuspension(true);
 					logger.log(Level.SEVERE, e.getMessage(), e);
 					playerWantsToStop = true;
 				}

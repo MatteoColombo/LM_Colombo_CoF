@@ -56,6 +56,7 @@ public class TurnManager {
 					turnPlayer.getClient().askPlayerWhatActionToDo();
 				else {
 					turnPlayer.setSuspension(true);
+					turnPlayer.getClient().close();
 					return;
 				}
 			} catch (IOException e) {

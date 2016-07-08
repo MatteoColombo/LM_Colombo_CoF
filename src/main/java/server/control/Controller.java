@@ -78,7 +78,6 @@ public class Controller implements GameListener {
 					temp.notify(new NotifyPlayerJoined(playersMap.get(client)));
 			} catch (IOException e) {
 				logger.log(Level.INFO, e.getMessage(), e);
-				playersMap.get(temp).setSuspension(true);
 			}
 		}
 	}
@@ -181,7 +180,6 @@ public class Controller implements GameListener {
 				temp.notify(new NotifyGameStarted());
 			} catch (IOException e) {
 				logger.log(Level.INFO, e.getMessage(), e);
-				playersMap.get(temp).setSuspension(true);
 			}
 		}
 	}
@@ -384,7 +382,6 @@ public class Controller implements GameListener {
 			try {
 				client.notify(new NotifyUpdatePlayer(simplifiedClone, playerIndex));
 			} catch (IOException e) {
-				player.setSuspension(true);
 				logger.log(Level.WARNING, e.getMessage(), e);
 			}
 
@@ -500,7 +497,6 @@ public class Controller implements GameListener {
 				client.notify(new UpdateSendCityBonus(rewards));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
-				playersMap.get(client).setSuspension(true);
 			}
 		}
 	}
@@ -533,7 +529,6 @@ public class Controller implements GameListener {
 				client.notify(new UpdateCouncil(copy, index));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
-				playersMap.get(client).setSuspension(true);
 			}
 		}
 	}
@@ -584,7 +579,6 @@ public class Controller implements GameListener {
 				client.notify(new UpdateRegionPermission(card, region, slot));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
-				playersMap.get(client).setSuspension(true);
 			}
 		}
 	}
@@ -604,7 +598,6 @@ public class Controller implements GameListener {
 				client.notify(new UpdateEmporiumBuilt(playerIndex, city));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
-				playersMap.get(client).setSuspension(true);
 			}
 		}
 	}
@@ -623,7 +616,6 @@ public class Controller implements GameListener {
 					client.notify(new NotifyKingLocation(city));
 				} catch (IOException e) {
 					logger.log(Level.WARNING, e.getMessage(), e);
-					playersMap.get(client).setSuspension(true);
 				}
 		}
 	}
@@ -650,7 +642,6 @@ public class Controller implements GameListener {
 					client.notify(new UpdateBoardRewards(copyKing, copyColor, copyRegion));
 				} catch (IOException e) {
 					logger.log(Level.WARNING, e.getMessage(), e);
-					playersMap.get(client).setSuspension(true);
 				}
 			}
 		}

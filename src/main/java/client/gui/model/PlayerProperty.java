@@ -34,6 +34,7 @@ public class PlayerProperty {
 	private IntegerProperty victory;
 	private BooleanProperty canNotDoMainAction;
 	private BooleanProperty canNotDoSideAction;
+	private BooleanProperty isNotMyTurn;
 	/**
 	 * web color repreentation of each politic card color
 	 */
@@ -42,7 +43,8 @@ public class PlayerProperty {
 		
 	public PlayerProperty() {
 		canNotDoMainAction = new SimpleBooleanProperty(true);
-		canNotDoSideAction = new SimpleBooleanProperty(true );
+		canNotDoSideAction = new SimpleBooleanProperty(true);
+		isNotMyTurn = new SimpleBooleanProperty(true);
 		name = new SimpleStringProperty("");
 		coins = new SimpleIntegerProperty(0);
 		assistants = new SimpleIntegerProperty(0);
@@ -96,6 +98,10 @@ public class PlayerProperty {
 	
 	public BooleanProperty canNotDoSideAction() {
 		return this.canNotDoSideAction;
+	}
+	
+	public BooleanProperty isNotMyTurn() {
+		return this.isNotMyTurn;
 	}
 	
 	public IntegerProperty coinsProperty() {

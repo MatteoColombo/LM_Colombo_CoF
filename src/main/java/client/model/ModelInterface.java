@@ -107,5 +107,7 @@ public interface ModelInterface {
 	public void setMarket(List<OnSaleItem> items);
 	
 	public void setConnections(List<CityConnection> connections);
+	
+	public void endMarket();
 }
 

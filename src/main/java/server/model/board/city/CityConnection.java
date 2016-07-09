@@ -13,8 +13,7 @@ import java.util.List;
  * @author Matteo Colombo
  * @see City
  */
-public class CityConnection implements Serializable{
-
+public class CityConnection implements Serializable {
 	private static final long serialVersionUID = 1666612357631546239L;
 	private List<String> cities;
 

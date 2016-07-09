@@ -174,11 +174,13 @@ public class ABuildEmporiumWithKing extends Action {
 
 	// I KNOW SONAR THIS IS DUPLICATE BUT STFU WE'LL FIX LATER
 	/**
-	 * Calculate the money that can be paid instead of cards
+	 * Calculates the {@link Coins} that can be paid instead of
+	 * {@link PoliticCard PoliticCards}.
 	 * 
 	 * @param difference
-	 *            the number of missing cards
-	 * @return an integer, the price
+	 *            the number of missing PoliticCards
+	 * @return the extra Coins to be paid
+	 * @see ABuildEmporiumWithKing
 	 */
 	private int calculatePrice(int difference) {
 		if (difference == 0) {
@@ -189,10 +191,11 @@ public class ABuildEmporiumWithKing extends Action {
 
 	// ALSO THIS
 	/**
-	 * Calculate the extra money that have to be paid because of multiple
-	 * colored cards
+	 * Calculate the extra {@link Coins} that have to be paid because of
+	 * multicolored {@link PoliticCard PoliticCards}.
 	 * 
-	 * @return an integer, the extra price
+	 * @return the extra Coins to be paid
+	 * @see ABuildEmporiumWithKing
 	 */
 	private int calculatePriceMultipleColoredCards() {
 		int multipCards = 0;

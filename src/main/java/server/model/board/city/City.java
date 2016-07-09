@@ -43,10 +43,6 @@ import server.model.reward.Reward;
  * @see Reward
  */
 public class City implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1519838226056409747L;
 	private String cityName;
 	private Color cityColor;
@@ -159,12 +155,13 @@ public class City implements Serializable {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns the list of the emporiums
+	 * 
 	 * @return
 	 */
-	public List<Emporium> getEmporiums(){
+	public List<Emporium> getEmporiums() {
 		return emporiums;
 	}
 

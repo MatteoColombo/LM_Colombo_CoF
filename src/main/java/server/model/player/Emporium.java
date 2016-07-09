@@ -1,7 +1,7 @@
 package server.model.player;
 
 /**
- * A class that represents every Emporium in the game.
+ * A class that represents every Emporium in the Game.
  * <p>
  * Each of them is assigned to one {@link #getPlayer() Player}.
  * 

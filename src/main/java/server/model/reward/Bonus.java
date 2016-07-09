@@ -99,7 +99,7 @@ public abstract class Bonus implements Serializable {
 
 	/**
 	 * Returns the <U>VALUE</U> that is a static number in each concrete bonus
-	 * representing the impact on the game, his power.
+	 * representing the impact on the Game, his power.
 	 * <p>
 	 * It's used in the random constructor of the {@link Reward} in order to
 	 * generate balanced ones.

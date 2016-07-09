@@ -69,6 +69,7 @@ public class Board {
 	private Configuration config;
 	private BoardRewardsManager boardRewManager;
 	private boolean randomConfig;
+
 	/**
 	 * Starts the initializations of the Board loading this configurations and
 	 * the chosen Map.
@@ -84,12 +85,12 @@ public class Board {
 		this(config.getMaps().get(choosenMap), config.getNobility(), config.getCouncilorsPerColor(),
 				config.getCouncilSize(), config.getColorsList());
 		this.config = config;
-		this.randomConfig=randomConfig;
+		this.randomConfig = randomConfig;
 		initializeBoard();
-		if(randomConfig)
+		if (randomConfig)
 			this.mapManager.generateConnections();
 	}
-	
+
 	/**
 	 * Initializes the Board receiving all the configuration parameters.
 	 * 
@@ -127,13 +128,13 @@ public class Board {
 		NobilityLoader nl;
 		try {
 			this.mapManager = new MapLoader(mapPath, councilManager);
-			if(!randomConfig)
+			if (!randomConfig)
 				this.mapManager.loadConnections();
 		} catch (MapXMLFileException mxfe) {
 			throw new XMLFileException(mxfe);
 		}
 		try {
-				nl = new NobilityLoader(nobilityPath);
+			nl = new NobilityLoader(nobilityPath);
 		} catch (TrackXMLFileException txfe) {
 			throw new XMLFileException(txfe);
 		}
@@ -311,6 +312,5 @@ public class Board {
 	public List<Region> getRegions() {
 		return this.regions;
 	}
-	
-	
+
 }

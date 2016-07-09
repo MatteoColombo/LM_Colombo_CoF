@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * A class that represents the Game status of the Player.
  * <p>
- * Each of the {@link #getClientCopy() Players} that are playing in this game
+ * Each of the {@link #getClientCopy() Players} that are playing in this Game
  * has several parameters that are:
  * <ul>
  * <li>Its {@link #getName() name}, that can be freely {@link #setName(String)
@@ -99,7 +99,7 @@ public class Player implements Serializable {
 	 * @param config
 	 *            the Configuration object that is needed for all the parameters
 	 * @param numberOfPlayers
-	 *            the number of Players already in the game before this one
+	 *            the number of Players already in the Game before this one
 	 * @param client
 	 *            the ClientInt of the client which will represent this Player
 	 * @param track

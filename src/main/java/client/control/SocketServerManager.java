@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import org.apache.log4j.*;
 
-import server.control.dialogue.Dialogue;
+import instruction.Instruction;
 
 public class SocketServerManager extends Thread implements ServerManager {
 	private Controller controller;
@@ -34,7 +34,7 @@ public class SocketServerManager extends Thread implements ServerManager {
 	public void run() {
 		try {
 			while (true) {
-				Dialogue dialogue = (Dialogue) in.readObject();
+				Instruction dialogue = (Instruction) in.readObject();
 				controller.parseDialogue(dialogue);
 			}
 		} catch (IOException e) {

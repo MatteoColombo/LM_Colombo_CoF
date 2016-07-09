@@ -14,11 +14,11 @@ import client.control.Controller;
 import client.control.RMIServerManager;
 import client.control.ServerManager;
 import client.control.SocketServerManager;
+import instruction.Instruction;
+import instruction.notify.Notify;
+import instruction.request.Request;
+import instruction.update.Update;
 import server.control.connection.ServerInt;
-import server.control.dialogue.Dialogue;
-import server.control.dialogue.notify.Notify;
-import server.control.dialogue.request.Request;
-import server.control.dialogue.update.Update;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 
@@ -53,11 +53,11 @@ public class CliController implements Runnable, Controller {
 		}	
 	}
 	/**
-	 * execute a {@link Dialogue}
+	 * execute a {@link Instruction}
 	 * @param dialog the given Dialogue
 	 */
 	@Override
-	public synchronized void parseDialogue(Dialogue dialog) {
+	public synchronized void parseDialogue(Instruction dialog) {
 		if (dialog instanceof Request) {
 			this.canWrite = true;
 			((Request) dialog).execute(view);

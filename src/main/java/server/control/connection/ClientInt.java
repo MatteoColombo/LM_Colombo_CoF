@@ -3,8 +3,8 @@ package server.control.connection;
 import java.io.IOException;
 import java.util.List;
 
+import instruction.Instruction;
 import server.control.Controller;
-import server.control.dialogue.Dialogue;
 import server.model.action.IllegalActionException;
 import server.model.market.OnSaleItem;
 
@@ -81,7 +81,7 @@ public interface ClientInt {
 	 * @param dialog
 	 * @throws IOException
 	 */
-	public void notify(Dialogue dialog) throws IOException;
+	public void notify(Instruction dialog) throws IOException;
 	
 	/**
 	 * Asks to the client which item on sale he wishes to buy

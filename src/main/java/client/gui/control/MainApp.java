@@ -16,6 +16,10 @@ import client.control.ViewInterface;
 import client.gui.model.GameProperty;
 import client.gui.view.*;
 import client.gui.view.RoomController;
+import instruction.Instruction;
+import instruction.notify.Notify;
+import instruction.request.Request;
+import instruction.update.Update;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -28,10 +32,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import server.control.connection.ServerInt;
-import server.control.dialogue.Dialogue;
-import server.control.dialogue.notify.Notify;
-import server.control.dialogue.request.Request;
-import server.control.dialogue.update.Update;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 import server.model.player.Player;
@@ -64,7 +64,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	}
 
 	@Override
-	public void parseDialogue(Dialogue dialog) {
+	public void parseDialogue(Instruction dialog) {
 		if (dialog instanceof Update)
 			Platform.runLater(() -> ((Update) dialog).execute(localGame));
 		if (dialog instanceof Notify)

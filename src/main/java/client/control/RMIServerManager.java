@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import instruction.Instruction;
 import server.control.connection.rmi.RMIServerManagerInterface;
-import server.control.dialogue.Dialogue;
 
 /**
  * This is the remote object which is sent to the server, it represents the implementation of the skeleton
@@ -41,7 +41,7 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 	 * a message is inserted in the queue
 	 */
 	@Override
-	public String requestAnswer(Dialogue dialogue) throws RemoteException {
+	public String requestAnswer(Instruction dialogue) throws RemoteException {
 		controller.parseDialogue(dialogue);
 		synchronized (this) {
 			while (this.queue.isEmpty()) {
@@ -62,7 +62,7 @@ public class RMIServerManager extends UnicastRemoteObject implements RMIServerMa
 	 * This is used when the server doesn't require an answer
 	 */
 	@Override
-	public void sendNotify(Dialogue dialogue) throws RemoteException {
+	public void sendNotify(Instruction dialogue) throws RemoteException {
 		controller.parseDialogue(dialogue);
 	}
 

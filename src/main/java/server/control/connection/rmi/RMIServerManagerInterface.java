@@ -3,7 +3,7 @@ package server.control.connection.rmi;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import server.control.dialogue.Dialogue;
+import instruction.Instruction;
 
 /**
  * This class represents the client in an RMI connection and it is the remote object on which the server works
@@ -18,14 +18,14 @@ public interface RMIServerManagerInterface extends Remote {
 	 * @return a String, the answer
 	 * @throws RemoteException
 	 */
-	public String requestAnswer(Dialogue dialogue) throws RemoteException;
+	public String requestAnswer(Instruction dialogue) throws RemoteException;
 	
 	/**
 	 * This method is used when the server doesn't need a reply but it just want to notify the client about something
 	 * @param dialogue the Dialogue object which will update the client's UI
 	 * @throws RemoteException
 	 */
-	public void sendNotify(Dialogue dialogue) throws RemoteException;
+	public void sendNotify(Instruction dialogue) throws RemoteException;
 	
 	/**
 	 * This is used to check if the client is connected

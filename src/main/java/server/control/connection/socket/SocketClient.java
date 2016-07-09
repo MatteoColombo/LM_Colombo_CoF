@@ -17,20 +17,21 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import instruction.Instruction;
+import instruction.notify.NotifyIllegalAction;
+import instruction.request.RequestCity;
+import instruction.request.RequestConfigurationMethod;
+import instruction.request.RequestFreePermissionCard;
+import instruction.request.RequestMaxPlayersNumber;
+import instruction.request.RequestPlayerName;
+import instruction.request.RequestRewardFromPermission;
+import instruction.request.RequestWhatActionToDo;
+import instruction.request.RequestWhichItemToBuy;
+import instruction.request.RequestWhichItemToSell;
+import instruction.request.RequestWichMapToUse;
 import server.control.Controller;
 import server.control.connection.ClientInt;
-import server.control.dialogue.Dialogue;
-import server.control.dialogue.notify.NotifyIllegalAction;
-import server.control.dialogue.request.RequestCity;
-import server.control.dialogue.request.RequestConfigurationMethod;
-import server.control.dialogue.request.RequestFreePermissionCard;
-import server.control.dialogue.request.RequestMaxPlayersNumber;
-import server.control.dialogue.request.RequestPlayerName;
-import server.control.dialogue.request.RequestRewardFromPermission;
-import server.control.dialogue.request.RequestWhatActionToDo;
-import server.control.dialogue.request.RequestWhichItemToSell;
-import server.control.dialogue.request.RequestWhichItemToBuy;
-import server.control.dialogue.request.RequestWichMapToUse;
 import server.model.action.IllegalActionException;
 import server.model.market.OnSaleItem;
 
@@ -217,7 +218,7 @@ public class SocketClient implements ClientInt {
 	}
 
 	@Override
-	public void notify(Dialogue dialog) throws IOException {
+	public void notify(Instruction dialog) throws IOException {
 		out.writeObject(dialog);
 		out.flush();
 	}

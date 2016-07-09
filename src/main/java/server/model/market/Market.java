@@ -7,8 +7,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import server.control.dialogue.notify.NotifyMarketSellStarted;
-import server.control.dialogue.update.NotifyMarketEnded;
+import instruction.notify.NotifyMarketSellStarted;
+import instruction.update.NotifyMarketEnded;
 import server.model.player.Assistants;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
@@ -142,9 +142,6 @@ public class Market {
 
 	/**
 	 * Give the player an OnSaleItem, it is used
-	 * 
-	 * @param item
-	 * @param p
 	 */
 	private void giveToplayer(OnSaleItem item, Player p) {
 		Soldable soldItem = item.getItem();

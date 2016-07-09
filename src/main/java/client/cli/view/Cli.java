@@ -302,7 +302,7 @@ public class Cli implements ViewInterface {
 		writer.println("Game finished!\nClassification:");
 		for(int i=0;i<players.size();i++){
 			Player p= players.get(i);
-			writer.println(i+". "+p.getName()+" points: "+p.getVictoryPoints()+ " politics+assistants: "+(p.getPoliticCard().size()+p.getAssistants().getAmount()));
+			writer.println(i+". "+p.getName()+" points: "+p.getVictoryPoints().getAmount()+ " politics+assistants: "+(p.getPoliticCard().size()+p.getAssistants().getAmount()));
 		}
 		
 	}

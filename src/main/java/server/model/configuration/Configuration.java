@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
 
 /**
  * This is the class which loads the configuration from the xml file
+ * 
  * @author Matteo Colombo
  *
  */
@@ -53,11 +54,10 @@ public class Configuration {
 	private int timeout;
 
 	private Map<Color, String> cityColor;
-	
+
 	private Map<Color, Integer> colorRewards;
 
 	private List<Integer> boardRewards;
-	
 
 	private static final String PLAYERPATH = "/config/player/";
 	private static final String COLORPATH = "/config/colors/";
@@ -69,16 +69,16 @@ public class Configuration {
 	private static final String COLORREWARDPATH = "/config/city/reward/";
 	private static final String BOARDPATH = "/config/board/value";
 	private static final String CITYCOLORPATH = "/config/citycolor/color/";
-	
+
 	/**
 	 * Calls the method which loads
+	 * 
 	 * @throws ConfigurationErrorException
 	 */
 	public Configuration() throws ConfigurationErrorException {
 		loadXMLFile();
 	}
 
-	
 	private void loadXMLFile() throws ConfigurationErrorException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
@@ -187,113 +187,214 @@ public class Configuration {
 		for (int i = 0; i < list.getLength(); i++)
 			boardRewards.add(Integer.parseInt(list.item(i).getFirstChild().getNodeValue()));
 	}
-	
+
 	private void loadCityColor(XPath xpath, Document xmlDoc) throws XPathExpressionException {
-		cityColor= new HashMap<>();
+		cityColor = new HashMap<>();
 		NodeList values = (NodeList) xpath.compile(CITYCOLORPATH + "value").evaluate(xmlDoc, XPathConstants.NODESET);
 		NodeList colors = (NodeList) xpath.compile(CITYCOLORPATH + "name").evaluate(xmlDoc, XPathConstants.NODESET);
-		for(int i=0; i<values.getLength();i++)
-			cityColor.put(Color.decode(values.item(i).getFirstChild().getNodeValue()), colors.item(i).getFirstChild().getNodeValue());
+		for (int i = 0; i < values.getLength(); i++)
+			cityColor.put(Color.decode(values.item(i).getFirstChild().getNodeValue()),
+					colors.item(i).getFirstChild().getNodeValue());
 	}
-	
-	
 
+	/**
+	 * 
+	 * @return the initial coins of the first player
+	 */
 	public int getInitialPlayerMoney() {
 		return initialPlayerMoney;
 	}
 
+	/**
+	 * 
+	 * @return the inital assistants of the first player
+	 */
 	public int getInitialPlayerHelpers() {
 		return initialPlayerHelpers;
 	}
 
+	/**
+	 * 
+	 * @return the number of politic cards that every player has at the start of
+	 *         the game
+	 */
 	public int getInitialPoliticCards() {
 		return initialPoliticCards;
 	}
 
+	/**
+	 * 
+	 * @return the maximum number of emporiums that every player can build
+	 */
 	public int getInitialEmporiums() {
 		return initialEmporiums;
 	}
 
+	/**
+	 * 
+	 * @return the default number of victory points of every player at the start
+	 *         of the game
+	 */
 	public int getInitialVictoryPoints() {
 		return initialVictoryPoints;
 	}
 
+	/**
+	 * 
+	 * @return the default amount of nobility points of every player at the
+	 *         start of the game
+	 */
 	public int getInitialNobility() {
 		return initialNobility;
 	}
 
+	/**
+	 * 
+	 * @return the maximum number of players per game on this server
+	 */
 	public int getMaxNumberOfPlayer() {
 		return maxNumberOfPlayer;
 	}
 
+	/**
+	 * Return the list of the colors used by the politc cars
+	 * @return a list of Color
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Color> getColorsList() {
-		return (List<Color>)((ArrayList)colorsList).clone();
+		return (List<Color>) ((ArrayList) colorsList).clone();
 	}
 
+	/**
+	 * The map used to translate colors from English to hex, English names are the key, the Color objects are the elements
+	 * @return a map of Colors
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map<String, Color> getColorsTranslation() {
-		return (Map<String,Color>)((HashMap)colorTranslation).clone();
+		return (Map<String, Color>) ((HashMap) colorTranslation).clone();
 	}
 
+	/**
+	 * 
+	 * @return the number of councilors per color
+	 */
 	public int getCouncilorsPerColor() {
 		return councilorsPerColor;
 	}
 
+	/**
+	 * 
+	 * @return return the number of councilors per council
+	 */
 	public int getCouncilSize() {
 		return councilSize;
 	}
 
+	/**
+	 * 
+	 * @return the number of disclosed permission card per region
+	 */
 	public int getNumberDisclosedCards() {
 		return numberDisclosedCards;
 	}
 
+	/**
+	 * 
+	 * @return the path to the nobility track file
+	 */
 	public String getNobility() {
 		return nobility;
 	}
 
+	/**
+	 * Return the list with the paths of the maps
+	 * @return the list of the maps
+	 */
 	@SuppressWarnings("unchecked")
 	public List<String> getMaps() {
-		return (List<String>)((ArrayList<String>)maps).clone();
+		return (List<String>) ((ArrayList<String>) maps).clone();
 	}
 
+	/**
+	 * 
+	 * @return the port used by the RMI server
+	 */
 	public int getRmiPort() {
 		return rmiPort;
 	}
 
+	/**
+	 * 
+	 * @return the port used by the socket server
+	 */
 	public int getSocketPort() {
 		return socketPort;
 	}
 
+	/**
+	 * 
+	 * @return the amount of victory point per region
+	 */
 	public int getRewardPerRegion() {
 		return rewardPerRegion;
 	}
 
+	/**
+	 * return the map of the color rewards, the Color is the ket and the prize
+	 * is the element
+	 * 
+	 * @return
+	 */
 	public Map<Color, Integer> getColorRewards() {
 		return colorRewards;
 	}
 
+	/**
+	 * Return the ordered list of the board rewards
+	 * 
+	 * @return
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Integer> getBoardRewards() {
-		return (List<Integer>)((ArrayList)boardRewards).clone();
+		return (List<Integer>) ((ArrayList) boardRewards).clone();
 	}
 
+	/**
+	 * 
+	 * @return the IP of the server
+	 */
 	public String getServerAddress() {
 		return serverIp;
 	}
 
+	/**
+	 * Return the map with the colors of the politic cards, the english name as
+	 * element and the Color objects as key
+	 * 
+	 * @return the politic card colors
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map<Color, String> getColorsTranslationReverse() {
-		return (Map<Color,String>)((HashMap)colorTranslationReverse).clone();
+		return (Map<Color, String>) ((HashMap) colorTranslationReverse).clone();
 	}
-	
+
+	/**
+	 * Returns an hash map which contains the city colors, the english name as
+	 * element and the Color objects as key
+	 * 
+	 * @return the city colors
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public Map<Color, String> getCityColor(){
-		return (Map<Color,String>)((HashMap)this.cityColor).clone();
+	public Map<Color, String> getCityColor() {
+		return (Map<Color, String>) ((HashMap) this.cityColor).clone();
 	}
-	
-	public int getTimeout(){
+
+	/**
+	 * 
+	 * @return the maximum time to play a round
+	 */
+	public int getTimeout() {
 		return this.timeout;
 	}
-	
+
 }

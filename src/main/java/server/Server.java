@@ -38,6 +38,9 @@ public class Server implements GameListener {
 	private static Configuration gamesConfig;
 	private static boolean serverOn=true;
 	
+	/**
+	 *  no object of the server is ever built so this method isn't needed
+	 */
 	private Server() {
 	}
 
@@ -127,6 +130,11 @@ public class Server implements GameListener {
 		g.start();
 	}
 
+	@Override
+	public void gameEnded(Game game) {
+		gameControllerMap.remove(game);
+	}
+
 	/**
 	 * This is the main method of the server. It turns on both the RMI and
 	 * Socket servers
@@ -157,10 +165,4 @@ public class Server implements GameListener {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
-
-	@Override
-	public void gameEnded(Game game) {
-		gameControllerMap.remove(game);
-	}
-
 }

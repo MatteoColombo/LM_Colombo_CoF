@@ -115,6 +115,10 @@ public interface ClientInt {
 	 */
 	public void askSelectFreePermissionCard() throws IOException;
 	
+	/**
+	 * Asks to the client which configuration method he prefers, it can be random or manual
+	 * @throws IOException
+	 */
 	public void askConfigurationMethod() throws IOException;
 	
 }

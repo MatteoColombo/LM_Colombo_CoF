@@ -35,6 +35,11 @@ import server.control.instruction.request.RequestWichMapToUse;
 import server.model.action.IllegalActionException;
 import server.model.market.OnSaleItem;
 
+/**
+ * This is the client which implements the ClientInt and is used to manage a client which connects with sockets
+ * @author Matteo Colombo
+ *
+ */
 public class SocketClient implements ClientInt {
 	private Controller controller;
 	private Socket clientSocket;

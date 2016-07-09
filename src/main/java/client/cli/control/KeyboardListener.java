@@ -2,6 +2,9 @@ package client.cli.control;
 
 import java.util.Scanner;
 
+/**
+ * This is the class which reads from the keyboard
+ */
 public class KeyboardListener extends Thread {
 
 	private Scanner keyboard;

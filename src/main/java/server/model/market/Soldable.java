@@ -17,5 +17,9 @@ public interface Soldable extends Serializable {
 	 */
 	public String getMarketMessage(Configuration config);
 	
+	/**
+	 * Every soldable object need to implement this method which is used to return a new copy of the object
+	 * @return
+	 */
 	public Soldable newCopy();
 }

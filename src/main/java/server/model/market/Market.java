@@ -92,6 +92,7 @@ public class Market {
 				try {
 					players.get((i + starting) % players.size()).getClient().askPlayerItemToBuy(itemsOnSale);
 				} catch (IOException e) {
+					logger.log(Level.SEVERE, e.getMessage(), e);
 					playerWantsToStop = true;
 				}
 			}

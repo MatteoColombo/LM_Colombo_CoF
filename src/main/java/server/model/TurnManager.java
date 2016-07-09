@@ -131,14 +131,14 @@ public class TurnManager {
 	 * 
 	 * @throws IOException
 	 */
-	public void notifyUpdatePlayer() throws IOException {
+	private void notifyUpdatePlayer() throws IOException {
 		for (Player p : players) {
 			if (!p.getSuspended())
 				p.getClient().notify(new UpdatePlayer(players.get(playerIndex).getClientCopy(), playerIndex));
 		}
 	}
 
-	public void notifyDisconneted(String name) throws IOException {
+	private void notifyDisconneted(String name) throws IOException {
 		for (Player p : players) {
 			if (!p.getSuspended())
 				p.getClient().notify(new NotifyPlayerDisconnected(name));

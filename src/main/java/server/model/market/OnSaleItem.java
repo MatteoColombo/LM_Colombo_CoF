@@ -29,6 +29,10 @@ public class OnSaleItem implements Serializable{
 		this.price=price;
 	}
 	
+	/**
+	 * This constructor is used to clone an existing OnSaleItem
+	 * @param item
+	 */
 	private OnSaleItem(OnSaleItem item){
 		this.item=item.item.newCopy();
 		this.owner=item.owner.getClientCopy();
@@ -68,6 +72,10 @@ public class OnSaleItem implements Serializable{
 		return item.getMarketMessage(config)+" |  price: "+price+" | owner: "+owner.getName();
 	}
 	
+	/**
+	 * This is used to return a new copy of the object
+	 * @return a new copy
+	 */
 	public OnSaleItem newCopy(){
 		return new OnSaleItem(this);
 	}

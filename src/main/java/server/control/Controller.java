@@ -48,6 +48,10 @@ import server.model.reward.BoardRegionReward;
 import server.model.reward.Bonus;
 import server.model.reward.Reward;
 
+/**
+ * This is the MVC Controller of the server
+ *
+ */
 public class Controller implements GameListener {
 	private Game game;
 	private CliParser parser;
@@ -59,6 +63,12 @@ public class Controller implements GameListener {
 	private static final String WRONGSELECTION = "Wrong selection!";
 	private static final String NOTENOUGHASSISTANTS = "You don't have enough assistants!";
 
+	/**
+	 * Saves the board, the configuration object and instantiates the cli parser
+	 * 
+	 * @param game
+	 * @param config
+	 */
 	public Controller(Game game, Configuration config) {
 		this.game = game;
 		this.config = config;
@@ -194,6 +204,13 @@ public class Controller implements GameListener {
 		Server.acceptPlayers(game);
 	}
 
+	/**
+	 * Parses the string to decide which configuration type will be used, in
+	 * case the message is different from "manual", random configuration will be
+	 * choosen
+	 * 
+	 * @param message
+	 */
 	public void parseConfigurationType(String message) {
 		boolean choice = !"manual".equalsIgnoreCase(message);
 		if (choice) {
@@ -267,6 +284,11 @@ public class Controller implements GameListener {
 		playersMap.put(client, game.addPlayer(client));
 	}
 
+	/**
+	 * Notifies a client that the game is loading and will start soon
+	 * Sends to the client the map number, the players list and the game connections
+	 * @param client
+	 */
 	public void notifyGameLoading(ClientInt client) {
 		try {
 			client.notify(new NotifyPlayersList(game.getPlayers()));
@@ -366,9 +388,9 @@ public class Controller implements GameListener {
 	}
 
 	/**
-	 * send a {@link UpdatePlayer} to all clients connected to the game,
-	 * when the player's parameter change in the model. If the client is
-	 * disconnected it is immediately suspended
+	 * send a {@link UpdatePlayer} to all clients connected to the game, when
+	 * the player's parameter change in the model. If the client is disconnected
+	 * it is immediately suspended
 	 * 
 	 * @param player
 	 * @param playerIndex

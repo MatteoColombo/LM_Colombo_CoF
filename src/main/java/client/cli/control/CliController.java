@@ -21,6 +21,10 @@ import server.control.instruction.update.Update;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 
+/**
+ * This is the MVC controller on the client 
+ *
+ */
 public class CliController implements Runnable, Controller {
 	private Scanner keyboard;
 	private Cli view;
@@ -135,6 +139,7 @@ public class CliController implements Runnable, Controller {
 			disconnected();
 		}
 	}
+	
 	@Override
 	public void disconnected() {
 		view.printMessage("Connection lost, the client will terminate");

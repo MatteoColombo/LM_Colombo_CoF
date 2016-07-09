@@ -387,10 +387,18 @@ public class Game extends Thread {
 			}
 	}
 
+	/**
+	 * Adds a GameListener to the list
+	 * @param listener
+	 */
 	public void addListener(GameListener listener) {
 		this.listeners.add(listener);
 	}
 
+	/**
+	 * Sets the configuration method. True if random, false otherwise
+	 * @param randomConfig
+	 */
 	public void setConfigurationType(boolean randomConfig) {
 		this.randomConfig = randomConfig;
 	}

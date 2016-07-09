@@ -16,6 +16,10 @@ public class RequestWhichItemToBuy implements Update, Request{
 	private static final long serialVersionUID = -7887621821680475222L;
 	private List<OnSaleItem> items;
 
+	/**
+	 * Saves the list of items that are on sale
+	 * @param items
+	 */
 	public RequestWhichItemToBuy(List<OnSaleItem> items) {
 		this.items = items;
 	}

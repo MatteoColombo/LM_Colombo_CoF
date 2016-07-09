@@ -285,6 +285,11 @@ public class MapLoader {
 		return this.citiesOfMap;
 	}
 
+	/**
+	 * This method is used when the connections between cities are randomly
+	 * generated.
+	 * Generates the city connections
+	 */
 	public void generateConnections() {
 		for (Region r : regions) {
 			for (City c : r.getCities()) {
@@ -293,8 +298,8 @@ public class MapLoader {
 		}
 		addRegionConnections();
 	}
-	
-	private void generateConnectionsForACity(City c, Region r){
+
+	private void generateConnectionsForACity(City c, Region r) {
 		Random random = new Random();
 		int connectionsNumber = 1 + random.nextInt(MAXCONN);
 		while (c.getConnectedCities().size() < connectionsNumber) {

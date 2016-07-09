@@ -41,6 +41,11 @@ public class ActionBuilder {
 	private Board board;
 	private Configuration config;
 
+	/**
+	 * saves the Board and the configuration object
+	 * @param board 
+	 * @param config
+	 */
 	public ActionBuilder(Board board, Configuration config) {
 		this.board = board;
 		this.config = config;

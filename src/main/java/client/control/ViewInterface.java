@@ -4,6 +4,9 @@ import java.util.List;
 
 import server.model.player.Player;
 
+/**
+ * This is the MVC View which need to be implemented by all the view implementations
+ */
 public interface ViewInterface {
 	/**
 	 * print the exception

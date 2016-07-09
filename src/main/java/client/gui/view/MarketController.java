@@ -39,9 +39,7 @@ public class MarketController {
 	private ImageView assistantImage;
 	@FXML
 	private ImageView marketImage;
-	private static final String POLITICSTYLE = "-fx-background-image: "
-			+ "url('GameController.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))');"
-			+ " -fx-background-size:cover;";
+
 	private MainApp mainApp;
 	private PlayerProperty myData;
 	private Stage dialogStage;
@@ -85,7 +83,8 @@ public class MarketController {
 				if (item == null || empty) {
 					setStyle(null);
 				} else {
-					setStyle(POLITICSTYLE);
+					setStyle("-fx-background-image: url('" + MainApp.class.getResource(PlayerProperty.getPoliticCardsImages().get(item))
+							+ "'); -fx-background-size:cover;");
 				}
 				this.setOnDragDetected(event -> {
 					Dragboard db = this.startDragAndDrop(TransferMode.ANY);

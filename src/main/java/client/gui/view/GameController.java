@@ -358,59 +358,60 @@ public class GameController {
 			}
 		});
 	}
-
+	
 	private void initPermissionList() {
 		permissionList.setItems(myData.getPermissions());
+		permissionList.setCellFactory(listView -> new permissionCell());
+	}
 
-		permissionList.setCellFactory(listView -> new ListCell<PermissionProperty>() {
-			@Override
-			public void updateItem(PermissionProperty item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty) {
-					setGraphic(null);
-					setText(null);
-				} else {
-					AnchorPane permissionPane = Collection.permissionCard(item);
-					setGraphic(permissionPane);
-
-					// allow drag when the player want to build emporium
-					permissionPane.setOnDragDetected(event -> {
-						if (EMP.equals(gameStatus)) {
-							Dragboard db = this.startDragAndDrop(TransferMode.ANY);
-							ClipboardContent content = new ClipboardContent();
-							content.putString("" + (this.getIndex() + 1));
-							db.setContent(content);
-							db.setDragView(permissionPane.snapshot(params, null));
-							event.consume();
-						}
-					});
-				}
-				// trigger with the special bonus "take the reward from a
-				// permission card you have"
-				this.setOnMouseClicked(event -> {
-					if ("fromPermit".equals(gameStatus)) {
-						mainApp.sendMsg("" + (this.getIndex() + 1));
-					}
-				});
-
-				this.setOnMouseEntered(event -> {
-					if ("fromPermit".equals(gameStatus)) {
-						this.setEffect(new Glow());
-					}
-					event.consume();
-				});
-
-				this.setOnMouseExited(event -> {
-					if (this.isDisabled()) {
-						ColorAdjust grayscale = new ColorAdjust();
-						grayscale.setSaturation(-1);
-						this.setEffect(grayscale);
-					} else {
-						this.setEffect(null);
+	private class permissionCell extends ListCell<PermissionProperty> {
+		@Override
+		public void updateItem(PermissionProperty item, boolean empty) {
+			super.updateItem(item, empty);
+			if (empty) {
+				setGraphic(null);
+				setText(null);
+			} else {
+				AnchorPane permissionPane = Collection.permissionCard(item);
+				setGraphic(permissionPane);
+	
+				// allow drag when the player want to build emporium
+				permissionPane.setOnDragDetected(event -> {
+					if (EMP.equals(gameStatus)) {
+						Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+						ClipboardContent content = new ClipboardContent();
+						content.putString("" + (this.getIndex() + 1));
+						db.setContent(content);
+						db.setDragView(permissionPane.snapshot(params, null));
+						event.consume();
 					}
 				});
 			}
-		});
+			// trigger with the special bonus "take the reward from a
+			// permission card you have"
+			this.setOnMouseClicked(event -> {
+				if ("fromPermit".equals(gameStatus)) {
+					mainApp.sendMsg("" + (this.getIndex() + 1));
+				}
+			});
+	
+			this.setOnMouseEntered(event -> {
+				if ("fromPermit".equals(gameStatus)) {
+					this.setEffect(new Glow());
+				}
+				event.consume();
+			});
+	
+			this.setOnMouseExited(event -> {
+				if (this.isDisabled()) {
+					ColorAdjust grayscale = new ColorAdjust();
+					grayscale.setSaturation(-1);
+					this.setEffect(grayscale);
+				} else {
+					this.setEffect(null);
+				}
+			});
+		}
 	}
 
 	// generate a pane for each opponent

@@ -13,5 +13,4 @@ public class RequestWhichItemToSell implements Request {
 	public void execute(ViewInterface view) {
 		view.printMessage("choose the item that you want to put on sale");
 	}
-
 }

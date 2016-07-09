@@ -10,12 +10,11 @@ import server.model.player.Player;
 import server.model.player.PoliticCard;
 
 /**
- * An Action that is used by this Player to {@link #execute() buy a PermissionCard}
- * for an amount of Coins based on the number of PoliticCards used to satisfy a
- * specific Council; if multicolor PoliticCards are used, extra Coins have to be
- * payed.
+ * An Action that is used by this Player to buy a PermissionCard for an amount
+ * of Coins based on the number of PoliticCards used to satisfy a specific
+ * Council; if multicolor PoliticCards are used, extra Coins have to be payed.
  * <p>
- * This is a main Action.
+ * This is a MainAction.
  * 
  * @see Action
  * @see Coins
@@ -49,12 +48,12 @@ public class ABuyPermissionCard extends Action {
 	 * @throws IllegalActionException
 	 * @see ABuyPermissionCard
 	 */
-	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politic, Region region, int slot)
-			throws IllegalActionException {
+	public ABuyPermissionCard(Player p, PermissionCard permc, Council counc, List<PoliticCard> politic, Region region,
+			int slot) throws IllegalActionException {
 		super(true, p);
 		this.politicCards = politic;
-		this.region=region;
-		this.slot=slot;
+		this.region = region;
+		this.slot = slot;
 		this.player = p;
 		this.permCard = permc;
 		int difference = counc.compareCardCouncil(politicCards);
@@ -65,11 +64,6 @@ public class ABuyPermissionCard extends Action {
 		}
 	}
 
-	/**
-	 * Executes the current {@link Action}.
-	 * 
-	 * @see ABuyPermissionCard
-	 */
 	@Override
 	public void execute() {
 		region.givePermissionCard(slot);
@@ -85,8 +79,8 @@ public class ABuyPermissionCard extends Action {
 	}
 
 	/**
-	 * Calculates the extra money that have to be paid because of multiple
-	 * colored cards.
+	 * Calculates the extra {@link Coins} that have to be paid because of
+	 * multiple colored cards.
 	 * 
 	 * @return the extra price
 	 * @see ABuyPermissionCard
@@ -98,9 +92,9 @@ public class ABuyPermissionCard extends Action {
 				multipCards++;
 		return multipCards;
 	}
-	
+
 	/**
-	 * Calculates the money that can be paid instead of cards.
+	 * Calculates the {@link Coins} that can be paid instead of cards.
 	 * 
 	 * @param difference
 	 *            the number of missing cards
@@ -114,5 +108,4 @@ public class ABuyPermissionCard extends Action {
 		return difference * 3 + 1;
 	}
 
-	
 }

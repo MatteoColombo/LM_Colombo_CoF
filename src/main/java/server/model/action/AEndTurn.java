@@ -4,22 +4,26 @@ import server.model.TurnManager;
 import server.model.player.Player;
 
 /**
- * This is the action which is used when a player wants to end its turn without
- * doing all the actions that he is permitted. This work only if all the
- * player's main actions are done
+ * An Action that is used by this Player when he wants to end his turn without
+ * doing the ExtraAction that he could have done; this works only if all the
+ * Player's MainActions are already done.
  * 
  * @author Matteo Colombo
- *
+ * @see Action
+ * @see Player
+ * @see TurnManager
  */
 public class AEndTurn extends Action {
 	private TurnManager turnManager;
 
 	/**
-	 * This method checks if all the main action were done, in case it allows
-	 * the Action to be created. Otherwise it throws an exception
+	 * Checks if the {@link Player} has done all his {@link Action MainActions};
+	 * it will throw an exception if the Action conditions are not satisfied.
 	 * 
 	 * @param player
+	 *            the Player who wants to end his turn
 	 * @param turnManager
+	 *            the TurnManager of the Game
 	 * @throws IllegalActionException
 	 */
 	public AEndTurn(Player player, TurnManager turnManager) throws IllegalActionException {
@@ -28,10 +32,6 @@ public class AEndTurn extends Action {
 			throw new IllegalActionException("You must complete all your main actions before you can end the turn");
 	}
 
-	/**
-	 * This method is called by the turn manager and it is used to say that the
-	 * player decided to end his turn.
-	 */
 	@Override
 	public void execute() {
 		turnManager.setWantToEnd();

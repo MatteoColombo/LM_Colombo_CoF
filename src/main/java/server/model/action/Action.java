@@ -5,9 +5,9 @@ import server.model.player.Player;
 /**
  * A class that represents all the Actions this Player can do during his turn.
  * <p>
- * Each of them {@link #isMain() can be a main or an extra} Action, both with
- * different specific {@link #checkLegal(Player) conditions to be satisfied} to
- * be able to {@link #execute() be performed} by the Player.
+ * Each of them {@link #isMain() can be a MainAction or an ExtraAction}, both
+ * with different specific {@link #checkLegal(Player) conditions to be
+ * satisfied} to be able to {@link #execute() be performed} by the Player.
  *
  * @see Player
  */
@@ -24,8 +24,8 @@ public abstract class Action {
 	}
 
 	/**
-	 * Initializes the Action with this {@link Player} and if this Action it's
-	 * main or extra. Then it will check if the Player's conditions are
+	 * Initializes the Action with this {@link Player} and if this Action it's a
+	 * MainAction or ExtraAction. Then it will check if the Player's conditions are
 	 * satisfied, otherwise it will throw an exception.
 	 * 
 	 * @param main
@@ -45,7 +45,7 @@ public abstract class Action {
 	/**
 	 * Returns if the Action is or not main.
 	 * 
-	 * @return <code>true</code> if the action is main, <code>false</code>
+	 * @return <code>true</code> if the Action is a MainAction, <code>false</code>
 	 *         otherwise
 	 * @see Action
 	 */
@@ -65,7 +65,7 @@ public abstract class Action {
 	 * 
 	 * @param p
 	 *            the Player who wants to perform the Action
-	 * @return <code>true</code> if the action conditions are satisfied,
+	 * @return <code>true</code> if the Action conditions are satisfied,
 	 *         <code>false</code> otherwise
 	 * @see Action
 	 */

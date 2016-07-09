@@ -9,11 +9,10 @@ import server.model.player.Assistants;
 import server.model.player.Player;
 
 /**
- * An Action that is used by this Player to {@link #execute() add a new Councillor}
- * in a Council of his choice, making it slide and removing the oldest one for 1
- * Assistant.
+ * An Action that is used by this Player to add a new Councillor in a Council of
+ * his choice, making it slide and removing the oldest one for 1 Assistant.
  * <p>
- * This is an extra Action.
+ * This is an ExtraAction.
  * 
  * @see Action
  * @see Assistants
@@ -63,11 +62,6 @@ public class ASlideCouncilWithAssistant extends Action {
 
 	}
 
-	/**
-	 * Executes the current {@link Action}.
-	 * 
-	 * @see ASlideCouncilWithAssistant
-	 */
 	@Override
 	public void execute() {
 		pool.slideCouncilor(council, councilorColor);

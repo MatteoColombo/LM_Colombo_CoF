@@ -4,10 +4,10 @@ import server.model.player.Assistants;
 import server.model.player.Player;
 
 /**
- * An Action that is used by this Player to {@link #execute() buy a new main
- * Action} for 3 Assistants.
+ * An Action that is used by this Player to buy a new MainAction for 3
+ * Assistants.
  * <p>
- * This is an extra Action.
+ * This is an ExtraAction.
  * 
  * @see Action
  * @see Assistants
@@ -19,11 +19,11 @@ public class AExtraMainAction extends Action {
 
 	/**
 	 * Checks if the {@link Player} has enough {@link Assistants} to buy a new
-	 * main {@link Action}; it will throw an exception if the Action conditions
-	 * are not satisfied.
+	 * {@link Action MainAction}; it will throw an exception if the Action
+	 * conditions are not satisfied.
 	 * 
 	 * @param player
-	 *            the Player who wants to buy a new main Action
+	 *            the Player who wants to buy a new MainAction
 	 * @throws IllegalActionException
 	 * @see AExtraMainAction
 	 */
@@ -35,11 +35,6 @@ public class AExtraMainAction extends Action {
 		this.player = player;
 	}
 
-	/**
-	 * Executes the current {@link Action}.
-	 * 
-	 * @see AExtraMainAction
-	 */
 	@Override
 	public void execute() {
 		player.getAssistants().decreaseAmount(ACTIONCOST);

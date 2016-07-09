@@ -5,10 +5,9 @@ import server.model.player.Coins;
 import server.model.player.Player;
 
 /**
- * An Action that is used by this Player to {@link #execute() buy an Assistants}
- * for 3 Coins.
+ * An Action that is used by this Player to buy an Assistants for 3 Coins.
  * <p>
- * This is an extra Action.
+ * This is an ExtraAction.
  * 
  * @see Action
  * @see Assistants
@@ -25,7 +24,7 @@ public class ABuyAssistant extends Action {
 	 * {@link Action} conditions are not satisfied.
 	 * 
 	 * @param player
-	 *            the Player who wants to buy an Assistants
+	 *            the Player who wants to buy an Assistant
 	 * @throws IllegalActionException
 	 * @see ABuyAssistant
 	 */
@@ -37,11 +36,6 @@ public class ABuyAssistant extends Action {
 		}
 	}
 
-	/**
-	 * Executes the current {@link Action}.
-	 * 
-	 * @see ABuyAssistant
-	 */
 	@Override
 	public void execute() {
 		player.getCoins().decreaseAmount(ASSISTANTPRICE);

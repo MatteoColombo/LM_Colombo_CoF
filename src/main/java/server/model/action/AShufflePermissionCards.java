@@ -5,10 +5,10 @@ import server.model.player.Assistants;
 import server.model.player.Player;
 
 /**
- * An Action that is used by this Player to {@link #execute() shuffle the faced-up
- * PermissionCards} of a Region for 1 Assistant.
+ * An Action that is used by this Player to shuffle the faced-up PermissionCards
+ * of a Region for 1 Assistant.
  * <p>
- * This is an extra Action.
+ * This is an ExtraAction.
  * 
  * @see Action
  * @see Assistants
@@ -41,11 +41,6 @@ public class AShufflePermissionCards extends Action {
 		this.region = region;
 	}
 
-	/**
-	 * Executes the current {@link Action}.
-	 * 
-	 * @see AShufflePermissionCards
-	 */
 	@Override
 	public void execute() {
 		player.getAssistants().decreaseAmount(ACTIONCOST);

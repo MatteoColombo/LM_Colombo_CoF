@@ -15,16 +15,16 @@ import server.model.reward.BoardReward;
 import server.model.reward.Reward;
 
 /**
- * An Action that is used by this Player to {@link #execute() build a new
- * Emporium} in a City of his choice for a valid PermissionCard; one extra
- * Assistant have to be payed for every other Emporium of the others Players
- * already in that City. The Player is also awarded with that City Rewards and
- * the ones of all the adjacent Cities where the Player has already one Emporium
- * and if he has placed an Emporium in each City of a Region or in each City of
- * the same Color, he will be also awarded with an extra BoardReward and a
+ * An Action that is used by this Player to build a new Emporium in a City of
+ * his choice for a valid PermissionCard; one extra Assistant have to be payed
+ * for every other Emporium of the others Players already in that City. The
+ * Player is also awarded with that City Rewards and the ones of all the
+ * adjacent Cities where the Player has already one Emporium and if he has
+ * placed an Emporium in each City of a Region or in each City of the same
+ * Color, he will be also awarded with an extra BoardReward and a
  * BoardKingRewards, if they are still available.
  * <p>
- * This is an main Action.
+ * This is a MainAction.
  * 
  * @see Action
  * @see Assistants
@@ -84,11 +84,6 @@ public class ABuildEmporium extends Action {
 			throw new IllegalActionException("this card was already used!");
 	}
 
-	/**
-	 * Executes the current {@link Action}.
-	 * 
-	 * @see ABuildEmporium
-	 */
 	@Override
 	public void execute() {
 		player.getAssistants().decreaseAmount(chosenCity.getNumberOfEmporium());

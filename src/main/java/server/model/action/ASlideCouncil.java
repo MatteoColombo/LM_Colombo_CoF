@@ -9,11 +9,11 @@ import server.model.player.Coins;
 import server.model.player.Player;
 
 /**
- * An Action that is used by this Player to {@link #execute() add a new Councillor}
- * in a Council of his choice, making it slide, removing the oldest one and
- * giving the Player 4 Coins.
+ * An Action that is used by this Player to add a new Councillor in a Council of
+ * his choice, making it slide, removing the oldest one and giving the Player 4
+ * Coins.
  * <p>
- * This is a main Action.
+ * This is a MainAction.
  * 
  * @see Action
  * @see Coins
@@ -58,11 +58,6 @@ public class ASlideCouncil extends Action {
 		}
 	}
 
-	/**
-	 * Executes the current {@link Action}.
-	 * 
-	 * @see ASlideCouncil
-	 */
 	@Override
 	public void execute() {
 		pool.slideCouncilor(council, councilorColor);

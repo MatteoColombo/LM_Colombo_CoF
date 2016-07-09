@@ -19,20 +19,20 @@ import server.model.reward.BoardReward;
 import server.model.reward.Reward;
 
 /**
- * An Action that is used by a Player to {@link #execute() build a new Emporium}
- * in a City of his choice using the King for an amount of Coins based on the
- * number of PoliticCards used to satisfy the King Council and for an other
- * amount of Coins calculated from the number of adjacent Cities the King has to
- * move through to arrive at the chosen City; if multicolor PoliticCards are
- * used, extra Coins have to be payed and one extra Assistant have to be payed
- * for every other Emporium of the others Players already in that City. The
- * Player is also awarded with that City Rewards and the ones of all the
- * adjacent Cities where the Player has already one Emporium and if he has
- * placed an Emporium in each City of a Region or in each City of the same
- * Color, he will be also awarded with an extra BoardReward and a
- * BoardKingRewards, if they are still available.
+ * An Action that is used by a Player to build a new Emporium in a City of his
+ * choice using the King for an amount of Coins based on the number of
+ * PoliticCards used to satisfy the King Council and for an other amount of
+ * Coins calculated from the number of adjacent Cities the King has to move
+ * through to arrive at the chosen City; if multicolor PoliticCards are used,
+ * extra Coins have to be payed and one extra Assistant have to be payed for
+ * every other Emporium of the others Players already in that City. The Player
+ * is also awarded with that City Rewards and the ones of all the adjacent
+ * Cities where the Player has already one Emporium and if he has placed an
+ * Emporium in each City of a Region or in each City of the same Color, he will
+ * be also awarded with an extra BoardReward and a BoardKingRewards, if they are
+ * still available.
  * <p>
- * This is an main Action.
+ * This is a MainAction.
  * 
  * @see Action
  * @see Assistants
@@ -103,7 +103,7 @@ public class ABuildEmporiumWithKing extends Action {
 		int difference = king.getKingCouncil().compareCardCouncil(politicCards);
 		priceForTheKingCouncil = calculatePrice(difference);
 		priceForTheKingCouncil += calculatePriceMultipleColoredCards();
-		
+
 		if (chosenCity.hasEmporiumOfPlayer(player) || this.player.getEmporium().isEmpty()) {
 			throw new IllegalActionException("you can't build an emporium here!");
 		}
@@ -122,11 +122,6 @@ public class ABuildEmporiumWithKing extends Action {
 
 	}
 
-	/**
-	 * Executes the current {@link Action}.
-	 * 
-	 * @see ABuildEmporiumWithKing
-	 */
 	@Override
 	public void execute() {
 		king.moveKing(chosenCity);

@@ -1,7 +1,9 @@
 package server.control.dialogue.notify;
 
 import client.control.ViewInterface;
-
+/**
+ * Notify that the market selling round started
+ */
 public class NotifyMarketSellStarted implements Notify {
 
 	/**

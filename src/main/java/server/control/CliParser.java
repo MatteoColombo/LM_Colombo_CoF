@@ -17,6 +17,9 @@ public class CliParser {
 	public static final String OPTCARDS ="politic";
 	public static final String OPTCOLOR ="color";
 	
+	/**
+	 * Create a new CliParser for the action parsing
+	 */
 	public CliParser() {
 
 		opt = new Options()
@@ -32,6 +35,10 @@ public class CliParser {
 		opt.addOption(cards);
 	}
 	
+	/**
+	 * parse the passed tokenized strings array representing an action
+	 * @throws ParseException
+	 */
 	public CommandLine computeRequest(String[] args) throws ParseException {
 		return parser.parse(opt, args);
 	}

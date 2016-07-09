@@ -82,7 +82,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			primaryStage.setScene(scene);
 			// Give the controller access to the main app.
 			RoomController roomController = loader.getController();
-			roomController.setMainApp(this);
+			roomController.setAll(this);
 		} catch (IOException e) {
 			log.log( Level.SEVERE, e.toString(), e );
 		}
@@ -137,7 +137,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			primaryStage.show();
 			// Give the controller access to the main app.
 			RoomController roomController = loader.getController();
-			roomController.setMainApp(this);
+			roomController.setAll(this);
 
 		} catch (IOException e) {
 			log.log( Level.SEVERE, e.toString(), e );

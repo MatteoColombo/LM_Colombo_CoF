@@ -46,6 +46,12 @@ public class SocketClient implements ClientInt {
 	private Logger logger = Logger.getGlobal();
 	private final int timeout;
 
+	/**
+	 * Create a new SocketClient
+	 * @param clientSocket the Socket where the client will connect
+	 * @param timeout an integer representing the time a player have to play his turn, in seconds
+	 * @throws IOException
+	 */
 	public SocketClient(Socket clientSocket, int timeout) throws IOException {
 		this.clientSocket = clientSocket;
 		this.inputStream = clientSocket.getInputStream();

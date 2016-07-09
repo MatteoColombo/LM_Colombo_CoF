@@ -51,6 +51,16 @@ public class PermissionCard implements Soldable, Serializable {
 		this.reward = reward;
 		this.used = false;
 	}
+	
+	/**
+	 * Copy-constructor
+	 * @param p the permission card to clone
+	 */
+	public PermissionCard(PermissionCard p) {
+		this.cities = p.cities;
+		this.reward = p.reward;
+		this.used = p.used;
+	}
 
 	/**
 	 * Initializes the PermissionCard with the {@link City Cities} (at least
@@ -154,6 +164,6 @@ public class PermissionCard implements Soldable, Serializable {
 	
 	@Override
 	public Soldable newCopy(){
-		return new PermissionCard(this.cities, this.reward);
+		return new PermissionCard(this);
 	}
 }

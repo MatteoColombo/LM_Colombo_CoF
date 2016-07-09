@@ -92,19 +92,17 @@ public class Market {
 				try {
 					players.get((i + starting) % players.size()).getClient().askPlayerItemToBuy(itemsOnSale);
 				} catch (IOException e) {
-					logger.log(Level.SEVERE, e.getMessage(), e);
 					playerWantsToStop = true;
 				}
 			}
-		}
-		
-		for(Player player : players) {
+			
 			try {
-				player.getClient().notify(new NotifyMarketEnded());
+				players.get((i + starting) % players.size()).getClient().notify(new NotifyMarketEnded());
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, e.getMessage(), e);
-				player.setSuspension(true);
+				players.get((i + starting) % players.size()).setSuspension(true);
 			}
+
 		}
 	}
 

@@ -2,7 +2,9 @@ package server.control.instruction.update;
 
 import client.model.ModelInterface;
 import server.model.board.council.Council;
-
+/**
+ * Updates a council when changes occures
+ */
 public class UpdateCouncil implements Update{
 	
 	/**
@@ -16,8 +18,8 @@ public class UpdateCouncil implements Update{
 	/**
 	 * Notify to update a council in the client.
 	 * By convention, the king council's number is -1
-	 * @param c
-	 * @param i
+	 * @param c The updated council
+	 * @param index the council's index 
 	 */
 	public UpdateCouncil(Council c, int index) {
 		this.council = c;

@@ -7,7 +7,7 @@ import client.model.ModelInterface;
  * @author Matteo Colombo
  *
  */
-public class NotifyKingLocation implements Update {
+public class UpdateKingLocation implements Update {
 
 	private static final long serialVersionUID = 2653404705987899118L;
 	private String location;
@@ -16,7 +16,7 @@ public class NotifyKingLocation implements Update {
 	 * Sets the city in which the king is located,  
 	 * @param location the name of the city
 	 */
-	public NotifyKingLocation(String location) {
+	public UpdateKingLocation(String location) {
 		this.location=location;
 	}
 	@Override

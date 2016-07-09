@@ -3,13 +3,21 @@ package server.control.instruction.update;
 import client.model.ModelInterface;
 import server.model.player.Player;
 
-public class NotifyUpdatePlayer implements Update {
+/**
+ * Refresh the data of a player
+ */
+public class UpdatePlayer implements Update {
 
 	private static final long serialVersionUID = 1L;
 	private Player player;
 	private int index;
 
-	public NotifyUpdatePlayer(Player player, int index) {
+	/**
+	 * Create a new NotifyUpdatePlayer
+	 * @param player the new player data to replace
+	 * @param index the index of the player to replace
+	 */
+	public UpdatePlayer(Player player, int index) {
 		this.player = player;
 		this.index = index;
 	}

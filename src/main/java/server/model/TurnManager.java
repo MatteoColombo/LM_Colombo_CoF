@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import server.control.instruction.notify.NotifyPlayerDisconnected;
 import server.control.instruction.update.NotifyTurnEnded;
-import server.control.instruction.update.NotifyUpdatePlayer;
+import server.control.instruction.update.UpdatePlayer;
 import server.control.instruction.update.NotifyYourTurn;
 import server.model.action.Action;
 import server.model.player.Player;
@@ -134,7 +134,7 @@ public class TurnManager {
 	public void notifyUpdatePlayer() throws IOException {
 		for (Player p : players) {
 			if (!p.getSuspended())
-				p.getClient().notify(new NotifyUpdatePlayer(players.get(playerIndex).getClientCopy(), playerIndex));
+				p.getClient().notify(new UpdatePlayer(players.get(playerIndex).getClientCopy(), playerIndex));
 		}
 	}
 

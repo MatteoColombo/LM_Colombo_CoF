@@ -7,6 +7,10 @@ import client.model.ModelInterface;
 import server.control.instruction.update.Update;
 import server.model.market.OnSaleItem;
 
+/**
+ * Request for the market round
+ * It ask the player which item he wants to buy
+ */
 public class RequestWhichItemToBuy implements Update, Request{
 
 	private static final long serialVersionUID = -7887621821680475222L;

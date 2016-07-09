@@ -16,15 +16,15 @@ import server.Server;
 import server.control.connection.ClientInt;
 import server.control.instruction.notify.NotifyGameLoading;
 import server.control.instruction.notify.NotifyGameStarted;
-import server.control.instruction.update.NotifyKingLocation;
+import server.control.instruction.update.UpdateKingLocation;
 import server.control.instruction.update.NotifyPlayerJoined;
 import server.control.instruction.update.NotifyPlayersList;
-import server.control.instruction.update.NotifyUpdatePlayer;
+import server.control.instruction.update.UpdatePlayer;
 import server.control.instruction.update.UpdateBoardRewards;
 import server.control.instruction.update.UpdateCouncil;
 import server.control.instruction.update.UpdateEmporiumBuilt;
 import server.control.instruction.update.UpdateRegionPermission;
-import server.control.instruction.update.UpdateSendCityBonus;
+import server.control.instruction.update.UpdateSendCityRewards;
 import server.control.instruction.update.UpdateSetConnections;
 import server.model.Game;
 import server.model.GameListener;
@@ -366,7 +366,7 @@ public class Controller implements GameListener {
 	}
 
 	/**
-	 * send a {@link NotifyUpdatePlayer} to all clients connected to the game,
+	 * send a {@link UpdatePlayer} to all clients connected to the game,
 	 * when the player's parameter change in the model. If the client is
 	 * disconnected it is immediately suspended
 	 * 
@@ -378,7 +378,7 @@ public class Controller implements GameListener {
 		Player simplifiedClone = new Player(player);
 		for (ClientInt client : clients) {
 			try {
-				client.notify(new NotifyUpdatePlayer(simplifiedClone, playerIndex));
+				client.notify(new UpdatePlayer(simplifiedClone, playerIndex));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
 			}
@@ -502,7 +502,7 @@ public class Controller implements GameListener {
 		Set<ClientInt> clients = playersMap.keySet();
 		for (ClientInt client : clients) {
 			try {
-				client.notify(new UpdateSendCityBonus(rewards));
+				client.notify(new UpdateSendCityRewards(rewards));
 			} catch (IOException e) {
 				logger.log(Level.WARNING, e.getMessage(), e);
 			}
@@ -611,7 +611,7 @@ public class Controller implements GameListener {
 	}
 
 	/**
-	 * send a {@link NotifyKingLocation} to the clients
+	 * send a {@link UpdateKingLocation} to the clients
 	 * 
 	 * @param city
 	 *            the new city where the king is placed
@@ -621,7 +621,7 @@ public class Controller implements GameListener {
 		for (ClientInt client : clients) {
 			if (!playersMap.get(client).getSuspended())
 				try {
-					client.notify(new NotifyKingLocation(city));
+					client.notify(new UpdateKingLocation(city));
 				} catch (IOException e) {
 					logger.log(Level.WARNING, e.getMessage(), e);
 				}

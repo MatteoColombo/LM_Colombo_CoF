@@ -6,6 +6,7 @@ import server.control.dialogue.Dialogue;
 
 /**
  * This is the dialogue which is sent when a response from the client is requested
+ * When a request is sent, the client must send the asked informations
  * @author Matteo Colombo
  *
  */

@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import server.control.Controller;
 import server.control.connection.ClientInt;
 import server.control.dialogue.Dialogue;
-import server.control.dialogue.notify.NotifyBonusFromCities;
 import server.control.dialogue.notify.NotifyIllegalAction;
 import server.control.dialogue.request.RequestCity;
 import server.control.dialogue.request.RequestConfigurationMethod;
@@ -144,10 +143,9 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void askCityToGetNobilityReward(int citiesNumber) throws IOException {
-		client.sendNotify(new NotifyBonusFromCities(citiesNumber));
 		List<String> cities = new ArrayList<>();
 		for (int i = 0; i < citiesNumber; i++) {
-			cities.add(client.requestAnswer(new RequestCity()));
+			cities.add(client.requestAnswer(new RequestCity(citiesNumber)));
 		}
 		controller.parseBonusGetCityBonus(cities, this);
 	}

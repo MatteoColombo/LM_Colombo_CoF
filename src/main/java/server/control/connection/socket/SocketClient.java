@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 import server.control.Controller;
 import server.control.connection.ClientInt;
 import server.control.dialogue.Dialogue;
-import server.control.dialogue.notify.NotifyBonusFromCities;
 import server.control.dialogue.notify.NotifyIllegalAction;
 import server.control.dialogue.request.RequestCity;
 import server.control.dialogue.request.RequestConfigurationMethod;
@@ -179,11 +178,10 @@ public class SocketClient implements ClientInt {
 
 	@Override
 	public void askCityToGetNobilityReward(int citiesNumber) throws IOException {
-		out.writeObject(new NotifyBonusFromCities(citiesNumber));
-		out.flush();
+
 		List<String> cities = new ArrayList<>();
 		for (int i = 0; i < citiesNumber; i++) {
-			out.writeObject(new RequestCity());
+			out.writeObject(new RequestCity(citiesNumber));
 			out.flush();
 			try {
 				cities.add((String) in.readObject());

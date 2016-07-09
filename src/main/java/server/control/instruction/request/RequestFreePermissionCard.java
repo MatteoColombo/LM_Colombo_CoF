@@ -12,7 +12,7 @@ public class RequestFreePermissionCard implements Request{
 
 	@Override
 	public void execute(ViewInterface view) {
-		view.changeStatusToNobilityBonus("You can choose a free permission card: (Read the README for the instructions)","takePermission");
+		view.changeStatusToNobilityBonus("You can choose a free permission card","takePermission");
 	}
 
 }

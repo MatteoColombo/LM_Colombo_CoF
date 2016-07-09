@@ -11,7 +11,7 @@ public class RequestWhichItemToSell implements Request {
 
 	@Override
 	public void execute(ViewInterface view) {
-		view.printMessage("Write the item that you want to put on sale: (Read the README for the instructions)");
+		view.printMessage("choose the item that you want to put on sale");
 	}
 
 }

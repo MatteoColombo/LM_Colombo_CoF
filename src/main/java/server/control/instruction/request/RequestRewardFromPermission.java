@@ -11,7 +11,7 @@ public class RequestRewardFromPermission implements Request{
 
 	@Override
 	public void execute(ViewInterface view) {
-		view.changeStatusToNobilityBonus("You can choose the reward from one of you permission cards: (Read the README for instructions)", "fromPermit");
+		view.changeStatusToNobilityBonus("You can choose the reward from one of your permission cards", "fromPermit");
 	}
 
 }

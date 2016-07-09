@@ -32,6 +32,7 @@ public class TestMapLoader {
 	public void test() throws Exception{
 		MapLoader ml= new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors) );
 		assertEquals(ml.getRegionsNumber(),3);
+		ml.loadConnections();
 		ml.getRegions();
 		ml.getKingCity();
 		
@@ -41,5 +42,12 @@ public class TestMapLoader {
 	public void testExceptionMaokXML() throws Exception{
 		MapLoader ml = new MapLoader("src/file.xml", new CouncilorPool(4, 4, colors));
 		ml.getCitiesList();
+	}
+	
+	@Test
+	public void testRandomGenerator() throws MapXMLFileException{
+		MapLoader ml= new MapLoader("src/main/resources/map.xml", new CouncilorPool(4, 4, colors) );
+		ml.generateConnections();
+		assertEquals(ml.getRegionsNumber(),3);
 	}
 }

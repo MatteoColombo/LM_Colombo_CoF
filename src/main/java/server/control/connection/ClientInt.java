@@ -3,8 +3,8 @@ package server.control.connection;
 import java.io.IOException;
 import java.util.List;
 
-import instruction.Instruction;
 import server.control.Controller;
+import server.control.instruction.Instruction;
 import server.model.action.IllegalActionException;
 import server.model.market.OnSaleItem;
 

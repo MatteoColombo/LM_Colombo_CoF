@@ -3,7 +3,7 @@ package server.control.connection.rmi;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import instruction.Instruction;
+import server.control.instruction.Instruction;
 
 /**
  * This class represents the client in an RMI connection and it is the remote object on which the server works

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import instruction.Instruction;
 import server.control.connection.rmi.RMIServerManagerInterface;
+import server.control.instruction.Instruction;
 
 /**
  * This is the remote object which is sent to the server, it represents the implementation of the skeleton

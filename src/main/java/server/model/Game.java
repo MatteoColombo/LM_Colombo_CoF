@@ -7,10 +7,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import instruction.notify.NotifyClassification;
-import instruction.update.NotifyPlayerJoined;
-import instruction.update.UpdateEmporiumBuilt;
 import server.control.connection.ClientInt;
+import server.control.instruction.notify.NotifyClassification;
+import server.control.instruction.update.NotifyPlayerJoined;
+import server.control.instruction.update.UpdateEmporiumBuilt;
 import server.model.board.Board;
 import server.model.board.Region;
 import server.model.board.city.City;

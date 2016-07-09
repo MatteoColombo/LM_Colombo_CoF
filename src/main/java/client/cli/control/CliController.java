@@ -14,11 +14,11 @@ import client.control.Controller;
 import client.control.RMIServerManager;
 import client.control.ServerManager;
 import client.control.SocketServerManager;
-import instruction.Instruction;
-import instruction.notify.Notify;
-import instruction.request.Request;
-import instruction.update.Update;
 import server.control.connection.ServerInt;
+import server.control.instruction.Instruction;
+import server.control.instruction.notify.Notify;
+import server.control.instruction.request.Request;
+import server.control.instruction.update.Update;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 

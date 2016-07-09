@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import instruction.notify.NotifyPlayerDisconnected;
-import instruction.update.NotifyTurnEnded;
-import instruction.update.NotifyUpdatePlayer;
-import instruction.update.NotifyYourTurn;
+import server.control.instruction.notify.NotifyPlayerDisconnected;
+import server.control.instruction.update.NotifyTurnEnded;
+import server.control.instruction.update.NotifyUpdatePlayer;
+import server.control.instruction.update.NotifyYourTurn;
 import server.model.action.Action;
 import server.model.player.Player;
 import server.model.player.PoliticCard;

@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import org.apache.log4j.*;
 
-import instruction.Instruction;
+import server.control.instruction.Instruction;
 
 public class SocketServerManager extends Thread implements ServerManager {
 	private Controller controller;

@@ -1,6 +1,6 @@
 package client.control;
 
-import instruction.Instruction;
+import server.control.instruction.Instruction;
 
 /**
  * This is the class that needs to be implemented by the client side controllers

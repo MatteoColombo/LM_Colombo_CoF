@@ -23,7 +23,6 @@ import server.model.market.Soldable;
  * @see Player
  */
 public class PoliticCard implements Serializable, Soldable {
-
 	private static final long serialVersionUID = 3808938190487455501L;
 	private Color color;
 	private boolean isMultipleColor;
@@ -111,9 +110,9 @@ public class PoliticCard implements Serializable, Soldable {
 	public String getMarketMessage(Configuration config) {
 		return "politic " + (this.isMultipleColor ? "multi " : config.getColorsTranslationReverse().get(color) + " ");
 	}
-	
+
 	@Override
-	public Soldable newCopy(){
+	public Soldable newCopy() {
 		return new PoliticCard(this.color);
 	}
 

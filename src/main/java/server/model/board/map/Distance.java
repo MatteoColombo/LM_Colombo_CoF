@@ -4,8 +4,9 @@ import server.model.board.city.City;
 import server.model.board.city.CityConnection;
 
 /**
- * A class that represent the distance between a City (an intermediate or the
- * terminal one) and the beginning one.
+ * A class that represent the {@link #getDistance() distance} between a
+ * {@link #getCity() City} (an intermediate or the terminal one) and the
+ * beginning one.
  * 
  * @see City
  * @see CityConnection

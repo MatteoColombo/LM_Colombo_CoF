@@ -12,7 +12,6 @@ import server.model.player.Player;
  * @see Player
  */
 public class BNobility extends Bonus {
-
 	private static final long serialVersionUID = -3756662449122371548L;
 	private static final int VALUE = 30;
 	private static final String NAME = "nobility";

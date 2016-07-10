@@ -70,7 +70,7 @@ public class Game extends Thread {
 	public void configGame() throws ConfigurationErrorException {
 		try {
 			initialClient.askConfigurationMethod();
-			if(!randomConfig)
+			if (!randomConfig)
 				initialClient.askConfiguration(maxNumberOfPlayers);
 		} catch (IOException ioe) {
 			throw new ConfigurationErrorException(ioe);
@@ -132,12 +132,13 @@ public class Game extends Thread {
 		boolean someoneWon = false;
 		checkAndConfigGameForTwo();
 		turnManager = new TurnManager(players, config.getColorsList());
-		while (!someoneWon && countSuspendedPlayers()<players.size()-1) {
+		while (!someoneWon && countSuspendedPlayers() < players.size() - 1) {
 			someoneWon = regularCycle();
 			runMarket(someoneWon);
 		}
 
 		lastCycle();
+		removeServer();
 		giveExtraPoints();
 		calculateWinner();
 		publishWinner();
@@ -145,9 +146,19 @@ public class Game extends Thread {
 	}
 
 	/**
+	 * If the server was playing, it is removed before giving extra points so
+	 * that it isnt' sent to the client with the classification
+	 */
+	private void removeServer() {
+		Player temp = players.get(players.size() - 1);
+		if (SERVERNAME.equals(temp.getName()) && temp.getVictoryPoints().getAmount() == -1)
+			players.remove(temp);
+	}
+
+	/**
 	 * Removes the references and notifies the listeners
 	 */
-	public void cleanUp() {
+	private void cleanUp() {
 		for (Player p : players)
 			p.removeClient();
 		this.gameBoard = null;
@@ -231,12 +242,11 @@ public class Game extends Thread {
 	 * Assigns the extra points to the player who places the tenth emporium and
 	 * to the one who has more permission cards,
 	 */
-	public void giveExtraPoints() {
+	private void giveExtraPoints() {
 		players.get(winningPlayer).getVictoryPoints().increaseAmount(3);
 
 		int maxNobility = players.stream().mapToInt(p -> p.getNobility().getAmount()).max().orElse(-1);
-		int playersWithMax = (int) players.stream().filter(p -> p.getNobility().getAmount() == maxNobility)
-				.count();
+		int playersWithMax = (int) players.stream().filter(p -> p.getNobility().getAmount() == maxNobility).count();
 		players.stream().filter(p -> p.getNobility().getAmount() == maxNobility)
 				.forEach(p -> p.getVictoryPoints().increaseAmount(5));
 		if (playersWithMax > 1) {
@@ -255,7 +265,7 @@ public class Game extends Thread {
 	/**
 	 * It sorts the players list based on victory points
 	 */
-	public void calculateWinner() {
+	private void calculateWinner() {
 		players = players.stream().sorted((p1, p2) -> {
 			if (p1.getVictoryPoints().getAmount() > p2.getVictoryPoints().getAmount())
 				return -1;
@@ -277,11 +287,9 @@ public class Game extends Thread {
 	/**
 	 * publishes the classification
 	 */
-	public void publishWinner() {
+	private void publishWinner() {
 		List<Player> clones = new ArrayList<>();
 		for (Player p : players) {
-			if (SERVERNAME.equals(p.getName()) && p.getVictoryPoints().getAmount() == -1)
-				continue;
 			clones.add(p.getClientCopy());
 		}
 		for (Player p : players) {
@@ -389,6 +397,7 @@ public class Game extends Thread {
 
 	/**
 	 * Adds a GameListener to the list
+	 * 
 	 * @param listener
 	 */
 	public void addListener(GameListener listener) {
@@ -397,6 +406,7 @@ public class Game extends Thread {
 
 	/**
 	 * Sets the configuration method. True if random, false otherwise
+	 * 
 	 * @param randomConfig
 	 */
 	public void setConfigurationType(boolean randomConfig) {

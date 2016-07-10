@@ -361,10 +361,10 @@ public class GameController {
 	
 	private void initPermissionList() {
 		permissionList.setItems(myData.getPermissions());
-		permissionList.setCellFactory(listView -> new permissionCell());
+		permissionList.setCellFactory(listView -> new PermissionCell());
 	}
 
-	private class permissionCell extends ListCell<PermissionProperty> {
+	private class PermissionCell extends ListCell<PermissionProperty> {
 		@Override
 		public void updateItem(PermissionProperty item, boolean empty) {
 			super.updateItem(item, empty);

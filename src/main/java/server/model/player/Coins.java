@@ -13,7 +13,6 @@ import java.io.Serializable;
  * @see Player
  */
 public class Coins implements Serializable {
-
 	private static final long serialVersionUID = -5634469152427209044L;
 	private int amount;
 

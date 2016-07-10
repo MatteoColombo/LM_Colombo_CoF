@@ -12,7 +12,6 @@ import server.model.player.Player;
  * @see Player
  */
 public class BExtraMainAction extends Bonus {
-
 	private static final long serialVersionUID = 2652339487323746030L;
 	private static final int VALUE = 99;
 	private static final String NAME = "extra";

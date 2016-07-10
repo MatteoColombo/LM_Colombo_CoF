@@ -12,9 +12,10 @@ import java.util.Random;
  * {@link #getCouncil() creating a new Council} if {@link #canGenerateCouncil()
  * one of them is still missing} or simply
  * {@link #slideCouncilor(Council, Color) getting the one} in which add a
- * particular Councilor; it also knows, about {@link #getListColor() all the
- * Colors}, if one of them is {@link #isAvailable(Color) still not used} or if
- * there is no more {@link #isFull(Color) availability for one of them}.
+ * particular Councilor; about all the {@link #getListColor() available Colors},
+ * it also knows how many {@link #getCouncPerColor() Councilors are present for
+ * each Color} and if one of them is {@link #isAvailable(Color) still not used}
+ * or there is no more {@link #isFull(Color) availability for one of them}.
  * 
  * @see Color
  * @see Council
@@ -189,10 +190,11 @@ public class CouncilorPool {
 	public List<Color> getListColor() {
 		return this.colors;
 	}
-	
+
 	/**
+	 * Returns the number of {@link Councilor Councilors} per {@link Color}.
 	 * 
-	 * @return the number of councilors per color
+	 * @return the number of Councilors per Color
 	 */
 	public int getCouncPerColor() {
 		return this.concPerColor;

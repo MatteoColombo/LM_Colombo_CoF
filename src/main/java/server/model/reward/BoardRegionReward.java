@@ -24,7 +24,6 @@ import server.model.player.Player;
  * @see Reward
  */
 public class BoardRegionReward extends BoardReward {
-
 	private static final long serialVersionUID = -159897097059005958L;
 	private transient Region bRegionRewardKey;
 

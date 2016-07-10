@@ -13,7 +13,6 @@ import server.model.board.city.City;
  * @see Reward
  */
 public class RewardCity extends Reward {
-
 	private static final long serialVersionUID = 8328602223482028431L;
 
 	/**

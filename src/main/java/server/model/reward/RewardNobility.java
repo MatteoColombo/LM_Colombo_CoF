@@ -13,7 +13,6 @@ import server.model.board.nobility.NobilityTrack;
  * @see Reward
  */
 public class RewardNobility extends Reward {
-
 	private static final long serialVersionUID = -1108948848681251626L;
 
 	/**

@@ -12,7 +12,6 @@ import server.model.player.Assistants;
  * @see Player
  */
 public class BAssistants extends Bonus {
-
 	private static final long serialVersionUID = 7786633864808076814L;
 	private static final int VALUE = 33;
 	private static final String NAME = "assistants";

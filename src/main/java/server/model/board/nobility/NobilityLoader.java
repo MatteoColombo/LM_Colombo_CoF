@@ -51,19 +51,22 @@ public class NobilityLoader {
 		this.trackRewards = new ArrayList<>();
 		loadXML();
 	}
-	
+
 	/**
-	 * random generator
+	 * Initializes the NobilityLoader randomly.
+	 * 
+	 * @see NobilityLoader
+	 * @see Random
 	 */
 	public NobilityLoader() {
 		this.trackRewards = new ArrayList<>();
 		trackRewards.add(null);
-		
+
 		Random r = new Random();
-		
-		for(int i = 0; i < MAXLENGTH; i++) {
+
+		for (int i = 0; i < MAXLENGTH; i++) {
 			// 33% of chance that there is a bonus on the track
-			if(r.nextInt(3) == 0) {
+			if (r.nextInt(3) == 0) {
 				trackRewards.add(new RewardNobility());
 			} else {
 				trackRewards.add(null);

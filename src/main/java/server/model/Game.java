@@ -3,6 +3,7 @@ package server.model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -14,19 +15,42 @@ import server.control.instruction.update.UpdateEmporiumBuilt;
 import server.model.board.Board;
 import server.model.board.Region;
 import server.model.board.city.City;
+import server.model.board.map.MapLoader;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
 import server.model.configuration.XMLFileException;
 import server.model.market.Market;
+import server.model.player.Emporium;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
+import server.model.player.VictoryPoints;
 
 /**
- * This class represents the game class, for every game on the server a new Game
- * class is instantiated
+ * A class that represents the Game itself; for each one on the Server, a new
+ * Game class is instantiated.
+ * <p>
+ * The {@link #configGame() Configurations of the current Game} are decided by
+ * the first Client that will start a new instance of it: in the specific he can
+ * or {@link #setMaxNumberOfPlayers(int) set the max number} of
+ * {@link #getPlayers() Players} and {@link #setChoosenMap(int) the Map to play}
+ * or letting the Game itself to {@link #setConfigurationType(boolean) generate
+ * all randomly}; in any case {@link #getPlayersNumber() new Players} can
+ * {@link #addPlayer(ClientInt) be added} checking that {@link #isComplete() the
+ * set max will not be exceeded}. Then the Game will initialize some of its main
+ * objects such as {@link #getBoard() the Board}, {@link #getMarket() the
+ * Market} and {@link #getTurnManager() the TurnManager}; it will also create
+ * {@link #addListener(GameListener) a GameListener} as an event filter for the
+ * other classes.
  * 
  * @author Matteo Colombo
- *
+ * @see Board
+ * @see ClientInt
+ * @see Configuration
+ * @see GameListener
+ * @see MapLoader
+ * @see Market
+ * @see Player
+ * @see TurnManager
  */
 public class Game extends Thread {
 	private List<Player> players;
@@ -44,13 +68,15 @@ public class Game extends Thread {
 	private boolean randomConfig;
 
 	/**
-	 * Instantiates some objects and saves the configuration
+	 * Instantiates the {@link ClientInt initial Client} and saves the
+	 * {@link Configuration Configurations}.
 	 * 
 	 * @param gameConfig
-	 *            the configuration object
+	 *            the default Configurations
 	 * @param initialClient
-	 *            the client which is configuring the game
+	 *            the initial Client that will configure the Game
 	 * @throws ConfigurationErrorException
+	 * @see Game
 	 */
 	public Game(Configuration gameConfig, ClientInt initialClient) throws ConfigurationErrorException {
 		this.config = gameConfig;
@@ -61,11 +87,13 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This is the game configuration class, it asks to the initial client for
-	 * the max number of players and for the choosen gamemap, then it generates
-	 * the game elements
+	 * Configures the current Game, asking to the {@link ClientInt initial
+	 * Client} if randomly generate all the Game elements or manually set the
+	 * max number of {@link Player Player} and the Map to play.
 	 * 
 	 * @throws ConfigurationErrorException
+	 * @see Game
+	 * @see Random
 	 */
 	public void configGame() throws ConfigurationErrorException {
 		try {
@@ -83,12 +111,13 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This generates and initializes a player. The player is added to the
-	 * players list and then returned.
+	 * Generates and initializes a {@link ClientInt Client} of a new
+	 * {@link Player} adding it to the Players list and then returning itself.
 	 * 
 	 * @param client
-	 *            the ClientInt of the player
-	 * @return
+	 *            the Client of the new Player
+	 * @return the new Player
+	 * @see Game
 	 */
 	public synchronized Player addPlayer(ClientInt client) {
 		Player p = new Player(config, getPlayersNumber(), client, gameBoard.getNobleTrack());
@@ -97,36 +126,37 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * It Checks if the game is complete
+	 * Checks if the max availability of {@link Player Players} has been reached
+	 * or not.
 	 * 
-	 * @return true if the game is complete
+	 * @return <code>true</code> if the Game is full; <code>false</code>
+	 *         otherwise
+	 * @see Game
 	 */
 	public boolean isComplete() {
 		return players.size() == maxNumberOfPlayers;
 	}
 
 	/**
-	 * Returns the game board
+	 * Returns the {@link Board}.
 	 * 
 	 * @return the Board
+	 * @see Game
 	 */
 	public Board getBoard() {
 		return gameBoard;
 	}
 
 	/**
-	 * Returns the turn manager
+	 * Returns the {@link TurnManager}.
 	 * 
-	 * @return
+	 * @return the TurnManager
+	 * @see Game
 	 */
 	public TurnManager getTurnManager() {
 		return this.turnManager;
 	}
 
-	/**
-	 * This is the method which is ran by the game thread. it manages the market
-	 * and the game itself
-	 */
 	@Override
 	public void run() {
 		boolean someoneWon = false;
@@ -146,8 +176,11 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * If the server was playing, it is removed before giving extra points so
-	 * that it isnt' sent to the client with the classification
+	 * Removed the Server before giving extra {@link VictoryPoints} so that it
+	 * is not sent to the {@link ClientInt Client} with the classification; this
+	 * only if the Server was playing.
+	 * 
+	 * @see Game
 	 */
 	private void removeServer() {
 		Player temp = players.get(players.size() - 1);
@@ -156,7 +189,9 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * Removes the references and notifies the listeners
+	 * Removes all the references and notifies from the Game.
+	 * 
+	 * @see Game
 	 */
 	private void cleanUp() {
 		for (Player p : players)
@@ -175,9 +210,12 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This is the method which executes the regulare game cycle
+	 * Executes the regular {@link Game} turn cycle; this until a {@link Player}
+	 * has won.
 	 * 
-	 * @return true if a player placed the tenth emporium
+	 * @return <code>true</code> if a {@link Player} have placed its tenth
+	 *         Emporium; <code>false</code> otherwise
+	 * @see Game
 	 */
 	private boolean regularCycle() {
 		for (int i = 0; countSuspendedPlayers() < (players.size() - 1) && i < players.size(); i++) {
@@ -193,8 +231,10 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This is the extra cycle which allows all the players but the one which
-	 * placed the tenth emporium to play another turn
+	 * Allows all the {@link Player Players} but the one that placed the tenth
+	 * {@link Emporium} to play another turn.
+	 * 
+	 * @see Game
 	 */
 	private void lastCycle() {
 		for (int i = (winningPlayer + 1) % players.size(); countSuspendedPlayers() < (players.size() - 1)
@@ -206,9 +246,12 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This is the method which manages the market
+	 * Manages the {@link Market}.
 	 * 
 	 * @param someoneWon
+	 *            code>true</code> if a {@link Player} have placed its tenth
+	 *            Emporium; <code>false</code> otherwise
+	 * @see Game
 	 */
 	private void runMarket(boolean someoneWon) {
 		if (!someoneWon && countSuspendedPlayers() < players.size() - 1) {
@@ -218,8 +261,10 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This is the method which configures the game with the 2 players
-	 * regulation, in case there are only 2 clients connected
+	 * Configures the Game with the 2 {@link Player Players} regulation in case
+	 * there are only 2 {@link ClientInt Clients} connected.
+	 * 
+	 * @see Game
 	 */
 	private void checkAndConfigGameForTwo() {
 		if (players.size() > 2)
@@ -239,8 +284,11 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * Assigns the extra points to the player who places the tenth emporium and
-	 * to the one who has more permission cards,
+	 * Assigns the extra {@link VictoryPoints} to the {@link Player} who places
+	 * the tenth {@link Emporium} and to the one who has more
+	 * {@link PermissionCard PermissionCards}.
+	 * 
+	 * @see Game
 	 */
 	private void giveExtraPoints() {
 		players.get(winningPlayer).getVictoryPoints().increaseAmount(3);
@@ -254,7 +302,7 @@ public class Game extends Thread {
 		if (playersWithMax > 1) {
 			int secondNobility = players.stream().filter(p -> p.getNobility().getAmount() == maxNobility)
 					.mapToInt(p -> p.getNobility().getAmount()).max().orElse(-1);
-			
+
 			players.stream().filter(p -> p.getNobility().getAmount() == secondNobility)
 					.forEach(p -> p.getVictoryPoints().increaseAmount(2));
 		}
@@ -266,7 +314,10 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * It sorts the players list based on victory points
+	 * Sorts the {@link Player Players} list according to their
+	 * {@link VictoryPoints}.
+	 * 
+	 * @see Game
 	 */
 	private void calculateWinner() {
 		players = players.stream().sorted((p1, p2) -> {
@@ -288,7 +339,9 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * publishes the classification
+	 * Publishes the final {@link Player Players} classification.
+	 * 
+	 * @see Game
 	 */
 	private void publishWinner() {
 		List<Player> clones = new ArrayList<>();
@@ -307,67 +360,76 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * This returns the number of players connected
+	 * Returns the number of connected {@link Player Players}.
 	 * 
-	 * @return an integer, the number of players
+	 * @return the number of connected Players
+	 * @see Game
 	 */
 	public int getPlayersNumber() {
 		return players.size();
 	}
 
 	/**
-	 * This is used to change the max number of players, it is used before the
-	 * game starts
+	 * Sets the max number of {@link Player Players} before the Game starts.
 	 * 
 	 * @param maxNumberOfPlayers
+	 *            the max number of Players
+	 * @see Game
 	 */
 	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
 		this.maxNumberOfPlayers = maxNumberOfPlayers;
 	}
 
 	/**
-	 * This is used to choose the game map, it is used before the board is
-	 * initialized
+	 * Sets the desired Game Map before the {@link Board} is initialized.
 	 * 
 	 * @param map
-	 *            the index of the choosen map in the list
+	 *            the index of the chosen Map
+	 * @see Game
 	 */
 	public void setChoosenMap(int map) {
 		this.choosenMap = map;
 	}
 
 	/**
-	 * Return the list of the players
+	 * Return the list of the all the {@link Player Players}.
 	 * 
-	 * @return
+	 * @return all the Players
+	 * @see Game
 	 */
 	public List<Player> getPlayers() {
 		return players;
 	}
 
 	/**
-	 * @return the market
+	 * Returns the {@link Market}.
+	 * 
+	 * @return the Market
+	 * @see Game
 	 */
 	public Market getMarket() {
 		return this.market;
 	}
 
 	/**
-	 * Counts the number of suspended players
+	 * Counts the number of suspended {@link Player Players}.
 	 * 
-	 * @return the number of suspended players
+	 * @return the number of suspended Players
+	 * @see Game
 	 */
 	private int countSuspendedPlayers() {
 		return (int) players.stream().filter(Player::getSuspended).count();
 	}
 
 	/**
-	 * Sends the emporium of the Server to the clients
+	 * Sends the {@link Emporium} of the Server to the {@link ClientInt Clients}
+	 * .
 	 * 
 	 * @param name
-	 *            the server name
+	 *            the Server name
 	 * @param city
-	 *            the city in which the emporium is built
+	 *            the City where the Emporium is built
+	 * @see Game
 	 */
 	private void sendEmporium(int index, String city) {
 		for (Player p : players)
@@ -381,10 +443,11 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * Sends the server fake player to the clients
+	 * Sends the Server fake {@link Player} to the {@link ClientInt Clients}.
 	 * 
 	 * @param server
-	 *            the fake player
+	 *            the fake Player
+	 * @see Game
 	 */
 	private void sendServer(Player server) {
 		for (Player p : players)
@@ -399,18 +462,22 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * Adds a GameListener to the list
+	 * Adds a {@link GameListener} to the Game own list.
 	 * 
 	 * @param listener
+	 *            a GameListener
+	 * @see Game
 	 */
 	public void addListener(GameListener listener) {
 		this.listeners.add(listener);
 	}
 
 	/**
-	 * Sets the configuration method. True if random, false otherwise
+	 * Sets the Configuration method as manually or random.
 	 * 
 	 * @param randomConfig
+	 *            <code>true</code> if is random; false otherwise
+	 * @see Game
 	 */
 	public void setConfigurationType(boolean randomConfig) {
 		this.randomConfig = randomConfig;

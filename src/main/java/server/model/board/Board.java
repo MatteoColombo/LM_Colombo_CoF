@@ -51,6 +51,7 @@ import server.model.reward.BoardReward;
  * @see Council
  * @see Councilor
  * @see King
+ * @see MapLoader
  * @see NobilityTrack
  * @see Player
  * @see Region

@@ -1,16 +1,19 @@
 package server.model;
 
 /**
- * This is the interace that must be implemented by all the classes interested in some game events
+ * A interface that must be implemented by all the classes interested in some
+ * Game events.
+ * 
  * @author Matteo Colombo
- *
+ * @see Game
  */
 @FunctionalInterface
 public interface GameListener {
 
 	/**
-	 * This is the notifier of the game ended status
+	 * Notifiers the {@link Game} ended status.
 	 * 
+	 * @see GameListener
 	 */
 	public void gameEnded(Game game);
 }

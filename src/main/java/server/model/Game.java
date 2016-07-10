@@ -177,8 +177,9 @@ public class Game extends Thread {
 
 	/**
 	 * Removed the Server before giving extra {@link VictoryPoints} so that it
-	 * is not sent to the {@link ClientInt Client} with the classification; this
-	 * only if the Server was playing.
+	 * is not sent to the {@link ClientInt Client} with the classification.
+	 * <p>
+	 * This only if the Server is playing.
 	 * 
 	 * @see Game
 	 */
@@ -210,8 +211,9 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * Executes the regular {@link Game} turn cycle; this until a {@link Player}
-	 * has won.
+	 * Executes the regular {@link Game} turn cycle.
+	 * <p>
+	 * This until a {@link Player} has won.
 	 * 
 	 * @return <code>true</code> if a {@link Player} have placed its tenth
 	 *         Emporium; <code>false</code> otherwise

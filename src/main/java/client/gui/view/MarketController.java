@@ -44,7 +44,7 @@ public class MarketController {
 	private PlayerProperty myData;
 	private Stage dialogStage;
 
-	SnapshotParameters params = new SnapshotParameters();
+	private SnapshotParameters params = new SnapshotParameters();
 
 	@FXML
 	private void initialize() {

@@ -166,8 +166,8 @@ public class GameProperty implements ModelInterface {
 			List<BoardRegionReward> regionReward) {
 		for(int i = 0; i<regionReward.size();i++)
 			map.getRegions().get(i).setCounquerBonus(regionReward.get(i).getBRBonus().getAmount());
-		map.updateColorReward(colorReward);
-		map.updateKingBonus(kingReward);
+		map.setColorReward(colorReward);
+		map.setKingBonus(kingReward);
 			
 	}
 	
@@ -180,6 +180,9 @@ public class GameProperty implements ModelInterface {
 		}
 	}
 	
+	/**
+	 * @return the market, as a list of items
+	 */
 	public ObservableList<ItemProperty> getMarket() {
 		return this.market;
 	}

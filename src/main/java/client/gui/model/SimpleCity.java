@@ -31,13 +31,16 @@ public class SimpleCity {
 	private BooleanProperty hasKing;
 	private String name;
 	private String color;
-	/**
-	 * List containing the player's name who have an emporium here
-	 */
+
+	// List containing the player's name who have an emporium here
 	private ObservableList<Color> emporiums;
 	private List<SimpleBonus> bonuses;
 	private List<String> connections;
 	
+	/**
+	 * Create a new SimpleCity
+	 * @param city the city to unwrap
+	 */
 	public SimpleCity(City city) {
 		this.name = city.getName();
 		if(city.isCapital()) {
@@ -55,30 +58,53 @@ public class SimpleCity {
 		emporiums = FXCollections.observableArrayList();
 	}
 	
+	/**
+	 * @return the property saying if the king is here or not
+	 */
 	public BooleanProperty hasKing() {
 		return this.hasKing;
 	}
 	
+	/**
+	 * @return the name of the city
+	 */
 	public String getName() {
 		return this.name;
 	}
 	
+	/**
+	 * @return the list of emporiums, as colors
+	 */
 	public ObservableList<Color> getEmporiums() {
 		return this.emporiums;
 	}
 	
+	/**
+	 * @return the list of bonuses
+	 */
 	public List<SimpleBonus> getBonuses() {
 		return this.bonuses;
 	}
 	
+	/**
+	 * @return the list of connections
+	 */
 	public List<String> getConnections() {
 		return this.connections;
 	}
 	
+	/**
+	 * @return the path fot the image of this city
+	 */
 	public String getImagePath() {
 		return cityImages.get(color);
 	}
 	
+	/**
+	 * set the Bonuses of this city.
+	 * This make sense only in the initialization
+	 * @param reward the reward to unwrap
+	 */
 	public void setBonuses(Reward reward) {
 		this.bonuses = new ArrayList<>();
 		if(reward != null) {
@@ -89,10 +115,17 @@ public class SimpleCity {
 		}
 	}
 	
+	/**
+	 * set the king, if it is here or not
+	 */
 	public void setHasKing(boolean hasKing){
 		this.hasKing.set(hasKing);
 	}
 	
+	/**
+	 * set the connections for this city.
+	 * This make sense only in the initialization
+	 */
 	public void setConnections(List<CityConnection> connections){
 		this.connections.clear();
 		for(CityConnection conn: connections)

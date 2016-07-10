@@ -132,7 +132,7 @@ public class TestGUIModel {
 		
 		assertEquals(game.getMap().getColorBonuses().get("#008000").get(), 12);
 		
-		game.getMap().updateKingBonus(Arrays.asList());
+		game.getMap().setKingBonus(Arrays.asList());
 		assertEquals(game.getMap().kingBonus().get(), 0);
 	}
 	

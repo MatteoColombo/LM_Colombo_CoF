@@ -9,6 +9,10 @@ import server.model.reward.Reward;
 public class SimpleNobilityCell {
 	private List<SimpleBonus> bonuses;
 	
+	/**
+	 * Create a new NobiliyCell
+	 * @param reward the Reward to unwrap
+	 */
 	public SimpleNobilityCell(Reward reward) {
 			
 		bonuses = new ArrayList<>();
@@ -18,6 +22,9 @@ public class SimpleNobilityCell {
 		}
 	}
 	
+	/**
+	 * @return the cell bonuses
+	 */
 	public List<SimpleBonus> getBonuses() {
 		return this.bonuses;
 	}

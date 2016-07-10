@@ -40,7 +40,10 @@ public class PlayerProperty {
 	 */
 	private ObservableList<String> politicCards;
 	private ObservableList<PermissionProperty> permissions;
-		
+	
+	/**
+	 * Create a new empty PlayerProperty
+	 */
 	public PlayerProperty() {
 		canNotDoMainAction = new SimpleBooleanProperty(true);
 		canNotDoSideAction = new SimpleBooleanProperty(true);
@@ -54,14 +57,26 @@ public class PlayerProperty {
 		permissions = FXCollections.observableArrayList();	
 	}
 	
+	/**
+	 * set the player's color
+	 */
 	public void setColor(Color color) {
 		this.color = color;
 	}
 	
+	/**
+	 * @return the player's color
+	 */
 	public Color getColor() {
 		return this.color;
 	}
 
+	/**
+	 * set all the player's parameters except for the permission cards. 
+	 * This is only useful in the initialization
+	 * @param player the player server class
+	 * @return the setted PlayerProperty
+	 */
 	public PlayerProperty setAllButPermissions(Player player) {
 		canNotDoMainAction.set(player.getMainActionsLeft()>0? false:true);
 		canNotDoSideAction.set(player.getIfExtraActionDone());
@@ -82,56 +97,99 @@ public class PlayerProperty {
 		return this;
 	}
 
+	/**
+	 * Set every parameters of the playerProperty
+	 * @param player the given player from the server
+	 */
 	public void setAll(Player player) {
 		this.setAllButPermissions(player);
 		this.setAllPermissions(player);
 		
 	}
 	
+	/**
+	 * @return the name of the client as a property
+	 */
 	public StringProperty nameProperty() {
 		return name;
 	}
 
+	/**
+	 * @return a property with true if the player can not do any more main action,
+	 * false otherwise
+	 */
 	public BooleanProperty canNotDoMainAction() {
 		return this.canNotDoMainAction;
 	}
-	
+	/**
+	 * @return a property with true if the player can not do any more side action,
+	 * false otherwise
+	 */
 	public BooleanProperty canNotDoSideAction() {
 		return this.canNotDoSideAction;
 	}
 	
+	/**
+	 * @return a property with true if is not the player's turn,
+	 * false otherwise
+	 */
 	public BooleanProperty isNotMyTurn() {
 		return this.isNotMyTurn;
 	}
 	
+	/**
+	 * @return a property of the player's coins
+	 */
 	public IntegerProperty coinsProperty() {
 		return coins;
 	}
 	
+	/**
+	 * @return a property of the player's assistants
+	 */
 	public IntegerProperty assistantsProperty() {
 		return assistants;
 	}
 	
+	/**
+	 * @return a property of the player's victory points
+	 */
 	public IntegerProperty victoryProperty() {
 		return victory;
 	}
 	
+	/**
+	 * @return a property of the player's nobility points
+	 */
 	public IntegerProperty nobilityProperty() {
 		return nobility;
 	}
 	
+	/**
+	 * @return a list of string representing the politic cards colors
+	 */
 	public ObservableList<String> getPoliticCards() {
 		return this.politicCards;
 	}
 	
+	/**
+	 * @return the map for politic cards images
+	 */
 	public static Map<String, String> getPoliticCardsImages() {
 		return cardsImage;
 	}
 	
+	/**
+	 * @return a list of the player's permission
+	 */
 	public ObservableList<PermissionProperty> getPermissions() {
 		return this.permissions;
 	}
 	
+	/**
+	 * set All the player's permission
+	 * @param player the player's data where unwrap the permissions
+	 */
 	public void setAllPermissions(Player player) {
 		permissions.clear();
 		for(PermissionCard pc: player.getPermissionCard()) {
@@ -139,6 +197,10 @@ public class PlayerProperty {
 		}
 	}
 	
+	/**
+	 * add a permission to the player
+	 * @param p the card to unwrap and add
+	 */
 	public void addPermission(PermissionCard p) {
 		PermissionProperty card = new PermissionProperty();
 		card.set(p);

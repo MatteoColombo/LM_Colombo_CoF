@@ -12,25 +12,37 @@ public class ItemProperty {
 	private IntegerProperty price;
 	private Soldable item;
 	
+	/**
+	 * Create a new ItemProperty with the given OnSaleItem
+	 */
 	public ItemProperty(OnSaleItem onSale) {
 		this.price = new SimpleIntegerProperty(onSale.getPrice());
 		this.seller = new SimpleStringProperty(onSale.getOwner().getName());
 		
-		// the items are stored with the server class.
+		// the items are stored with the server classes.
 		// otherwhise, it would be impossible in some case
 		// to distinguish an object from another one
 		// e.g assistants from nobility points
 		item = onSale.getItem();
 	}
-	
+
+	/**
+	 * @return the owner's name
+	 */
 	public StringProperty owner() {
 		return this.seller;
 	}
 	
+	/**
+	 * @return the item's price
+	 */
 	public IntegerProperty price() {
 		return this.price;
 	}
 	
+	/**
+	 * @return the item
+	 */
 	public Soldable getItem() {
 		return this.item;
 	}

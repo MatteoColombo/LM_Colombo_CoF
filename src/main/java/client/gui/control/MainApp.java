@@ -73,6 +73,10 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			Platform.runLater(() -> ((Request) dialog).execute(this));
 	}
 
+	/**
+	 * launch the stage showing the players in the match, waiting for it to begin
+	 * 
+	 */
 	public void showWaitingRoom() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -88,6 +92,9 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
+	/**
+	 * launch the first stage of the application, before connecting
+	 */
 	public void showLogin() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -105,6 +112,9 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
+	/**
+	 * launch the stage for the gaming setup
+	 */
 	public void showConfigGame() {
 
 		try {
@@ -209,15 +219,25 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			log.log( Level.SEVERE, e.toString(), e );
 		}
 	}
-	
+
+	/**
+	 * @return the primary stage
+	 */
 	public Window getPrimaryStage() {
 		return this.primaryStage;
 	}
 
+	/**
+	 * set the name of the player
+	 */
 	public void setName(String name) {
 		this.myName = name;
 	}
 
+	/**
+	 * send a message to the {@link ServerManager}, which will send it to the server
+	 * @param msg the message to send
+	 */
 	public void sendMsg(String msg) {
 		try {
 			manager.publishMessage(msg);
@@ -226,6 +246,9 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
+	/**
+	 * initialize the ServerManager as a {@link SocketServerManager}
+	 */
 	public void initSocketManager() {
 		try {
 			localGame.setConfiguration(new Configuration());
@@ -240,6 +263,9 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 		}
 	}
 
+	/**
+	 * initialize the ServerManager as a {@link RMIServerManager}
+	 */
 	public void initRMIManager() {
 		try {
 			localGame.setConfiguration(new Configuration());
@@ -300,7 +326,10 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 	public void printAskPlayerName() {
 		sendMsg(myName);
 	}
-
+	/**
+	 * 
+	 * @return the local model for the game
+	 */
 	public GameProperty getLocalModel() {
 		return localGame;
 	}

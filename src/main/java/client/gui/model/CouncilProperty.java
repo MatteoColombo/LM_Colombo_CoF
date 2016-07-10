@@ -30,20 +30,32 @@ public class CouncilProperty {
 	
 	private List<StringProperty> councilorsColors;
 	
+	/**
+	 * Create a new empty CouncilProperty
+	 */
 	public CouncilProperty() {
 		councilorsColors = new ArrayList<>();
 	}
-	
+	/**
+	 * @return the list of councilor's color as a list of stringproperty
+	 */
 	public List<StringProperty> colors() {
 		return this.councilorsColors;
 	}
 		
+	/**
+	 * initialize the size of the council
+	 */
 	public void initCouncil(int size) {
 		for(int i = 0; i < size; i++) {
 			councilorsColors.add(new SimpleStringProperty(""));
 		}
 	}
 	
+	/**
+	 * set the councilProperty
+	 * @param council the server class for setting
+	 */
 	public void set(Council council) {
 		for(int i = 0; i < councilorsColors.size(); i++) {
 			String newHexColor = ColorConverter.awtToWeb(council.getCouncilorsColor().get(i));
@@ -51,6 +63,10 @@ public class CouncilProperty {
 		}
 	}
 	
+	/**
+	 * @param color the hex representation of the color (e.g: "#ffffff")
+	 * @return his name in natural language, or null if not found
+	 */
 	public static String getColorName(String color) {
 		return colorName.get(color);
 	}

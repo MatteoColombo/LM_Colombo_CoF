@@ -25,19 +25,32 @@ public class SimpleBonus {
 	private String name;
 	private int amount;
 	
+	/**
+	 * Create a new SimpleBonus
+	 * @param b the given Bonus tu unwrap
+	 */
 	public SimpleBonus(Bonus b) {
 		this.name = b.getTagName();
 		this.amount = b.getAmount();
 	}
 	
+	/**
+	 * @return the bonus name
+	 */
 	public String getName() {
 		return this.name;
 	}
 	
+	/**
+	 * @return the bonus amount
+	 */
 	public int getAmount() {
 		return this.amount;
 	}
 	
+	/**
+	 * @return the path of the bonus relative image
+	 */
 	public String getImagePath() {
 		return bonusImages.get(name);
 	}

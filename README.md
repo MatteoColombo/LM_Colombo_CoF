@@ -45,7 +45,12 @@ extra
 * #### Buy assistant ####
 assistant
 
-### End turn ###
+### End action ###
+* #### End turn ####
+end
+* #### Stop buying ####
+end
+* #### Stop selling ####
 end
 
 To end the turn, every main action must be done.
@@ -53,6 +58,6 @@ If a player skips a turn, he is disconnected.
 
 ## How do I play with the GUI? ##
 * Press the button of the action that you want to do
-** In case cards or councilors are needed, you have to drag and drop them on the item that you want to buy or on the city where you want to build
+* In case cards or councilors are needed, you have to drag and drop them on the item that you want to buy or on the city where you want to build
 
 

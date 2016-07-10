@@ -254,8 +254,7 @@ public class MainApp extends Application implements ViewInterface, Runnable, Con
 			localGame.setConfiguration(new Configuration());
 			SocketServerManager socketManager = new SocketServerManager(
 					new Socket(localGame.getConfiguration().getServerAddress(),
-							localGame.getConfiguration().getSocketPort()),
-					this);
+							localGame.getConfiguration().getSocketPort()), this);
 			manager = socketManager;
 			socketManager.start();
 		} catch (IOException | ConfigurationErrorException e) {

@@ -49,7 +49,6 @@ public class King {
 	 */
 	public City getKingLocation() {
 		return kingLocation;
-
 	}
 
 	/**

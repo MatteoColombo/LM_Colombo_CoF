@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import server.control.instruction.notify.NotifyMarketSellStarted;
+import server.control.instruction.notify.NotifyPlayerDisconnected;
 import server.control.instruction.update.NotifyMarketEnded;
 import server.model.player.Assistants;
 import server.model.player.PermissionCard;
@@ -70,6 +71,8 @@ public class Market {
 					p.getClient().askWichItemToSell();
 				} catch (IOException e) {
 					logger.log(Level.SEVERE, e.getMessage(), e);
+					p.setSuspension(true);
+					notifyDisconneted(p);
 					playerWantsToStop = true;
 				}
 			}
@@ -93,6 +96,8 @@ public class Market {
 					players.get((i + starting) % players.size()).getClient().askPlayerItemToBuy(itemsOnSale);
 				} catch (IOException e) {
 					logger.log(Level.SEVERE, e.getMessage(), e);
+					players.get(i).setSuspension(true);
+					notifyDisconneted(players.get(i));
 					playerWantsToStop = true;
 				}
 			}
@@ -152,6 +157,17 @@ public class Market {
 			p.getPoliticCard().add((PoliticCard) soldItem);
 		else if (soldItem instanceof PermissionCard)
 			p.getPermissionCard().add((PermissionCard) soldItem);
+	}
+	
+	private void notifyDisconneted(Player disconnected){
+		for (Player p : players) {
+			if (!p.getSuspended())
+				try {
+					p.getClient().notify(new NotifyPlayerDisconnected(disconnected.getName()));
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, e.getMessage(), e);
+				}
+		}
 	}
 
 }

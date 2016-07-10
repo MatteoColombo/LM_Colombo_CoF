@@ -114,7 +114,6 @@ public class Board {
 		this.concSize = concSize;
 		this.colors = colors;
 		this.councPerColor = councPerColor;
-
 	}
 
 	/**

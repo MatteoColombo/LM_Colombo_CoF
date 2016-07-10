@@ -131,14 +131,31 @@ public class RMIClient implements ClientInt {
 
 	@Override
 	public void askPlayerItemToBuy(List<OnSaleItem> itemsOnSale) throws IOException {
-		String item = client.requestAnswer(new RequestWhichItemToBuy(itemsOnSale));
-		controller.parseItemToBuy(itemsOnSale, item, this);
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Future<String> answer = executor.submit(() -> client.requestAnswer(new RequestWhichItemToBuy(itemsOnSale)));
+		try {
+			String item = answer.get(timeout, TimeUnit.SECONDS);
+			controller.parseItemToBuy(itemsOnSale, item, this);
+		} catch (TimeoutException | ExecutionException | InterruptedException e) {
+			throw new IOException(e);
+		} finally {
+			executor.shutdown();
+		}
 	}
 
 	@Override
 	public void askWichItemToSell() throws IOException {
-		String item = client.requestAnswer(new RequestWhichItemToSell());
-		controller.parseItemToSell(item, this);
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Future<String> answer = executor.submit(() -> client.requestAnswer(new RequestWhichItemToSell()));
+		try {
+			String item = answer.get(timeout, TimeUnit.SECONDS);
+			controller.parseItemToSell(item, this);
+		} catch (TimeoutException | ExecutionException | InterruptedException e) {
+			throw new IOException(e);
+		} finally {
+			executor.shutdown();
+		}
+		
 	}
 
 	@Override

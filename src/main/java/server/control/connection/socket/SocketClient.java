@@ -162,23 +162,31 @@ public class SocketClient implements ClientInt {
 			clone.add(item.newCopy());
 		out.writeObject(new RequestWhichItemToBuy(clone));
 		out.flush();
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Future<String> answer = executor.submit(() -> (String) in.readObject());
 		try {
-			String item = (String) in.readObject();
+			String item = answer.get(timeout, TimeUnit.SECONDS);
 			controller.parseItemToBuy(itemsOnSale, item, this);
-		} catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, e.getMessage(), e);
+		} catch (TimeoutException | InterruptedException | ExecutionException e) {
+			throw new IOException(e);
+		} finally {
+			executor.shutdown();
 		}
 	}
 
 	@Override
 	public void askWichItemToSell() throws IOException {
+		ExecutorService executor = Executors.newSingleThreadExecutor();
 		out.writeObject(new RequestWhichItemToSell());
 		out.flush();
+		Future<String> answer = executor.submit(() -> (String) in.readObject());
 		try {
-			String item = (String) in.readObject();
+			String item = answer.get(timeout, TimeUnit.SECONDS);
 			controller.parseItemToSell(item, this);
-		} catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, e.getMessage(), e);
+		} catch (TimeoutException | InterruptedException | ExecutionException e) {
+			throw new IOException(e);
+		} finally {
+			executor.shutdown();
 		}
 	}
 

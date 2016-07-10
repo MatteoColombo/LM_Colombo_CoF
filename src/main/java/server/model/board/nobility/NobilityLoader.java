@@ -102,7 +102,6 @@ public class NobilityLoader {
 		} catch (SAXException saxe) {
 			throw new TrackXMLFileException(saxe);
 		}
-
 	}
 
 	/**
@@ -122,12 +121,10 @@ public class NobilityLoader {
 				isBonus = true;
 				rew.add(getBonus(bonusList.item(i).getChildNodes()));
 			}
-
 		if (!isBonus)
 			trackRewards.add(null);
 		else
 			trackRewards.add(new Reward(rew));
-
 	}
 
 	/**
@@ -155,10 +152,8 @@ public class NobilityLoader {
 					break;
 				}
 			}
-
 		}
 		return instantiateBonus(bonusType, value);
-
 	}
 
 	/**

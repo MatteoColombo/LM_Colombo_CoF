@@ -78,6 +78,7 @@ public class Game implements ModelInterface {
 			logger.log(Level.SEVERE, "There is an error with the configuration, please fix it!", e);
 		}
 	}
+	
 	private void loadNobilityTrack(Board board){
 		nobilityTrack= new ArrayList<>();
 		NobilityTrack nob= board.getNobleTrack();
@@ -91,8 +92,7 @@ public class Game implements ModelInterface {
 				for(Bonus b: bonus)
 					cliBonuses.add(new CliBonus(b.getAmount(), b.getTagName()));
 				nobilityTrack.add(new CliNobility(cliBonuses));
-			}
-				
+			}	
 		}
 	}
 	/**
@@ -127,9 +127,8 @@ public class Game implements ModelInterface {
 	@Override
 	public void setCouncil(Council council, int index) {
 		List<String> stringCouncil = new ArrayList<>();
-		for (Color c : council.getCouncilorsColor()) {
-			stringCouncil.add(config.getColorsTranslationReverse().get(c));
-		}
+		for (Color c : council.getCouncilorsColor())
+			stringCouncil.add(config.getColorsTranslationReverse().get(c));	
 		if (index == -1	)
 			this.kingCouncil = stringCouncil;
 		else
@@ -287,6 +286,7 @@ public class Game implements ModelInterface {
 
 	@Override
 	public void endMarket() {
-		// not implemented in cli
+		//We don't need this here
 	}
+	
 }

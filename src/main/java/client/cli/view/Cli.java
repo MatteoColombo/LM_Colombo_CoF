@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import client.cli.model.CliBonus;
 import client.cli.model.CliCity;
 import client.cli.model.CliPermission;
@@ -71,8 +70,6 @@ public class Cli implements ViewInterface {
 				+ "(@)                      /|\\      ))_((     /|\\\n"
 				+ "|-|\\                    / | \\    (/\\|/\\)   / | \\                      (@)\n"
 				+ "| | -------------------/--|-voV---\\`|'/--Vov-|--\\---------------------|-|\n"
-				+ "|-|                         '^`   (o o)  '^`                          | |\n"
-				+ "| |                               `\\Y/'                               |-|\n"
 				+ "|-|                                                                   | |\n"
 				+ "| |                   C O U N C I L   O F   F O U R                   |-|\n"
 				+ "|-|                                                                   | |\n"
@@ -304,9 +301,8 @@ public class Cli implements ViewInterface {
 			Player p= players.get(i);
 			writer.println(i+". "+p.getName()+" points: "+p.getVictoryPoints().getAmount()+ " politics+assistants: "+(p.getPoliticCard().size()+p.getAssistants().getAmount()));
 		}
-		
 	}
-
+	
 	@Override
 	public void printAskConfigurationMethod() {
 		writer.println("Which method do you want to use to configurate the game?");

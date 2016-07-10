@@ -36,6 +36,9 @@ public class Collection {
 		// hidden
 	}
 	
+	/**
+	 * create a view class for the PermissionProperty 
+	 */
 	public static AnchorPane permissionCard(PermissionProperty pp) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -74,6 +77,9 @@ public class Collection {
 		return null;
 	}
 	
+	/**
+	 * create a view class for a SimpleBonus
+	 */
 	public static Pane bonus(SimpleBonus sb) {
 		FXMLLoader innerLoader = new FXMLLoader();
 		innerLoader.setLocation(MainApp.class.getResource("/fxml/Bonus.fxml"));
@@ -94,6 +100,10 @@ public class Collection {
 		return null;
 	}
 	
+	/**
+	 * Create a view class for a councilor
+	 * @param hexColor the web councilor's color
+	 */
 	public static Rectangle councilor(String hexColor) {
 		Rectangle councilor = new Rectangle();
 		councilor.setWidth(25.0);
@@ -105,6 +115,9 @@ public class Collection {
 		return councilor;
 	}
 	
+	/**
+	 * Create a view class for a SimpleCity
+	 */
 	public static AnchorPane city(SimpleCity sc) {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(MainApp.class.getResource("/fxml/City.fxml"));
@@ -137,6 +150,10 @@ public class Collection {
 		return null;
 	}
 	
+	/**
+	 * Create a view class for the opponent
+	 * @param player the playerProperty to threat as opponent
+	 */
 	public static AnchorPane opponent(PlayerProperty player) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -167,6 +184,9 @@ public class Collection {
 		return null;
 	}
 	
+	/**
+	 * convert the given textField to be numeric only
+	 */
 	public static void addNumericRestriction(TextField tf) {
 		tf.textProperty().addListener((obs, oldVal, newVal) -> {
 			if (!newVal.matches("\\d*")) {

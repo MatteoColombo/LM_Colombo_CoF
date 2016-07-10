@@ -20,6 +20,9 @@ public class LoginController {
 
 	private MainApp mainApp;
 
+	/**
+	 * Set the main application
+	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}

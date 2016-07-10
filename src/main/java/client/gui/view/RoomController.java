@@ -13,6 +13,9 @@ public class RoomController {
 	@FXML private TableView<PlayerProperty> playerTable;
 	@FXML private TableColumn<PlayerProperty, String> playerColumn;
 		
+	/**
+	 * set everything for this stage
+	 */
 	public void setAll(MainApp mainApp) throws IOException{
 		this.playerTable.setItems(mainApp.getLocalModel().getPlayers());
 		playerColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());

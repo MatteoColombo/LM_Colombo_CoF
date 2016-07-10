@@ -25,6 +25,10 @@ public class ResultsController {
 	@FXML
 	private TableColumn<PlayerProperty, Integer> politicColumn;
 
+	/**
+	 * Set the final results of the game
+	 * @param players the list in order of results of the players
+	 */
 	public void setResults(List<Player> players) {	
 		
 		ObservableList<PlayerProperty> playersProperty = FXCollections.observableArrayList();

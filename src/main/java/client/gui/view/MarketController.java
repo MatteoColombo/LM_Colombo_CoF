@@ -63,6 +63,9 @@ public class MarketController {
 		this.dialogStage = dialogStage;
 	}
 
+	/**
+	 * set everything for this stage, by getting data from the main application
+	 */
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
 		this.myData = mainApp.getLocalModel().getMyPlayerData();
@@ -73,7 +76,7 @@ public class MarketController {
 		setExit();
 	}
 
-	public void initPoliticList() {
+	private void initPoliticList() {
 		politicList.setItems(myData.getPoliticCards());
 
 		politicList.setCellFactory(listView -> new ListCell<String>() {
@@ -98,7 +101,7 @@ public class MarketController {
 		});
 	}
 
-	public void initPermissionList() {
+	private void initPermissionList() {
 		permissionList.setItems(myData.getPermissions());
 
 		permissionList.setCellFactory(listView -> new ListCell<PermissionProperty>() {
@@ -123,7 +126,7 @@ public class MarketController {
 		});
 	}
 
-	public void initAssistants() {
+	private void initAssistants() {
 		assistantLabel.textProperty().bind(myData.assistantsProperty().asString());
 
 		assistantImage.setOnDragDetected(event -> {
@@ -139,7 +142,7 @@ public class MarketController {
 		});
 	}
 
-	public void initMarket() {
+	private void initMarket() {
 		marketImage.setOnDragOver(event -> {
 			marketImage.setEffect(new Glow());
 			event.acceptTransferModes(TransferMode.MOVE);

@@ -37,10 +37,16 @@ public class ConfigGameController {
 		Collection.addNumericRestriction(playersNumber);
 	}
 
+	/**
+	 * set the main application
+	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 	
+	/**
+	 * set the list of available maps
+	 */
 	public void setMapList(List<String> maps) {
 		mapList = FXCollections.observableArrayList();
 		for(String map: maps) {
@@ -48,10 +54,6 @@ public class ConfigGameController {
 			mapList.add(new SimpleStringProperty(p.getFileName().toString()));
 		}
 		mapTable.setItems(mapList);
-	}
-	
-	public void setMaxPlayers(int max) {
-		maxLabel.setText("(max " + max + ")");
 	}
 	
 	@FXML 

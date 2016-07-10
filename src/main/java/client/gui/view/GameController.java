@@ -208,10 +208,6 @@ public class GameController {
 	public void logMsg(String msg) {
 		logger.appendText(msg + "\n");
 	}
-
-	public void setPassButton(boolean value) {
-		passButton.setDisable(value);
-	}
 	
 	/**
 	 * initialize the market table for buying
@@ -225,6 +221,12 @@ public class GameController {
 				.addListener((observable, oldValue, newValue) -> showItemDetails(newValue));
 	}
 
+	/**
+	 * set everything for the stage
+	 * @param mainApp the main application. 
+	 * Everithing is setted by getting the model from the main application,
+	 * so it must be ready before this method is called
+	 */
 	public void setAll(MainApp mainApp) {
 		this.mainApp = mainApp;
 		this.myData = mainApp.getLocalModel().getMyPlayerData();

@@ -15,9 +15,9 @@ import server.model.board.council.Council;
 import server.model.board.council.Councilor;
 import server.model.board.nobility.NobilityLoader;
 import server.model.board.nobility.NobilityTrack;
+import server.model.board.nobility.TrackXMLFileException;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
-import server.model.configuration.TrackXMLFileException;
 import server.model.player.Player;
 import server.model.reward.RewardCity;
 

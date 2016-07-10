@@ -3,6 +3,7 @@ package server.model.configuration;
 import server.model.board.map.MapLoader;
 import server.model.board.map.MapXMLFileException;
 import server.model.board.nobility.NobilityTrack;
+import server.model.board.nobility.TrackXMLFileException;
 
 /**
  * An Exception that is thrown when there is an error with the loading of a XML

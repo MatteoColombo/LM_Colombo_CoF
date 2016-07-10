@@ -1,7 +1,4 @@
-package server.model.configuration;
-
-import server.model.board.nobility.NobilityLoader;
-import server.model.board.nobility.NobilityTrack;
+package server.model.board.nobility;
 
 /**
  * An Exception that is thrown when there is an error with the XML file of the

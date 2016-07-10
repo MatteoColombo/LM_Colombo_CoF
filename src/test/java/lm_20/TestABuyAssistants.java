@@ -7,9 +7,9 @@ import server.model.action.ABuyAssistant;
 import server.model.action.IllegalActionException;
 import server.model.board.nobility.NobilityLoader;
 import server.model.board.nobility.NobilityTrack;
+import server.model.board.nobility.TrackXMLFileException;
 import server.model.configuration.Configuration;
 import server.model.configuration.ConfigurationErrorException;
-import server.model.configuration.TrackXMLFileException;
 import server.model.player.Player;
 
 public class TestABuyAssistants {

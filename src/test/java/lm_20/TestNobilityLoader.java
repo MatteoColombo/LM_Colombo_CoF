@@ -3,7 +3,7 @@ package lm_20;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import server.model.board.nobility.NobilityLoader;
-import server.model.configuration.TrackXMLFileException;
+import server.model.board.nobility.TrackXMLFileException;
 
 public class TestNobilityLoader {
 	private NobilityLoader nl;

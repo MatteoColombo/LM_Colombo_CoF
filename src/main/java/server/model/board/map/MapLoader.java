@@ -62,7 +62,6 @@ public class MapLoader {
 		this.regions = new ArrayList<>();
 		this.citiesOfMap = new ArrayList<>();
 		loadXML();
-
 	}
 
 	/**
@@ -86,11 +85,9 @@ public class MapLoader {
 	 * @see MapLoader
 	 */
 	private void addConnections(City c) {
-		for (CityConnection cityConn : connections) {
-			if (cityConn.getFirstCity().equals(c.getName())) {
+		for (CityConnection cityConn : connections)
+			if (cityConn.getFirstCity().equals(c.getName()))
 				c.addConnection(searchCity(cityConn.getSecondCity()));
-			}
-		}
 	}
 
 	/**
@@ -131,9 +128,9 @@ public class MapLoader {
 				NodeList citiesOfRegion = region.getChildNodes();
 				List<City> cities = parseCities(citiesOfRegion);
 				citiesOfMap.addAll(cities);
-				if (!pool.canGenerateCouncil()) {
+				if (!pool.canGenerateCouncil())
 					throw new MapXMLFileException(new ConfigurationErrorException("You need more councilors"));
-				}
+				
 				regions.add(new Region("name", cities, pool.getCouncil(), 2));
 				addRegionToCities(regions.get(i));
 			}

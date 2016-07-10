@@ -52,8 +52,7 @@ public class TurnManager {
 
 		notifyTurnStarted(turnPlayer);
 
-		while (!(turnPlayer.getIfExtraActionDone() && turnPlayer.getMainActionsLeft() == 0)
-				&& !(turnPlayer.getMainActionsLeft() == 0 && playerWantsToExit)) {
+		while (!(turnPlayer.getIfExtraActionDone() && turnPlayer.getMainActionsLeft() == 0) && !(turnPlayer.getMainActionsLeft() == 0 && playerWantsToExit)) {
 			try {
 				if (turnPlayer.getClient().isConnected())
 					turnPlayer.getClient().askPlayerWhatActionToDo();

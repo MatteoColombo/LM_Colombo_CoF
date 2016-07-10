@@ -135,8 +135,7 @@ public class Configuration {
 	}
 
 	private void loadCouncil(XPath xpath, Document xmlDoc) throws XPathExpressionException {
-		NodeList list = (NodeList) xpath.compile(COUNCILPATH + "councilorPerColor").evaluate(xmlDoc,
-				XPathConstants.NODESET);
+		NodeList list = (NodeList) xpath.compile(COUNCILPATH + "councilorPerColor").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.councilorsPerColor = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(COUNCILPATH + "size").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.councilSize = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());

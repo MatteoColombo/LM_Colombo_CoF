@@ -247,11 +247,14 @@ public class Game extends Thread {
 
 		int maxNobility = players.stream().mapToInt(p -> p.getNobility().getAmount()).max().orElse(-1);
 		int playersWithMax = (int) players.stream().filter(p -> p.getNobility().getAmount() == maxNobility).count();
+
 		players.stream().filter(p -> p.getNobility().getAmount() == maxNobility)
 				.forEach(p -> p.getVictoryPoints().increaseAmount(5));
+
 		if (playersWithMax > 1) {
 			int secondNobility = players.stream().filter(p -> p.getNobility().getAmount() == maxNobility)
 					.mapToInt(p -> p.getNobility().getAmount()).max().orElse(-1);
+			
 			players.stream().filter(p -> p.getNobility().getAmount() == secondNobility)
 					.forEach(p -> p.getVictoryPoints().increaseAmount(2));
 		}

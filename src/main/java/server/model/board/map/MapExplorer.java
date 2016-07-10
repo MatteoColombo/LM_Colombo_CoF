@@ -85,7 +85,6 @@ public class MapExplorer {
 			if (!checkIfInList(temp))
 				connectedCities.add(temp);
 		}
-
 	}
 
 	/**
@@ -133,7 +132,6 @@ public class MapExplorer {
 				else if (!inList(distances, connCities.get(j)))
 					distances.add(new Distance(connCities.get(j), distances.get(i).getDistance() + 1));
 			}
-
 		}
 		throw new IllegalActionException("No path found");
 	}

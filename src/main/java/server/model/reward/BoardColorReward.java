@@ -25,7 +25,6 @@ import server.model.player.Player;
  * @see Reward
  */
 public class BoardColorReward extends BoardReward {
-
 	private static final long serialVersionUID = -3753101587341868411L;
 	private Color bColorRewardKey;
 

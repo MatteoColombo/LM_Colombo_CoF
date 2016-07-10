@@ -25,17 +25,13 @@ import server.model.player.Player;
  * @see Player
  */
 public abstract class Bonus implements Serializable {
-
 	private static final long serialVersionUID = 8075384354316907271L;
-
 	private static final Bonus[] allStandardBonus = { new BCoins(1), new BAssistants(1), new BNobility(1),
 			new BVictoryPoints(1), new BPoliticCards(1), new BExtraMainAction() }; // 1
 																					// by
 																					// default
-
 	private static final Bonus[] nobilityBonus = { new BRewardFromPermissionCard(), new BExtraRewardFromCity(1),
 			new BTakePermissionCard() };
-
 	private int amount;
 
 	/**

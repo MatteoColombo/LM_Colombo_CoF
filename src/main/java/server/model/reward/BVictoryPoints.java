@@ -11,7 +11,6 @@ import server.model.player.Player;
  * @see VictoryPoints
  */
 public class BVictoryPoints extends Bonus {
-
 	private static final long serialVersionUID = 8781793974974121224L;
 	private static final int VALUE = 10;
 	private static final String NAME = "victory";

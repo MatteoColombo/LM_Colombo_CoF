@@ -12,7 +12,6 @@ import java.io.Serializable;
  * @see Player
  */
 public class VictoryPoints implements Serializable {
-
 	private static final long serialVersionUID = 5274845368512859920L;
 	private int amount;
 

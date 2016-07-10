@@ -29,7 +29,6 @@ import server.model.reward.RewardPermission;
  * @see Reward
  */
 public class PermissionCard implements Soldable, Serializable {
-
 	private static final long serialVersionUID = 8717409237659947557L;
 	private List<City> cities;
 	private Reward reward;
@@ -51,10 +50,13 @@ public class PermissionCard implements Soldable, Serializable {
 		this.reward = reward;
 		this.used = false;
 	}
-	
+
 	/**
-	 * Copy-constructor
-	 * @param p the permission card to clone
+	 * Generates a copy of another already existing PermissionCard.
+	 * 
+	 * @param p
+	 *            the PermissionCard that will be cloned
+	 * @see PermissionCard
 	 */
 	public PermissionCard(PermissionCard p) {
 		this.cities = p.cities;
@@ -161,9 +163,9 @@ public class PermissionCard implements Soldable, Serializable {
 			message += bon.getTagName().substring(0, 3).toUpperCase() + " " + bon.getAmount() + " ";
 		return message;
 	}
-	
+
 	@Override
-	public Soldable newCopy(){
+	public Soldable newCopy() {
 		return new PermissionCard(this);
 	}
 }

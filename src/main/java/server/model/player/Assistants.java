@@ -16,7 +16,6 @@ import server.model.market.Soldable;
  * @see Player
  */
 public class Assistants implements Serializable, Soldable {
-
 	private static final long serialVersionUID = 9031524695299977578L;
 	private int amount;
 
@@ -83,9 +82,9 @@ public class Assistants implements Serializable, Soldable {
 	public String getMarketMessage(Configuration config) {
 		return "Assistant: " + amount + " ";
 	}
-	
+
 	@Override
-	public Soldable newCopy(){
+	public Soldable newCopy() {
 		return new Assistants(this.getAmount());
 	}
 

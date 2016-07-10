@@ -19,7 +19,6 @@ import server.model.reward.Reward;
  * @see Reward
  */
 public class Nobility implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	private int amount;
 	private transient Player owner;

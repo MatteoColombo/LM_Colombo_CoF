@@ -22,9 +22,7 @@ import server.model.player.Player;
  * @see Reward
  */
 public class BRewardFromPermissionCard extends Bonus {
-
 	private static final Logger log = Logger.getLogger(BRewardFromPermissionCard.class.getName());
-
 	private static final long serialVersionUID = 7090121575021199364L;
 	// not really useful here, it may be removed in the future
 	private static final int VALUE = 80;

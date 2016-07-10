@@ -11,10 +11,12 @@ import server.model.reward.Reward;
 /**
  * A class that represent the NobilityTrack of the Game.
  * <p>
- * Each Player have Nobility that represent the steps of the NobilityTrack
- * where they are that can be increased with the right Bonuses, rewarding with
- * special Rewards, if that step is not <code>null</code>, and BVictoryPoints
- * for who is more forward than the others into it at the end of the Game.
+ * Each Player have Nobility that represent the steps of the {@link #getTrack()
+ * NobilityTrack} where they are that can be increased with the right Bonuses,
+ * rewarding with {@link #getReward(int) special Rewards} , if that step is not
+ * <code>null</code>, and BVictoryPoints for who is more forward than the others
+ * into it at the end of the Game; the NobilityTrack has a {@link #getMaxPoint()
+ * max size}.
  * 
  * @see Bonus
  * @see BVictoryPoints
@@ -39,8 +41,10 @@ public class NobilityTrack {
 	}
 
 	/**
+	 * Returns the NobilityTrack of the Game.
 	 * 
-	 * @return returns the list which represents the nobility track
+	 * @return the list that represents the NobilityTrack
+	 * @see NobilityTrack
 	 */
 	public List<Reward> getTrack() {
 		return this.track;

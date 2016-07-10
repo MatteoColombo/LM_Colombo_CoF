@@ -27,7 +27,9 @@ import java.util.Random;
  * {@link #getRegionsNumber() how many they are}, all the
  * {@link #getCitiesList() Cities} distinguishing between all the
  * {@link #getCity(String) single Cities} and the King's one (
- * {@link #getKingCity() the capital}).
+ * {@link #getKingCity() the capital}) and the {@link #loadConnections()
+ * connections} between them after they {@link #generateConnections() have been
+ * generated}.
  *
  * @see City
  * @see CityConnection
@@ -263,7 +265,7 @@ public class MapLoader {
 	 * Returns a specific {@link City}.
 	 * 
 	 * @param name
-	 *            the searched City name (case unsensitive)
+	 *            the searched City name (case insensitive)
 	 * @return the first City with that name; <code>null</code> if nothing found
 	 * @see MapLoader
 	 */
@@ -280,15 +282,17 @@ public class MapLoader {
 	 * Returns all the {@link City Cities} of this Map.
 	 * 
 	 * @return all the Cities
+	 * @see MapLoader
 	 */
 	public List<City> getCitiesList() {
 		return this.citiesOfMap;
 	}
 
 	/**
-	 * This method is used when the connections between cities are randomly
-	 * generated.
-	 * Generates the city connections
+	 * Generates the connections of each {@link City} randomly.
+	 * 
+	 * @see MapLoader
+	 * @see Random
 	 */
 	public void generateConnections() {
 		for (Region r : regions) {
@@ -299,6 +303,15 @@ public class MapLoader {
 		addRegionConnections();
 	}
 
+	/**
+	 * Generates the connections of a single {@link City} randomly.
+	 * 
+	 * @param c
+	 *            the City that is considered
+	 * @param r
+	 *            a Region of the Map
+	 * @see MapLoader
+	 */
 	private void generateConnectionsForACity(City c, Region r) {
 		Random random = new Random();
 		int connectionsNumber = 1 + random.nextInt(MAXCONN);
@@ -316,6 +329,11 @@ public class MapLoader {
 		}
 	}
 
+	/**
+	 * Adds the generated connections to each {@link Region Regions}.
+	 * 
+	 * @see MapLoader
+	 */
 	private void addRegionConnections() {
 		Random r = new Random();
 		for (int i = 0; i < regions.size() - 1; i++) {

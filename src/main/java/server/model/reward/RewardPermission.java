@@ -13,7 +13,6 @@ import server.model.player.PermissionCard;
  * @see Reward
  */
 public class RewardPermission extends Reward {
-
 	private static final long serialVersionUID = -5265241063177120154L;
 
 	/**

@@ -23,13 +23,11 @@ import server.model.player.Player;
  * @see Reward
  */
 public abstract class BoardReward implements Serializable {
-
 	private static final long serialVersionUID = -4608779705698062118L;
 	private BVictoryPoints bRewardBonus;
 
 	/**
-	 * Initializes the amount of {@link BVictoryPoints} of this
-	 * BoardReward.
+	 * Initializes the amount of {@link BVictoryPoints} of this BoardReward.
 	 * 
 	 * @param rewardAmount
 	 *            the new amount of BVictoryPoints of this BoardReward

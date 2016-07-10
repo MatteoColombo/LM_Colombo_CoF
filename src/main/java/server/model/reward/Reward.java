@@ -20,7 +20,6 @@ import server.model.player.Player;
  * @see Random
  */
 public class Reward implements Serializable {
-
 	private static final long serialVersionUID = 278887920051830885L;
 	private ArrayList<Bonus> bonusList = new ArrayList<>();
 

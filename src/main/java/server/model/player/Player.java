@@ -33,7 +33,8 @@ import java.util.ArrayList;
  * decreased}, and the {@link #getIfExtraActionDone() Extra one}, that can only
  * be {@link #doExtraAction() set as used} or not and both can be
  * {@link #actionsReset() reseted} to their default state;</li>
- * <li>Its {@link #getClient() Client};</li>
+ * <li>Its {@link #getClient() Client}, that is initially {@link #removeClient()
+ * not associated} with him;</li>
  * <li>Its {@link #getSuspended() status}, that can be
  * {@link #setSuspension(boolean) suspended} or not.</li>
  * </ul>
@@ -304,9 +305,9 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Returns the Player Client Interface.
+	 * Returns the {@link ClientInt} of this Player .
 	 * 
-	 * @return the Player Client Interface
+	 * @return the ClientInt of this Player
 	 * @see Player
 	 */
 	public ClientInt getClient() {
@@ -356,11 +357,13 @@ public class Player implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
-	 * Sets to null the ClientInt reference
+	 * Sets to <code>null</code> the {@link ClientInt} reference of this Player.
+	 * 
+	 * @see Player
 	 */
-	public void removeClient(){
-		this.client=null;
+	public void removeClient() {
+		this.client = null;
 	}
 }

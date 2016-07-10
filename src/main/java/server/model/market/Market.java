@@ -90,8 +90,10 @@ public class Market {
 			if (players.get((i + starting) % players.size()).getSuspended())
 				continue;
 			while (!playerWantsToStop) {
-				if (itemsOnSale.isEmpty())
+				if (itemsOnSale.isEmpty()) {
+					notifyPlayerEndBuyRound((i+ starting) % players.size());
 					return;
+				}
 				try {
 					players.get((i + starting) % players.size()).getClient().askPlayerItemToBuy(itemsOnSale);
 				} catch (IOException e) {
@@ -102,16 +104,19 @@ public class Market {
 				}
 			}
 			
-			try {
-				players.get((i + starting) % players.size()).getClient().notify(new NotifyMarketEnded());
-			} catch (IOException e) {
-				logger.log(Level.SEVERE, e.getMessage(), e);
-				players.get((i + starting) % players.size()).setSuspension(true);
-			}
+			notifyPlayerEndBuyRound((i+ starting) % players.size());
 
 		}
 	}
 
+	private void  notifyPlayerEndBuyRound(int index) {
+		try {
+			players.get((index) % players.size()).getClient().notify(new NotifyMarketEnded());
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
+			players.get((index) % players.size()).setSuspension(true);
+		}
+	}
 	/**
 	 * Sets something on sale
 	 * 

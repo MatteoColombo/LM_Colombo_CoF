@@ -1,10 +1,15 @@
 package server.model.configuration;
 
+import server.model.board.nobility.NobilityLoader;
+import server.model.board.nobility.NobilityTrack;
+
 /**
- * This Exception is generated when there is an error while loading the nobility
- * track
+ * An Exception that is thrown when there is an error with the XML file of the
+ * NobilityTrack.
  * 
  * @author Matteo Colombo
+ * @see Exception
+ * @see NobilityLoader
  *
  */
 public class TrackXMLFileException extends Exception {
@@ -12,8 +17,12 @@ public class TrackXMLFileException extends Exception {
 	private static final long serialVersionUID = -733823221846521326L;
 
 	/**
-	 * This is used to rethrow an exception which generated an error with the XML file of the nobility track
+	 * Throws an Exception for errors with the XML file of the
+	 * {@link NobilityTrack}.
+	 * 
 	 * @param e
+	 *            the Exception called
+	 * @see TrackXMLFileException
 	 */
 	public TrackXMLFileException(Exception e) {
 		super(e);

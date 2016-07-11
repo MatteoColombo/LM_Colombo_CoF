@@ -18,11 +18,28 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import server.model.Game;
+import server.model.board.Region;
+import server.model.board.city.City;
+import server.model.board.council.Council;
+import server.model.board.council.Councilor;
+import server.model.board.nobility.NobilityTrack;
+import server.model.player.Assistants;
+import server.model.player.Coins;
+import server.model.player.Emporium;
+import server.model.player.Nobility;
+import server.model.player.PermissionCard;
+import server.model.player.Player;
+import server.model.player.PoliticCard;
+import server.model.player.VictoryPoints;
+import server.model.reward.BoardColorReward;
+import server.model.reward.BoardReward;
+
 /**
- * This is the class which loads the configuration from the xml file
+ * A class that loads the Configurations of the Game from the XML file.
  * 
  * @author Matteo Colombo
- *
+ * @see Game
  */
 public class Configuration {
 	private static final String CONFIGPATH = "src/main/resources/config.xml";
@@ -71,9 +88,10 @@ public class Configuration {
 	private static final String CITYCOLORPATH = "/config/citycolor/color/";
 
 	/**
-	 * Calls the method which loads
+	 * Loads all the Configurations from the XML file.
 	 * 
 	 * @throws ConfigurationErrorException
+	 * @see Configuration
 	 */
 	public Configuration() throws ConfigurationErrorException {
 		loadXMLFile();
@@ -135,7 +153,8 @@ public class Configuration {
 	}
 
 	private void loadCouncil(XPath xpath, Document xmlDoc) throws XPathExpressionException {
-		NodeList list = (NodeList) xpath.compile(COUNCILPATH + "councilorPerColor").evaluate(xmlDoc, XPathConstants.NODESET);
+		NodeList list = (NodeList) xpath.compile(COUNCILPATH + "councilorPerColor").evaluate(xmlDoc,
+				XPathConstants.NODESET);
 		this.councilorsPerColor = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
 		list = (NodeList) xpath.compile(COUNCILPATH + "size").evaluate(xmlDoc, XPathConstants.NODESET);
 		this.councilSize = Integer.parseInt(list.item(0).getFirstChild().getNodeValue());
@@ -197,67 +216,89 @@ public class Configuration {
 	}
 
 	/**
+	 * Returns the initial {@link Coins} of the first {@link Player}.
 	 * 
-	 * @return the initial coins of the first player
+	 * @return the initial Coins of the first Player
+	 * @see Configuration
 	 */
 	public int getInitialPlayerMoney() {
 		return initialPlayerMoney;
 	}
 
 	/**
+	 * Returns the initial {@link Assistants} of the first {@link Player}.
 	 * 
-	 * @return the inital assistants of the first player
+	 * @return the initial Assistants of the first Player
+	 * @see Configuration
 	 */
 	public int getInitialPlayerHelpers() {
 		return initialPlayerHelpers;
 	}
 
 	/**
+	 * Returns the number of {@link PoliticCard PoliticCards} that every
+	 * {@link Player} has at the start of the Game.
 	 * 
-	 * @return the number of politic cards that every player has at the start of
-	 *         the game
+	 * @return the number of PoliticCards that every {@link Player} has at the
+	 *         start of the Game
+	 * @see Configuration
 	 */
 	public int getInitialPoliticCards() {
 		return initialPoliticCards;
 	}
 
 	/**
+	 * Returns the maximum number of {@link Emporium Emporiums} that every
+	 * {@link Player} can build.
 	 * 
-	 * @return the maximum number of emporiums that every player can build
+	 * @return the maximum number of Emporiums that every Player can build
+	 * @see Configuration
 	 */
 	public int getInitialEmporiums() {
 		return initialEmporiums;
 	}
 
 	/**
+	 * Returns the default number of {@link VictoryPoints} of every
+	 * {@link Player} at the start of the Game.
 	 * 
-	 * @return the default number of victory points of every player at the start
-	 *         of the game
+	 * @return the default number of VictoryPoints of every Player at the start
+	 *         of the Game
+	 * @see Configuration
 	 */
 	public int getInitialVictoryPoints() {
 		return initialVictoryPoints;
 	}
 
 	/**
+	 * Returns the default amount of {@link Nobility} that every {@link Player}
+	 * has at the start of the Game.
 	 * 
-	 * @return the default amount of nobility points of every player at the
-	 *         start of the game
+	 * @return the default amount of Nobility that every Player has at the start
+	 *         of the Game
+	 * @see Configuration
 	 */
 	public int getInitialNobility() {
 		return initialNobility;
 	}
 
 	/**
+	 * Returns the maximum number of {@link Player Players} per Game on this
+	 * Server.
 	 * 
-	 * @return the maximum number of players per game on this server
+	 * @return the maximum number of Players per Game on this Server
+	 * @see Configuration
 	 */
 	public int getMaxNumberOfPlayer() {
 		return maxNumberOfPlayer;
 	}
 
 	/**
-	 * Return the list of the colors used by the politc cars
-	 * @return a list of Color
+	 * Returns the list of the {@link Color Colors} used for the
+	 * {@link PoliticCard PoliticCards}.
+	 * 
+	 * @return the list of the Colors used for the PoliticCards
+	 * @see Configuration
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Color> getColorsList() {
@@ -265,8 +306,12 @@ public class Configuration {
 	}
 
 	/**
-	 * The map used to translate colors from English to hex, English names are the key, the Color objects are the elements
-	 * @return a map of Colors
+	 * The HashMap used to translate {@link Color Colors} from English to hex,
+	 * where the English names are the keys and the Color objects are the
+	 * elements.
+	 * 
+	 * @return the HashMap of Colors
+	 * @see Configuration
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map<String, Color> getColorsTranslation() {
@@ -274,40 +319,51 @@ public class Configuration {
 	}
 
 	/**
+	 * Returns the number of {@link Councilor Councilor} per {@link Color}.
 	 * 
-	 * @return the number of councilors per color
+	 * @return the number of Councilors per Color
+	 * @see Configuration
 	 */
 	public int getCouncilorsPerColor() {
 		return councilorsPerColor;
 	}
 
 	/**
+	 * Returns the number of {@link Councilor Councilor} per {@link Council}.
 	 * 
-	 * @return return the number of councilors per council
+	 * @return the number of Councilors per Council
+	 * @see Configuration
 	 */
 	public int getCouncilSize() {
 		return councilSize;
 	}
 
 	/**
+	 * Returns the number of disclosed {@link PermissionCard PermissionCards}
+	 * per {@link Region}.
 	 * 
-	 * @return the number of disclosed permission card per region
+	 * @return the number of disclosed PermissionCards per Region
+	 * @see Configuration
 	 */
 	public int getNumberDisclosedCards() {
 		return numberDisclosedCards;
 	}
 
 	/**
+	 * Returns the path of the {@link NobilityTrack} file.
 	 * 
-	 * @return the path to the nobility track file
+	 * @return the path of the NobilityTrack file
+	 * @see Configuration
 	 */
 	public String getNobility() {
 		return nobility;
 	}
 
 	/**
-	 * Return the list with the paths of the maps
-	 * @return the list of the maps
+	 * Returns the list with the paths of the Maps.
+	 * 
+	 * @return the list with the paths of the Maps
+	 * @see Configuration
 	 */
 	@SuppressWarnings("unchecked")
 	public List<String> getMaps() {
@@ -315,43 +371,51 @@ public class Configuration {
 	}
 
 	/**
+	 * Returns the port used by the RMI Server.
 	 * 
-	 * @return the port used by the RMI server
+	 * @return the port used by the RMI Server
+	 * @see Configuration
 	 */
 	public int getRmiPort() {
 		return rmiPort;
 	}
 
 	/**
+	 * Returns the port used by the Socket Server.
 	 * 
-	 * @return the port used by the socket server
+	 * @return the port used by the Socket Server
+	 * @see Configuration
 	 */
 	public int getSocketPort() {
 		return socketPort;
 	}
 
 	/**
+	 * Returns the amount of {@link VictoryPoints} per {@link Region}.
 	 * 
-	 * @return the amount of victory point per region
+	 * @return the amount of VictoryPoints per Region
+	 * @see Configuration
 	 */
 	public int getRewardPerRegion() {
 		return rewardPerRegion;
 	}
 
 	/**
-	 * return the map of the color rewards, the Color is the ket and the prize
-	 * is the element
+	 * Returns the HashMap of the {@link BoardColorReward BoardColorRewards},
+	 * where the {@link Color} is the key and the prize is the element.
 	 * 
-	 * @return
+	 * @return the HashMap of the BoardColorRewards
+	 * @see Configuration
 	 */
 	public Map<Color, Integer> getColorRewards() {
 		return colorRewards;
 	}
 
 	/**
-	 * Return the ordered list of the board rewards
+	 * Returns the ordered list of the {@link BoardReward BoardRewards}.
 	 * 
-	 * @return
+	 * @return the ordered list of the BoardRewards
+	 * @see Configuration
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Integer> getBoardRewards() {
@@ -359,18 +423,22 @@ public class Configuration {
 	}
 
 	/**
+	 * Returns the IP of the Server.
 	 * 
 	 * @return the IP of the server
+	 * @see Configuration
 	 */
 	public String getServerAddress() {
 		return serverIp;
 	}
 
 	/**
-	 * Return the map with the colors of the politic cards, the english name as
-	 * element and the Color objects as key
+	 * Returns the HashMap with the {@link Color Colors} of the
+	 * {@link PoliticCard PoliticCards}, where the English names are the
+	 * elements and the Color objects are the keys.
 	 * 
-	 * @return the politic card colors
+	 * @return the HashMap of the PoliticCards Colors
+	 * @see Configuration
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map<Color, String> getColorsTranslationReverse() {
@@ -378,10 +446,12 @@ public class Configuration {
 	}
 
 	/**
-	 * Returns an hash map which contains the city colors, the english name as
-	 * element and the Color objects as key
+	 * Returns the HashMap that contains the {@link City Cities} {@link Color
+	 * Colors}, where the English names are the elements and the Color objects
+	 * are the keys.
 	 * 
-	 * @return the city colors
+	 * @return the HashMap of the Cities Colors
+	 * @see Configuration
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map<Color, String> getCityColor() {
@@ -389,8 +459,10 @@ public class Configuration {
 	}
 
 	/**
+	 * Returns the maximum time to play a round.
 	 * 
 	 * @return the maximum time to play a round
+	 * @see Configuration
 	 */
 	public int getTimeout() {
 		return this.timeout;

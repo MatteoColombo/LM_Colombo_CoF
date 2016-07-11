@@ -4,22 +4,30 @@ import java.io.Serializable;
 import server.model.configuration.Configuration;
 
 /**
- * This is the public interface that the items which can be sold in the market need to implement
+ * An interface that have to be implemented by all the items that can be sold
+ * in the Market.
+ * 
  * @author Matteo Colombo
- *
+ * @see Market
  */
 public interface Soldable extends Serializable {
-	
+
 	/**
-	 * This method is used when you need to print a string with information about the objext
-	 * @param config the configuration, it is needed to translate colors into text
-	 * @return a string
+	 * Prints a string with information about this object.
+	 * 
+	 * @param config
+	 *            the Configuration; it is needed to translate the Colors into
+	 *            text
+	 * @return an information string of this object
+	 * @see Soldable
 	 */
 	public String getMarketMessage(Configuration config);
-	
+
 	/**
-	 * Every soldable object need to implement this method which is used to return a new copy of the object
-	 * @return
+	 * Return a new copy of this object.
+	 * 
+	 * @return a new copy of this object
+	 * @see Soldable
 	 */
 	public Soldable newCopy();
 }

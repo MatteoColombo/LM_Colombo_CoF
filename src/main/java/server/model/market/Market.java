@@ -10,16 +10,33 @@ import java.util.logging.Logger;
 import server.control.instruction.notify.NotifyMarketSellStarted;
 import server.control.instruction.notify.NotifyPlayerDisconnected;
 import server.control.instruction.update.NotifyMarketEnded;
+import server.model.TurnManager;
 import server.model.player.Assistants;
+import server.model.player.Coins;
 import server.model.player.PermissionCard;
 import server.model.player.Player;
 import server.model.player.PoliticCard;
 
 /**
- * This is the class which manages the market
+ * A class that manages the Market of the Game.
+ * <p>
+ * When {@link #runMarket() is started}, the Market begins to
+ * {@link #addItemOnSale(Soldable, int, Player) collect the selling requests} of
+ * the Players until {@link #playerWantsToStop() they have all done} with that;
+ * then {@link #buyItem(OnSaleItem, Player) each Player can buy} at most one of
+ * the items that the others have offered, paying him with an amount of Coins
+ * equal to the one asked for that item.
+ * <p>
+ * The Market phase always starts after all the Players have done a normal Game
+ * turn.
  * 
  * @author Matteo Colombo
- *
+ * @see Coins
+ * @see Game
+ * @see OnSaleItem
+ * @see Player
+ * @see Soldable
+ * @see TurnManager
  */
 public class Market {
 	private List<OnSaleItem> itemsOnSale;
@@ -28,9 +45,12 @@ public class Market {
 	private Logger logger = Logger.getGlobal();
 
 	/**
-	 * Instantiates the ArrayList of the items on sale and saves the players
+	 * Initializes the list of the {@link OnSaleItem OnSaleItems} and receives
+	 * the one of all the {@link Player Players}.
 	 * 
-	 * @param players the players of the game
+	 * @param players
+	 *            the Players of the Game
+	 * @see Market
 	 */
 	public Market(List<Player> players) {
 		this.players = players;
@@ -38,8 +58,10 @@ public class Market {
 	}
 
 	/**
-	 * This is the class which manages the market rounds Asks to each player
-	 * what they whish to sell and then what they want to buy
+	 * Starts asking to each {@link Player} first what they would like to sell
+	 * and then what they want to buy.
+	 * 
+	 * @see Market
 	 */
 	public void runMarket() {
 		startSellingTurns();
@@ -51,7 +73,9 @@ public class Market {
 	}
 
 	/**
-	 * Ask the players what the want to sell
+	 * Starts asking to each {@link Player} what they want to sell.
+	 * 
+	 * @see Market
 	 */
 	private void startSellingTurns() {
 		for (Player p : players) {
@@ -80,8 +104,11 @@ public class Market {
 	}
 
 	/**
-	 * Start ask each player what they want to buy It is permitted to buy at
-	 * most one item per person per turn
+	 * Starts asking to each {@link Player} what they want to buy.
+	 * <p>
+	 * It is permitted to buy at most one item per person per turn.
+	 * 
+	 * @see Market
 	 */
 	private void startBuyingTurns() {
 		int starting = new Random().nextInt(players.size());
@@ -91,7 +118,7 @@ public class Market {
 				continue;
 			while (!playerWantsToStop) {
 				if (itemsOnSale.isEmpty()) {
-					notifyPlayerEndBuyRound((i+ starting) % players.size());
+					notifyPlayerEndBuyRound((i + starting) % players.size());
 					return;
 				}
 				try {
@@ -103,13 +130,20 @@ public class Market {
 					playerWantsToStop = true;
 				}
 			}
-			
-			notifyPlayerEndBuyRound((i+ starting) % players.size());
+
+			notifyPlayerEndBuyRound((i + starting) % players.size());
 
 		}
 	}
 
-	private void  notifyPlayerEndBuyRound(int index) {
+	/**
+	 * Notifies the end of the selling round to this {@link Player}.
+	 * 
+	 * @param index
+	 *            the index of a Player
+	 * @see Market
+	 */
+	private void notifyPlayerEndBuyRound(int index) {
 		try {
 			players.get((index) % players.size()).getClient().notify(new NotifyMarketEnded());
 		} catch (IOException e) {
@@ -117,32 +151,41 @@ public class Market {
 			players.get((index) % players.size()).setSuspension(true);
 		}
 	}
+
 	/**
-	 * Sets something on sale
+	 * Sets something on sale creating a new OnSaleItem.
 	 * 
 	 * @param item
-	 *            the item set on sale
+	 *            the item that is put on sale
+	 * @param price
+	 *            the Coins amount
+	 * @param owner
+	 *            the Player owner
+	 * @see Market
 	 */
 	public void addItemOnSale(Soldable item, int price, Player owner) {
 		this.itemsOnSale.add(new OnSaleItem(item, owner, price));
 	}
 
 	/**
-	 * Sets to true the attribute used to check if the player wants to stop
-	 * selling
+	 * Sets to <code>true</code> the attribute used to check if this
+	 * {@link Player} wants to stop selling.
+	 * 
+	 * @see Market
 	 */
 	public void playerWantsToStop() {
 		this.playerWantsToStop = true;
 	}
 
 	/**
-	 * Realizes the sale. It pays the owner and scales the money from the buyer,
-	 * then it gives him the bought item(s)
+	 * Realizes the sale paying the owner and scaling the {@link Coins} from the
+	 * buyer; then it gives him the bought item(s).
 	 * 
 	 * @param item
-	 *            the item which was bought
+	 *            the bought OnSaleItem
 	 * @param p
-	 *            the player who buys
+	 *            the new owner of this OnSaleItem
+	 * @see Market
 	 */
 	public void buyItem(OnSaleItem item, Player p) {
 		itemsOnSale.remove(item);
@@ -152,7 +195,13 @@ public class Market {
 	}
 
 	/**
-	 * Give the player an OnSaleItem, it is used
+	 * Gives the {@link OnSaleItem} to this {@link Player}.
+	 * 
+	 * @param item
+	 *            the OnSaleItem
+	 * @param p
+	 *            the new owner of this OnSaleItem
+	 * @see Market
 	 */
 	private void giveToplayer(OnSaleItem item, Player p) {
 		Soldable soldItem = item.getItem();
@@ -163,8 +212,15 @@ public class Market {
 		else if (soldItem instanceof PermissionCard)
 			p.getPermissionCard().add((PermissionCard) soldItem);
 	}
-	
-	private void notifyDisconneted(Player disconnected){
+
+	/**
+	 * Notifies the disconnection of a {@link Player} to all the others.
+	 * 
+	 * @param disconnected
+	 *            the disconnected Player
+	 * @see Market
+	 */
+	private void notifyDisconneted(Player disconnected) {
 		for (Player p : players) {
 			if (!p.getSuspended())
 				try {

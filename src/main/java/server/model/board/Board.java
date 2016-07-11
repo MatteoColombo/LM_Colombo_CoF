@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import server.model.Game;
 import server.model.board.city.City;
 import server.model.board.council.Council;
 import server.model.board.council.Councilor;
@@ -25,7 +26,7 @@ import server.model.reward.BoardReward;
 /**
  * A class that represent the Board of the Game.
  * <p>
- * The Board loads the configurations that will be used for the current Game, as
+ * The Board loads the Configurations that will be used for the current Game, as
  * well as contains one of the possible {@link #getMap() Maps}, whose parameters
  * are loaded from a XML file, and nearly all the things each Player can
  * interact with, such as:
@@ -48,8 +49,10 @@ import server.model.reward.BoardReward;
  * @see BoardRewardsManager
  * @see City
  * @see Color
+ * @see Configuration
  * @see Council
  * @see Councilor
+ * @see Game
  * @see King
  * @see MapLoader
  * @see NobilityTrack
@@ -72,11 +75,11 @@ public class Board {
 	private boolean randomConfig;
 
 	/**
-	 * Starts the initializations of the Board loading this configurations and
-	 * the chosen Map.
+	 * Starts the initializations of the Board loading this {@link Configuration
+	 * Configurations} and the chosen Map.
 	 * 
 	 * @param config
-	 *            the chosen configuration for this Game
+	 *            the chosen Configuration for this Game
 	 * @param choosenMap
 	 *            the chosen Map for this Game
 	 * @throws XMLFileException
@@ -93,7 +96,7 @@ public class Board {
 	}
 
 	/**
-	 * Initializes the Board receiving all the configuration parameters.
+	 * Initializes the Board receiving all the {@link Configuration} parameters.
 	 * 
 	 * @param mapPath
 	 *            the path of the XML file of this Map

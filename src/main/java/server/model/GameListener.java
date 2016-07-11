@@ -1,8 +1,8 @@
 package server.model;
 
 /**
- * A interface that must be implemented by all the classes interested in some
- * Game events.
+ * An interface that have to be implemented by all the classes interested in
+ * some Game events.
  * 
  * @author Matteo Colombo
  * @see Game
